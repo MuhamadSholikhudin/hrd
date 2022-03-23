@@ -19,7 +19,7 @@ class InvestigationFactory extends Factory
     {
         return [
             'remark' => collect($this->faker->paragraphs(mt_rand(5, 10)) ),
-            'employee_id' => mt_rand(1, 3)
+            'employee_id' => mt_rand(1, 25000)
         ];
     }
 

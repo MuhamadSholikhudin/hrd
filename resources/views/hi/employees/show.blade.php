@@ -160,11 +160,11 @@
                               </tr>
                             </thead>
                             <tbody>
-                                @foreach ($investigations as $investigation)
+                            @foreach ($investigations as $investigation)
                               <tr>
-                                <td>{{ $employee->id }}</td>
-                                <td>{{ $investigation->remark }}i</td>
-                                <td>{{ $investigation->created_at }}</td>
+                                <td>1</td>
+                                <td>{{$investigation->created_at}}</td>
+                                <td>{{ $investigation->updated_at }}</td>
                                 <td>Harus diberi SP 1</td>
                                 <td>
                                     <a href="/hi/employees/" class="btn  btn-outline-primary">

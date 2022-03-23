@@ -19,9 +19,22 @@ class HiEmployeeController extends Controller
      */
     public function index()
     {
-        //
+        //asli
+        // return view('hi.employees.index', [
+        //     'employees' => Employee::all()
+             
+        // ]);
+
+// dd(request('search'));
+        $employees = Employee::latest();
+
+        if(request('search')){
+            $employees->where('number_of_employees', 'like', '%' . request('search') . '%')
+                      ->orWhere('name', 'like', '%' . request('search') . '%');
+        }
+
         return view('hi.employees.index', [
-            'employees' => Employee::all()
+            'employees' => $employees->paginate(15)
              
         ]);
     }
@@ -74,11 +87,14 @@ class HiEmployeeController extends Controller
         //     'hiEmployee' => Employee::find($hiEmployee)
         // ]);
         // $investigationemployee = DB::table('investigations')->where('employee_id', $employee->id);
+        // $investigation->where('employee_id', 'like', '%' . request('search') . '%');
+        $investigation = DB::table('investigations')
+                ->where('employee_id', '=', $employee->id)
+                ->get();
 
         return view('hi.employees.show', [
             'employee' => $employee,
-            'investigations' => Investigation::where('employee_id', $employee)->get()
-            // 'investigations' => $investigationemployee
+            'investigations' => $investigation
         ]);
     }
 
@@ -95,9 +111,9 @@ class HiEmployeeController extends Controller
         // return view('hi.employees.edit', [
         //     'employee' => Employee::find($id)
         // ]);
-        return view('hi.employees.edit'
+        return view('hi.employees.create'
         , [
-            'employee' => $employee
+            'employees' => Employee::all()
         ]
     );
     }
