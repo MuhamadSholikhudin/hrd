@@ -20,9 +20,9 @@ Route::get('/', function () {
 
 
 //HRD IT
-// Route::get('/hi', function () {
-//     return view('hi.employees');
-// });
+Route::get('/hi', function () {
+    return view('hi.employees');
+});
 
 // Route::get('/hi/employees', function () {
 //     $employees = Employee::all();

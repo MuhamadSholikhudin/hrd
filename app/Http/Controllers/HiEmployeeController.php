@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\HiEmployee;
 use App\Models\Employee;
+use App\Models\Investigation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class HiEmployeeController extends Controller
 {
@@ -17,9 +19,22 @@ class HiEmployeeController extends Controller
      */
     public function index()
     {
-        //
+        //asli
+        // return view('hi.employees.index', [
+        //     'employees' => Employee::all()
+             
+        // ]);
+
+// dd(request('search'));
+        $employees = Employee::latest();
+
+        if(request('search')){
+            $employees->where('number_of_employees', 'like', '%' . request('search') . '%')
+                      ->orWhere('name', 'like', '%' . request('search') . '%');
+        }
+
         return view('hi.employees.index', [
-            'employees' => Employee::all()
+            'employees' => $employees->paginate(3)
              
         ]);
     }
@@ -73,7 +88,8 @@ class HiEmployeeController extends Controller
         // ]);
 
         return view('hi.employees.show', [
-            'employee' => $employee
+            'employee' => $employee,
+            'investigations' => Investigation::all()
         ]);
     }
 
@@ -90,11 +106,7 @@ class HiEmployeeController extends Controller
         // return view('hi.employees.edit', [
         //     'employee' => Employee::find($id)
         // ]);
-        return view('hi.employees.edit'
-        , [
-            'employee' => $employee
-        ]
-    );
+        return view('hi.employees.create');
     }
 
     /**

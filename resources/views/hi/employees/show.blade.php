@@ -160,10 +160,11 @@
                               </tr>
                             </thead>
                             <tbody>
+                            @foreach ($investigations as $investigation)
                               <tr>
                                 <td>1</td>
-                                <td>2022-03-01</td>
-                                <td>telah mencuri</td>
+                                <td>{{$investigation->created_at}}</td>
+                                <td>{{ $investigation->updated_at }}</td>
                                 <td>Harus diberi SP 1</td>
                                 <td>
                                     <a href="/hi/employees/" class="btn  btn-outline-primary">
@@ -180,7 +181,7 @@
                                       </form>
                                 </td>
                               </tr>
-                       
+                              @endforeach
                             </tbody>
                           </table>
                         </div>

@@ -32,13 +32,15 @@
         <h3 class="card-title">Responsive Hover Table</h3>
 
         <div class="card-tools">
+        <form action="/hi/employees" >     
           <div class="input-group input-group-sm" style="width: 150px;">
-            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+            <input type="text" name="search" value="{{ request('search') }}" class="form-control float-right" placeholder="Search">
 
             <div class="input-group-append">
               <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
             </div>
           </div>
+          </form>
         </div>
       </div>
       <!-- /.card-header -->
@@ -62,7 +64,8 @@
               <td><span class="tag tag-success">{{ $employee->phone_number }}</span></td>
               <td>
                   <a href="/hi/employees/{{ $employee->id }}" class="btn  btn-outline-primary">
-Show                    </a>
+                    Show
+                  </a>
                       <a href="/hi/employees/{{ $employee->id }}/edit" class="btn  btn-outline-warning">
                     Edit
                     </a>
@@ -76,8 +79,11 @@ Show                    </a>
               </td>
             </tr>
             @endforeach
-     
+
           </tbody>
+          <tfoot>
+              {{ $employees->links() }}
+          </tfoot>
         </table>
       </div>
       <!-- /.card-body -->
