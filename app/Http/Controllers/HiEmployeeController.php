@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\HiEmployee;
 use App\Models\Employee;
+use App\Models\Investigation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class HiEmployeeController extends Controller
 {
@@ -71,9 +73,12 @@ class HiEmployeeController extends Controller
         // return view('hi.employees.show', [
         //     'hiEmployee' => Employee::find($hiEmployee)
         // ]);
+        // $investigationemployee = DB::table('investigations')->where('employee_id', $employee->id);
 
         return view('hi.employees.show', [
-            'employee' => $employee
+            'employee' => $employee,
+            'investigations' => Investigation::where('employee_id', $employee)->get()
+            // 'investigations' => $investigationemployee
         ]);
     }
 
