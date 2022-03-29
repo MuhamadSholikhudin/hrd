@@ -20,9 +20,33 @@ php artisan migrate:refresh
 php artisan migrate:refresh --seed
 
 
-Factory
+-Factory
 php artisan make:factory EmployeeFactory
 
-Model 
+-Model 
 php artisan make:model Employee
 
+-The Route List
+php artisan route:list
+
+php artisan route:list -v
+
+-Route Parameters
+Route::get('/user/{id}', function ($id) {
+    return 'User '.$id;
+});
+
+Route::get('/posts/{post}/comments/{comment}', function ($postId, $commentId) {
+    //
+});
+
+-Parameters & Dependency Injection
+Route::get('/user/{id}', function (Request $request, $id) {
+    return 'User '.$id;
+});
+
+-Resource Controllers
+php artisan make:controller PhotoController --resource
+use App\Http\Controllers\PhotoController;
+ 
+Route::resource('photos', PhotoController::class);

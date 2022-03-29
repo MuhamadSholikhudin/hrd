@@ -31,7 +31,6 @@ return new class extends Migration
             $table->string('address_district');
             $table->string('address_city');
             $table->string('address_province');
-            $table->string('biological_mothers_name');
             $table->string('phone');
             $table->string('email');
             $table->string('educate');

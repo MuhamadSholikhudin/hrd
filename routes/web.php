@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\HiEmployee;
+
+use App\Http\Controllers\JobController;
 use App\Http\Controllers\HiEmployeeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchController;
@@ -48,5 +50,20 @@ Route::controller(SearchController::class)->group(function(){
     Route::get('demo-search', 'index');
     Route::get('autocomplete', 'autocomplete')->name('autocomplete');
 });
+
+
+// JOBS
+Route::resource('jobs', JobController::class);
+
+// DATA MASTER
+
+
+// PROMOTION
+
+
+// DEMOTION
+
+
+// MUTATION
 
 
