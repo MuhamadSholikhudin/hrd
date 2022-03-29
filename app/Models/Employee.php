@@ -11,6 +11,7 @@ class Employee extends Model
 
     use HasFactory;
     protected $guarded = ['id'];
+    protected $with = ['job'];
 
     public function scopeFilter($query, array $filters){
 
@@ -28,8 +29,26 @@ class Employee extends Model
 
 
     }
+    public function job()
+    {
+        return $this->belongsTo(Job::class);
+    }
 
     public function investigations()
+    {
+        return $this->hasMany(Employee::class);
+    }
+
+    public function mutations()
+    {
+        return $this->hasMany(Employee::class);
+    }
+
+    public function promotions()
+    {
+        return $this->hasMany(Employee::class);
+    }
+    public function demomotions()
     {
         return $this->hasMany(Employee::class);
     }
