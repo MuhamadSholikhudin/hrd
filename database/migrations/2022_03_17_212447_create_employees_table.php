@@ -35,6 +35,12 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('educate')->nullable();
             $table->string('major')->nullable();
+
+            $table->date('hire_date')->nullable();
+            $table->string('employee_type')->nullable();
+            $table->date('end_of_contract')->nullable();
+            $table->date('date_out')->nullable();
+            $table->string('exit_statement')->nullable();
             $table->string('bank_name')->nullable();
             $table->string('bank_branch')->nullable();
             $table->string('bank_account_name')->nullable();
