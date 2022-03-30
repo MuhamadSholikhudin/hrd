@@ -22,7 +22,6 @@
 
 <!-- Main content -->
 <section class="content">
-    <div class="card">
     <div class="col-md-12">
           <!-- Kelola karyawan =>   -->
           &nbsp;
@@ -64,7 +63,7 @@
               <i class="fas fa-upload" data-toggle="tooltip" data-placement="bottom" title="Upload Excel Update Data Karyawan"></i>
             </a>
              <!-- Modal -->
-             <div class="modal fade" id="excel_karyawan_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+             <div class="modal fade"  id="excel_karyawan_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -158,15 +157,11 @@
           </div>
         </div>
       </div>
-     
       <!-- /.card-body -->
     </div>
   <!-- /.card -->
-
 </section>
 <!-- /.content -->
-
-
 </div>
 
 @endsection
