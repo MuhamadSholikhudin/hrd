@@ -35,13 +35,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="./employees.html" class="nav-link active">
+              <a href="/datamaster/employees" class="nav-link active">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Karyawan</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="./bpjs.html" class="nav-link">
+              <a href="/bpjs" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>BPJS</p>
               </a>
@@ -53,27 +53,33 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="./promotion.html" class="nav-link">
+              <a href="/promotions" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>PROMOSI</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="./demotion.html" class="nav-link">
+              <a href="/demotions" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>DEMOSI</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="./mutation.html" class="nav-link">
+              <a href="/mutations" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>MUTASI</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="./job_level.html" class="nav-link">
+              <a href="/jobs" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>JOB LEVEL</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/departments" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>DEPARTEMEN</p>
               </a>
             </li>
           </ul>

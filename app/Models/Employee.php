@@ -11,7 +11,7 @@ class Employee extends Model
 
     use HasFactory;
     protected $guarded = ['id'];
-    protected $with = ['job'];
+    protected $with = ['job', 'department'];
 
     public function scopeFilter($query, array $filters){
 
@@ -51,5 +51,9 @@ class Employee extends Model
     public function demomotions()
     {
         return $this->hasMany(Employee::class);
+    }
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
     }
 }

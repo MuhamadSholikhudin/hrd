@@ -10,7 +10,7 @@ class Mutation extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
-    protected $with = ['employee', 'job'];
+    protected $with = ['employee', 'job', 'department'];
 
     public function employee()
     {
@@ -19,5 +19,9 @@ class Mutation extends Model
     public function job()
     {
         return $this->belongsTo(Job::class);
+    }
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
     }
 }

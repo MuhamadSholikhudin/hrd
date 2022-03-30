@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Job;
+use App\Models\Department;
 
-class JobController extends Controller
+class DepartmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,15 +14,14 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Job::latest();
+        $departments = Department::latest();
 
         if(request('search')){
-            $jobs->where('code_job_level', 'like', '%' . request('search') . '%')
-                      ->orWhere('job_level', 'like', '%' . request('search') . '%');
+            $departments->where('department', 'like', '%' . request('search') . '%');
         }
 
-        return view('jobs.index', [
-            'jobs' => $jobs->paginate(15)
+        return view('departments.index', [
+            'departments' => $departments->paginate(15)
              
         ]);
     }
@@ -35,7 +34,7 @@ class JobController extends Controller
     public function create()
     {
         //
-        return view('jobs.create');
+        return view('departments.create');
     }
 
     /**
@@ -47,13 +46,12 @@ class JobController extends Controller
     public function store(Request $request)
     {        
         $validatedData =  $request->validate([
-            'code_job_level' => ['required', 'unique:jobs'],
-            'job_level' => 'required',
-            'level' => 'required'
+            'code_department' => ['required', 'unique:departments'],
+            'department' => 'required'
         ]);
 
-        Job::create($validatedData);
-        return redirect('/jobs')->with('success', 'New Post has been added!');
+        Department::create($validatedData);
+        return redirect('/departments')->with('success', 'New Post has been added!');
     }
 
     /**
@@ -62,10 +60,10 @@ class JobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Job $job)
+    public function show(Department $department)
     {
-        return view('jobs.show', [
-            'job' => $job
+        return view('departments.show', [
+            'department' => $department
         ]);
     }
 
@@ -75,11 +73,11 @@ class JobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Job $job)
+    public function edit(Department $department)
     {
         //
-        return view('jobs.edit', [
-            'job' => $job
+        return view('departments.edit', [
+            'department' => $department
         ]);
     }
 
@@ -90,18 +88,17 @@ class JobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Job $job)
+    public function update(Request $request, Department $department)
     {
         //
         $rules =  [
-            'kode_job_level' => ['required', 'unique:jobs'],
-            'job_level' => 'required',
-            'level' => 'required'
+            'code_department' => ['required', 'unique:departments'],
+            'department' => 'required'
         ];
         $validatedData = $request->validate($rules);
-        Job::where('id', $job->id)
+        Department::where('id', $department->id)
                 ->update($validatedData);
-        return redirect('/jobs')->with('success', 'Post has been updated!');
+        return redirect('/departments')->with('success', 'Post has been updated!');
     }
 
     /**
@@ -110,10 +107,10 @@ class JobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Job $job)
+    public function destroy(Department $department)
     {
         //
-        Job::destroy($job->id);
-        return redirect('/jobs')->with('success', 'Post has been deleted!');
+        Department::destroy($department->id);
+        return redirect('/departments')->with('success', 'Post has been deleted!');
     }
 }

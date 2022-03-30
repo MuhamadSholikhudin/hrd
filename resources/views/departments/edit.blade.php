@@ -8,7 +8,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>Edit Jobs</h1>
+        <h1>Edit departments</h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -26,20 +26,13 @@
     <div class="col-md-6">
       <div class="card card-primary">    
         <div class="card-body">
-            <form role="form" action="/jobs/{{  $job->id  }}" method="POST" enctype="multipart/form-data">
+            <form role="form" action="/departments/{{  $department->id  }}" method="POST" enctype="multipart/form-data">
               @method('put')
               @csrf
+
               <div class="form-group">
-                <label for="exampleInputEmail1">Kode Job Level</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" name="code_job_level" value="{{  $job->kode_job_level  }}" placeholder="" required>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1">Job Level</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" name="job_level" value="{{  $job->job_level  }}" placeholder="" required>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Level</label>
-                <input type="number" class="form-control" id="exampleInputPassword1" name="level" value="{{  $job->department  }}" placeholder="" required>
+                <label for="exampleInputPassword1">Departemant</label>
+                <input type="text" class="form-control" id="exampleInputPassword1" name="department" value="{{  $department->department  }}" placeholder="" required>
               </div>
               <div class="card-footer">
                   <button type="submit" class="btn btn-primary float-right">Update</button>

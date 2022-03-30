@@ -8,14 +8,14 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>jobs</h1> 
+        <h1>Departments</h1> 
         <br>
-        <a href="/jobs/create" class="btn  btn-info">+ Add Jobs</a>
+        <a href="/departments/create" class="btn  btn-info">+ Add Employee</a>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">jobs Page</li>
+          <li class="breadcrumb-item active">Blank Page</li>
         </ol>
       </div>
     </div>
@@ -32,7 +32,7 @@
         <h3 class="card-title">Responsive Hover Table</h3>
 
         <div class="card-tools">
-        <form action="/jobs" >     
+        <form action="/departments" >     
           <div class="input-group input-group-sm" style="width: 150px;">
             <input type="text" name="search" value="{{ request('search') }}" class="form-control float-right" placeholder="Search">
 
@@ -49,27 +49,23 @@
           <thead>
             <tr>
               <th>ID</th>
-              <th>Kode Jobs</th>
-              <th>Descripition</th>
-              <th>Level</th>
+              <th>Department</th>
               <th>Reason</th>
             </tr>
           </thead>
           <tbody>
-              @foreach ($jobs as $job)
+              @foreach ($departments as $department)
             <tr>
-              <td>{{ $job->id }}</td>
-              <td>{{ $job->kode_job_level }}</td>
-              <td>{{ $job->job_level }}</td>
-              <td>{{ $job->level }}</td>
+              <td>{{ $department->id }}</td>
+              <td>{{ $department->department }}</td>
               <td>
-                  <a href="/jobs/{{ $job->id }}" class="btn  btn-outline-primary">
+                  <a href="/departments/{{ $department->id }}" class="btn  btn-outline-primary">
                     Show
                   </a>
-                      <a href="/jobs/{{ $job->id }}/edit" class="btn  btn-outline-warning">
+                      <a href="/departments/{{ $department->id }}/edit" class="btn  btn-outline-warning">
                     Edit
                     </a>
-                    <form action="/jobs/{{ $job->id }}" method="POST" class="d-inline ">
+                    <form action="/departments/{{ $department->id }}" method="POST" class="d-inline ">
                       @method('delete')
                       @csrf
                       <button class="btn  btn-outline-danger" onclick="return confirm(' Are you sure delete data ?')"> 
@@ -88,7 +84,7 @@
         {{-- <h3 class="card-title">Responsive Hover Table</h3> --}}
         <div class="row justify-content-center mb-3">
           <div class="col-lg-6">
-            {{ $jobs->links() }}
+            {{ $departments->links() }}
           </div>
         </div>
       </div>

@@ -13,7 +13,7 @@
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">Job Level Page</li>
+          <li class="breadcrumb-item active">Department Page</li>
         </ol>
       </div>
     </div>
@@ -22,27 +22,20 @@
 
 <!-- Main content -->
 <section class="content">
-  <div class="col-md-6">     
+  <div class="col-md-4">     
     <div class="card card-primary">
     <div class="card-header">
-        <h3 class="card-title">Tambah Job Level</h3>
+        <h3 class="card-title">Tambah Department</h3>
     </div>
     <!-- /.card-header -->
     <!-- form start -->
-    <form role="form" action="/jobs" method="POST" enctype="multipart/form-data">
+    <form role="form" action="/departments" method="POST" enctype="multipart/form-data">
       @csrf
       <div class="card-body">
+
         <div class="form-group">
-            <label for="exampleInputEmail1">Kode Job Level</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" name="code_job_level" placeholder="" required>
-        </div>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Job Level</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" name="job_level" placeholder="" required>
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Level</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" name="level" placeholder="" required>
+            <label for="exampleInputPassword1">Departeman</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="department" placeholder="" required>
         </div>
         <div class="card-footer">
         <button type="submit" class="btn btn-primary float-right">Submit</button>

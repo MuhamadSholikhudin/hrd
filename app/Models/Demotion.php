@@ -11,7 +11,7 @@ class Demotion extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
-    protected $with = ['employee', 'job'];
+    protected $with = ['employee', 'job', 'department'];
 
     public function employee()
     {
@@ -20,5 +20,9 @@ class Demotion extends Model
     public function job()
     {
         return $this->belongsTo(Job::class);
+    }
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
     }
 }

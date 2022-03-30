@@ -35,8 +35,8 @@
                 <input type="text" class="form-control" id="exampleInputEmail1" name="job_level" value="{{  $job->job_level  }}" placeholder="" required>
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Departeman</label>
-                <input type="text" class="form-control" id="exampleInputPassword1" name="department" value="{{  $job->department  }}" placeholder="" required>
+                <label for="exampleInputPassword1">Level</label>
+                <input type="text" class="form-control" id="exampleInputPassword1" name="level" value="{{  $job->level  }}" placeholder="" required>
             </div>
             <div class="card-footer">
               <a href="/jobs"  class="btn btn-primary float-right">kembali</a>

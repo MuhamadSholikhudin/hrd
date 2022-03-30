@@ -13,15 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('jobs', function (Blueprint $table) {
+        Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->char('code_job_level', 5);
-            $table->string('job_level', 30);
-            $table->integer('level');
-            // $table->string('department');       
-            // $table->foreignId('employee_id');
+            $table->string('department', 30);
             $table->timestamps();
-
         });
     }
 
@@ -32,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jobs');
+        Schema::dropIfExists('departments');
     }
 };

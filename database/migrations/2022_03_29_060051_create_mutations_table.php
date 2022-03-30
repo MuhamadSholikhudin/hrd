@@ -17,9 +17,10 @@ return new class extends Migration
             $table->id();
             $table->date('mutation_date');
             $table->enum('status', ['active', 'not active']);  
-            $table->string('bagian');
-            $table->string('cell');           
+            $table->string('bagian')->nullable();
+            $table->string('cell')->nullable();           
             $table->foreignId('job_id');
+            $table->foreignId('department_id');
             $table->foreignId('employee_id');
             $table->timestamps();
         });

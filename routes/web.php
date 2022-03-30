@@ -2,8 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\HiEmployee;
+use App\Models\Employee;
+use App\Models\Jon;
+use App\Models\Department;
 
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\DatamasterEmployeeController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\HiEmployeeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchController;
@@ -55,7 +60,12 @@ Route::controller(SearchController::class)->group(function(){
 // JOBS
 Route::resource('jobs', JobController::class);
 
-// DATA MASTER
+// DEPARTMENTS
+Route::resource('departments', DepartmentController::class);
+
+
+// DATA MASTER EMPLOYEES
+Route::resource('datamaster/employees', DatamasterEmployeeController::class);
 
 
 // PROMOTION
