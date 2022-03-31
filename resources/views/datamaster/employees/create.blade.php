@@ -62,7 +62,19 @@
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">About Me</h3>
+              </div>
+              <div class="card-body">
 
+              @foreach ($errors->all() as $message)
+{{$message}}
+                            @endforeach
+              
+              </div>
+              
+            </div>
             <!-- About Me Box -->
             <!-- <div class="card card-primary">
               <div class="card-header">
@@ -145,11 +157,11 @@
                       <div class="form-group row">
                         <label for="place_of_birth" class="col-sm-2 col-form-label">Tempat lahir</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="place_of_birth" name="place_of_birth" required>
+                            <input type="text" class="form-control" id="place_of_birth" name="place_of_birth" value="{{ old('place_of_birth') }}" required>
                         </div>
                         <label for="place_of_birth" class="col-sm-2 col-form-label">Tanggal lahir</label>
                         <div class="col-sm-4">
-                            <input type="date" class="form-control" id="place_of_birth" name="date_of_birth" required > 
+                            <input type="date" class="form-control" id="place_of_birth" name="date_of_birth" value="{{ old('date_of_birth') }}" required > 
                         </div>
                       </div>
                       <div class="form-group row">
@@ -174,7 +186,7 @@
                       <div class="form-group row">
                         <label for="inputExperience" class="col-sm-2 col-form-label">Agama</label>
                         <div class="col-sm-10">
-                          <select class="form-control" name="religion" required>
+                          <select class="form-control" name="religion"  required>
                             <option value="MOSLEM">MOSLEM</option>
                             <option value="BUDHIST">BUDHIST</option>
                             <option value="CATHOLIC">CATHOLIC</option>
@@ -185,62 +197,71 @@
                           </select>                                      
                         </div>
                       </div>
+                      <div class="form-group row">
+                        <label for="inputExperience" class="col-sm-2 col-form-label">Status Pernikahan</label>
+                        <div class="col-sm-10">
+                          <select class="form-control" name="marital_status"  required>
+                            <option value="S">SINGLE / S</option>
+                            <option value="M">MENIKAH / M</option>
+                          </select>                                      
+                        </div>
+                      </div>
                   </div>
                   
                   <div class="tab-pane" id="input_identitas">
                       <div class="form-group row">
                           <label for="national_id" class="col-sm-2 col-form-label">Nomer KTP</label>
                           <div class="col-sm-10">
-                              <input type="text" class="form-control" id="national_id" name="national_id" placeholder="Nomer KTP" required>
+                              <input type="text" class="form-control" id="national_id" name="national_id" value="{{ old('national_id') }}" placeholder="Nomer KTP" required>
                           </div>
                         </div>               
                     
                     <div class="form-group row">
                       <label for="address_province" class="col-sm-2 col-form-label">Provinsi </label>
                       <div class="col-sm-2">
-                        <input type="text" class="form-control" id="address_province"   name="address_province" required>
+                        <input type="text" class="form-control" id="address_province" name="address_province" value="{{ old('address_province') }}" required>
                       </div>
                       <label for="address_city" class="col-sm-2 col-form-label">Kota </label>
                       <div class="col-sm-2">
-                        <input type="text" class="form-control" id="address_city" name="address_city" required>
+                        <input type="text" class="form-control" id="address_city" name="address_city" value="{{ old('address_city') }}" required>
                       </div>
                       <label for="address_district" class="col-sm-2 col-form-label">Kecamatan </label>
                       <div class="col-sm-2">
-                        <input type="text" class="form-control" id="address_district" name="address_district" required>
+                        <input type="text" class="form-control" id="address_district" name="address_district" value="{{ old('address_district') }}" required>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="address_village" class="col-sm-2 col-form-label">Desa </label>
                       <div class="col-sm-2">
-                        <input type="text" class="form-control" id="address_rw"   name="address_rw" required>
+                        <input type="text" class="form-control" id="address_rw"   name="address_village" value="{{ old('address_village') }}" required>
                       </div>
                       <label for="address_rt" class="col-sm-1 col-form-label">RT </label>
                       <div class="col-sm-1">
-                        <input type="text" class="form-control" id="address_rt" name="address_rt" required>
+                        <input type="text" class="form-control" id="address_rt" name="address_rt" value="{{ old('address_rt') }}" required>
                       </div>
                       <label for="address_rt" class="col-sm-1 col-form-label">RW </label>
                       <div class="col-sm-1">
-                        <input type="text" class="form-control" id="address_rw" name="address_rw" required>
+                        <input type="text" class="form-control" id="address_rw" name="address_rw" value="{{ old('address_rw') }}" required>
                       </div>
 
                     </div>
                     <div class="form-group row">
                         <label for="address_jalan" class="col-sm-2 col-form-label">Alamat Jalan</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" id="address_jalan" name="address_jalan" required>
+                          <input type="text" class="form-control" id="address_jalan" name="address_jalan" value="{{ old('address_jalan') }}" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                       <label for="phone" class="col-sm-2 col-form-label">Nomer Telephone</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="phone" name="phone" required>
+                        <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone') }}" required>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="email" class="col-sm-2 col-form-label">Email </label>
                       <div class="col-sm-10">
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
                       </div>
                     </div>
                   </div>
@@ -249,16 +270,18 @@
                     <label for="hire_date" class="col-sm-2 col-form-label">Pendidikan</label>
                     <div class="col-sm-4">
                       <select class="form-control" name="educate" required>
+
                         <option value="SD">SD</option>
                         <option value="SMP">SMP</option>
                         <option value="SMA">SMA</option>
                         <option value="S1">Sarjana / S-1</option>
                         <option value="S2">Magister / S-2</option>
+                        
                       </select>
                     </div>
                     <label for="major" class="col-sm-2 col-form-label">Jurusan </label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" id="major" name="major" >
+                      <input type="text" class="form-control" id="major" name="major" value="{{ old('major') }}">
                     </div>
                   </div>
                 </div>
@@ -267,7 +290,7 @@
                   <div class="form-group row">
                     <label for="biological_mother_name" class="col-sm-4 col-form-label">Nama Ibu Kandung</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="biological_mother_name" name="biological_mother_name" required>
+                      <input type="text" class="form-control" id="biological_mother_name" name="biological_mothers_name" value="{{ old('biological_mother_name') }}" required>
                     </div>
                   </div>
                 </div>
@@ -276,11 +299,11 @@
                     <div class="form-group row">
                       <label for="number_of_employees" class="col-sm-3 col-form-label">Nomor Induk Karyawan</label>
                       <div class="col-sm-4">
-                          <input type="text" class="form-control" id="number_of_employees" name="number_of_employees" placeholder="Nomer Induk Karyawan" required>
+                          <input type="text" class="form-control" id="number_of_employees" name="number_of_employees" value="{{ old('number_of_employees') }}" placeholder="Nomer Induk Karyawan" required>
                       </div>
                       <label for="finger_id" class="col-sm-2 col-form-label">Finger ID</label>
                       <div class="col-sm-3">
-                          <input type="text" class="form-control" id="finger_id" name="finger_id" placeholder="Finger ID" required>
+                          <input type="text" class="form-control" id="finger_id" name="finger_id" value="{{ old('finger_id') }}" placeholder="Finger ID" required>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -318,13 +341,13 @@
                       <div class="form-group row">
                         <label for="hire_date" class="col-sm-3 col-form-label">Bagian</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" id="bagian"   name="bagian" required>
+                          <input type="text" class="form-control" id="bagian" name="bagian" value="{{ old('bagian') }}" required>
                         </div>
                       </div> 
                       <div class="form-group row">
-                        <label for="hire_date" class="col-sm-3 col-form-label">cELL</label>
+                        <label for="hire_date" class="col-sm-3 col-form-label">CELL</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" id="cell" name="cell" required>
+                          <input type="text" class="form-control" id="cell" name="cell" value="{{ old('cell') }}" required>
                         </div>
                       </div> 
                       
@@ -332,7 +355,7 @@
                       <div class="form-group row">
                         <label for="hire_date" class="col-sm-3 col-form-label">Tanggal Masuk Kerja </label>
                         <div class="col-sm-9">
-                          <input type="date" class="form-control" id="hire_date"   name="hire_date" required>
+                          <input type="date" class="form-control" id="hire_date" name="hire_date" value="{{ old('hire_date') }}" required>
                         </div>
                       </div>                      
                       <div class="form-group row">
@@ -347,19 +370,19 @@
                       <div class="form-group row">
                         <label for="end_of_contract" class="col-sm-3 col-form-label">End of Contract </label>
                         <div class="col-sm-9">
-                          <input type="date" class="form-control" id="end_of_contract"   name="end_of_contract" required>
+                          <input type="date" class="form-control" id="end_of_contract" name="end_of_contract" value="{{ old('end_of_contract') }}" required>
                         </div>
                       </div>    
                       <div class="form-group row">
                         <label for="out" class="col-sm-3 col-form-label">Date Out </label>
                         <div class="col-sm-9">
-                          <input type="date" class="form-control" id="out"   name="date_out" >
+                          <input type="date" class="form-control" id="out" name="date_out" value="{{ old('date_out') }}">
                         </div>
                       </div> 
                       <div class="form-group row">
                         <label for="exit_statement" class="col-sm-3 col-form-label">Out </label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" id="exit_statement" name="exit_statement" required>
+                          <input type="text" class="form-control" id="exit_statement" name="exit_statement" value="{{ old('exit_statement') }}" required>
                         </div>
                       </div> 
                     </div>
@@ -369,21 +392,21 @@
                   <div class="form-group row">
                     <label for="inputName2" class="col-sm-3 col-form-label">BPJS Ketenagakerjaan</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" name="bpjs_ketenagakerjaan" id="inputName2" placeholder="Name">
+                        <input type="text" class="form-control" name="bpjs_ketenagakerjaan" value="{{ old('bpjs_ketenagakerjaan') }}" id="inputName2" placeholder="Name">
                     </div>
                     <label for="inputName2" class="col-sm-2 col-form-label">Tanggal gabung</label>
                     <div class="col-sm-3">
-                        <input type="date" class="form-control" name="date_bpjs_ketenagakerjaan" id="inputName2" placeholder="Name">
+                        <input type="date" class="form-control" name="date_bpjs_ketenagakerjaan" value="{{ old('date_bpjs_ketenagakerjaan') }}" id="inputName2" placeholder="Name">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="inputName2" class="col-sm-3 col-form-label">BPJS Kesehatan</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" name="bpjs_kesehatan" id="inputName2" placeholder="Name">
+                        <input type="text" class="form-control" name="bpjs_kesehatan" value="{{ old('bpjs_kesehatan') }}" id="inputName2" placeholder="Name">
                     </div>
                     <label for="inputName2" class="col-sm-2 col-form-label">Tanggal gabung</label>
                     <div class="col-sm-3">
-                        <input type="date" class="form-control" name="date_bpjs_kesehatan" id="inputName2" placeholder="Name">
+                        <input type="date" class="form-control" name="date_bpjs_kesehatan" value="{{ old('date_bpjs_kesehatan') }}" id="inputName2" placeholder="Name" required>
                     </div>
                   </div>
                 </div>
@@ -392,74 +415,75 @@
                   <div class="form-group row">
                     <label for="bank_name" class="col-sm-3 col-form-label">Nama Bank</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="bank_name" name="bank_name" required>
+                      <input type="text" class="form-control" id="bank_name" name="bank_name" value="{{ old('bank_name') }}" required>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="bank_branch" class="col-sm-3 col-form-label">Cabang Bank</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="bank_branch" name="bank_branch" required>
+                      <input type="text" class="form-control" id="bank_branch" name="bank_branch" value="{{ old('bank_branch') }}" required>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="bank_account_name" class="col-sm-3 col-form-label">Nama Akun Bank</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="bank_account_name" name="bank_account_name" required>
+                      <input type="text" class="form-control" id="bank_account_name" name="bank_account_name" value="{{ old('bank_account_name') }}" required>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="bank_account_number" class="col-sm-3 col-form-label">Nomer Rekening</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="bank_account_number" name="bank_account_number" required>
+                      <input type="text" class="form-control" id="bank_account_number" name="bank_account_number" value="{{ old('bank_account_number') }}" required>
                     </div>
                   </div>
                 </div>
 
-                <div class="tab-pane" id="input_gaji">
+               <div class="tab-pane" id="input_gaji">
                   <div class="form-group row">
                     <label for="basic_salary" class="col-sm-3 col-form-label">Basic Salary</label>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" id="basic_salary" name="basic_salary" required>
+                      <input type="number" class="form-control" id="basic_salary" name="basic_salary" value="{{ old('basic_salary') }}" required>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="positional_allowance" class="col-sm-3 col-form-label">Tunjangan Jabatan</label>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" id="positional_allowance" name="positional_allowance" required>
+                      <input type="number" class="form-control" id="positional_allowance" name="positional_allowance" value="{{ old('positional_allowance') }}" required>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="transportation_allowance" class="col-sm-3 col-form-label">Tunjangan Transportasi</label>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" id="transportation_allowance" name="transportation_allowance" required>
+                      <input type="number" class="form-control" id="transportation_allowance" name="transportation_allowance" value="{{ old('transportation_allowance') }}" required>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="attendance_allowance" class="col-sm-3 col-form-label">Tunjangan Kehadiran</label>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" id="attendance_allowance" name="attendance_allowance" required>
+                      <input type="number" class="form-control" id="attendance_allowance" name="attendance_allowance" value="{{ old('attendance_allowance') }}" required>
                     </div>
                   </div>
                   <div class="form-group row">
-                      <label for="hire_date" class="col-sm-3 col-form-label">Grade</label>
-                      <div class="col-sm-2">
-                          <select class="form-control" name="grade_salary" required>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                          </select>
-                      </div>
-                      <label for="grade_total" class="col-sm-2 col-form-label">Total Grade</label>
-                      <div class="col-sm-3">
-                          <input type="number" class="form-control" id="grade_total" name="grade_total" required>
-                      </div>
-                      <div class="col-sm-2">
-                        <button type="button" class="btn btn-primary "><i class="fas fa-arrows-rotate"></i> Generate</button>
-                      </div>
-
+                    <label for="hire_date" class="col-sm-3 col-form-label">Grade</label>
+                    <div class="col-sm-2">
+                        <select class="form-control" name="grade_salary" required>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                        </select>
                     </div>
+                    <label for="grade_total" class="col-sm-2 col-form-label">Total Grade</label>
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" id="grade_total" name="grade_total" value="{{ old('grade_total') }}" required>
+                    </div>
+                    <div class="col-sm-2">
+                      <button type="button" class="btn btn-primary "><i class="fas fa-arrows-rotate"></i> Generate</button>
+                    </div>
+                  </div>  
 
+                </div>
+<!-- 
                     <hr>
-                    {{-- <div class="form-group row mt-3">
+                     <div class="form-group row mt-3">
                         <label for="basic_salary" class="col-sm-3 col-form-label">Basic Salary</label>
                         <div class="col-sm-9">
                           <input type="number" class="form-control" id="basic_salary" name="basic_salary" required>
@@ -488,15 +512,17 @@
                           <div class="col-sm-9">
                             <input type="number" class="form-control" id="attendance_allowance" name="attendance_allowance" required>
                           </div>
-                        </div> --}}
-                
+                        </div> 
                       </div>
+                -->
 
+                
+                
                 <div class="tab-pane" id="input_pajak">
                   <div class="form-group row">
                       <label for="npwp" class="col-sm-2 col-form-label">NPWP</label>
                       <div class="col-sm-4">
-                          <input type="number" class="form-control" id="npwp" name="npwp" required>
+                          <input type="number" class="form-control" id="npwp" name="npwp" value="{{ old('npwp') }}" required>
                       </div>
                       <label for="kode_ptkp" class="col-sm-2 col-form-label">Kode PTKP</label>
                       <div class="col-sm-4">
@@ -511,7 +537,7 @@
                   <div class="form-group row">
                     <label for="year_ptkp" class="col-sm-2 col-form-label">Tanggal PTKP</label>
                     <div class="col-sm-3">
-                        <input type="date" class="form-control" id="year_ptkp" name="year_ptkp" required>
+                        <input type="date" class="form-control" id="year_ptkp" name="year_ptkp" value="{{ old('year_ptkp') }}" required>
                     </div>
                   </div>
                 </div>

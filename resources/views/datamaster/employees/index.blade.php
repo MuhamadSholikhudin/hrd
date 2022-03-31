@@ -105,14 +105,8 @@
 <a  class="btn btn-outline-primary" data-toggle="tooltip" data-placement="bottom" title="Download Excel Data Karyawan">
 <i class="fas fa-download"></i>
 </a>
-
-
-
-        
-
-
         <div class="card-tools">
-            <form action="/hi/employees" >     
+            <form action="/datamaster/employees" >     
                 <div class="input-group input-group-sm" style="width: 150px;">
                     <input type="text" name="search" value="{{ request('search') }}" class="form-control float-right" placeholder="Search">
                     <div class="input-group-append">
@@ -148,13 +142,13 @@
                             <a href="/datamaster/employees/{{ $employee->id }}/edit" class="btn  btn-outline-warning">
                             Edit
                             </a>
-                            <form action="/datamaster/employees/{{ $employee->id }}" method="POST" class="d-inline ">
+                            <!-- <form action="/datamaster/employees/{{ $employee->id }}" method="POST" class="d-inline ">
                                 @method('delete')
                                 @csrf
                                 <button class="btn  btn-outline-danger" onclick="return confirm(' Are you sure delete data ?')"> 
                                     Delete
                                 </button>
-                            </form>
+                            </form> -->
                     </td>
                 </tr>
             @endforeach

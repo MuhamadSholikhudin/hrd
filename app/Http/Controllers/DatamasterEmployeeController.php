@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+
 use App\Models\Employee;
 use App\Models\Job;
 use App\Models\Department;
@@ -27,7 +30,7 @@ class DatamasterEmployeeController extends Controller
         }
 
         return view('datamaster.employees.index', [
-            'employees' => $employees->paginate(15)
+            'employees' => $employees->paginate(3)
              
         ]);
     }
@@ -54,6 +57,7 @@ class DatamasterEmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $validatedDataEmployee = $request->validate([
             'number_of_employees' => 'required',
             'finger_id' => 'required',
@@ -61,7 +65,7 @@ class DatamasterEmployeeController extends Controller
             'gender'=> 'required',  
             'place_of_birth'=> 'required',
             'date_of_birth'=> 'required',
-            // 'marital_status'=> 'required',
+            'marital_status'=> 'required',
             'religion'=> 'required', 
             'biological_mothers_name'=> 'required',
             'national_id'=> 'required',
@@ -76,14 +80,11 @@ class DatamasterEmployeeController extends Controller
             'email'=> 'required',
             'educate'=> 'required',
             'major'=> 'required',
-
             'hire_date'=> 'required',
             'employee_type'=> 'required',
             'end_of_contract'=> 'required',
             'date_out'=> 'required',
             'exit_statement'=> 'required',
-
-
             'bank_name'=> 'required',
             'bank_branch'=> 'required',
             'bank_account_name'=> 'required',
@@ -102,12 +103,11 @@ class DatamasterEmployeeController extends Controller
         ]);
         Employee::create($validatedDataEmployee);
         
-        // $employee_get = DB::table('employees')
-        // ->where('number_of_employees', '=', $request->number_of_employees)
-        // ->get();
+        $employee_get = DB::table('employees')->where('number_of_employees', '=', $request->number_of_employees)->first();
         
+        $request->employee_id = $employee_get->id;
         // $validatedDataSalary = $request->validate([
-        //     'employee_id' => $employee_get->id,
+        //     'employee_id' => 'reguired',
         //     'basic_salary' => 'required',
         //     'positional_allowance' => 'required',
         //     'transportation_allowance' => 'required',
@@ -115,9 +115,21 @@ class DatamasterEmployeeController extends Controller
         //     'grade_salary' => 'required',
         //     'grade_total' => 'required'
         // ]);
+        DB::table('salaries')->insertOrIgnore([
+            'employee_id' => $employee_get->id,
+            'basic_salary' => $request->basic_salary,
+            'positional_allowance' => $request->positional_allowance,
+            'transportation_allowance' => $request->transportation_allowance,
+            'attendance_allowance' => $request->attendance_allowance,
+            'grade_salary' => $request->grade_salary,
+            'total_salary' => 0
+        ]);
+
+        // dd($validatedDataSalary);
+        
         // Salary::create($validatedDataSalary);
             
-        return redirect('/jobs')->with('success', 'New Post has been added!');
+        return redirect('/datamaster/employees');
     }
 
     /**
@@ -126,9 +138,18 @@ class DatamasterEmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Employee $employee)
     {
         //
+        $job = DB::table('jobs')
+        ->where('id', '=', $employee->job_id)
+        ->get();
+
+        $salary = DB::table('salaries')->where('employee_id', $employee->id)->first();
+        return view('datamaster.employees.show', [
+            'employee' => $employee,
+            'salary' => $salary
+        ]);
     }
 
     /**
@@ -137,9 +158,15 @@ class DatamasterEmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Employee $employee)
     {
         //
+        // $salary = DB::table('salaries')->where('employee_id', $employee->id)->first();
+        // $employee = DB::table('employees')->where('id', $id)->first();
+
+        return view('datamaster.employees.edit', [
+            'employee' => $employee
+        ]);
     }
 
     /**

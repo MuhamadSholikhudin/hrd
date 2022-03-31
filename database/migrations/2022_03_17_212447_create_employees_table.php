@@ -16,14 +16,15 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('number_of_employees')->unique();
-            $table->string('name');
+            $table->string('finger_id')->unique();
+            $table->string('name')->nullable();
             $table->enum('gender', ['M', 'F']);  
             $table->string('place_of_birth')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->enum('marital_status', ['M', 'S']);  
             $table->enum('religion', ['MOSLEM','BUDHIST','CATHOLIC','CHRISTIAN','HINDU','KEPERCAYAAN','NONE']);  
-            $table->string('biological_mothers_name');
-            $table->string('national_id');
+            $table->string('biological_mothers_name')->nullable();
+            $table->string('national_id')->nullable();
             $table->text('address_jalan')->nullable();
             $table->char('address_rt', 5)->nullable();
             $table->char('address_rw', 5)->nullable();
@@ -35,7 +36,6 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('educate')->nullable();
             $table->string('major')->nullable();
-
             $table->date('hire_date')->nullable();
             $table->string('employee_type')->nullable();
             $table->date('end_of_contract')->nullable();
@@ -48,12 +48,13 @@ return new class extends Migration
             $table->string('bpjs_ketenagakerjaan')->nullable();
             $table->date('date_bpjs_ketenagakerjaan')->nullable();
             $table->string('bpjs_kesehatan')->nullable();
-            $table->date('date_bpjs_kesehatan');
+            $table->date('date_bpjs_kesehatan')->nullable();
             $table->string('npwp')->nullable();
             $table->enum('kode_ptkp', ['TK', 'K/0', 'K/1', 'K/2']);
             $table->date('year_ptkp')->nullable();
-            $table->string('bagian');
-            $table->string('cell');   
+            $table->string('bagian')->nullable();
+            $table->string('cell')->nullable();   
+            $table->string('status_employee')->nullable();   
             $table->foreignId('job_id');
             $table->foreignId('department_id');
             $table->timestamps();                                  

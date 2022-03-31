@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('salaries', function (Blueprint $table) {
             $table->id();
-            $table->integer('basic_salary');          
-            $table->integer('positional_allowance');          
-            $table->integer('transportation_allowance');          
-            $table->integer('attendance_allowance');          
-            $table->integer('grade_salary');          
-            $table->integer('salary_adjustment');          
-            $table->integer('total_salary');          
+            $table->integer('basic_salary')->nullable();          
+            $table->integer('positional_allowance')->nullable();          
+            $table->integer('transportation_allowance')->nullable();          
+            $table->integer('attendance_allowance')->nullable();          
+            $table->integer('grade_salary')->nullable();          
+            $table->integer('salary_adjustment')->nullable();          
+            $table->integer('total_salary')->nullable();          
             $table->foreignId('employee_id');
             $table->timestamps();
 
