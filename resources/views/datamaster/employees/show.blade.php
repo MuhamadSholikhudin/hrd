@@ -52,8 +52,7 @@
                         </li>
                       </ul>
       
-                      <!-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
-                    </div>
+                      <a href="#" class="btn btn-primary btn-block"><b>active</b></a>                    </div>
                     <!-- /.card-body -->
                   </div>
                   <!-- /.card -->
@@ -205,7 +204,7 @@
 
                               <label for="exit_statement" class="col-sm-3 col-form-label">Out </label>
                               <div class="col-sm-3">
-                                <input type="text" class="form-control" id="exit_statement" name="exit_statement" value="{{  $employee->employee_type  }}" required>
+                                <input type="text" class="form-control" id="exit_statement" name="exit_statement" value="{{  $employee->exit_statement  }}" required>
                               </div>
                             </div>
     

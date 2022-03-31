@@ -94,7 +94,7 @@ class JobController extends Controller
     {
         //
         $rules =  [
-            'kode_job_level' => ['required', 'unique:jobs'],
+            'code_job_level' => ['required', 'unique:jobs'],
             'job_level' => 'required',
             'level' => 'required'
         ];

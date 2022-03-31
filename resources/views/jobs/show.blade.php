@@ -28,7 +28,7 @@
         <div class="card-body">
             <div class="form-group">
                 <label for="exampleInputEmail1">Kode Job Level</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" name="kode_job_level" value="{{  $job->kode_job_level  }}" placeholder="" required>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="code_job_level" value="{{  $job->code_job_level  }}" placeholder="" required>
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Job Level</label>

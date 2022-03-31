@@ -92,7 +92,7 @@ class DepartmentController extends Controller
     {
         //
         $rules =  [
-            'code_department' => ['required', 'unique:departments'],
+            // 'code_department' => ['required', 'unique:departments'],
             'department' => 'required'
         ];
         $validatedData = $request->validate($rules);

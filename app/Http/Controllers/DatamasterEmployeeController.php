@@ -42,10 +42,22 @@ class DatamasterEmployeeController extends Controller
      */
     public function create()
     {
+        $agamas = ["MOSLEM", "BUDHIST", "CATHOLIC", "CHRISTIAN", "HINDU", "KEPERCAYAAN", "NONE"];
+        $marital_status = ["M", "S"];
+        $educations = ["SD","SMP", "SMA", "S1","S2"];
+        $employee_type = ["1-Permanent","5-Probation"];
+        $kode_ptkp = ["TK","K/0", "K/1", "K/2"];
+        $grade_salary = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
         //
         return view('datamaster.employees.create', [
             'jobs' => Job::all(),
-            'departments' => Department::all()
+            'departments' => Department::all(),
+            'agamas' => $agamas,
+            'marital_status' => $marital_status,
+            'educations' => $educations,
+            'employee_type' => $employee_type,
+            'kode_ptkp' => $kode_ptkp,
+            'grade_salary' => $grade_salary
         ]);
     }
 
@@ -160,12 +172,30 @@ class DatamasterEmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        //
-        // $salary = DB::table('salaries')->where('employee_id', $employee->id)->first();
-        // $employee = DB::table('employees')->where('id', $id)->first();
 
+        $agamas = ["MOSLEM", "BUDHIST", "CATHOLIC", "CHRISTIAN", "HINDU", "KEPERCAYAAN", "NONE"];
+        $marital_status = ["M", "S"];
+        $educations = ["SD","SMP", "SMA", "S1","S2"];
+        $employee_type = ["1-Permanent","5-Probation"];
+        $kode_ptkp = ["TK","K/0", "K/1", "K/2"];
+        $grade_salary = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+        //
+        $job = DB::table('jobs')
+        ->where('id', '=', $employee->job_id)
+        ->get();
+
+        $salary = DB::table('salaries')->where('employee_id', $employee->id)->first();
         return view('datamaster.employees.edit', [
-            'employee' => $employee
+            'employee' => $employee,
+            'salary' => $salary,
+            'jobs' => Job::all(),
+            'departments' => Department::all(),
+            'agamas' => $agamas,
+            'marital_status' => $marital_status,
+            'educations' => $educations,
+            'employee_type' => $employee_type,
+            'kode_ptkp' => $kode_ptkp,
+            'grade_salary' => $grade_salary
         ]);
     }
 
@@ -179,6 +209,21 @@ class DatamasterEmployeeController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+
+
+         DB::table('salaries')
+              ->where('employee_id' , $request->id)
+              ->where('employee_id' , $request->id)
+              ->update([
+                        'basic_salary' => $request->basic_salary,
+                        'positional_allowance' => $request->positional_allowance,
+                        'transportation_allowance' => $request->transportation_allowance,
+                        'attendance_allowance' => $request->attendance_allowance,
+                        'grade_salary' => $request->grade_salary,
+                        'total_salary' => 0
+                ]);
+        return redirect('/datamaster/employees');
     }
 
     /**

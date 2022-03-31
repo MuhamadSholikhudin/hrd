@@ -31,7 +31,7 @@
               @csrf
               <div class="form-group">
                 <label for="exampleInputEmail1">Kode Job Level</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" name="code_job_level" value="{{  $job->kode_job_level  }}" placeholder="" required>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="code_job_level" value="{{  $job->code_job_level  }}" placeholder="" required>
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Job Level</label>
@@ -39,7 +39,7 @@
               </div>
               <div class="form-group">
                 <label for="exampleInputPassword1">Level</label>
-                <input type="number" class="form-control" id="exampleInputPassword1" name="level" value="{{  $job->department  }}" placeholder="" required>
+                <input type="number" class="form-control" id="exampleInputPassword1" name="level" value="{{  $job->level  }}" placeholder="" required>
               </div>
               <div class="card-footer">
                   <button type="submit" class="btn btn-primary float-right">Update</button>
