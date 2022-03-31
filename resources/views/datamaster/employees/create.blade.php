@@ -40,11 +40,15 @@
                   Departemen
                 </p>
                 <div class="form-group">
-                      <select class="form-control">
-                        <option>Karyawan baru</option>
-                        <option>Mantan karyawan</option>
+                      <select class="form-control" id="pil_karyawan">
+                        <option value="baru">Karyawan baru</option>
+                        <option value="karyawan_lama">Mantan karyawan</option>
                       </select>
                     </div>
+                <div id="t_karyawan_lama">
+
+
+                </div>
                 <!-- <ul class="list-group list-group-unbordered mb-3">
                   <li class="list-group-item">
                     <b>Followers</b> <a class="float-right">1,322</a>
@@ -57,7 +61,7 @@
                   </li>
                 </ul> -->
 
-                <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+                {{-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> --}}
               </div>
               <!-- /.card-body -->
             </div>
@@ -161,26 +165,21 @@
                       </div>
                       <div class="form-group row">
                           <label for="gender" class="col-sm-2 col-form-label">Jenis Kelamin</label>
-                          <div class="col-sm-10">
-                              <div class="col-sm-6">
-                                  <div class="form-group clearfix">
-                                      <div class="icheck-primary d-inline">
-                                          <input type="radio" id="male" name="gender" value="M" checked="">
-                                          <label for="male"> Male
-                                          </label>
-                                      </div>
-                                      <div class="icheck-primary d-inline">
-                                          <input type="radio" id="female" name="gender" value="F">
-                                          <label for="female"> Female
-                                          </label>
-                                      </div>
-                                  </div>
-                              </div>
+                          <div class="col-sm-2">
+                            <select class="form-control" name="gender" >
+                              @foreach ($gender as $gender)
+                                @if(old('gender') == $gender)
+                                  <option value="{{ $gender }}" selected>{{ $gender}} </option>
+                                @else
+                                  <option value="{{ $gender }}" >{{ $gender }} </option>
+                                @endif
+                              @endforeach
+                          </select>
                           </div>
                       </div>
                       <div class="form-group row">
                         <label for="inputExperience" class="col-sm-2 col-form-label">Agama</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-2">
                           <select class="form-control" name="religion" >
                               @foreach ($agamas as $agama)
                                 @if(old('religion') == $agama)
@@ -194,7 +193,7 @@
                       </div>
                       <div class="form-group row">
                         <label for="inputExperience" class="col-sm-2 col-form-label">Status Pernikahan</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-2">
                           <select class="form-control" name="marital_status"  >
                             @foreach ($marital_status as $marital_status)
                               @if(old('marital_status') == $marital_status)
@@ -584,4 +583,20 @@
 
 </div>
 
+
+<script>
+    $('#pil_karyawan').change(function() {
+    var pil_kar = $(this).val();
+
+    if( pil_kar == 'karyawan_lama'){
+      // alert("karyawan lama");
+      $('#t_karyawan_lama').append("<select class='form-control select2bs4' style='width: 100%;' id='car_kar' name='job_id'>  <option value='nama' selected>Nama karyawa / no ktp</option>  </select>" );
+
+
+    }else{
+      $( "#car_kar" ).remove();
+    }
+
+  })
+</script>
 @endsection

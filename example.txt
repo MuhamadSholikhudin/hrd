@@ -25,3 +25,6 @@ INSERT INTO `jobs`( `code_job_level`, `job_level`, `level`) VALUES
 ("PWT", "PERAWAT", "11"),
 ("DRV", "DRIVER", "12"),
 ("OP", "OPERATOR", "12");
+
+
+

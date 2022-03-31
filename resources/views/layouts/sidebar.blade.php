@@ -40,32 +40,32 @@
                 <p>Karyawan</p>
               </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a href="/bpjs" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>BPJS</p>
               </a>
-            </li>
-            <li class="nav-item">
+            </li> --}}
+            {{-- <li class="nav-item">
               <a href="./gaji_tunjangan.html" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>GAJI / TUNJANGAN</p>
               </a>
-            </li>
+            </li> --}}
             <li class="nav-item">
-              <a href="/promotions" class="nav-link">
+              <a href="/datamaster/promotions" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>PROMOSI</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/demotions" class="nav-link">
+              <a href="/datamaster/demotions" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>DEMOSI</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/mutations" class="nav-link">
+              <a href="/datamaster/mutations" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>MUTASI</p>
               </a>

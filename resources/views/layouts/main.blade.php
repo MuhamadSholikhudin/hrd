@@ -73,6 +73,22 @@
 
 <!-- jquery-validation -->
 <script>
+  $('#pil_karyawan').change(function() {
+    var pil_kar = $(this).val();
+
+    if( pil_kar == 'karyawan_lama'){
+      // alert("karyawan lama");
+      $('#t_karyawan_lama').append("<select class='form-control select2bs4' style='width: 100%;' id='car_kar' name='job_id'><option value='nama' selected>Nama karyawa / no ktp</option></select>" );
+
+
+    }else{
+      $( "#car_kar" ).remove();
+
+    }
+
+  })
+
+
   $(function () {
     $.validator.setDefaults({
       submitHandler: function () {

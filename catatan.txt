@@ -50,6 +50,8 @@ Route::get('/user/{id}', function (Request $request, $id) {
 
 -Resource Controllers
 php artisan make:controller PhotoController --resource
+
+php artisan make:controller PhotoController --model=Photo --resource
 use App\Http\Controllers\PhotoController;
  
 Route::resource('photos', PhotoController::class);

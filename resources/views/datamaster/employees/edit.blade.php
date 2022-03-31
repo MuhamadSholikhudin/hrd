@@ -145,6 +145,8 @@
                         <label for="name" class="col-sm-2 col-form-label">Nama Lengkap</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $employee->name) }}" placeholder="Nama Lengkap" >
+                            <input type="hidden" class="form-control" id="id" name="id" value="{{ $employee->id }}" placeholder="Nama Lengkap" >
+                            <input type="hidden" class="form-control" id="salary_id" name="salary_id" value="{{  $salary->id }}" placeholder="Nama Lengkap" >
                         </div>
                       </div>
                       <div class="form-group row">
@@ -159,26 +161,21 @@
                       </div>
                       <div class="form-group row">
                           <label for="gender" class="col-sm-2 col-form-label">Jenis Kelamin</label>
-                          <div class="col-sm-10">
-                              <div class="col-sm-6">
-                                  <div class="form-group clearfix">
-                                      <div class="icheck-primary d-inline">
-                                          <input type="radio" id="male" name="gender" value="M" checked="">
-                                          <label for="male"> Male
-                                          </label>
-                                      </div>
-                                      <div class="icheck-primary d-inline">
-                                          <input type="radio" id="female" name="gender" value="F">
-                                          <label for="female"> Female
-                                          </label>
-                                      </div>
-                                  </div>
-                              </div>
+                          <div class="col-sm-2">
+                            <select class="form-control" name="gender" >
+                              @foreach ($gender as $gender)
+                                @if(old('gender', $employee->gender) == $gender)
+                                  <option value="{{ $gender }}" selected>{{ $gender}} </option>
+                                @else
+                                  <option value="{{ $gender }}" >{{ $gender }} </option>
+                                @endif
+                              @endforeach
+                          </select>  
                           </div>
                       </div>
                       <div class="form-group row">
                         <label for="inputExperience" class="col-sm-2 col-form-label">Agama</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-2">
                           <select class="form-control" name="religion" >
                               @foreach ($agamas as $agama)
                                 @if(old('religion', $employee->religion) == $agama)
@@ -192,7 +189,7 @@
                       </div>
                       <div class="form-group row">
                         <label for="inputExperience" class="col-sm-2 col-form-label">Status Pernikahan</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-2">
                           <select class="form-control" name="marital_status"  >
                             @foreach ($marital_status as $marital_status)
                               @if(old('marital_status', $employee->marital_status) == $marital_status)
@@ -405,7 +402,7 @@
                     </div>
                     <label for="inputName2" class="col-sm-2 col-form-label">Tanggal gabung</label>
                     <div class="col-sm-3">
-                        <input type="date" class="form-control" name="date_bpjs_ketenagakerjaan" value="{{ old('date_bpjs_ketenagakerjaan', $employee->bpjs_kesehatan) }}" data-inputmask-inputformat="dd/mm/yyyy" id="inputName2" placeholder="Name">
+                        <input type="date" class="form-control" name="date_bpjs_ketenagakerjaan" value="{{ old('date_bpjs_ketenagakerjaan', $employee->date_bpjs_ketenagakerjaan) }}" data-inputmask-inputformat="dd/mm/yyyy" id="inputName2" placeholder="Name">
                     </div>
                   </div>
                   <div class="form-group row">

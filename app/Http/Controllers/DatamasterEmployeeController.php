@@ -44,6 +44,7 @@ class DatamasterEmployeeController extends Controller
     {
         $agamas = ["MOSLEM", "BUDHIST", "CATHOLIC", "CHRISTIAN", "HINDU", "KEPERCAYAAN", "NONE"];
         $marital_status = ["M", "S"];
+        $gender = ["M", "F"];
         $educations = ["SD","SMP", "SMA", "S1","S2"];
         $employee_type = ["1-Permanent","5-Probation"];
         $kode_ptkp = ["TK","K/0", "K/1", "K/2"];
@@ -52,7 +53,9 @@ class DatamasterEmployeeController extends Controller
         return view('datamaster.employees.create', [
             'jobs' => Job::all(),
             'departments' => Department::all(),
+            'employees' => Employee::all(),
             'agamas' => $agamas,
+            'gender' => $gender,
             'marital_status' => $marital_status,
             'educations' => $educations,
             'employee_type' => $employee_type,
@@ -103,8 +106,8 @@ class DatamasterEmployeeController extends Controller
             'bank_account_number'=> 'required',
             'bpjs_ketenagakerjaan'=> 'required',
             'date_bpjs_ketenagakerjaan'=> 'required',
-            'bpjs_kesehatan'=> 'required',
-            'date_bpjs_kesehatan',
+            'bpjs_kesehatan' => 'required',
+            'date_bpjs_kesehatan'=> 'required',
             'npwp'=> 'required',
             'kode_ptkp'=> 'required',
             'year_ptkp'=> 'required',
@@ -175,6 +178,7 @@ class DatamasterEmployeeController extends Controller
 
         $agamas = ["MOSLEM", "BUDHIST", "CATHOLIC", "CHRISTIAN", "HINDU", "KEPERCAYAAN", "NONE"];
         $marital_status = ["M", "S"];
+        $gender = ["M", "F"];
         $educations = ["SD","SMP", "SMA", "S1","S2"];
         $employee_type = ["1-Permanent","5-Probation"];
         $kode_ptkp = ["TK","K/0", "K/1", "K/2"];
@@ -190,6 +194,7 @@ class DatamasterEmployeeController extends Controller
             'salary' => $salary,
             'jobs' => Job::all(),
             'departments' => Department::all(),
+            'gender' => $gender,
             'agamas' => $agamas,
             'marital_status' => $marital_status,
             'educations' => $educations,
@@ -208,13 +213,55 @@ class DatamasterEmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
 
-
-
+        DB::table('employees')
+        ->where('id' , $request->id)
+        ->update([
+            'number_of_employees' => $request->number_of_employees,
+            'finger_id' => $request->finger_id,
+            'name'=> $request->name,
+            'gender'=> $request->gender,  
+            'place_of_birth'=> $request->place_of_birth,
+            'date_of_birth'=> $request->date_of_birth,
+            'marital_status'=> $request->marital_status,
+            'religion'=> $request->religion, 
+            'biological_mothers_name'=> $request->biological_mothers_name,
+            'national_id'=> $request->national_id,
+            'address_jalan'=> $request->address_jalan,
+            'address_rt'=> $request->address_rt,
+            'address_rw'=> $request->address_rw,
+            'address_village'=> $request->address_village,
+            'address_district'=> $request->address_district,
+            'address_city'=> $request->address_city,
+            'address_province'=> $request->address_province,
+            'phone'=> $request->phone,
+            'email'=> $request->email,
+            'educate'=> $request->educate,
+            'major'=> $request->major,
+            'hire_date'=> $request->hire_date,
+            'employee_type'=> $request->employee_type,
+            'end_of_contract'=> $request->end_of_contract,
+            'date_out'=> $request->date_out,
+            'exit_statement'=> $request->exit_statement,
+            'bank_name'=> $request->bank_name,
+            'bank_branch'=> $request->bank_branch,
+            'bank_account_name'=> $request->bank_account_name,
+            'bank_account_number'=> $request->bank_account_number,
+            'bpjs_ketenagakerjaan'=> $request->bpjs_ketenagakerjaan,
+            'date_bpjs_ketenagakerjaan'=> $request->date_bpjs_ketenagakerjaan,
+            'bpjs_kesehatan'=> $request->bpjs_kesehatan,
+            'date_bpjs_kesehatan'=> $request->date_bpjs_kesehatan,
+            'npwp'=> $request->npwp,
+            'kode_ptkp'=> $request->kode_ptkp,
+            'year_ptkp'=> $request->year_ptkp,
+            'bagian'=> $request->bagian,
+            'cell'=> $request->cell, 
+            'job_id'=> $request->job_id,
+            'department_id'=> $request->department_id
+            ]);
          DB::table('salaries')
               ->where('employee_id' , $request->id)
-              ->where('employee_id' , $request->id)
+              ->where('id' , $request->salary_id)
               ->update([
                         'basic_salary' => $request->basic_salary,
                         'positional_allowance' => $request->positional_allowance,

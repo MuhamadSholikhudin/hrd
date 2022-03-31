@@ -8,6 +8,7 @@ use App\Models\Department;
 
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\DatamasterEmployeeController;
+use App\Http\Controllers\DatamasterPromotionController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\HiEmployeeController;
 use App\Http\Controllers\UserController;
@@ -68,7 +69,8 @@ Route::resource('departments', DepartmentController::class);
 Route::resource('datamaster/employees', DatamasterEmployeeController::class);
 
 
-// PROMOTION
+// DATA MASTER PROMOTION
+Route::resource('datamaster/promotions', DatamasterPromotionController::class);
 
 
 // DEMOTION
