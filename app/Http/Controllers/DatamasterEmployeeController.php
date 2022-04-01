@@ -121,15 +121,18 @@ class DatamasterEmployeeController extends Controller
         $employee_get = DB::table('employees')->where('number_of_employees', '=', $request->number_of_employees)->first();
         
         $request->employee_id = $employee_get->id;
-        // $validatedDataSalary = $request->validate([
-        //     'employee_id' => 'reguired',
-        //     'basic_salary' => 'required',
-        //     'positional_allowance' => 'required',
-        //     'transportation_allowance' => 'required',
-        //     'attendance_allowance' => 'required',
-        //     'grade_salary' => 'required',
-        //     'grade_total' => 'required'
-        // ]);
+
+        DB::table('mutations')->insertOrIgnore([
+            'mutation_date'=> date('Y-m-d'),
+            'bagian'=> $request->bagian,
+            'cell'=> $request->cell,
+            // 'created_at' => date('Y-m-d H:i:s'),
+            // 'updated_at' => date('Y-m-d H:i:s'),
+            'job_id'=> $request->job_id,
+            'department_id'=> $request->department_id,
+            'employee_id'=> $employee_get->id
+            ]);
+
         DB::table('salaries')->insertOrIgnore([
             'employee_id' => $employee_get->id,
             'basic_salary' => $request->basic_salary,
@@ -184,9 +187,9 @@ class DatamasterEmployeeController extends Controller
         $kode_ptkp = ["TK","K/0", "K/1", "K/2"];
         $grade_salary = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
         //
-        $job = DB::table('jobs')
-        ->where('id', '=', $employee->job_id)
-        ->get();
+        // $job = DB::table('jobs')
+        // ->where('id', '=', $employee->job_id)
+        // ->get();
 
         $salary = DB::table('salaries')->where('employee_id', $employee->id)->first();
         return view('datamaster.employees.edit', [

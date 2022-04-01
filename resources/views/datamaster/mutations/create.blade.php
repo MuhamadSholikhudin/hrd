@@ -8,12 +8,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Promosi Karyawan</h1>
+          <h1>Mutasi Karyawan</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Promosi Page</li>
+            <li class="breadcrumb-item active">Mutasi Page</li>
           </ol>
         </div>
       </div>
@@ -85,7 +85,7 @@
                   </div>
                   <div class="card-body">
                     <!-- Date -->
-                    <form role="form" action="/datamaster/promotions" method="POST" enctype="multipart/form-data">
+                    <form role="form" action="/datamaster/mutations" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" class="form-control"  name="id" value="{{  $employee->id  }}">
                     
@@ -129,7 +129,7 @@
 
                             <label for="inputName2" class="col-sm-2 col-form-label">Tanggal Promosi</label>
                             <div class="col-sm-4">
-                                <input type="date" class="form-control" id="inputName2" name="promotion_date" value="<?php echo date("Y-m-d") ?>">
+                                <input type="date" class="form-control" id="inputName2" name="mutation_date" value="<?php echo date("Y-m-d") ?>">
                             </div>
                         </div>
                        
@@ -178,42 +178,23 @@
                           </tr>
                         </thead>
                         <tbody>
-                        @foreach ($mutation_get as $mutation_get)
-                            <tr>
-                              <td>{{ $loop->iteration }}</td>
-                              <td>{{ $mutation_get->job_level }} / {{ $mutation_get->department }} (awal kerja)</td>
-                              <td>
-                                  {{ $mutation_get->mutation_date }}
-                              </td>
-                              <td>
-                                  {{ $mutation_get->bagian }}
-                              </td>
-                              <td>
-                                  {{ $mutation_get->cell }}
-                              </td>
-                              <td>
-                                  <!-- <a href="employee_show_by_id.html" class="btn  btn-outline-danger btn-sm">Lihat</a> -->
-                                  <a href="promotion_edit_by_id.html" class="btn  btn-outline-warning btn-sm">edit</a>
-                              </td>
-                            </tr>
-                          @endforeach     
 
-                          @foreach ($promotions as $promotion)
+                          @foreach ($mutations as $mutation)
                             <tr>
-                              <td>{{ $loop->iteration + 1 }}</td>
-                              <td>{{ $promotion->department }} / {{ $promotion->job_level }}</td>
+                              <td>{{ $loop->iteration  }}</td>
+                              <td>{{ $mutation->department }} / {{ $mutation->job_level }}</td>
                               <td>
-                                  {{ $promotion->promotion_date }}
+                                  {{ $mutation->mutation_date }}
                               </td>
                               <td>
-                                  {{ $promotion->bagian }}
+                                  {{ $mutation->bagian }}
                               </td>
                               <td>
-                                  {{ $promotion->cell }}
+                                  {{ $mutation->cell }}
                               </td>
                               <td>
                                   <!-- <a href="employee_show_by_id.html" class="btn  btn-outline-danger btn-sm">Lihat</a> -->
-                                  <a href="promotion_edit_by_id.html" class="btn  btn-outline-warning btn-sm">edit</a>
+                                  <a href="mutation_edit_by_id.html" class="btn  btn-outline-warning btn-sm">edit</a>
                               </td>
                             </tr>
                           @endforeach

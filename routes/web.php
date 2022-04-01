@@ -9,6 +9,8 @@ use App\Models\Department;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\DatamasterEmployeeController;
 use App\Http\Controllers\DatamasterPromotionController;
+use App\Http\Controllers\DatamasterDemotionController;
+use App\Http\Controllers\DatamasterMutationController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\HiEmployeeController;
 use App\Http\Controllers\UserController;
@@ -30,18 +32,12 @@ Route::get('/', function () {
 
 
 //HRD IT
-Route::get('/hi', function () {
-    return view('hi.employees');
-});
 
 // Route::get('/hi/employees', function () {
 //     $employees = Employee::all();
 //     return view('hi.employees.index', [ 'employees' => $employees]);
 // });
 
-Route::resource('/hi/employees', HiEmployeeController::class);
-
-Route::resource('/hi/investigations', HiEmployeeController::class);
 
 
 //EXCEL IMPORT END EXPORT
@@ -68,14 +64,29 @@ Route::resource('departments', DepartmentController::class);
 // DATA MASTER EMPLOYEES
 Route::resource('datamaster/employees', DatamasterEmployeeController::class);
 
+//EXCEL IMPORT END EXPORT EMPLOYEES
+// Route::controller(EmployeeExcelController::class)->group(function(){
+//     // Route::get('users', 'index');
+//     Route::get('users-export', 'export')->name('users.export');
+//     Route::post('users-import', 'import')->name('users.import');
+// });
 
 // DATA MASTER PROMOTION
 Route::resource('datamaster/promotions', DatamasterPromotionController::class);
 
 
-// DEMOTION
+// DATA MASTER DEMOTION
+Route::resource('datamaster/demotions', DatamasterDemotionController::class);
 
 
-// MUTATION
+// DATA MASTER MUTATION
+Route::resource('datamaster/mutations', DatamasterMutationController::class);
 
 
+Route::get('/hi', function () {
+    return view('hi.employees');
+});
+
+Route::resource('/hi/employees', HiEmployeeController::class);
+
+Route::resource('/hi/investigations', HiEmployeeController::class);

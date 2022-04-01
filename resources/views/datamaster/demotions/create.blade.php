@@ -8,12 +8,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Promosi Karyawan</h1>
+          <h1>Demosi Karyawan</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Promosi Page</li>
+            <li class="breadcrumb-item active">Demosi Page</li>
           </ol>
         </div>
       </div>
@@ -81,11 +81,11 @@
           <div class="col-md-9">
               <div class="card card-primary">
                   <div class="card-header">
-                    <h3 class="card-title">Promosi Karyawan</h3>
+                    <h3 class="card-title">Demosi Karyawan</h3>
                   </div>
                   <div class="card-body">
                     <!-- Date -->
-                    <form role="form" action="/datamaster/promotions" method="POST" enctype="multipart/form-data">
+                    <form role="form" action="/datamaster/demotions" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" class="form-control"  name="id" value="{{  $employee->id  }}">
                     
@@ -129,7 +129,7 @@
 
                             <label for="inputName2" class="col-sm-2 col-form-label">Tanggal Promosi</label>
                             <div class="col-sm-4">
-                                <input type="date" class="form-control" id="inputName2" name="promotion_date" value="<?php echo date("Y-m-d") ?>">
+                                <input type="date" class="form-control" id="inputName2" name="demotion_date" value="<?php echo date("Y-m-d") ?>">
                             </div>
                         </div>
                        
@@ -170,8 +170,8 @@
                         <thead>
                           <tr>
                             <th style="width: 10px">#</th>
-                            <th>Promosi</th>
-                            <th>Tanggal Promosi</th>
+                            <th>Demosi</th>
+                            <th>Tanggal Demosi</th>
                             <th>Bagian</th>
                             <th>Cell</th>
                             <th>Aksi</th>
@@ -193,27 +193,27 @@
                               </td>
                               <td>
                                   <!-- <a href="employee_show_by_id.html" class="btn  btn-outline-danger btn-sm">Lihat</a> -->
-                                  <a href="promotion_edit_by_id.html" class="btn  btn-outline-warning btn-sm">edit</a>
+                                  <a href="demotion_edit_by_id.html" class="btn  btn-outline-warning btn-sm">edit</a>
                               </td>
                             </tr>
                           @endforeach     
 
-                          @foreach ($promotions as $promotion)
+                          @foreach ($demotions as $demotion)
                             <tr>
                               <td>{{ $loop->iteration + 1 }}</td>
-                              <td>{{ $promotion->department }} / {{ $promotion->job_level }}</td>
+                              <td>{{ $demotion->department }} / {{ $demotion->job_level }}</td>
                               <td>
-                                  {{ $promotion->promotion_date }}
+                                  {{ $demotion->demotion_date }}
                               </td>
                               <td>
-                                  {{ $promotion->bagian }}
+                                  {{ $demotion->bagian }}
                               </td>
                               <td>
-                                  {{ $promotion->cell }}
+                                  {{ $demotion->cell }}
                               </td>
                               <td>
                                   <!-- <a href="employee_show_by_id.html" class="btn  btn-outline-danger btn-sm">Lihat</a> -->
-                                  <a href="promotion_edit_by_id.html" class="btn  btn-outline-warning btn-sm">edit</a>
+                                  <a href="demotion_edit_by_id.html" class="btn  btn-outline-warning btn-sm">edit</a>
                               </td>
                             </tr>
                           @endforeach

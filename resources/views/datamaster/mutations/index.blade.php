@@ -8,7 +8,7 @@
 <div class="container-fluid">
   <div class="row mb-2">
     <div class="col-sm-6">
-      <h1>Promosi Karyawan</h1>
+      <h1>Mutasi Karyawan</h1>
     </div>
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
@@ -40,7 +40,7 @@
 <!-- Kelola karyawan =>   -->
 &nbsp;
 <!-- Button trigger modal -->
-<a href="/datamaster/promotions/create" class="btn btn-outline-primary " >
+<a href="/datamaster/mutations/create" class="btn btn-outline-primary " >
   <i class="fa fa-plus" data-toggle="tooltip" data-placement="bottom" title="Tambah 1 Karyawan"></i>
 </a>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -106,7 +106,7 @@
 <i class="fas fa-download"></i>
 </a>
         <div class="card-tools">
-            <form action="/datamaster/promotions" >     
+            <form action="/datamaster/mutations" >     
                 <div class="input-group input-group-sm" style="width: 150px;">
                     <input type="text" name="search" value="{{ request('search') }}" class="form-control float-right" placeholder="Search">
                     <div class="input-group-append">
@@ -136,11 +136,11 @@
                     <td>{{ $employee->email }}</td>
                     <td><span class="tag tag-success">{{ $employee->phone_number }}</span></td>
                     <td>
-                        <a href="/datamaster/promotions/{{ $employee->id }}" class="btn  btn-outline-primary">
+                        <a href="/datamaster/mutations/{{ $employee->id }}" class="btn  btn-outline-primary">
                             Lihat
                         </a>
-                            <a href="/datamaster/promotions/{{ $employee->id }}/edit" class="btn  btn-outline-warning">
-                            Promosi
+                            <a href="/datamaster/mutations/{{ $employee->id }}/edit" class="btn  btn-outline-warning">
+                            Mutasi
                             </a>
                             <!-- <form action="/datamaster/employees/{{ $employee->id }}" method="POST" class="d-inline ">
                                 @method('delete')

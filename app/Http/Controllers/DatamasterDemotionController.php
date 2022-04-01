@@ -9,9 +9,9 @@ use App\Models\Employee;
 use App\Models\Job;
 use App\Models\Department;
 use App\Models\Salary;
-use App\Models\Promotion;
+use App\Models\Demotion;
 
-class DatamasterPromotionController extends Controller
+class DatamasterDemotionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,7 +28,7 @@ class DatamasterPromotionController extends Controller
                       ->orWhere('national_id', 'like', '%' . request('search') . '%');
         }
 
-        return view('datamaster.promotions.index', [
+        return view('datamaster.demotions.index', [
             'employees' => $employees->paginate(3)
              
         ]);
@@ -42,7 +42,7 @@ class DatamasterPromotionController extends Controller
     public function create()
     {
         //
-        return view('datamaster.promotions.create');
+        return view('datamaster.demotions.create');
     }
 
     /**
@@ -63,8 +63,8 @@ class DatamasterPromotionController extends Controller
             'department_id'=> $request->department_id
             ]);
 
-        DB::table('promotions')->insertOrIgnore([
-            'promotion_date'=> $request->promotion_date,
+        DB::table('demotions')->insertOrIgnore([
+            'demotion_date'=> $request->demotion_date,
             'bagian'=> $request->bagian,
             'cell'=> $request->cell, 
             'job_id'=> $request->job_id,
@@ -72,7 +72,7 @@ class DatamasterPromotionController extends Controller
             'employee_id'=> $request->id
             ]);
 
-        return redirect('/datamaster/promotions/'. $request->id . '/edit');
+        return redirect('/datamaster/demotions/'. $request->id . '/edit');
 
     }
 
@@ -93,9 +93,9 @@ class DatamasterPromotionController extends Controller
         $get_department = DB::table('departments')
             ->where('id', $employee->department_id)->first();
         
-        $promotions = DB::table('promotions')
-            ->leftJoin('departments', 'promotions.department_id', '=', 'departments.id')
-            ->leftJoin('jobs', 'promotions.job_id', '=', 'jobs.id')
+        $demotions = DB::table('demotions')
+            ->leftJoin('departments', 'demotions.department_id', '=', 'departments.id')
+            ->leftJoin('jobs', 'demotions.job_id', '=', 'jobs.id')
             // ->latest()
             ->where('employee_id', '=', $id) 
             ->get();
@@ -113,12 +113,12 @@ class DatamasterPromotionController extends Controller
             // ->oldest() 
             // ->first();
 
-        return view('datamaster.promotions.show', [
+        return view('datamaster.demotions.show', [
             'employee' => $employee,
             'jobs' => Job::all(),
             'mutation_get' => $mutation_get,
             'departments' => Department::all(),
-            'promotions' => $promotions,
+            'demotions' => $demotions,
             'get_job' => $get_job,
             'get_department' => $get_department
         ]);
@@ -142,9 +142,9 @@ class DatamasterPromotionController extends Controller
         $get_department = DB::table('departments')
             ->where('id', $employee->department_id)->first();
         
-        $promotions = DB::table('promotions')
-            ->leftJoin('departments', 'promotions.department_id', '=', 'departments.id')
-            ->leftJoin('jobs', 'promotions.job_id', '=', 'jobs.id')
+        $demotions = DB::table('demotions')
+            ->leftJoin('departments', 'demotions.department_id', '=', 'departments.id')
+            ->leftJoin('jobs', 'demotions.job_id', '=', 'jobs.id')
             // ->latest()
             ->where('employee_id', '=', $id) 
             ->get();
@@ -162,12 +162,12 @@ class DatamasterPromotionController extends Controller
             // ->oldest() 
             // ->first();
 
-        return view('datamaster.promotions.create', [
+        return view('datamaster.demotions.create', [
             'employee' => $employee,
             'jobs' => Job::all(),
             'mutation_get' => $mutation_get,
             'departments' => Department::all(),
-            'promotions' => $promotions,
+            'demotions' => $demotions,
             'get_job' => $get_job,
             'get_department' => $get_department
         ]);

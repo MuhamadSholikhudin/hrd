@@ -28,3 +28,10 @@ INSERT INTO `jobs`( `code_job_level`, `job_level`, `level`) VALUES
 
 
 
+            'promotion_date' => 
+            'status')
+            'bagian')
+            'cell'     
+            'job_id'
+            'department_id'
+            'employee_id'
