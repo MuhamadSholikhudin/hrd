@@ -82,7 +82,7 @@ class DatamasterEmployeeController extends Controller
             'date_of_birth'=> 'required',
             'marital_status'=> 'required',
             'religion'=> 'required', 
-            'biological_mothers_name'=> 'required',
+            'biological_mothers_name' => 'required',
             'national_id'=> 'required',
             'address_jalan'=> 'required',
             'address_rt'=> 'required',
@@ -126,8 +126,8 @@ class DatamasterEmployeeController extends Controller
             'mutation_date'=> date('Y-m-d'),
             'bagian'=> $request->bagian,
             'cell'=> $request->cell,
-            // 'created_at' => date('Y-m-d H:i:s'),
-            // 'updated_at' => date('Y-m-d H:i:s'),
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
             'job_id'=> $request->job_id,
             'department_id'=> $request->department_id,
             'employee_id'=> $employee_get->id
@@ -140,6 +140,8 @@ class DatamasterEmployeeController extends Controller
             'transportation_allowance' => $request->transportation_allowance,
             'attendance_allowance' => $request->attendance_allowance,
             'grade_salary' => $request->grade_salary,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
             'total_salary' => 0
         ]);
 
