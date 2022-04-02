@@ -8,7 +8,12 @@
 <div class="container-fluid">
   <div class="row mb-2">
     <div class="col-sm-6">
-      <h1>Karyawan</h1>
+      <h1>Karyawan 
+{{
+  DateTime::createFromFormat('m-d-Y', '10162003')->format('Y-m-d');
+}}
+
+      </h1>
     </div>
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
@@ -58,17 +63,25 @@
           </button>
         </div>
         <div class="modal-body">
+            <p class="text-justify-right">
+                <a href="{{asset('excel/FORMAT_MASTER_DATA.xlsx')}}">Format Master Data</a>
+                <br>
+              </p>
+        <form action="{{ route('employees.import') }}" method="POST" enctype="multipart/form-data">
+          @csrf
           <div class="input-group">
               <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="exampleInputFile">
+
+                  <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
                   <label class="custom-file-label" for="exampleInputFile">Choose file</label>
               </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="submit" class="btn btn-primary">Uploads</button>
         </div>
+      </form>
       </div>
     </div>
   </div>
@@ -155,12 +168,19 @@
           </tbody>
         </table>
       </div>
+      {{-- <div class="card-footer clearfix">
+          <ul class="pagination pagination-sm m-0 float-right">
+            <li class="page-item"><a class="page-link" href="#">«</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">»</a></li>
+          </ul>
+        </div> --}}
       <div class="card-footer">
-        {{-- <h3 class="card-title">Responsive Hover Table</h3> --}}
-        <div class="row justify-content-center mb-3">
-          <div class="col-lg-6">
+      <h3 class="card-title">Total : {{$count}}</h3>
+        <div class="pagination pagination-sm m-0 float-right">
             {{ $employees->links() }}
-          </div>
         </div>
       </div>
       <!-- /.card-body -->

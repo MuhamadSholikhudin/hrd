@@ -26,12 +26,3 @@ INSERT INTO `jobs`( `code_job_level`, `job_level`, `level`) VALUES
 ("DRV", "DRIVER", "12"),
 ("OP", "OPERATOR", "12");
 
-
-
-            'promotion_date' => 
-            'status')
-            'bagian')
-            'cell'     
-            'job_id'
-            'department_id'
-            'employee_id'

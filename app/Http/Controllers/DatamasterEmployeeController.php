@@ -30,7 +30,8 @@ class DatamasterEmployeeController extends Controller
         }
 
         return view('datamaster.employees.index', [
-            'employees' => $employees->paginate(3)
+            'employees' => $employees->paginate(15),
+            'count' => DB::table('employees')->count()
              
         ]);
     }

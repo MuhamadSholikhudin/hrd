@@ -10,8 +10,14 @@ class Employee extends Model
 
 
     use HasFactory;
-    protected $guarded = ['id'];
+    // protected $guarded = ['id'];
     protected $with = ['job', 'department'];
+
+
+    protected $fillable = [
+        'number_of_employees',	'name',	'gender',	'place_of_birth',
+
+    ];
 
     public function scopeFilter($query, array $filters){
 

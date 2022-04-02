@@ -12,6 +12,7 @@ use App\Http\Controllers\DatamasterPromotionController;
 use App\Http\Controllers\DatamasterDemotionController;
 use App\Http\Controllers\DatamasterMutationController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HiEmployeeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchController;
@@ -65,11 +66,11 @@ Route::resource('departments', DepartmentController::class);
 Route::resource('datamaster/employees', DatamasterEmployeeController::class);
 
 //EXCEL IMPORT END EXPORT EMPLOYEES
-// Route::controller(EmployeeExcelController::class)->group(function(){
-//     // Route::get('users', 'index');
-//     Route::get('users-export', 'export')->name('users.export');
-//     Route::post('users-import', 'import')->name('users.import');
-// });
+Route::controller(EmployeeController::class)->group(function(){
+    // Route::get('users', 'index');
+    Route::get('exportemployees', 'export')->name('users.export');
+    Route::post('importemployees', 'import')->name('employees.import');
+});
 
 // DATA MASTER PROMOTION
 Route::resource('datamaster/promotions', DatamasterPromotionController::class);

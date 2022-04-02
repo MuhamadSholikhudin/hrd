@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->string('number_of_employees')->unique();
-            $table->string('finger_id')->unique();
+            $table->string('number_of_employees')->nullable();
+            $table->string('finger_id')->nullable();
             $table->string('name')->nullable();
             $table->enum('gender', ['M', 'F']);  
             $table->string('place_of_birth')->nullable();
