@@ -1,28 +1,25 @@
 Department
-INSERT INTO `departments`( `department`) VALUES 
-("ACCOUNTING"),("ASSEMBLY-A"),("ASSEMBLY-B"),("ASSEMBLY-C"),("ASSEMBLY-D"),("ASSEMBLY-D1"),("ASSEMBLY-D2"),("ASSEMBLY-E1"),("ASSEMBLY-E2"),("ASSEMBLY-H"),("CHEMICAL ENGINEERING"),("CUTTING-A"),("CUTTING-B"),("CUTTING-C"),("CUTTING-D1"),("CUTTING-D2"),("CUTTING-E1"),("CUTTING-E2"),("CUTTING-H"),("DEVELOPMENT"),("EMBOSS"),("ENGINEERING"),("EPTE"),("EXIM"),("FACTORY MGR A"),("FACTORY MGR C"),("FACTORY MGR D"),("FACTORY MGR E"),("FINISH GOOD A"),("FINISH GOOD C"),("FINISH GOOD D"),("FINISH GOOD E"),("FINISH GOOD H"),("FINISH GOOD O"),("GA"),("GA (DRIVER)"),("GA (KEBERSIHAN)"),("GA (MESS)"),("GA (SECURITY)"),("GA (SIPIL)"),("GA (WWTP)"),("GUDANG MATERIAL"),("HRD"),("IE"),("IT"),("LABORAT "),("LAMINATING"),("MAGANG"),("MARKETING"),("ME"),("MT"),("PPIC"),("PRODUCTION DIRECTOR"),("PURCHASING"),("QIP "),("QIP-A"),("QIP-B"),("QIP-C"),("QIP-D"),("QIP-E"),("QIP-F"),("QIP-G"),("QIP-H"),("QIP-M"),("QIP-S"),("QSM"),("SABLON "),("SABLON EMBOSS"),("SEA"),("SERIKAT NON-JOB"),("SEWING COMP A"),("SEWING COMP B"),("SEWING COMP C"),("SEWING COMP D1"),("SEWING COMP D2"),("SEWING COMP E1"),("SEWING COMP E2"),("SEWING COMP H"),("SEWING MEKANIK A"),("SEWING MEKANIK B"),("SEWING MEKANIK C"),("SEWING MEKANIK D1"),("SEWING MEKANIK D2"),("SEWING MEKANIK E1"),("SEWING MEKANIK E2"),("SEWING MEKANIK H"),("SEWING-A"),("SEWING-B"),("SEWING-C"),("SEWING-D1"),("SEWING-D2"),("SEWING-E1"),("SEWING-E2"),("SEWING-H"),("SMART"),("STOCKFIT"),("TECHNICAL"),("TECHNICAL HOTPRESS"),("TECHNICAL LAB "),("TECHNICAL ROLLING COMPOUND"),("TECHNICAL SUPERMARKET"),("TRAINING"),("TRAINING CENTER");
+Job::create(["code_job_level" => "PD", "job_level" => "PRESIDEN DIREKTUR", "level" => "1"]);
+Job::create(["code_job_level" => "SD", "job_level" => "SENIOR DIREKTUR", "level" => "2"]);
+Job::create(["code_job_level" => "DIR", "job_level" => "DIREKTUR", "level" => "3"]);
+Job::create(["code_job_level" => "ASDIR", "job_level" => "ASISTEN DIREKTUR", "level" => "4"]);
+Job::create(["code_job_level" => "SM", "job_level" => "SENIOR MANAGER", "level" => "5"]);
+Job::create(["code_job_level" => "AMA", "job_level" => "ASISTEN MANAGER A", "level" => "6"]);
+Job::create(["code_job_level" => "MGRA", "job_level" => "MANAGER A", "level" => "6"]);
+Job::create(["code_job_level" => "FMGR", "job_level" => "FACTORY MANAGER", "level" => "7"]);
+Job::create(["code_job_level" => "AMI", "job_level" => "ASISTEN MANAGER I", "level" => "8"]);
+Job::create(["code_job_level" => "MGRI", "job_level" => "MANAGER I", "level" => "8"]);
+Job::create(["code_job_level" => "DOK", "job_level" => "DOKTER", "level" => "8"]);
+Job::create(["code_job_level" => "SPV", "job_level" => "SUPERVISOR", "level" => "9"]);
+Job::create(["code_job_level" => "ASPV", "job_level" => "ASISTEN SUPERVISOR", "level" => "9"]);
+Job::create(["code_job_level" => "LD", "job_level" => "LEADER", "level" => "10"]);
+Job::create(["code_job_level" => "SST", "job_level" => "SENIOR STAFF", "level" => "10"]);
+Job::create(["code_job_level" => "ST", "job_level" => "STAFF", "level" => "11"]);
+Job::create(["code_job_level" => "STO", "job_level" => "STAFF OPERATOR", "level" => "11"]);
+Job::create(["code_job_level" => "PWT", "job_level" => "PERAWAT", "level" => "11"]);
+Job::create(["code_job_level" => "DRV", "job_level" => "DRIVER", "level" => "12"]);
+Job::create(["code_job_level" => "OP", "job_level" => "OPERATOR", "level" => "12"]);
 
 
-JOb Level
-INSERT INTO `jobs`( `code_job_level`, `job_level`, `level`) VALUES 
-("PD", "PRESIDEN DIREKTUR", "1"),
-("SD", "SENIOR DIREKTUR", "2"),
-("DIR", "DIREKTUR", "3"),
-("ASDIR", "ASISTEN DIREKTUR", "4"),
-("SM", "SENIOR MANAGER", "5"),
-("AMA", "ASISTEN MANAGER A", "6"),
-("MGRA", "MANAGER A", "6"),
-("FMGR", "FACTORY MANAGER", "7"),
-("AMI", "ASISTEN MANAGER I", "8"),
-("MGRI", "MANAGER I", "8"),
-("DOK", "DOKTER", "8"),
-("SPV", "SUPERVISOR", "9"),
-("ASPV", "ASISTEN SUPERVISOR", "9"),
-("LD", "LEADER", "10"),
-("SST", "SENIOR STAFF", "10"),
-("ST", "STAFF", "11"),
-("STO", "STAFF OPERATOR", "11"),
-("PWT", "PERAWAT", "11"),
-("DRV", "DRIVER", "12"),
-("OP", "OPERATOR", "12");
+
 

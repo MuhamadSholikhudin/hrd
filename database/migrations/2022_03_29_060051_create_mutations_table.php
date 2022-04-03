@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('mutations', function (Blueprint $table) {
             $table->id();
             $table->date('mutation_date');
-            $table->enum('status', ['active', 'not active']);  
+            $table->enum('status', ['active', 'not active'])->nullable();  
             $table->string('bagian')->nullable();
             $table->string('cell')->nullable();           
             $table->foreignId('job_id');

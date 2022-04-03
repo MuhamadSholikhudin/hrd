@@ -9,10 +9,14 @@
   <div class="row mb-2">
     <div class="col-sm-6">
       <h1>Karyawan 
-{{
-  DateTime::createFromFormat('m-d-Y', '10162003')->format('Y-m-d');
-}}
+<?php
+$time = strtotime('10/16/2003');
 
+$newformat = date('Y-m-d',$time);
+
+echo $newformat;
+
+?>
       </h1>
     </div>
     <div class="col-sm-6">
@@ -99,25 +103,33 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <form action="{{ route('employees.update') }}" method="POST" enctype="multipart/form-data">
+        @csrf
       <div class="modal-body">
         <div class="input-group">
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="exampleInputFile">
+              <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
               <label class="custom-file-label" for="exampleInputFile">Choose file</label>
             </div>
             </div>
         </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
+      </form>
     </div>
   </div>
 </div>
+
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a  class="btn btn-outline-primary" data-toggle="tooltip" data-placement="bottom" title="Download Excel Data Karyawan">
+<a href="/exportemployees" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="bottom" title="Download Excel Data Karyawan">
 <i class="fas fa-download"></i>
 </a>
+
+
+
         <div class="card-tools">
             <form action="/datamaster/employees" >     
                 <div class="input-group input-group-sm" style="width: 150px;">

@@ -26,7 +26,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
-          <a href="#" class="nav-link active">
+          <a href="#" class="nav-link {{ Request::is('datamaster') ? 'active' : '' }} ">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Data Master
@@ -35,7 +35,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="/datamaster/employees" class="nav-link active">
+              <a href="/datamaster/employees" class="nav-link {{ Request::is('datamaster/employees*') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Karyawan</p>
               </a>
@@ -53,31 +53,31 @@
               </a>
             </li> --}}
             <li class="nav-item">
-              <a href="/datamaster/promotions" class="nav-link">
+              <a href="/datamaster/promotions" class="nav-link {{ Request::is('datamaster/promotions*') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>PROMOSI</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/datamaster/demotions" class="nav-link">
+              <a href="/datamaster/demotions" class="nav-link {{ Request::is('datamaster/demotions*') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>DEMOSI</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/datamaster/mutations" class="nav-link">
+              <a href="/datamaster/mutations" class="nav-link {{ Request::is('datamaster/mutations*') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>MUTASI</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/jobs" class="nav-link">
+              <a href="/jobs" class="nav-link {{ Request::is('jobs*') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>JOB LEVEL</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/departments" class="nav-link">
+              <a href="/departments" class="nav-link {{ Request::is('departments*') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>DEPARTEMEN</p>
               </a>

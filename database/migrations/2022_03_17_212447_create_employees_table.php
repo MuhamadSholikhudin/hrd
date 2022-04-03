@@ -18,11 +18,11 @@ return new class extends Migration
             $table->string('number_of_employees')->nullable();
             $table->string('finger_id')->nullable();
             $table->string('name')->nullable();
-            $table->enum('gender', ['M', 'F']);  
+            $table->enum('gender', ['M', 'F'])->nullable();  
             $table->string('place_of_birth')->nullable();
             $table->date('date_of_birth')->nullable();
-            $table->enum('marital_status', ['M', 'S']);  
-            $table->enum('religion', ['MOSLEM','BUDHIST','CATHOLIC','CHRISTIAN','HINDU','KEPERCAYAAN','NONE']);  
+            $table->enum('marital_status', ['M', 'S'])->nullable();  
+            $table->enum('religion', ['MOSLEM','BUDHIST','CATHOLIC','CHRISTIAN','HINDU','KEPERCAYAAN','NONE'])->nullable();  
             $table->string('biological_mothers_name')->nullable();
             $table->string('national_id')->nullable();
             $table->text('address_jalan')->nullable();
@@ -50,13 +50,13 @@ return new class extends Migration
             $table->string('bpjs_kesehatan')->nullable();
             $table->date('date_bpjs_kesehatan')->nullable();
             $table->string('npwp')->nullable();
-            $table->enum('kode_ptkp', ['TK', 'K/0', 'K/1', 'K/2']);
+            $table->enum('kode_ptkp', ['TK', 'K/0', 'K/1', 'K/2'])->nullable();
             $table->date('year_ptkp')->nullable();
             $table->string('bagian')->nullable();
             $table->string('cell')->nullable();   
             $table->string('status_employee')->nullable();   
-            $table->foreignId('job_id');
-            $table->foreignId('department_id');
+            $table->foreignId('job_id')->nullable();
+            $table->foreignId('department_id')->nullable();
             $table->timestamps();                                  
         });
     }

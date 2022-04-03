@@ -70,6 +70,7 @@ Route::controller(EmployeeController::class)->group(function(){
     // Route::get('users', 'index');
     Route::get('exportemployees', 'export')->name('users.export');
     Route::post('importemployees', 'import')->name('employees.import');
+    Route::post('updateemployees', 'update')->name('employees.update');
 });
 
 // DATA MASTER PROMOTION
@@ -88,6 +89,6 @@ Route::get('/hi', function () {
     return view('hi.employees');
 });
 
-Route::resource('/hi/employees', HiEmployeeController::class);
+// Route::resource('/hi/employees', HiEmployeeController::class);
 
-Route::resource('/hi/investigations', HiEmployeeController::class);
+// Route::resource('/hi/investigations', HiEmployeeController::class);

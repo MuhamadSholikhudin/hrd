@@ -15,7 +15,7 @@ class Employee extends Model
 
 
     protected $fillable = [
-        'number_of_employees',	'name',	'gender',	'place_of_birth',
+        'number_of_employees',	'name',	'gender','place_of_birth', 'gender', 'date_of_birth',
 
     ];
 

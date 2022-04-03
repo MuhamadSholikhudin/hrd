@@ -4,14 +4,26 @@ namespace App\Exports;
 
 use App\Models\Employee;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class EmployeesExport implements FromCollection
+// class EmployeesExport implements FromCollection
+// {
+//     /**
+//     * @return \Illuminate\Support\Collection
+//     */
+//     public function collection()
+//     {
+//         return Employee::all();
+//     }
+// }
+
+class EmployeesExport implements FromView
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    public function view(): View
     {
-        return Employee::all();
+        return view('exports.employees', [
+            'employees' => Employee::all()
+        ]);
     }
 }
