@@ -8,16 +8,7 @@
 <div class="container-fluid">
   <div class="row mb-2">
     <div class="col-sm-6">
-      <h1>Karyawan 
-<?php
-$time = strtotime('10/16/2003');
-
-$newformat = date('Y-m-d',$time);
-
-echo $newformat;
-
-?>
-      </h1>
+      <h1>Karyawan </h1>
     </div>
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
@@ -106,6 +97,10 @@ echo $newformat;
       <form action="{{ route('employees.update') }}" method="POST" enctype="multipart/form-data">
         @csrf
       <div class="modal-body">
+        <p class="text-justify-right">
+          <a href="{{asset('excel/FORMAT_UPDATE_MASTER_DATA.xlsx')}}">Format Update Master Data</a>
+          <br>
+        </p>
         <div class="input-group">
             <div class="custom-file">
               <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
@@ -127,9 +122,6 @@ echo $newformat;
 <a href="/exportemployees" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="bottom" title="Download Excel Data Karyawan">
 <i class="fas fa-download"></i>
 </a>
-
-
-
         <div class="card-tools">
             <form action="/datamaster/employees" >     
                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -146,11 +138,12 @@ echo $newformat;
         <table class="table table-hover text-nowrap">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>User</th>
-              <th>Date</th>
+              <th>NIK ID</th>
+              <th>Nama</th>
+              <th>Nomer KTP</th>
+              <th>JOb Level / Departemen</th>
               <th>Status</th>
-              <th>Reason</th>
+              <th>Aksi</th>
             </tr>
           </thead>
           <tbody>
@@ -158,8 +151,19 @@ echo $newformat;
                 <tr>
                     <td>{{ $employee->number_of_employees }}</td>
                     <td>{{ $employee->name }}</td>
-                    <td>{{ $employee->email }}</td>
-                    <td><span class="tag tag-success">{{ $employee->phone_number }}</span></td>
+                    <td>{{ $employee->national_id }}</td>
+                    <td>
+                      <?php 
+                        $job = DB::table('jobs')
+                        ->where('id', '=', $employee->job_id)
+                        ->first();
+                        $department = DB::table('departments')
+                        ->where('id', '=', $employee->department_id)
+                        ->first();
+                      ?>
+                      {{ $job->job_level }} / {{ $department->department  }}
+                    </td>
+                    <td>{{ $employee->status_employee }}</td>
                     <td>
                         <a href="/datamaster/employees/{{ $employee->id }}" class="btn  btn-outline-primary">
                             Show
@@ -167,6 +171,7 @@ echo $newformat;
                             <a href="/datamaster/employees/{{ $employee->id }}/edit" class="btn  btn-outline-warning">
                             Edit
                             </a>
+
                             <!-- <form action="/datamaster/employees/{{ $employee->id }}" method="POST" class="d-inline ">
                                 @method('delete')
                                 @csrf

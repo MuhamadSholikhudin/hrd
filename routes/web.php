@@ -75,7 +75,13 @@ Route::controller(EmployeeController::class)->group(function(){
 
 // DATA MASTER PROMOTION
 Route::resource('datamaster/promotions', DatamasterPromotionController::class);
-
+//EXCEL IMPORT END EXPORT EMPLOYEES
+Route::controller(DatamasterPromotionController::class)->group(function(){
+    // Route::get('users', 'index');
+    Route::get('exportpromotions', 'export')->name('promotions.export');
+    Route::post('importpromotions', 'import')->name('promotions.import');
+    Route::post('updatepromotions', 'update')->name('promotions.update');
+});
 
 // DATA MASTER DEMOTION
 Route::resource('datamaster/demotions', DatamasterDemotionController::class);

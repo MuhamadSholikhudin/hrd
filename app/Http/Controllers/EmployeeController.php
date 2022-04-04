@@ -49,25 +49,28 @@ class EmployeeController extends Controller
                 
                 // CEK tanggal [date_of_birth, hire_date, end_of_contract, date_out, year_ptkp ]
                 
-                // CEK date_of_birth
-                $date_of_birth_t = strtotime($x['date_of_birth']);             
-                $date_of_birth = date('Y-m-d', $date_of_birth_t);
+                // CEK date_of_birth '12/04/2022
+                // $date_of_birth_t = strtotime($x['date_of_birth']);             
+                // $date_of_birth = date('Y-m-d', $date_of_birth_t);
+                // $date = intval($row['date_of_birth']);
+                 
+
 
                 // CEK hire_date
-                $hire_date_t = strtotime($x['hire_date']);             
-                $hire_date = date('Y-m-d', $hire_date_t);
+                // $hire_date_t = strtotime($x['hire_date']);             
+                // $hire_date = date('Y-m-d', $hire_date_t);
 
                 // CEK end_of_contract 
-                $end_of_contract_t = strtotime($x['end_of_contract']);             
-                $end_of_contract = date('Y-m-d', $end_of_contract_t);
+                // $end_of_contract_t = strtotime($x['end_of_contract']);             
+                // $end_of_contract = date('Y-m-d', $end_of_contract_t);
 
                 // CEK date_out          
-                $date_out_t = strtotime($x['date_out']);             
-                $date_out = date('Y-m-d', $date_out_t);
+                // $date_out_t = strtotime($x['date_out']);             
+                // $date_out = date('Y-m-d', $date_out_t);
 
                 // CEK year_ptkp
-                $year_ptkp_t = strtotime($x['year_ptkp']);             
-                $year_ptkp = date('Y-m-d', $year_ptkp_t);
+                // $year_ptkp_t = strtotime($x['year_ptkp']);             
+                // $year_ptkp = date('Y-m-d', $year_ptkp_t);
                 
 
                 // CEK Department
@@ -97,7 +100,7 @@ class EmployeeController extends Controller
                     'name'=> $x['name'],
                     'gender'=> $x['gender'],  
                     'place_of_birth'=> $x['place_of_birth'],
-                    'date_of_birth'=> $date_of_birth,
+                    'date_of_birth'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['date_of_birth']),
                     'marital_status'=> $x['marital_status'],
                     'religion'=> $x['religion'], 
                     'biological_mothers_name' => $x['biological_mothers_name'],
@@ -118,15 +121,15 @@ class EmployeeController extends Controller
                     'bank_account_number'=> $x['bank_account_number'],
                     'bpjs_ketenagakerjaan'=> $x['bpjs_ketenagakerjaan'],
                     'bpjs_kesehatan' => $x['bpjs_kesehatan'],
-                    'hire_date'=> $hire_date,
+                    'hire_date'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['hire_date']),
                     'employee_type'=> $x['employee_type'],
-                    'end_of_contract'=> $end_of_contract,
-                    'date_out'=> $date_out,
+                    'end_of_contract'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['end_of_contract']),
+                    'date_out'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['date_out']),
                     'exit_statement'=> $x['exit_statement'],
                     'cell'=> $x['cell'], 
                     'bagian'=> $x['bagian'],
                     'kode_ptkp'=> $x['kode_ptkp'],
-                    'year_ptkp'=> $year_ptkp,
+                    'year_ptkp'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['year_ptkp']),
                     'educate'=> $x['educate'],
                     'major'=> $x['major'],
                     'finger_id' => $x['number_of_employees'],
@@ -179,29 +182,7 @@ class EmployeeController extends Controller
                 if(floor($x['number_of_employees']) == NULL){
 
                 }else{ 
-                                // CEK tanggal [date_of_birth, hire_date, end_of_contract, date_out, year_ptkp ]
-                
-                // CEK date_of_birth
-                $date_of_birth_t = strtotime($x['date_of_birth']);             
-                $date_of_birth = date('Y-m-d', $date_of_birth_t);
-
-                // CEK hire_date
-                $hire_date_t = strtotime($x['hire_date']);             
-                $hire_date = date('Y-m-d', $hire_date_t);
-
-                // CEK end_of_contract 
-                $end_of_contract_t = strtotime($x['end_of_contract']);             
-                $end_of_contract = date('Y-m-d', $end_of_contract_t);
-
-                // CEK date_out          
-                $date_out_t = strtotime($x['date_out']);             
-                $date_out = date('Y-m-d', $date_out_t);
-
-                // CEK year_ptkp
-                $year_ptkp_t = strtotime($x['year_ptkp']);             
-                $year_ptkp = date('Y-m-d', $year_ptkp_t);
-                
-
+           
                 // CEK Department
                 $num_dept = DB::table('departments')->where('department', '=', $x['department'])->count();
                 if($num_dept > 0){
@@ -210,7 +191,6 @@ class EmployeeController extends Controller
                 }else{
                    $department_id = 12;
                 }
-
                 // CEK job_level
                 $num_dept = DB::table('jobs')->where('job_level', '=', $x['job_level'])->count();
                 if($num_dept > 0){
@@ -231,7 +211,7 @@ class EmployeeController extends Controller
                     'name'=> $x['name'],
                     'gender'=> $x['gender'],  
                     'place_of_birth'=> $x['place_of_birth'],
-                    'date_of_birth'=> $date_of_birth,
+                    'date_of_birth'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['date_of_birth']),
                     'marital_status'=> $x['marital_status'],
                     'religion'=> $x['religion'], 
                     'biological_mothers_name' => $x['biological_mothers_name'],
@@ -252,15 +232,15 @@ class EmployeeController extends Controller
                     'bank_account_number'=> $x['bank_account_number'],
                     'bpjs_ketenagakerjaan'=> $x['bpjs_ketenagakerjaan'],
                     'bpjs_kesehatan' => $x['bpjs_kesehatan'],
-                    'hire_date'=> $hire_date,
+                    'hire_date'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['hire_date']),
                     'employee_type'=> $x['employee_type'],
-                    'end_of_contract'=> $end_of_contract,
-                    'date_out'=> $date_out,
+                    'end_of_contract'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['end_of_contract']),
+                    'date_out'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['date_out']),
                     'exit_statement'=> $x['exit_statement'],
                     'cell'=> $x['cell'], 
                     'bagian'=> $x['bagian'],
                     'kode_ptkp'=> $x['kode_ptkp'],
-                    'year_ptkp'=> $year_ptkp,
+                    'year_ptkp'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['year_ptkp']),
                     'educate'=> $x['educate'],
                     'major'=> $x['major'],
                     'finger_id' => $x['number_of_employees'],

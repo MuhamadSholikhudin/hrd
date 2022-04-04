@@ -41,7 +41,7 @@
 &nbsp;
 <!-- Button trigger modal -->
 <a href="/datamaster/promotions/create" class="btn btn-outline-primary " >
-  <i class="fa fa-plus" data-toggle="tooltip" data-placement="bottom" title="Tambah 1 Karyawan"></i>
+  <i class="fa fa-plus" data-toggle="tooltip" data-placement="bottom" title="Tambah 1 Promosi"></i>
 </a>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a class="btn btn-outline-primary" data-toggle="modal"  data-target="#excel_karyawan_baru" >
@@ -52,12 +52,18 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Upload excel data karyawan baru</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Upload excel data promosi karyawan</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-        </div>
+        </div>      
+        <form action="{{ route('promotions.import') }}" method="POST" enctype="multipart/form-data">
+        @csrf
         <div class="modal-body">
+        <p class="text-justify-right">
+          <a href="{{asset('excel/FORMAT_PROMOSI_DATA.xlsx')}}">Format Uploads Input Promosi </a>
+          <br>
+        </p>
           <div class="input-group">
               <div class="custom-file">
                   <input type="file" class="custom-file-input" id="exampleInputFile">
@@ -67,8 +73,9 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="submit" class="btn btn-primary">Uploads</button>
         </div>
+</form>
       </div>
     </div>
   </div>
@@ -86,18 +93,21 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+
       <div class="modal-body">
+
         <div class="input-group">
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="exampleInputFile">
+              <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
               <label class="custom-file-label" for="exampleInputFile">Choose file</label>
             </div>
             </div>
         </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary">Uploads</button>
       </div>
+    </form>
     </div>
   </div>
 </div>
@@ -122,8 +132,9 @@
           <thead>
             <tr>
               <th>NIK ID</th>
-              <th>User</th>
-              <th>Date</th>
+              <th>Nama</th>
+              <th>Nomer KTP</th>
+              <th>Job Level / Departemen</th>
               <th>Status</th>
               <th>Reason</th>
             </tr>
@@ -133,8 +144,19 @@
                 <tr>
                     <td>{{ $employee->number_of_employees }}</td>
                     <td>{{ $employee->name }}</td>
-                    <td>{{ $employee->email }}</td>
-                    <td><span class="tag tag-success">{{ $employee->phone_number }}</span></td>
+                    <td>{{ $employee->national_id }}</td>
+                    <td>
+                      <?php 
+                        $job = DB::table('jobs')
+                            ->where('id', '=', $employee->job_id)
+                            ->first();
+                        $department = DB::table('departments')
+                            ->where('id', '=', $employee->department_id)
+                            ->first();
+                      ?>
+                      {{ $job->job_level }} / {{ $department->department  }}
+                    </td>
+                    <td>{{ $employee->status_employee }}</td>
                     <td>
                         <a href="/datamaster/promotions/{{ $employee->id }}" class="btn  btn-outline-primary">
                             Lihat

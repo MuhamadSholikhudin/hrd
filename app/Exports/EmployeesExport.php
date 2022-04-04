@@ -22,7 +22,7 @@ class EmployeesExport implements FromView
 {
     public function view(): View
     {
-        return view('exports.employees', [
+        return view('exports.employees.employees', [
             'employees' => Employee::all()
         ]);
     }

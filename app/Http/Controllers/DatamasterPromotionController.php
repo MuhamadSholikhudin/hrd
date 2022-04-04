@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Maatwebsite\Excel\Concerns\ToArray;
+use App\Exports\EmployeesExport;
+use App\Imports\EmployeesImport;
+use Maatwebsite\Excel\Facades\Excel;
+
 use App\Models\Employee;
 use App\Models\Job;
 use App\Models\Department;
@@ -29,7 +34,7 @@ class DatamasterPromotionController extends Controller
         }
 
         return view('datamaster.promotions.index', [
-            'employees' => $employees->paginate(3)
+            'employees' => $employees->paginate(15)
              
         ]);
     }
@@ -197,5 +202,54 @@ class DatamasterPromotionController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+
+    public function import() 
+    {        // Excel::import(new EmployeesImport, request()->file('file'));
+
+        $rows =  Excel::toArray(new PromotionsImport, request()->file('file'));
+        // dd($rows);
+        foreach($rows as $row):
+            foreach($row as $x):
+                if($x['number_of_employees'] == NULL){
+
+                }else{
+                    // CEK number_of_employees	name	job_level	code_job_level	department	cell	bagian
+
+                    // CEK Department
+                    $num_dept = DB::table('departments')->where('department', '=', $x['department'])->count();
+                    if($num_dept > 0){
+                        $department_get = DB::table('departments')->where('department', '=', $x['department'])->first();
+                        $department_id = $department_get->id;
+                    }else{
+                        $department_id = 12;
+                    }
+
+                    // CEK job_level
+                    $num_dept = DB::table('jobs')->where('job_level', '=', $x['job_level'])->count();
+                    if($num_dept > 0){
+                        $job_get = DB::table('jobs')->where('job_level', '=', $x['job_level'])->first();
+                        $job_id = $job_get->id;
+                    }else{
+                        $job_id = 12;
+                    }
+
+                    DB::table('promotions')->insert([
+                        'promotion_date'=> date('Y-m-d'),
+                        'bagian'=> $x['bagian'],
+                        'cell'=> $x['cell'],
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s'),
+                        'job_id'=> $job_id,
+                        'department_id'=> $department_id,
+                        'employee_id'=> $employee_get->id
+                        ]);
+                                    
+                }
+            endforeach;
+        endforeach;
+        return redirect('/datamaster/promotions');
     }
 }
