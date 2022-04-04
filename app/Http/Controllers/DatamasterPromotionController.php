@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\ToArray;
 use App\Exports\EmployeesExport;
 use App\Imports\EmployeesImport;
+use App\Imports\PromotionsImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 use App\Models\Employee;
@@ -216,6 +217,11 @@ class DatamasterPromotionController extends Controller
                 if($x['number_of_employees'] == NULL){
 
                 }else{
+                    $search_employee = DB::table('employees')->where('number_of_employees', '=', floor($x['number_of_employees']))->count();
+                          
+                    if($search_employee > 0){
+
+                    }else{
                     // CEK number_of_employees	name	job_level	code_job_level	department	cell	bagian
 
                     // CEK Department
@@ -235,6 +241,16 @@ class DatamasterPromotionController extends Controller
                     }else{
                         $job_id = 12;
                     }
+                    $employee_get = DB::table('employees')->where('number_of_employees', '=',  floor($x['number_of_employees']))->first();
+
+                    DB::table('employees')
+                    ->where('id', $employee_get->id)
+                    ->update([
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s'),
+                        'job_id'=> $job_id,
+                        'department_id'=> $department_id
+                        ]);
 
                     DB::table('promotions')->insert([
                         'promotion_date'=> date('Y-m-d'),
@@ -246,7 +262,7 @@ class DatamasterPromotionController extends Controller
                         'department_id'=> $department_id,
                         'employee_id'=> $employee_get->id
                         ]);
-                                    
+                    }                  
                 }
             endforeach;
         endforeach;

@@ -54,7 +54,7 @@
                   </li>
                 </ul> -->
 
-                <a href="#" class="btn btn-primary btn-block"><b>active</b></a>
+                <a href="#" class="btn btn-primary btn-block"><b>{{ $employee->status_employee }}</b></a>
               </div>
               <!-- /.card-body -->
             </div>
@@ -262,7 +262,7 @@
                   </div>
                   <div class="tab-pane" id="input_pendidikan">
                   <div class="form-group row">
-                    <label for="hire_date" class="col-sm-2 col-form-label">Pendidikan</label>
+                    <label for="educate" class="col-sm-2 col-form-label">Pendidikan</label>
                     <div class="col-sm-4">
                       <select class="form-control" name="educate" >
                         @foreach ($educations as $educations)
@@ -285,7 +285,7 @@
                   <div class="form-group row">
                     <label for="biological_mother_name" class="col-sm-4 col-form-label">Nama Ibu Kandung</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="biological_mother_name" name="biological_mothers_name" value="{{ old('biological_mother_name', $employee->biological_mother_name) }}" >
+                      <input type="text" class="form-control" id="biological_mother_name" name="biological_mothers_name" value="{{ old('biological_mothers_name', $employee->biological_mothers_name) }}" >
                     </div>
                   </div>
                 </div>
@@ -360,7 +360,7 @@
                         </div>
                       </div>                      
                       <div class="form-group row">
-                        <label for="hire_date" class="col-sm-3 col-form-label">Tipe Karyawan</label>
+                        <label for="employee_type" class="col-sm-3 col-form-label">Tipe Karyawan</label>
                         <div class="col-sm-9">
                             <select class="form-control" name="employee_type" >
                               @foreach ($employee_type as $employee_type)
@@ -389,6 +389,20 @@
                         <label for="exit_statement" class="col-sm-3 col-form-label">Out </label>
                         <div class="col-sm-9">
                           <input type="text" class="form-control" id="exit_statement" name="exit_statement" value="{{ old('exit_statement', $employee->exit_statement) }}" >
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="status_employee" class="col-sm-3 col-form-label">Status Karyawan</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="status_employee" >
+                              @foreach ($status_employee as $status_employee)
+                                @if(old('status_employee', $employee->status_employee) == $status_employee)
+                                  <option value="{{ $status_employee }}" selected>{{ $status_employee }} </option>
+                                @else
+                                  <option value="{{ $status_employee }}" >{{ $status_employee }}</option>
+                                @endif
+                              @endforeach
+                            </select>
                         </div>
                       </div> 
                     </div>
@@ -470,7 +484,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="hire_date" class="col-sm-3 col-form-label">Grade</label>
+                    <label for="grade_salary" class="col-sm-3 col-form-label">Grade</label>
                     <div class="col-sm-2">
                         <select class="form-control" name="grade_salary" >
                           @foreach ($grade_salary as $grade_salary)
@@ -533,7 +547,7 @@
                   <div class="form-group row">
                       <label for="npwp" class="col-sm-2 col-form-label">NPWP</label>
                       <div class="col-sm-4">
-                          <input type="number" class="form-control" id="npwp" name="npwp" value="{{ old('npwp', $employee->npwp) }}" >
+                          <input type="text" class="form-control" id="npwp" name="npwp" value="{{ old('npwp', $employee->npwp) }}" >
                       </div>
                       <label for="kode_ptkp" class="col-sm-2 col-form-label">Kode PTKP</label>
                       <div class="col-sm-4">

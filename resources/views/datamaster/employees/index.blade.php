@@ -24,8 +24,17 @@
 <section class="content">
     <div class="col-md-12">
         
-      <div class="card">
+      <div class="card mb-3">
           <div class="card-body table-responsive p-0">
+            @if (session()->has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong>
+            {{ session('success') }}
+          </strong>
+        @else
+
+        @endif
+
           
       </div>
     </div>

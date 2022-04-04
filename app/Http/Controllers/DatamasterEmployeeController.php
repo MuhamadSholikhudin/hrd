@@ -150,7 +150,7 @@ class DatamasterEmployeeController extends Controller
         
         // Salary::create($validatedDataSalary);
             
-        return redirect('/datamaster/employees');
+        return redirect('/datamaster/employees')->with('success', 'Data Karaywan Berhasil di tambahkan!');
     }
 
     /**
@@ -189,6 +189,7 @@ class DatamasterEmployeeController extends Controller
         $employee_type = ["1-Permanent","5-Probation"];
         $kode_ptkp = ["TK","K/0", "K/1", "K/2"];
         $grade_salary = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+        $status_employee = ['active', 'not active'];
         //
         // $job = DB::table('jobs')
         // ->where('id', '=', $employee->job_id)
@@ -206,7 +207,8 @@ class DatamasterEmployeeController extends Controller
             'educations' => $educations,
             'employee_type' => $employee_type,
             'kode_ptkp' => $kode_ptkp,
-            'grade_salary' => $grade_salary
+            'grade_salary' => $grade_salary,
+            'status_employee' => $status_employee
         ]);
     }
 
@@ -260,11 +262,13 @@ class DatamasterEmployeeController extends Controller
             'npwp'=> $request->npwp,
             'kode_ptkp'=> $request->kode_ptkp,
             'year_ptkp'=> $request->year_ptkp,
+            'status_employee'=> $request->status_employee,
             'bagian'=> $request->bagian,
             'cell'=> $request->cell, 
             'job_id'=> $request->job_id,
             'department_id'=> $request->department_id
             ]);
+
          DB::table('salaries')
               ->where('employee_id' , $request->id)
               ->where('id' , $request->salary_id)
@@ -276,7 +280,7 @@ class DatamasterEmployeeController extends Controller
                         'grade_salary' => $request->grade_salary,
                         'total_salary' => 0
                 ]);
-        return redirect('/datamaster/employees');
+        return redirect('/datamaster/employees')->with('success', 'Data Karaywan Berhasil di update!');
     }
 
     /**
