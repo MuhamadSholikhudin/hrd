@@ -167,8 +167,8 @@ class EmployeeController extends Controller
                             'total_salary' => 0
                         ]);
 
-                        DB::table('mutations')->insert([
-                            'mutation_date'=> date('Y-m-d'),
+                        DB::table('startworks')->insert([
+                            'startwork_date'=> date('Y-m-d'),
                             'bagian'=> $x['bagian'],
                             'cell'=> $x['cell'],
                             'created_at' => date('Y-m-d H:i:s'),

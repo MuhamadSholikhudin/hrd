@@ -20,6 +20,16 @@
     </div><!-- /.container-fluid -->
   </section>
   
+  
+        @if (session()->has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong>
+            {{ session('success') }}
+          </strong>
+          </div>
+        @else
+
+        @endif
 
 <!-- Main content -->
 <section class="content">
@@ -34,11 +44,11 @@
                   <img class="profile-user-img img-fluid img-circle" src="{{asset('dist/img/user4-128x128.jpg')}}" alt="User profile picture">
                 </div>
 
-                <h3 class="profile-username text-center">{{  $employee->number_of_employees  }}</h3>
-                <h3 class="profile-username text-center">{{  $employee->name  }}</h3>
+                <h3 class="profile-username text-center">{{  $demotion->number_of_employees  }}</h3>
+                <h3 class="profile-username text-center">{{  $demotion->name  }}</h3>
 
-                  <p class="text-muted text-center">{{ $get_job->job_level }} <br>
-                      {{ $get_department->department }}
+                  <p class="text-muted text-center">{{ $demotion->job_level }} <br>
+                      {{ $demotion->department }}
                   </p>
 
                 <div id="t_karyawan_lama">
@@ -56,7 +66,7 @@
                     <b>Friends</b> <a class="float-right">13,287</a>
                   </li>
                 </ul> -->
-                <a href="#" class="btn btn-primary btn-block"><b>active</b></a>
+                <a href="#" class="btn btn-primary btn-block"><b>{{  $demotion->status_employee  }}</b></a>
               </div>
               <!-- /.card-body -->
             </div>
@@ -71,9 +81,7 @@
                 @endforeach
               
               </div>
-              
             </div>
-           
           </div>
           
 
@@ -86,16 +94,16 @@
                   <div class="card-body">
                     <!-- Date -->
                     <form role="form" action="/datamaster/demotions" method="POST" enctype="multipart/form-data">
+                    @method('put')  
                     @csrf
-                    <input type="hidden" class="form-control"  name="id" value="{{  $employee->id  }}">
-                    
+                    <input type="hidden" class="form-control"  name="id" value="{{ old('id', $demotion->id) }}">
                     <div class="form-group row">
                       <label for="inputName" class="col-sm-2 col-form-label">Job level</label>
                       <div class="col-sm-4">
                         <div class="form-group">
                           <select class="form-control select2bs4" style="width: 100%;" name="job_id">
                             @foreach ($jobs as $job)
-                              @if(old('job_id') == $job->id)
+                              @if(old('job_id', $demotion->job_id) == $job->id)
                                 <option value="{{ $job->id }}" selected>{{ $job->code_job_level }} / {{ $job->job_level }}</option>
                               @else
                                 <option value="{{ $job->id }}" >{{ $job->code_job_level }} / {{ $job->job_level }}</option>
@@ -110,7 +118,7 @@
                         <div class="form-group">
                           <select class="form-control select2bs4" name="department_id" style="width: 100%;">
                             @foreach ($departments as $department)
-                              @if(old('department_id') == $department->id)
+                              @if(old('department_id', $demotion->department_id) == $department->id)
                                 <option value="{{ $department->id }}" selected>{{ $department->department }} </option>
                               @else
                                 <option value="{{ $department->id }}" >{{ $department->department }}</option>
@@ -122,11 +130,6 @@
                     </div>
                         
                         <div class="form-group row">
-                            <!-- <label for="inputName2" class="col-sm-2 col-form-label">Tempat lahir</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="inputName2" placeholder="Name">
-                            </div> -->
-
                             <label for="inputName2" class="col-sm-2 col-form-label">Tanggal Promosi</label>
                             <div class="col-sm-4">
                                 <input type="date" class="form-control" id="inputName2" name="demotion_date" value="<?php echo date("Y-m-d") ?>">
@@ -136,14 +139,14 @@
                          <div class="form-group row">
                           <label for="inputSkills" class="col-sm-2 col-form-label">Bagian</label>
                           <div class="col-sm-10">
-                              <input type="text" class="form-control" id="inputSkills" name="bagian" value="-" placeholder="">
+                              <input type="text" class="form-control" id="inputSkills" name="bagian" value="{{ old('bagian', $demotion->bagian) }}" placeholder="">
                           </div>
                         </div>
                        
                          <div class="form-group row">
                           <label for="inputSkills" class="col-sm-2 col-form-label">Cell</label>
                           <div class="col-sm-10">
-                              <input type="text" class="form-control" id="inputSkills" name="cell" value="-" placeholder="">
+                              <input type="text" class="form-control" id="inputSkills" name="cell" value="{{ old('cell', $demotion->cell) }}" placeholder="">
                           </div>
                         </div>
 
@@ -152,7 +155,7 @@
                         </div>
                         
                           <div class="col-sm-2">
-                            <button type="submit" class="btn btn-primary "><i class="fas fa-arrows-rotate"></i> Promosikan</button>
+                            <button type="submit" class="btn btn-success "><i class="fas fa-edit"> </i>Update</button>
                           </div>
                         </div>
                     </form>
@@ -160,69 +163,6 @@
                 </div>
               </div>
 
-              <div class="card card-primary">
-                  <div class="card-header">
-                    <h3 class="card-title">Riwayat Promosi</h3>
-                  </div>
-                  <div class="card-body">
-                    <!-- Date -->
-                    <table class="table table-bordered">
-                        <thead>
-                          <tr>
-                            <th style="width: 10px">#</th>
-                            <th>Demosi</th>
-                            <th>Tanggal Demosi</th>
-                            <th>Bagian</th>
-                            <th>Cell</th>
-                            <th>Aksi</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                        @foreach ($startwork_get as $startwork_get)
-                            <tr>
-                              <td>{{ $loop->iteration }}</td>
-                              <td>{{ $startwork_get->job_level }} / {{ $startwork_get->department }} (awal kerja)</td>
-                              <td>
-                                  {{ $startwork_get->startwork_date }}
-                              </td>
-                              <td>
-                                  {{ $startwork_get->bagian }}
-                              </td>
-                              <td>
-                                  {{ $startwork_get->cell }}
-                              </td>
-                              <td>
-                                  <!-- <a href="employee_show_by_id.html" class="btn  btn-outline-danger btn-sm">Lihat</a> -->
-                                  <a href="demotion_edit_by_id.html" class="btn  btn-outline-warning btn-sm">edit</a>
-                              </td>
-                            </tr>
-                          @endforeach     
-
-                          @foreach ($demotions as $demotion)
-                            <tr>
-                              <td>{{ $loop->iteration + 1 }}</td>
-                              <td>{{ $demotion->department }} / {{ $demotion->job_level }}</td>
-                              <td>
-                                  {{ $demotion->demotion_date }}
-                              </td>
-                              <td>
-                                  {{ $demotion->bagian }}
-                              </td>
-                              <td>
-                                  {{ $demotion->cell }}
-                              </td>
-                              <td>
-                                  <!-- <a href="employee_show_by_id.html" class="btn  btn-outline-danger btn-sm">Lihat</a> -->
-                                  <a href="demotion_edit_by_id.html" class="btn  btn-outline-warning btn-sm">edit</a>
-                              </td>
-                            </tr>
-                          @endforeach
-                        </tbody>
-                      </table>
-                  <!-- /.card-body -->
-                </div>
-              </div>
-            <!-- /.card -->
           </div>
         </div>
 

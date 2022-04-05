@@ -14,6 +14,7 @@ use App\Http\Controllers\DatamasterMutationController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ExcelPromotionController;
 use App\Http\Controllers\ExcelDemotionController;
+use App\Http\Controllers\ExcelMutationController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HiEmployeeController;
 use App\Http\Controllers\UserController;
@@ -102,6 +103,15 @@ Route::controller(ExcelDemotionController::class)->group(function(){
 
 // DATA MASTER MUTATION
 Route::resource('datamaster/mutations', DatamasterMutationController::class);
+
+Route::get('/datamaster/mutations/{demotions:id}/getedit', [DatamasterMutationController::class, 'getedit']);
+
+//EXCEL IMPORT END EXPORT EMPLOYEES
+Route::controller(ExcelMutationController::class)->group(function(){
+    Route::get('exportmutations', 'export')->name('mutations.export');
+    Route::post('importmutations', 'import')->name('mutations.import');
+    Route::post('updatemutations', 'update')->name('mutations.update');
+});
 
 Route::get('/hi', function () {
     return view('hi.employees');

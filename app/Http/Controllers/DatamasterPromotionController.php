@@ -26,10 +26,10 @@ class DatamasterPromotionController extends Controller
      */
     public function index()
     {
-        // $employees = Employee::latest();
-        $employees = DB::table('employees')
-        ->leftJoin('jobs', 'employees.job_id', '=', 'jobs.id')
-        ->Join('departments', 'employees.department_id', '=', 'departments.id');
+        $employees = Employee::oldest();
+        // $employees = DB::table('employees')
+        // ->leftJoin('jobs', 'employees.job_id', '=', 'jobs.id')
+        // ->leftjoin('departments', 'employees.department_id', '=', 'departments.id');
 
         if(request('search')){
             $employees->where('number_of_employees', 'like', '%' . request('search') . '%')
@@ -39,8 +39,7 @@ class DatamasterPromotionController extends Controller
 
         return view('datamaster.promotions.index', [
             'employees' => $employees->paginate(15),
-            'count' => DB::table('employees')->count()
-             
+            'count' => DB::table('employees')->count()             
         ]);
     }
 
@@ -110,12 +109,12 @@ class DatamasterPromotionController extends Controller
             ->where('employee_id', '=', $id) 
             ->get();
         
-        //Menampilkan data mutations paling lama berdasarkan id employee
-        $mutation_get = DB::table('mutations')
+        //Menampilkan data startworks paling lama berdasarkan id employee
+        $startwork_get = DB::table('startworks')
             ->where('employee_id', '=', $id)
-            ->leftJoin('departments', 'mutations.department_id', '=', 'departments.id')
-            ->leftJoin('jobs', 'mutations.job_id', '=', 'jobs.id')
-            ->orderBy('mutations.id')
+            ->leftJoin('departments', 'startworks.department_id', '=', 'departments.id')
+            ->leftJoin('jobs', 'startworks.job_id', '=', 'jobs.id')
+            ->orderBy('startworks.id')
             ->limit(1)
             // ->where('votes', '=', 100)
             // ->where('age', '>', 35)
@@ -126,7 +125,7 @@ class DatamasterPromotionController extends Controller
         return view('datamaster.promotions.show', [
             'employee' => $employee,
             'jobs' => Job::all(),
-            'mutation_get' => $mutation_get,
+            'startwork_get' => $startwork_get,
             'departments' => Department::all(),
             'promotions' => $promotions,
             'get_job' => $get_job,
@@ -159,12 +158,13 @@ class DatamasterPromotionController extends Controller
                     ->where('employee_id', '=', $id) 
                     ->get();
         
-        //Menampilkan data mutations paling lama berdasarkan id employee
-        $mutation_get = DB::table('mutations')
+        //Menampilkan data promotions paling lama berdasarkan id employee
+        $startwork_get = DB::table('startworks')
             ->where('employee_id', '=', $id)
-            ->leftJoin('departments', 'mutations.department_id', '=', 'departments.id')
-            ->leftJoin('jobs', 'mutations.job_id', '=', 'jobs.id')
-            ->orderBy('mutations.id')
+            ->leftJoin('departments', 'startworks.department_id', '=', 'departments.id')
+            ->leftJoin('jobs', 'startworks.job_id', '=', 'jobs.id')
+            // ->leftJoin('employees', 'promotions.employee_id', '=', 'employees.id')
+            ->orderBy('startworks.id')
             ->limit(1)
             // ->where('votes', '=', 100)
             // ->where('age', '>', 35)
@@ -174,7 +174,7 @@ class DatamasterPromotionController extends Controller
 
         return view('datamaster.promotions.create', [
             'employee' => $employee,
-            'mutation_get' => $mutation_get,
+            'startwork_get' => $startwork_get,
             'jobs' => Job::all(),
             'departments' => Department::all(),
             'promotions' => $promotions,
@@ -204,6 +204,8 @@ class DatamasterPromotionController extends Controller
             'department_id'=> $request->department_id,
             'employee_id'=> $request->id
             ]); 
+            return redirect('/datamaster/promotions/'. $request->id . '/edit')->with('success', 'Data Promosi Karyawan Berhasil di edit!');
+
     }
 
     public function getedit($id)

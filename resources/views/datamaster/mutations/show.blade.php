@@ -69,10 +69,30 @@
                           </tr>
                         </thead>
                         <tbody>
-                        <tbody>                  
+                        <tbody> 
+                            @foreach ($startwork_get as $startwork_get)
+                            <tr>
+                              <td>{{ $loop->iteration }}</td>
+                              <td>{{ $startwork_get->job_level }} / {{ $startwork_get->department }} (awal kerja)</td>
+                              <td>
+                                  {{ $startwork_get->startwork_date }}
+                              </td>
+                              <td>
+                                  {{ $startwork_get->bagian }}
+                              </td>
+                              <td>
+                                  {{ $startwork_get->cell }}
+                              </td>
+                              <td>
+                                  <!-- <a href="employee_show_by_id.html" class="btn  btn-outline-danger btn-sm">Lihat</a> -->
+                                  {{-- <a href="promotion_edit_by_id.html" class="btn  btn-outline-warning btn-sm">edit</a> --}}
+                              </td>
+                            </tr>
+                          @endforeach     
+                 
                           @foreach ($mutations as $mutation)
                             <tr>
-                              <td>{{ $loop->iteration  }}</td>
+                              <td>{{ $loop->iteration + 1 }}</td>
                               <td>{{ $mutation->department }} / {{ $mutation->job_level }}</td>
                               <td>
                                   {{ $mutation->mutation_date }}

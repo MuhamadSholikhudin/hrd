@@ -20,11 +20,11 @@ class DatamasterEmployeeController extends Controller
      */
     public function index()
     {
-        // $employees = Employee::oldest();
+        $employees = Employee::oldest();
 
-        $employees = DB::table('employees')
-            ->leftJoin('jobs', 'employees.job_id', '=', 'jobs.id')
-            ->Join('departments', 'employees.department_id', '=', 'departments.id');
+        // $employees = DB::table('employees')
+        //     ->leftJoin('jobs', 'employees.job_id', '=', 'jobs.id')
+        //     ->Join('departments', 'employees.department_id', '=', 'departments.id');
             // ->get();
 
 
@@ -131,8 +131,8 @@ class DatamasterEmployeeController extends Controller
         
         $request->employee_id = $employee_get->id;
 
-        DB::table('mutations')->insertOrIgnore([
-            'mutation_date'=> date('Y-m-d'),
+        DB::table('startworks')->insert([
+            'startwork_date'=> date('Y-m-d'),
             'bagian'=> $request->bagian,
             'cell'=> $request->cell,
             'created_at' => date('Y-m-d H:i:s'),
@@ -142,7 +142,7 @@ class DatamasterEmployeeController extends Controller
             'employee_id'=> $employee_get->id
             ]);
 
-        DB::table('salaries')->insertOrIgnore([
+        DB::table('salaries')->insert([
             'employee_id' => $employee_get->id,
             'basic_salary' => $request->basic_salary,
             'positional_allowance' => $request->positional_allowance,

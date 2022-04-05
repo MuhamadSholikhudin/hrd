@@ -20,7 +20,7 @@ class DatamasterMutationController extends Controller
      */
     public function index()
     {
-        $employees = Employee::latest();
+        $employees = Employee::oldest();
 
         if(request('search')){
             $employees->where('number_of_employees', 'like', '%' . request('search') . '%')
@@ -29,8 +29,8 @@ class DatamasterMutationController extends Controller
         }
 
         return view('datamaster.mutations.index', [
-            'employees' => $employees->paginate(3)
-             
+            'employees' => $employees->paginate(15),
+            'count' => DB::table('employees')->count() 
         ]);
     }
 
@@ -100,12 +100,12 @@ class DatamasterMutationController extends Controller
             ->where('employee_id', '=', $id) 
             ->get();
         
-        //Menampilkan data mutations paling lama berdasarkan id employee
-        $mutation_get = DB::table('mutations')
+        //Menampilkan data startworks paling lama berdasarkan id employee
+        $startwork_get = DB::table('startworks')
             ->where('employee_id', '=', $id)
-            ->leftJoin('departments', 'mutations.department_id', '=', 'departments.id')
-            ->leftJoin('jobs', 'mutations.job_id', '=', 'jobs.id')
-            ->orderBy('mutations.id')
+            ->leftJoin('departments', 'startworks.department_id', '=', 'departments.id')
+            ->leftJoin('jobs', 'startworks.job_id', '=', 'jobs.id')
+            ->orderBy('startworks.id')
             ->limit(1)
             // ->where('votes', '=', 100)
             // ->where('age', '>', 35)
@@ -116,7 +116,7 @@ class DatamasterMutationController extends Controller
         return view('datamaster.mutations.show', [
             'employee' => $employee,
             'jobs' => Job::all(),
-            'mutation_get' => $mutation_get,
+            'startwork_get' => $startwork_get,
             'departments' => Department::all(),
             'mutations' => $mutations,
             'get_job' => $get_job,
@@ -149,12 +149,13 @@ class DatamasterMutationController extends Controller
             ->where('employee_id', '=', $id) 
             ->get();
         
-        //Menampilkan data mutations paling lama berdasarkan id employee
-        $mutation_get = DB::table('mutations')
+        //Menampilkan data mutatios paling lama berdasarkan id employee
+        $startwork_get = DB::table('startworks')
             ->where('employee_id', '=', $id)
-            ->leftJoin('departments', 'mutations.department_id', '=', 'departments.id')
-            ->leftJoin('jobs', 'mutations.job_id', '=', 'jobs.id')
-            ->orderBy('mutations.id')
+            ->leftJoin('departments', 'startworks.department_id', '=', 'departments.id')
+            ->leftJoin('jobs', 'startworks.job_id', '=', 'jobs.id')
+            // ->leftJoin('employees', 'mutatios.employee_id', '=', 'employees.id')
+            ->orderBy('startworks.id')
             ->limit(1)
             // ->where('votes', '=', 100)
             // ->where('age', '>', 35)
@@ -165,7 +166,7 @@ class DatamasterMutationController extends Controller
         return view('datamaster.mutations.create', [
             'employee' => $employee,
             'jobs' => Job::all(),
-            // 'mutation_get' => $mutation_get,
+            'startwork_get' => $startwork_get,
             'departments' => Department::all(),
             'mutations' => $mutations,
             'get_job' => $get_job,
@@ -185,8 +186,38 @@ class DatamasterMutationController extends Controller
     {
         //
 
- 
+        DB::table('mutations')
+            ->where('id', '=', $id)
+            ->update([
+            'mutation_date'=> $request->mutation_date,
+            'bagian'=> $request->bagian,
+            'cell'=> $request->cell, 
+            'job_id'=> $request->job_id,
+            'department_id'=> $request->department_id,
+            'employee_id'=> $request->id
+        ]); 
+        return redirect('/datamaster/mutations/'. $request->id . '/edit')->with('success', 'Data Promosi Karyawan Berhasil di edit!');
+
     }
+
+    public function getedit($id)
+    {
+        // echo $id;
+        $mutatios = DB::table('mutatios')
+            ->where('mutatios.id', '=', $id) 
+            ->leftJoin('departments', 'mutatios.department_id', '=', 'departments.id')
+            ->leftJoin('jobs', 'mutatios.job_id', '=', 'jobs.id')
+            ->leftJoin('employees', 'mutatios.employee_id', '=', 'employees.id')
+            ->first();
+
+
+        return  view('datamaster.mutatios.getedit', [
+            "mutatio" => $mutatios,
+            'jobs' => Job::all(),
+            'departments' => Department::all(),
+        ]);
+    }
+
 
     /**
      * Remove the specified resource from storage.

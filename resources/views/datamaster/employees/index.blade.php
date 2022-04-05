@@ -164,7 +164,7 @@
                     <td>{{ $employee->national_id }}</td>
                     <td>
 
-                      {{ $employee->job_level }} / {{ $employee->department  }}
+                      {{ $employee->job->job_level }} / {{ $employee->department->department  }}
                     </td>
                     <td>{{ $employee->status_employee }}</td>
                     <td>

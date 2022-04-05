@@ -25,7 +25,15 @@
     <div class="col-md-12">
         
       <div class="card">
-          <div class="card-body table-responsive p-0">
+        @if (session()->has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong>
+            {{ session('success') }}
+          </strong>
+          </div>
+        @else
+
+        @endif
           
       </div>
     </div>
@@ -57,50 +65,29 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+        <form action="{{ route('demotions.import') }}" method="POST" enctype="multipart/form-data">
+          @csrf
         <div class="modal-body">
+            <p class="text-justify-right">
+                <a href="{{asset('excel/FORMAT_DEMOSI_DATA.xlsx')}}">Format Uploads Input Demosi </a>
+                <br>
+            </p>
           <div class="input-group">
               <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="exampleInputFile">
+                  <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
                   <label class="custom-file-label" for="exampleInputFile">Choose file</label>
               </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
         </div>
+      </form>
       </div>
     </div>
   </div>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a class="btn btn-outline-primary" data-toggle="modal"  data-target="#excel_karyawan_update" >
-<i class="fas fa-upload" data-toggle="tooltip" data-placement="bottom" title="Upload Excel Update Data Karyawan"></i>
-</a>
-<!-- Modal -->
-<div class="modal fade"  id="excel_karyawan_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Upload excel Update data karyawan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="input-group">
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="exampleInputFile">
-              <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-            </div>
-            </div>
-        </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a  class="btn btn-outline-primary" data-toggle="tooltip" data-placement="bottom" title="Download Excel Data Karyawan">
 <i class="fas fa-download"></i>
@@ -134,7 +121,7 @@
                     <td>{{ $employee->number_of_employees }}</td>
                     <td>{{ $employee->name }}</td>
                     <td>{{ $employee->email }}</td>
-                    <td><span class="tag tag-success">{{ $employee->phone_number }}</span></td>
+                    <td>{{ $employee->job->job_level }} / {{ $employee->department->department  }}</td>
                     <td>
                         <a href="/datamaster/demotions/{{ $employee->id }}" class="btn  btn-outline-primary">
                             Lihat
@@ -156,13 +143,11 @@
         </table>
       </div>
       <div class="card-footer">
-        {{-- <h3 class="card-title">Responsive Hover Table</h3> --}}
-        <div class="row justify-content-center mb-3">
-          <div class="col-lg-6">
-            {{ $employees->links() }}
+          <h3 class="card-title">Total : {{$count}}</h3>
+            <div class="pagination pagination-sm m-0 float-right">
+                {{ $employees->links() }}
+            </div>
           </div>
-        </div>
-      </div>
       <!-- /.card-body -->
     </div>
   </div>

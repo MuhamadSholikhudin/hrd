@@ -40,7 +40,7 @@
                   </p>
                 <div id="t_karyawan_lama">
                 </div>
-                <a href="#" class="btn btn-primary btn-block"><b>active</b></a>
+                <a href="#" class="btn btn-primary btn-block"><b>{{  $employee->status_employee  }}</b></a>
               </div>
               <!-- /.card-body -->
             </div>
@@ -70,22 +70,22 @@
                         </thead>
                         <tbody>
                         <tbody>
-                        @foreach ($mutation_get as $mutation_get)
+                        @foreach ($startwork_get as $startwork_get)
                             <tr>
                               <td>{{ $loop->iteration }}</td>
-                              <td>{{ $mutation_get->job_level }} / {{ $mutation_get->department }} (awal kerja)</td>
+                              <td>{{ $startwork_get->job_level }} / {{ $startwork_get->department }} (awal kerja)</td>
                               <td>
-                                  {{ $mutation_get->mutation_date }}
+                                  {{ $startwork_get->startwork_date }}
                               </td>
                               <td>
-                                  {{ $mutation_get->bagian }}
+                                  {{ $startwork_get->bagian }}
                               </td>
                               <td>
-                                  {{ $mutation_get->cell }}
+                                  {{ $startwork_get->cell }}
                               </td>
                               <td>
                                   <!-- <a href="employee_show_by_id.html" class="btn  btn-outline-danger btn-sm">Lihat</a> -->
-                                  <a href="promotion_edit_by_id.html" class="btn  btn-outline-warning btn-sm">edit</a>
+                                  {{-- <a href="promotion_edit_by_id.html" class="btn  btn-outline-warning btn-sm">edit</a> --}}
                               </td>
                             </tr>
                           @endforeach     
@@ -105,7 +105,7 @@
                               </td>
                               <td>
                                   <!-- <a href="employee_show_by_id.html" class="btn  btn-outline-danger btn-sm">Lihat</a> -->
-                                  <a href="promotion_edit_by_id.html" class="btn  btn-outline-warning btn-sm">edit</a>
+                                  {{-- <a href="promotion_edit_by_id.html" class="btn  btn-outline-warning btn-sm">edit</a> --}}
                               </td>
                             </tr>
                           @endforeach

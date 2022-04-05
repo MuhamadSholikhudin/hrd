@@ -56,7 +56,7 @@
                     <b>Friends</b> <a class="float-right">13,287</a>
                   </li>
                 </ul> -->
-                <a href="#" class="btn btn-primary btn-block"><b>active</b></a>
+                <a href="#" class="btn btn-primary btn-block"><b>{{  $employee->status_employee  }}</b></a>
               </div>
               <!-- /.card-body -->
             </div>
@@ -178,10 +178,29 @@
                           </tr>
                         </thead>
                         <tbody>
+                            @foreach ($startwork_get as $startwork_get)
+                            <tr>
+                              <td>{{ $loop->iteration }}</td>
+                              <td>{{ $startwork_get->job_level }} / {{ $startwork_get->department }} (awal kerja)</td>
+                              <td>
+                                  {{ $startwork_get->startwork_date }}
+                              </td>
+                              <td>
+                                  {{ $startwork_get->bagian }}
+                              </td>
+                              <td>
+                                  {{ $startwork_get->cell }}
+                              </td>
+                              <td>
+                                  <!-- <a href="employee_show_by_id.html" class="btn  btn-outline-danger btn-sm">Lihat</a> -->
+                                  {{-- <a href="" class="btn  btn-outline-warning btn-sm">edit</a> --}}
+                              </td>
+                            </tr>
+                          @endforeach     
 
                           @foreach ($mutations as $mutation)
                             <tr>
-                              <td>{{ $loop->iteration  }}</td>
+                              <td>{{ $loop->iteration + 1 }}</td>
                               <td>{{ $mutation->department }} / {{ $mutation->job_level }}</td>
                               <td>
                                   {{ $mutation->mutation_date }}
@@ -194,7 +213,7 @@
                               </td>
                               <td>
                                   <!-- <a href="employee_show_by_id.html" class="btn  btn-outline-danger btn-sm">Lihat</a> -->
-                                  <a href="mutation_edit_by_id.html" class="btn  btn-outline-warning btn-sm">edit</a>
+                                  <a href="/datamaster/mutations/{{ $mutation->id }}/getedit" class="btn  btn-outline-warning btn-sm">edit</a>
                               </td>
                             </tr>
                           @endforeach

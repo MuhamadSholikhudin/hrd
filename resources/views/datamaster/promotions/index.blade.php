@@ -111,6 +111,7 @@
         <table class="table table-hover text-nowrap">
           <thead>
             <tr>
+              <th>NO</th>
               <th>NIK ID</th>
               <th>Nama</th>
               <th>Nomer KTP</th>
@@ -122,19 +123,13 @@
           <tbody>
               @foreach ($employees as $employee)
                 <tr>
+                    <td>{{ $employee->id }}</td>
                     <td>{{ $employee->number_of_employees }}</td>
                     <td>{{ $employee->name }}</td>
                     <td>{{ $employee->national_id }}</td>
                     <td>
-                      <?php 
-                        // $job1 = DB::table('jobs')
-                        //     ->where('id', '=', $employee->job_id)
-                        //     ->first();
-                        // $department1 = DB::table('departments')
-                        //     ->where('id', '=', $employee->department_id)
-                        //     ->first();
-                      ?>
-                      {{ $employee->job_level }} / {{ $employee->department  }}
+                        {{ $employee->job->job_level }} / {{ $employee->department->department  }}
+                
                     </td>
                     <td>{{ $employee->status_employee }}</td>
                     <td>

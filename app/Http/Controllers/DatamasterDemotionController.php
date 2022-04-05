@@ -21,6 +21,9 @@ class DatamasterDemotionController extends Controller
     public function index()
     {
         $employees = Employee::latest();
+        // $employees = DB::table('employees')
+        //     ->leftJoin('jobs', 'employees.job_id', '=', 'jobs.id')
+        //     ->Join('departments', 'employees.department_id', '=', 'departments.id');
 
         if(request('search')){
             $employees->where('number_of_employees', 'like', '%' . request('search') . '%')
@@ -29,7 +32,8 @@ class DatamasterDemotionController extends Controller
         }
 
         return view('datamaster.demotions.index', [
-            'employees' => $employees->paginate(3)
+            'employees' => $employees->paginate(15),
+            'count' => DB::table('employees')->count()
              
         ]);
     }
@@ -72,7 +76,7 @@ class DatamasterDemotionController extends Controller
             'employee_id'=> $request->id
             ]);
 
-        return redirect('/datamaster/demotions/'. $request->id . '/edit');
+        return redirect('/datamaster/demotions/'. $request->id . '/edit')->with('success', 'Data Promosi Karyawan Berhasil di demosikan!');
 
     }
 
@@ -100,12 +104,12 @@ class DatamasterDemotionController extends Controller
             ->where('employee_id', '=', $id) 
             ->get();
         
-        //Menampilkan data mutations paling lama berdasarkan id employee
-        $mutation_get = DB::table('mutations')
+        //Menampilkan data startworks paling lama berdasarkan id employee
+        $startwork_get = DB::table('startworks')
             ->where('employee_id', '=', $id)
-            ->leftJoin('departments', 'mutations.department_id', '=', 'departments.id')
-            ->leftJoin('jobs', 'mutations.job_id', '=', 'jobs.id')
-            ->orderBy('mutations.id')
+            ->leftJoin('departments', 'startworks.department_id', '=', 'departments.id')
+            ->leftJoin('jobs', 'startworks.job_id', '=', 'jobs.id')
+            ->orderBy('startworks.id')
             ->limit(1)
             // ->where('votes', '=', 100)
             // ->where('age', '>', 35)
@@ -116,7 +120,7 @@ class DatamasterDemotionController extends Controller
         return view('datamaster.demotions.show', [
             'employee' => $employee,
             'jobs' => Job::all(),
-            'mutation_get' => $mutation_get,
+            'startwork_get' => $startwork_get,
             'departments' => Department::all(),
             'demotions' => $demotions,
             'get_job' => $get_job,
@@ -134,27 +138,27 @@ class DatamasterDemotionController extends Controller
     {
         //
         $employee = DB::table('employees')->where('id', $id)
-            ->first();
+                ->first();
         
         $get_job = DB::table('jobs')->where('id', $employee->job_id)
-            ->first();
+                ->first();
 
         $get_department = DB::table('departments')
-            ->where('id', $employee->department_id)->first();
+                ->where('id', $employee->department_id)->first();   
         
         $demotions = DB::table('demotions')
-            ->leftJoin('departments', 'demotions.department_id', '=', 'departments.id')
-            ->leftJoin('jobs', 'demotions.job_id', '=', 'jobs.id')
-            // ->latest()
-            ->where('employee_id', '=', $id) 
-            ->get();
+                ->leftJoin('departments', 'demotions.department_id', '=', 'departments.id')
+                ->leftJoin('jobs', 'demotions.job_id', '=', 'jobs.id')
+                // ->latest()
+                ->where('employee_id', '=', $id) 
+                ->get();
         
-        //Menampilkan data mutations paling lama berdasarkan id employee
-        $mutation_get = DB::table('mutations')
+        //Menampilkan data startworks paling lama berdasarkan id employee
+        $startwork_get = DB::table('startworks')
             ->where('employee_id', '=', $id)
-            ->leftJoin('departments', 'mutations.department_id', '=', 'departments.id')
-            ->leftJoin('jobs', 'mutations.job_id', '=', 'jobs.id')
-            ->orderBy('mutations.id')
+            ->leftJoin('departments', 'startworks.department_id', '=', 'departments.id')
+            ->leftJoin('jobs', 'startworks.job_id', '=', 'jobs.id')
+            ->orderBy('startworks.id')
             ->limit(1)
             // ->where('votes', '=', 100)
             // ->where('age', '>', 35)
@@ -164,8 +168,8 @@ class DatamasterDemotionController extends Controller
 
         return view('datamaster.demotions.create', [
             'employee' => $employee,
+            'startwork_get' => $startwork_get,
             'jobs' => Job::all(),
-            'mutation_get' => $mutation_get,
             'departments' => Department::all(),
             'demotions' => $demotions,
             'get_job' => $get_job,
@@ -184,8 +188,36 @@ class DatamasterDemotionController extends Controller
     public function update(Request $request, $id)
     {
         //
+        DB::table('demotions')
+            ->where('id', '=', $id)
+            ->update([
+            'demotion_date'=> $request->demotion_date,
+            'bagian'=> $request->bagian,
+            'cell'=> $request->cell, 
+            'job_id'=> $request->job_id,
+            'department_id'=> $request->department_id,
+            'employee_id'=> $request->id
+            ]); 
+            return redirect('/datamaster/demotions/'. $request->id . '/edit')->with('success', 'Data Demosi Karyawan Berhasil di edit!');
+    }
 
- 
+
+    public function getedit($id)
+    {
+        // echo $id;
+        $demotions = DB::table('demotions')
+            ->where('demotions.id', '=', $id) 
+            ->leftJoin('departments', 'demotions.department_id', '=', 'departments.id')
+            ->leftJoin('jobs', 'demotions.job_id', '=', 'jobs.id')
+            ->leftJoin('employees', 'demotions.employee_id', '=', 'employees.id')
+            ->first();
+
+
+        return  view('datamaster.demotions.getedit', [
+            "demotion" => $demotions,
+            'jobs' => Job::all(),
+            'departments' => Department::all(),
+        ]);
     }
 
     /**
