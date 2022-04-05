@@ -150,3 +150,79 @@ Department::create([ "department" => "TECHNICAL SUPERMARKET"]);
 Department::create([ "department" => "TRAINING"]);
 Department::create([ "department" => "TRAINING CENTER");
 
+public function import() 
+    {        // Excel::import(new EmployeesImport, request()->file('file'));
+
+        $rows =  Excel::toArray(new PromotionsImport, request()->file('file'));
+        // dd($rows);
+        foreach($rows as $row):
+            foreach($row as $x):
+                if($x['number_of_employees'] == NULL){
+
+                }else{
+                    $search_employee = DB::table('employees')->where('number_of_employees', '=', floor($x['number_of_employees']))->count();
+                          
+                    if($search_employee > 0){
+
+                    }else{
+                    // CEK number_of_employees	name	job_level	code_job_level	department	cell	bagian
+
+                    // CEK Department
+                    $num_dept = DB::table('departments')->where('department', '=', $x['department'])->count();
+                    if($num_dept > 0){
+                        $department_get = DB::table('departments')->where('department', '=', $x['department'])->first();
+                        $department_id = $department_get->id;
+                    }else{
+                        $department_id = 12;
+                    }
+
+                    // CEK job_level
+                    $num_dept = DB::table('jobs')->where('job_level', '=', $x['job_level'])->count();
+                    if($num_dept > 0){
+                        $job_get = DB::table('jobs')->where('job_level', '=', $x['job_level'])->first();
+                        $job_id = $job_get->id;
+                    }else{
+                        $job_id = 12;
+                    }
+                    $employee_get = DB::table('employees')->where('number_of_employees', '=',  floor($x['number_of_employees']))->first();
+
+                    DB::table('employees')
+                    ->where('id', $employee_get->id)
+                    ->update([
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s'),
+                        'job_id'=> $job_id,
+                        'department_id'=> $department_id
+                        ]);
+
+                    DB::table('promotions')->insert([
+                        'promotion_date'=> date('Y-m-d'),
+                        'bagian'=> $x['bagian'],
+                        'cell'=> $x['cell'],
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s'),
+                        'job_id'=> $job_id,
+                        'department_id'=> $department_id,
+                        'employee_id'=> $employee_get->id
+                        ]);
+                    }                  
+                }
+            endforeach;
+        endforeach;
+        return redirect('/datamaster/promotions');
+    }
+
+        public function model(array $row)
+    {
+        return new Promotion([
+            //  number_of_employees	name	job_level	code_job_level	department	cell	bagian
+
+            'number_of_employees' => $row['number_of_employees'],
+            'name'=> $row['name'],
+            'job_level'=> $row['job_level'],  
+            'code_job_level'=> $row['code_job_level'],
+            'department'=> $row['department'],
+            'cell'=> $row['cell'],
+            'bagian'=> $row['bagian']
+        ]);
+    }

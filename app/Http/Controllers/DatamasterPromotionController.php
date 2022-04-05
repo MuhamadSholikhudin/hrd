@@ -26,7 +26,10 @@ class DatamasterPromotionController extends Controller
      */
     public function index()
     {
-        $employees = Employee::latest();
+        // $employees = Employee::latest();
+        $employees = DB::table('employees')
+        ->leftJoin('jobs', 'employees.job_id', '=', 'jobs.id')
+        ->Join('departments', 'employees.department_id', '=', 'departments.id');
 
         if(request('search')){
             $employees->where('number_of_employees', 'like', '%' . request('search') . '%')
@@ -35,7 +38,8 @@ class DatamasterPromotionController extends Controller
         }
 
         return view('datamaster.promotions.index', [
-            'employees' => $employees->paginate(15)
+            'employees' => $employees->paginate(15),
+            'count' => DB::table('employees')->count()
              
         ]);
     }
@@ -78,7 +82,7 @@ class DatamasterPromotionController extends Controller
             'employee_id'=> $request->id
             ]);
 
-        return redirect('/datamaster/promotions/'. $request->id . '/edit');
+        return redirect('/datamaster/promotions/'. $request->id . '/edit')->with('success', 'Data Promosi Karyawan Berhasil di promosikan!');
 
     }
 
@@ -140,20 +144,20 @@ class DatamasterPromotionController extends Controller
     {
         //
         $employee = DB::table('employees')->where('id', $id)
-            ->first();
+                    ->first();
         
         $get_job = DB::table('jobs')->where('id', $employee->job_id)
-            ->first();
+                    ->first();
 
         $get_department = DB::table('departments')
-            ->where('id', $employee->department_id)->first();
+                    ->where('id', $employee->department_id)->first();
         
         $promotions = DB::table('promotions')
-            ->leftJoin('departments', 'promotions.department_id', '=', 'departments.id')
-            ->leftJoin('jobs', 'promotions.job_id', '=', 'jobs.id')
-            // ->latest()
-            ->where('employee_id', '=', $id) 
-            ->get();
+                    ->leftJoin('departments', 'promotions.department_id', '=', 'departments.id')
+                    ->leftJoin('jobs', 'promotions.job_id', '=', 'jobs.id')
+                    // ->latest()
+                    ->where('employee_id', '=', $id) 
+                    ->get();
         
         //Menampilkan data mutations paling lama berdasarkan id employee
         $mutation_get = DB::table('mutations')
@@ -170,8 +174,8 @@ class DatamasterPromotionController extends Controller
 
         return view('datamaster.promotions.create', [
             'employee' => $employee,
-            'jobs' => Job::all(),
             'mutation_get' => $mutation_get,
+            'jobs' => Job::all(),
             'departments' => Department::all(),
             'promotions' => $promotions,
             'get_job' => $get_job,
@@ -190,8 +194,34 @@ class DatamasterPromotionController extends Controller
     public function update(Request $request, $id)
     {
         //
+        DB::table('promotions')
+            ->where('id', '=', $id)
+            ->update([
+            'promotion_date'=> $request->promotion_date,
+            'bagian'=> $request->bagian,
+            'cell'=> $request->cell, 
+            'job_id'=> $request->job_id,
+            'department_id'=> $request->department_id,
+            'employee_id'=> $request->id
+            ]); 
+    }
 
- 
+    public function getedit($id)
+    {
+        // echo $id;
+        $promotions = DB::table('promotions')
+            ->where('promotions.id', '=', $id) 
+            ->leftJoin('departments', 'promotions.department_id', '=', 'departments.id')
+            ->leftJoin('jobs', 'promotions.job_id', '=', 'jobs.id')
+            ->leftJoin('employees', 'promotions.employee_id', '=', 'employees.id')
+            ->first();
+
+
+        return  view('datamaster.promotions.getedit', [
+            "promotion" => $promotions,
+            'jobs' => Job::all(),
+            'departments' => Department::all(),
+        ]);
     }
 
     /**
@@ -205,67 +235,4 @@ class DatamasterPromotionController extends Controller
         //
     }
 
-
-
-    public function import() 
-    {        // Excel::import(new EmployeesImport, request()->file('file'));
-
-        $rows =  Excel::toArray(new PromotionsImport, request()->file('file'));
-        // dd($rows);
-        foreach($rows as $row):
-            foreach($row as $x):
-                if($x['number_of_employees'] == NULL){
-
-                }else{
-                    $search_employee = DB::table('employees')->where('number_of_employees', '=', floor($x['number_of_employees']))->count();
-                          
-                    if($search_employee > 0){
-
-                    }else{
-                    // CEK number_of_employees	name	job_level	code_job_level	department	cell	bagian
-
-                    // CEK Department
-                    $num_dept = DB::table('departments')->where('department', '=', $x['department'])->count();
-                    if($num_dept > 0){
-                        $department_get = DB::table('departments')->where('department', '=', $x['department'])->first();
-                        $department_id = $department_get->id;
-                    }else{
-                        $department_id = 12;
-                    }
-
-                    // CEK job_level
-                    $num_dept = DB::table('jobs')->where('job_level', '=', $x['job_level'])->count();
-                    if($num_dept > 0){
-                        $job_get = DB::table('jobs')->where('job_level', '=', $x['job_level'])->first();
-                        $job_id = $job_get->id;
-                    }else{
-                        $job_id = 12;
-                    }
-                    $employee_get = DB::table('employees')->where('number_of_employees', '=',  floor($x['number_of_employees']))->first();
-
-                    DB::table('employees')
-                    ->where('id', $employee_get->id)
-                    ->update([
-                        'created_at' => date('Y-m-d H:i:s'),
-                        'updated_at' => date('Y-m-d H:i:s'),
-                        'job_id'=> $job_id,
-                        'department_id'=> $department_id
-                        ]);
-
-                    DB::table('promotions')->insert([
-                        'promotion_date'=> date('Y-m-d'),
-                        'bagian'=> $x['bagian'],
-                        'cell'=> $x['cell'],
-                        'created_at' => date('Y-m-d H:i:s'),
-                        'updated_at' => date('Y-m-d H:i:s'),
-                        'job_id'=> $job_id,
-                        'department_id'=> $department_id,
-                        'employee_id'=> $employee_get->id
-                        ]);
-                    }                  
-                }
-            endforeach;
-        endforeach;
-        return redirect('/datamaster/promotions');
-    }
 }

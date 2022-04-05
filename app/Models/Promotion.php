@@ -12,6 +12,11 @@ class Promotion extends Model
 
     protected $with = ['employee', 'job', 'department'];
 
+    // protected $fillable = [
+    //     'employee_id',	'job_id',	'department_id','', 'gender', 'date_of_birth',
+
+    // ];
+
     public function employee()
     {
         return $this->belongsTo(Employee::class);

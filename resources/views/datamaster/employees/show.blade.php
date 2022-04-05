@@ -32,6 +32,8 @@
                     <div class="card-body box-profile">
                       <div class="text-center">
                         <img class="profile-user-img img-fluid img-circle" src="{{ asset('dist/img/user4-128x128.jpg')}}" alt="User profile picture">
+                        <!-- <img class="profile-user-img img-fluid img-circle" src="file://10.10.40.190/database%20foto%20karyawan/1604000017.jpg" alt="User profile picture"> -->
+                        <!-- file://10.10.40.190/database%20foto%20karyawan/{{$employee->number_of_employees}}.jpg -->
                       </div>
       
                       <h4 class="profile-username text-center">{{  $employee->number_of_employees  }}</h4>
@@ -111,24 +113,24 @@
                       <strong><i class="fas fa-book mr-1"></i> Pendidikan</strong>
                         <table>
                           <tr>
-                            <td>Pend Terakhir</td>
-                            <td>: {{  $employee->educate  }}</td>
+                            <td valign="top">Pend Terakhir</td>
+                            <td valign="top">: {{  $employee->educate  }}</td>
                           </tr>
                           <tr>
-                            <td>Jurusan</td>
-                            <td>: {{  $employee->major  }}</td>
+                            <td valign="top">Jurusan</td>
+                            <td valign="top">: {{  $employee->major  }}</td>
                           </tr>
                         </table>
                       <hr>
                       <strong><i class="fas fa-book mr-1"></i> Email & Phone</strong>
                         <table>
                           <tr>
-                            <td>Email</td>
-                            <td>: {{  $employee->email  }}</td>
+                            <td valign="top">Email</td>
+                            <td valign="top">: {{  $employee->email  }}</td>
                           </tr>
                           <tr>
-                            <td>Phone</td>
-                            <td>: {{  $employee->phone  }}</td>
+                            <td valign="top">Phone</td>
+                            <td valign="top">: {{  $employee->phone  }}</td>
                           </tr>
                         </table>
                       

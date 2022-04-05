@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use Maatwebsite\Excel\Concerns\ToArray;
+use Maatwebsite\Excel\Facades\Excel;
+
 use App\Exports\EmployeesExport;
 use App\Imports\EmployeesImport;
-use Maatwebsite\Excel\Facades\Excel;
+
 use App\Models\Employee;
   
 
@@ -186,18 +188,18 @@ class EmployeeController extends Controller
 
         $rows =  Excel::toArray(new EmployeesImport, request()->file('file'));
 
-
         foreach($rows as $row): 
             foreach($row as $x): 
                 if(floor($x['number_of_employees']) == NULL){
 
-                }else{ 
+                }else{
+
            
                 // CEK Department
                 $num_dept = DB::table('departments')->where('department', '=', $x['department'])->count();
                 if($num_dept > 0){
-                $department_get = DB::table('departments')->where('department', '=', $x['department'])->first();
-                $department_id = $department_get->id;
+                    $department_get = DB::table('departments')->where('department', '=', $x['department'])->first();
+                    $department_id = $department_get->id;
                 }else{
                    $department_id = 12;
                 }

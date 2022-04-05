@@ -31,6 +31,7 @@
               <strong>
             {{ session('success') }}
           </strong>
+          </div>
         @else
 
         @endif
@@ -162,15 +163,8 @@
                     <td>{{ $employee->name }}</td>
                     <td>{{ $employee->national_id }}</td>
                     <td>
-                      <?php 
-                        $job = DB::table('jobs')
-                        ->where('id', '=', $employee->job_id)
-                        ->first();
-                        $department = DB::table('departments')
-                        ->where('id', '=', $employee->department_id)
-                        ->first();
-                      ?>
-                      {{ $job->job_level }} / {{ $department->department  }}
+
+                      {{ $employee->job_level }} / {{ $employee->department  }}
                     </td>
                     <td>{{ $employee->status_employee }}</td>
                     <td>

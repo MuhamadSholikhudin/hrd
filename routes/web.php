@@ -12,6 +12,8 @@ use App\Http\Controllers\DatamasterPromotionController;
 use App\Http\Controllers\DatamasterDemotionController;
 use App\Http\Controllers\DatamasterMutationController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\ExcelPromotionController;
+use App\Http\Controllers\ExcelDemotionController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HiEmployeeController;
 use App\Http\Controllers\UserController;
@@ -75,8 +77,11 @@ Route::controller(EmployeeController::class)->group(function(){
 
 // DATA MASTER PROMOTION
 Route::resource('datamaster/promotions', DatamasterPromotionController::class);
+
+Route::get('/datamaster/promotions/{promotions:id}/getedit', [DatamasterPromotionController::class, 'getedit']);
+
 //EXCEL IMPORT END EXPORT EMPLOYEES
-Route::controller(DatamasterPromotionController::class)->group(function(){
+Route::controller(ExcelPromotionController::class)->group(function(){
     // Route::get('users', 'index');
     Route::get('exportpromotions', 'export')->name('promotions.export');
     Route::post('importpromotions', 'import')->name('promotions.import');
@@ -86,10 +91,17 @@ Route::controller(DatamasterPromotionController::class)->group(function(){
 // DATA MASTER DEMOTION
 Route::resource('datamaster/demotions', DatamasterDemotionController::class);
 
+Route::get('/datamaster/demotions/{demotions:id}/getedit', [DatamasterDemotionController::class, 'getedit']);
+
+//EXCEL IMPORT END EXPORT EMPLOYEES
+Route::controller(ExcelDemotionController::class)->group(function(){
+    Route::get('exportdemotions', 'export')->name('demotions.export');
+    Route::post('importdemotions', 'import')->name('demotions.import');
+    Route::post('updatedemotions', 'update')->name('demotions.update');
+});
 
 // DATA MASTER MUTATION
 Route::resource('datamaster/mutations', DatamasterMutationController::class);
-
 
 Route::get('/hi', function () {
     return view('hi.employees');

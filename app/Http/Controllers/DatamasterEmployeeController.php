@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-
 use App\Models\Employee;
 use App\Models\Job;
 use App\Models\Department;
@@ -21,7 +20,13 @@ class DatamasterEmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::latest();
+        // $employees = Employee::oldest();
+
+        $employees = DB::table('employees')
+            ->leftJoin('jobs', 'employees.job_id', '=', 'jobs.id')
+            ->Join('departments', 'employees.department_id', '=', 'departments.id');
+            // ->get();
+
 
         if(request('search')){
             $employees->where('number_of_employees', 'like', '%' . request('search') . '%')
@@ -29,8 +34,9 @@ class DatamasterEmployeeController extends Controller
                       ->orWhere('national_id', 'like', '%' . request('search') . '%');
         }
 
+        
         return view('datamaster.employees.index', [
-            'employees' => $employees->paginate(15),
+            'employees' => $employees->paginate(10),
             'count' => DB::table('employees')->count()
              
         ]);
@@ -115,8 +121,10 @@ class DatamasterEmployeeController extends Controller
             'bagian'=> 'required',
             'cell'=> 'required', 
             'job_id'=> 'required',
-           'department_id'=> 'required'
+            'department_id'=> 'required'
         ]);
+        dd($validatedDataEmployee);
+        
         Employee::create($validatedDataEmployee);
         
         $employee_get = DB::table('employees')->where('number_of_employees', '=', $request->number_of_employees)->first();
@@ -146,7 +154,6 @@ class DatamasterEmployeeController extends Controller
             'total_salary' => 0
         ]);
 
-        // dd($validatedDataSalary);
         
         // Salary::create($validatedDataSalary);
             

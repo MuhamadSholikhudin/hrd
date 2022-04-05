@@ -287,9 +287,9 @@
 
                 <div class="tab-pane" id="input_keluarga">
                   <div class="form-group row">
-                    <label for="biological_mother_name" class="col-sm-4 col-form-label">Nama Ibu Kandung</label>
+                    <label for="biological_mothers_name" class="col-sm-4 col-form-label">Nama Ibu Kandung</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="biological_mother_name" name="biological_mothers_name" value="{{ old('biological_mother_name') }}" >
+                      <input type="text" class="form-control" id="biological_mothers_name" name="biological_mothers_name" value="{{ old('biological_mother_name') }}" >
                     </div>
                   </div>
                 </div>

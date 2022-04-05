@@ -8,7 +8,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Tambah Karyawan</h1>
+          <h1>Edit Karyawan</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -66,8 +66,8 @@
               <div class="card-body">
 
               @foreach ($errors->all() as $message)
-                          {{$message}} <br>
-                            @endforeach
+                  {{$message}} <br>
+              @endforeach
               
               </div>
               
@@ -256,7 +256,7 @@
                     <div class="form-group row">
                       <label for="email" class="col-sm-2 col-form-label">Email </label>
                       <div class="col-sm-10">
-                        <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $employee->email) }}" >
+                        <input type="text" class="form-control" id="email" name="email" value="{{ old('email', $employee->email) }}" >
                       </div>
                     </div>
                   </div>

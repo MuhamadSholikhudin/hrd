@@ -1,17 +1,13 @@
 <?php
 
 namespace App\Imports;
-namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 use App\Models\Promotion;
-use App\Models\Employee;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Hash;
 
-class PromotionsImport implements ToModel
+class PromotionsImport implements ToModel, WithHeadingRow
 {
     /**
     * @param array $row
@@ -21,8 +17,7 @@ class PromotionsImport implements ToModel
     public function model(array $row)
     {
         return new Promotion([
-            //  number_of_employees	name	job_level	code_job_level	department	cell	bagian
-
+            //
             'number_of_employees' => $row['number_of_employees'],
             'name'=> $row['name'],
             'job_level'=> $row['job_level'],  
