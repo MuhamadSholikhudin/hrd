@@ -30,24 +30,21 @@
                       <div class="text-center">
                         <img class="profile-user-img img-fluid img-circle" src="{{asset('dist/img/user4-128x128.jpg')}}" alt="User profile picture">
                       </div>
-      
-                      <h3 class="profile-username text-center">{{  $employee->name  }}e</h3>
-      
+                       <h3 class="profile-username text-center">{{  $employee->name  }}</h3>
                       <p class="text-muted text-center">{{  $employee->number_of_employees  }}</p>
-      
                       <ul class="list-group list-group-unbordered mb-3">
                         <li class="list-group-item">
                           <b>Email</b> <a class="float-right">{{  $employee->email  }}</a>
                         </li>
                         <li class="list-group-item">
-                          <b>Phone Number</b> <a class="float-right">{{  $employee->phone_number  }}</a>
+                          <b>Phone Number</b> <a class="float-right">{{  $employee->phone  }}</a>
                         </li>
-                        <li class="list-group-item">
+                        <!-- <li class="list-group-item">
                           <b>Create at</b> <a class="float-right">{{  $employee->created_at  }}</a>
-                        </li>
+                        </li> -->
                       </ul>
       
-                      {{-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> --}}
+                      <a href="#" class="btn btn-primary btn-block"><b>{{ $employee->status_employee }}</b></a>
                     </div>
                     <!-- /.card-body -->
                   </div>
@@ -55,13 +52,13 @@
             </div>
             <div class="col-md-9">
                     <!-- general form elements -->
-                    <div class="card card-warning">
+                   <!--  <div class="card card-warning">
                       <div class="card-header mb-2">
                         <h3 class="card-title">List Investigation</h3>
-                      </div>
+                      </div> -->
                       <!-- /.card-header -->
                       <!-- form start -->
-                      <a href="/hi/investigation/create" class="btn btn-block btn-primary mb-2" width="50px">+ add investigation</a>
+                      <!-- <a href="/hi/investigation/create" class="btn btn-block btn-primary mb-2" width="50px">+ add investigation</a>
 
                       <table class="table table-hover text-nowrap">
                           <thead>
@@ -97,21 +94,19 @@
                      
                           </tbody>
                         </table>
-                    </div>
+                    </div> -->
                     <!-- /.card -->
                     <div class="card card-secondary">
                         <div class="card-header">
                           <h3 class="card-title">List Warning Letter</h3>
                         </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
                         <table class="table table-hover text-nowrap">
                             <thead>
                               <tr>
                                 <th>ID</th>
                                 <th>date</th>
-                                <th>Kronologi</th>
-                                <th>Status</th>
+                                <th>Jenis Pelanggran</th>
+                                <th>Status </th>
                                 <th>Reason</th>
                               </tr>
                             </thead>
@@ -119,8 +114,8 @@
                               <tr>
                                 <td>1</td>
                                 <td>2022-03-01</td>
-                                <td>telah mencuri</td>
-                                <td>Harus diberi SP 1</td>
+                                <td>SP 1 </td>
+                                <td>Aktif</td>
                                 <td>
                                     <a href="/hi/employees/" class="btn  btn-outline-primary">
                                       Show                    </a>
@@ -160,28 +155,7 @@
                               </tr>
                             </thead>
                             <tbody>
-                            @foreach ($investigations as $investigation)
-                              <tr>
-                                <td>1</td>
-                                <td>{{$investigation->created_at}}</td>
-                                <td>{{ $investigation->updated_at }}</td>
-                                <td>Harus diberi SP 1</td>
-                                <td>
-                                    <a href="/hi/employees/" class="btn  btn-outline-primary">
-                                      Show                    </a>
-                                        <a href="/hi/employees//edit" class="btn  btn-outline-warning">
-                                      Edit
-                                      </a>
-                                      <form action="/hi/employees/" method="POST" class="d-inline ">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="btn  btn-outline-danger" onclick="return confirm(' Are you sure delete data ?')"> 
-                                        Delete
-                                      </button>
-                                      </form>
-                                </td>
-                              </tr>
-                              @endforeach
+                            
                             </tbody>
                           </table>
                         </div>

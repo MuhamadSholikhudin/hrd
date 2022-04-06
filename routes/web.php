@@ -19,6 +19,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HiEmployeeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\ViolationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -113,9 +114,13 @@ Route::controller(ExcelMutationController::class)->group(function(){
     Route::post('updatemutations', 'update')->name('mutations.update');
 });
 
-Route::get('/hi', function () {
-    return view('hi.employees');
-});
+
+// DATA HI Violations
+Route::resource('hi/violations', ViolationController::class);
+
+// Route::get('/hi', function () {
+//     return view('hi.employees');
+// });
 
 // Route::resource('/hi/employees', HiEmployeeController::class);
 

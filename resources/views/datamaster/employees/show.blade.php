@@ -54,7 +54,9 @@
                         </li>
                       </ul>
       
-                      <a href="#" class="btn btn-primary btn-block"><b>{{ $employee->status_employee }}</b></a>                    </div>
+                      <a href="#" class="btn btn-primary btn-block"><b>{{ $employee->status_employee }}</b></a>
+                      
+                    </div>
                     <!-- /.card-body -->
                   </div>
                   <!-- /.card -->

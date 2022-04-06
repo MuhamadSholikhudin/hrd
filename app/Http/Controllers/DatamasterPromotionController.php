@@ -154,27 +154,11 @@ class DatamasterPromotionController extends Controller
         $promotions = DB::table('promotions')
                     ->leftJoin('departments', 'promotions.department_id', '=', 'departments.id')
                     ->leftJoin('jobs', 'promotions.job_id', '=', 'jobs.id')
-                    // ->latest()
                     ->where('employee_id', '=', $id) 
                     ->get();
-        
-        //Menampilkan data promotions paling lama berdasarkan id employee
-        $startwork_get = DB::table('startworks')
-            ->where('employee_id', '=', $id)
-            ->leftJoin('departments', 'startworks.department_id', '=', 'departments.id')
-            ->leftJoin('jobs', 'startworks.job_id', '=', 'jobs.id')
-            // ->leftJoin('employees', 'promotions.employee_id', '=', 'employees.id')
-            ->orderBy('startworks.id')
-            ->limit(1)
-            // ->where('votes', '=', 100)
-            // ->where('age', '>', 35)
-            ->get(); 
-            // ->oldest() 
-            // ->first();
 
         return view('datamaster.promotions.create', [
             'employee' => $employee,
-            'startwork_get' => $startwork_get,
             'jobs' => Job::all(),
             'departments' => Department::all(),
             'promotions' => $promotions,
@@ -205,7 +189,6 @@ class DatamasterPromotionController extends Controller
             'employee_id'=> $request->id
             ]); 
             return redirect('/datamaster/promotions/'. $request->id . '/edit')->with('success', 'Data Promosi Karyawan Berhasil di edit!');
-
     }
 
     public function getedit($id)
