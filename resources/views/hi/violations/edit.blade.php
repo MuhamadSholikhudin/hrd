@@ -167,10 +167,8 @@
                           </div>
                         
                         <div class="card-footer clearfix">
-                        <button type="button" id="btn_modal_click" class="btn btn-default" style="display:none;" data-toggle="modal" data-target="#modal-xl">
-                          Launch Extra Large Modal
-                        </button>
-                        
+
+                          
                             <div class="form-group row">
                               
                               <div class="col-sm-12">
@@ -218,40 +216,52 @@
                                   //  alert(select_violation + ' ' + violation_now);
                                   //  alert();
                                   if(select_violation == '' && violation_now == 'sp1'){
-                                    document.getElementById("btn_modal_click").click();
+                                    document.getElementById("btn_modal_click1").click();
                                       document.getElementById("jpn").value = "SP1";
                                    }
+                                  if(select_violation == '' && violation_now == 'sp2'){
+                                    document.getElementById("btn_modal_click1").click();
+                                      document.getElementById("jpn").value = "SP2";
+                                   }
+                                  if(select_violation == '' && violation_now == 'sp3'){
+                                    document.getElementById("btn_modal_click1").click();
+                                      document.getElementById("jpn").value = "SP3";
+                                   }
+                                  if(select_violation == '' && violation_now == 'sp4'){
+                                    document.getElementById("btn_modal_click1").click();
+                                      document.getElementById("jpn").value = "SP4";
+                                   }
                                    if(select_violation == 'notviolation' && violation_now == 'sp1'){
-                                      document.getElementById("btn_modal_click").click();
+                                      document.getElementById("btn_modal_click1").click();
                                       document.getElementById("jpn").value = "SP1";
                                    }
                                    if(select_violation == 'sp1' && violation_now == 'sp1'){
-                                      document.getElementById("btn_modal_click").click();
+                                      document.getElementById("btn_modal_click2").click();
                                       document.getElementById("jpn").value = "SP2";
                                     // alert("SP 2");
-                                   }
+                                   } 
                                    if(select_violation == 'sp1' && violation_now == 'sp2'){
-                                    document.getElementById("btn_modal_click").click();
-                                      document.getElementById("jpn").value = "SP3";
+                                    document.getElementById("btn_modal_click2").click();
+                                      document.getElementById("jpn2").value = "SP3";
                                    }
                                    if(select_violation == 'sp2' && violation_now == 'sp1'){
-                                      document.getElementById("btn_modal_click").click();
-                                      document.getElementById("jpn").value = "SP3";
+                                      document.getElementById("btn_modal_click2").click();
+                                      document.getElementById("jpn2").value = "SP3";
                                    }
                                    if(select_violation == 'sp2' && violation_now == 'sp2'){
                                     // alert("SP 4");
-                                    document.getElementById("btn_modal_click").click();
-                                      document.getElementById("jpn").value = "SP4";
+                                    document.getElementById("btn_modal_click2").click();
+                                      document.getElementById("jpn2").value = "SP4";
                                    }
                                    if(select_violation == 'sp2' && violation_now == 'sp3'){
                                     // alert("SP 4");
-                                    document.getElementById("btn_modal_click").click();
-                                      document.getElementById("jpn").value = "SP4";
+                                    document.getElementById("btn_modal_click2").click();
+                                      document.getElementById("jpn2").value = "SP4";
                                    }
                                    if(select_violation == 'sp3' && violation_now == 'sp4'){
                                     // alert("SP PHK");
-                                    document.getElementById("btn_modal_click").click();
-                                      document.getElementById("jpn").value = "PHK";
+                                    document.getElementById("btn_modal_click2").click();
+                                      document.getElementById("jpn2").value = "PHK";
                                    }
 
                                  }
@@ -263,8 +273,10 @@
                       </div>
                     <!-- /.card -->
 
-                    
-                <div class="modal fade" id="modal-xl">
+                  <button type="button" id="btn_modal_click1" class="btn btn-default" style="display:none;" data-toggle="modal" data-target="#modal-xl1">
+                    Launch Extra Large Modal
+                  </button>
+                <div class="modal fade" id="modal-xl1">
                   <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -275,46 +287,80 @@
                       </div>
                       <div class="modal-body">
                         <p>One fine body&hellip;</p>
-                    <div class="form-group row">
-                      <label for="number_of_employees" class="col-sm-2 col-form-label">NOmer SP </label>
-                      <div class="col-sm-4">
-                          <input type="text" class="form-control" id="number_of_employees" name="number_of_employees" value="NAma orang" placeholder="Nomer Induk Karyawan" >
-                      </div>
-                     
-                    </div>
+                        <div class="form-group row">
+                          <label for="number_of_employees" class="col-sm-2 col-form-label">Nomer SP </label>
+                          <div class="col-sm-4">
+                              <input type="text" class="form-control" id="number_of_employees" name="number_of_employees" value=" 34/SP-HRD/IV/2022" placeholder="Nomer Induk Karyawan" >
+                          </div>
+                        </div>
 
-                    <div class="form-group row">
-                      <label for="number_of_employees" class="col-sm-2 col-form-label">Nama </label>
-                      <div class="col-sm-4">
-                          <input type="text" class="form-control" id="number_of_employees" name="number_of_employees" value="NAma orang" placeholder="Nomer Induk Karyawan" >
-                      </div>
-                      <label for="finger_id" class="col-sm-2 col-form-label">NIK</label>
-                      <div class="col-sm-4">
-                          <input type="text" class="form-control" id="finger_id" name="finger_id" value="NIK" placeholder="Finger ID" >
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="number_of_employees" class="col-sm-2 col-form-label">Jabatan </label>
-                      <div class="col-sm-4">
-                          <input type="text" class="form-control" id="number_of_employees" name="number_of_employees" value="NAma orang" placeholder="Nomer Induk Karyawan" >
-                      </div>
-                      <label for="finger_id" class="col-sm-2 col-form-label">Bagian / Department</label>
-                      <div class="col-sm-4">
-                          <input type="text" class="form-control" id="finger_id" name="finger_id" value="NIK" placeholder="Finger ID" >
-                      </div>
-                    </div>
+                        <div class="form-group row">
+                          <label for="number_of_employees" class="col-sm-2 col-form-label">Nama </label>
+                          <div class="col-sm-4">
+                              <input type="text" class="form-control" id="number_of_employees" name="number_of_employees" value="Nama orang" placeholder="Nomer Induk Karyawan" >
+                          </div>
+                          <label for="finger_id" class="col-sm-2 col-form-label">NIK</label>
+                          <div class="col-sm-4">
+                              <input type="text" class="form-control" id="finger_id" name="finger_id" value="NIK" placeholder="Finger ID" >
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="number_of_employees" class="col-sm-2 col-form-label">Jabatan </label>
+                          <div class="col-sm-4">
+                              <input type="text" class="form-control" id="number_of_employees" name="number_of_employees" value="Jabatan" placeholder="Nomer Induk Karyawan" >
+                          </div>
+                          <label for="finger_id" class="col-sm-2 col-form-label">Bagian / Department</label>
+                          <div class="col-sm-4">
+                              <input type="text" class="form-control" id="finger_id" name="finger_id" value="Department" placeholder="Finger ID" >
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="inputName" class="col-sm-2 col-form-label">Jenis Pelangaran</label>
+                          <div class="col-sm-3">
+                              <input type="text" class="form-control" id="jpn2" name="jpn"  placeholder="Jenis Pelanggaran" >     
+                          </div>
+                        </div> 
+                    
+                        <div class="form-group row">
+                          <label for="inputName" class="col-sm-2 col-form-label">Pasal Yang dilanggar : </label>
+                          <div class="col-sm-10">
+                            <p>
+                              Perjanjian Kerja Bersama Pasal 27 ayat (4) huruf "t" Menitipkan dan/atau dititipi scanning absensi.
+                            </p>
+                          </div>
+                        </div> 
+                        <div class="form-group row">
+                          <label for="inputName" class="col-sm-2 col-form-label">Keterangan lain :</label>
+                          <div class="col-sm-10">
+                              <form …>
+                                  <input id="x" type="hidden" name="content">
+                                  <trix-editor input="x">
+                                      -	Mencekrollkan absensi sdr. Arum Kusumaningtyas dan sdr. Arum Wahyunigsih pada Selasa, 5 April 2022
 
-                    <div class="form-group row">
-                    <label for="inputName" class="col-sm-2 col-form-label">Jenis Pelangaran</label>
-                    <div class="col-sm-3">
-                                 
-                          <input type="text" class="form-control" id="jpn" name="jpn"  placeholder="Finger ID" >
-                                 
-                    </div>
-                    </div> 
-                     
-                    </div>
-                                </div> 
+                                  </trix-editor>
+                                </form>
+                            {{-- <input type="text" class="form-control" id="jpn" name="jpn" value="-	Mencekrollkan absensi sdr. Arum Kusumaningtyas dan sdr. Arum Wahyunigsih pada Selasa, 5 April 2022">      --}}
+                          </div>
+                        </div> 
+                        <div class="form-group row">
+                          <label for="inputName" class="col-sm-12 col-form-label">
+                            Apabila dikemudian hari terjadi pengulangan perbuatan pelanggaran tersebut diatas dan/atau melakukan perbuatan pelanggaran selama masa berlaku Surat Peringatan (6 bulan sejak waktu pelanggaran ) maka akan diambil tindakan lanjutan sesuai peraturan perusahaan yang berlaku.
+                          </label>
+                          
+                        </div> 
+                        <div class="form-group row">
+                          <label for="inputName" class="col-sm-2 col-form-label">Tanggal Surat :</label>
+                          <div class="col-sm-2">
+                            <input type="date" class="form-control" id="2" name="jpn" value="">     
+                          </div>
+                          <label for="inputName" class="col-sm-2 col-form-label">Human Resource Development :</label>
+                          <div class="col-sm-2">
+                            <input type="datextte" class="form-control" id="" name="jpn" value="Nama manager">     
+                          </div>
+                        
+                        </div> 
+
+                      </div> 
                       <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary">Save changes</button>
@@ -325,31 +371,112 @@
                   <!-- /.modal-dialog -->
                 </div>
                 <!-- /.modal -->
-        
-                    <div class="card card-danger">
-                        <div class="card-header">
-                          <h3 class="card-title">List Work Termination</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
-                        <table class="table table-hover text-nowrap">
-                            <thead>
-                              <tr>
-                                <th>ID</th>
-                                <th>date</th>
-                                <th>Kronologi</th>
-                                <th>Status</th>
-                                <th>Reason</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                            
-                            </tbody>
-                          </table>
+
+                
+                <button type="button" id="btn_modal_click2" class="btn btn-default" style="display:none;" data-toggle="modal" data-target="#modal-xl2">
+                    Launch Extra Large Modal
+                  </button>
+                <div class="modal fade" id="modal-xl2">
+                  <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title">Tambahkan pelanggaran</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <p>One fine body&hellip;</p>
+                        <div class="form-group row">
+                          <label for="number_of_employees" class="col-sm-2 col-form-label">Nomer SP </label>
+                          <div class="col-sm-4">
+                              <input type="text" class="form-control" id="number_of_employees" name="number_of_employees" value=" 34/SP-HRD/IV/2022" placeholder="Nomer Induk Karyawan" >
+                          </div>
                         </div>
 
-                    <!-- /.card -->
+                        <div class="form-group row">
+                          <label for="number_of_employees" class="col-sm-2 col-form-label">Nama </label>
+                          <div class="col-sm-4">
+                              <input type="text" class="form-control" id="number_of_employees" name="number_of_employees" value="Nama orang" placeholder="Nomer Induk Karyawan" >
+                          </div>
+                          <label for="finger_id" class="col-sm-2 col-form-label">NIK</label>
+                          <div class="col-sm-4">
+                              <input type="text" class="form-control" id="finger_id" name="finger_id" value="NIK" placeholder="Finger ID" >
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="number_of_employees" class="col-sm-2 col-form-label">Jabatan </label>
+                          <div class="col-sm-4">
+                              <input type="text" class="form-control" id="number_of_employees" name="number_of_employees" value="Jabatan" placeholder="Nomer Induk Karyawan" >
+                          </div>
+                          <label for="finger_id" class="col-sm-2 col-form-label">Bagian / Department</label>
+                          <div class="col-sm-4">
+                              <input type="text" class="form-control" id="finger_id" name="finger_id" value="Department" placeholder="Finger ID" >
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="inputName" class="col-sm-2 col-form-label">Jenis Pelangaran</label>
+                          <div class="col-sm-3">
+                              <input type="text" class="form-control" id="jpn" name="jpn"  placeholder="Jenis Pelanggaran" >     
+                          </div>
+                        </div> 
+                    
+                        <div class="form-group row">
+                          <label for="inputName" class="col-sm-2 col-form-label">Pasal Yang dilanggar : </label>
+                          <div class="col-sm-10">
+                            <p>
+                                Perjanjian Kerja Bersama Pasal 27 ayat (5) huruf "c". Pekerja sudah diberikan Sanksi SP III (tiga), yang masa berlakunya belum habis tetapi melakukan pelanggaran kembali yang bobot sanksinya SP III (tiga) atau SP II (dua) atau SP I (satu)..
+                            </p>
+                          </div>
+                        </div> 
+                        <div class="form-group row">
+                          <label for="inputName" class="col-sm-2 col-form-label">Keterangan lain :</label>
+                          <div class="col-sm-10">
+                              <form …>
+                                  <input id="x" type="hidden" name="content">
+                                  <trix-editor input="x">
+                                      -	Mangkir Tanggal 11 dan 26 Oktober 2021
+                                      -	Bobot Pelanggaran sekarang yaitu Perjanjian Kerja Bersama Pasal 27 ayat (2) huruf "g" Tidak masuk kerja tanpa keterangan/ Alpa selama 2 (dua) hari tidak berturut-turut selama satu bulan.
+                                      -	Dalam masa Surat Peringatan Ketiga Perjanjian Kerja Bersama Pasal 27 ayat (4) huruf "b"; Perjanjian Kerja Bersama Pasal 27 ayat (2) huruf "m"., Melakukan checkroll kehadiran, tetapi tidak berada di produksi tanpa keterangan dispensasi dan non-job
+                                      
+
+                                  </trix-editor>
+                                </form>
+                            {{-- <input type="text" class="form-control" id="jpn" name="jpn" value="-	Mencekrollkan absensi sdr. Arum Kusumaningtyas dan sdr. Arum Wahyunigsih pada Selasa, 5 April 2022">      --}}
+                          </div>
+                        </div> 
+                        <div class="form-group row">
+                          <label for="inputName" class="col-sm-12 col-form-label">
+                            Apabila dikemudian hari terjadi pengulangan perbuatan pelanggaran tersebut diatas dan/atau melakukan perbuatan pelanggaran selama masa berlaku Surat Peringatan (6 bulan sejak waktu pelanggaran ) maka akan diambil tindakan lanjutan sesuai peraturan perusahaan yang berlaku.
+                          </label>
+                          
+                        </div> 
+                        <div class="form-group row">
+                          <label for="inputName" class="col-sm-2 col-form-label">Tanggal Surat :</label>
+                          <div class="col-sm-2">
+                            <input type="date" class="form-control" id="jpn" name="jpn" value="">     
+                          </div>
+                          <label for="inputName" class="col-sm-3 col-form-label">Human Resource Development :</label>
+                          <div class="col-sm-3">
+                            <input type="text" class="form-control" id="jpn" name="jpn" value="Nama manager">     
+                          </div>
+                        </div> 
+
+                      </div> 
+                      <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
+                    </div>
+                    <!-- /.modal-content -->
                   </div>
+                  <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+    
+
+
+      </div>
     </div>
 
 

@@ -23,6 +23,17 @@
   <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+                      {{-- TRIX EDOTIR --}}
+  <link rel="stylesheet" type="text/css" href="{{ asset('dist/css/trix.css') }}">
+  <script type="text/javascript" src="{{ asset('dist/js/trix.js') }}"></script>
+
+<style>
+  trix-toolbar [data-trix-button-group="file-tools"]{
+    display: none;
+  }
+</style>
+
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -69,6 +80,9 @@
 <!-- Select2 -->
 <script src="{{asset('plugins/select2/js/select2.full.min.js') }}"></script>
 
+
+
+
 <script src="{{ asset('dist/js/scriptdewe.js') }}"></script> 
 
 <!-- jquery-validation -->
@@ -89,6 +103,10 @@
   })
 
 
+)
+document.addEventListener('trix-file-accept', function(e){
+    e.preventDefault();
+  }
   // $(function () {
   //   $.validator.setDefaults({
   //     submitHandler: function () {
