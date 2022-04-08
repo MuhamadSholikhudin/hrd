@@ -19,7 +19,16 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HiEmployeeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchController;
+
 use App\Http\Controllers\ViolationController;
+
+use App\Http\Controllers\HiPkbController;
+use App\Http\Controllers\HiArticleController;
+use App\Http\Controllers\HiParagraphController;
+use App\Http\Controllers\HiLetterController;
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -122,6 +131,16 @@ Route::resource('hi/violations', ViolationController::class);
 //     return view('hi.employees');
 // });
 
-// Route::resource('/hi/employees', HiEmployeeController::class);
+// PKB
+Route::resource('/hi/pkb', HiPkbController::class);
+
+// PKB -> articles
+Route::resource('/hi/articles', HiArticleController::class);
+
+// PKB -> paragraphs
+Route::resource('/hi/pkb/paragraphs', HiParagraphController::class);
+
+// PKB -> letters
+Route::resource('/hi/pkb/letters', HiLetterController::class);
 
 // Route::resource('/hi/investigations', HiEmployeeController::class);

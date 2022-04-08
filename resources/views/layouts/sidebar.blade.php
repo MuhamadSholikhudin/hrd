@@ -120,11 +120,41 @@
                 <p>PHK</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="/hi/pkb" class="nav-link {{ Request::is('hi/pkb*') ? 'active' : '' }}">
+            <!-- <li class="nav-item">
+              <a href="/hi/pkb" class="nav-link ">
                 <i class="far fa-circle nav-icon"></i>
                 <p>PKB</p>
               </a>
+            </li> -->
+            <li class="nav-item">
+              <a href="/hi/pkb" class="nav-link {{ Request::is('hi/pkb*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-circle"></i>
+                <p>
+                  PKB
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview" style="display: none;">
+                <li class="nav-item">
+                  <a href="/hi/pkb/articles" class="nav-link {{ Request::is('hi/pkb/articles*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Pasal</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/hi/pkb/paragraphs" class="nav-link {{ Request::is('hi/pkb/paragraphs*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Ayat</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/hi/pkb/letters" class="nav-link {{ Request::is('hi/pkb/letters*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Huruf</p>
+                  </a>
+                </li>
+
+              </ul>
             </li>
             <li class="nav-item">
               <a href="/hi/default_texts" class="nav-link {{ Request::is('hi/default_texts*') ? 'active' : '' }}">
