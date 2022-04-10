@@ -136,19 +136,19 @@
               </a>
               <ul class="nav nav-treeview" style="display: none;">
                 <li class="nav-item">
-                  <a href="/hi/pkb/articles" class="nav-link {{ Request::is('hi/pkb/articles*') ? 'active' : '' }}">
+                  <a href="/hi/articles" class="nav-link {{ Request::is('hi/articles*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Pasal</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/hi/pkb/paragraphs" class="nav-link {{ Request::is('hi/pkb/paragraphs*') ? 'active' : '' }}">
+                  <a href="/hi/paragraphs" class="nav-link {{ Request::is('hi/paragraphs*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Ayat</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/hi/pkb/letters" class="nav-link {{ Request::is('hi/pkb/letters*') ? 'active' : '' }}">
+                  <a href="/hi/alphabets" class="nav-link {{ Request::is('hi/alphabets*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Huruf</p>
                   </a>

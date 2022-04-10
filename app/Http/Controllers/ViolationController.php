@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Employee;
 use App\Models\Job;
 use App\Models\Department;
-use App\Models\Salary;
+use App\Models\Alphabet;
+use App\Models\Article;
+use App\Models\Paragraph;
 
 class ViolationController extends Controller
 {
@@ -85,6 +87,7 @@ class ViolationController extends Controller
 
         return view('hi.violations.edit', [
             'employee' => $employee,
+            'alphabets' => Alphabet::all(),
             'jobs' => Job::all(),
             'departments' => Department::all()
         ]);
@@ -112,5 +115,13 @@ class ViolationController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function get_type_violation()
+    {
+        //
+        $data = 'ok 1';
+        return response()->json($data);
     }
 }

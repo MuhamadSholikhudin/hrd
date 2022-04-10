@@ -31,10 +31,8 @@ class Employee extends Model
         //     $employees->where('number_of_employees', 'like', '%' . request('search') . '%')
         //               ->orWhere('name', 'like', '%' . request('search') . '%');
         // }
-
-
-
     }
+    
     public function job()
     {
         return $this->belongsTo(Job::class);

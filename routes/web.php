@@ -1,10 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Models\HiEmployee;
 use App\Models\Employee;
 use App\Models\Jon;
 use App\Models\Department;
+use App\Models\Paragraph;
+use App\Models\Article;
+use App\Models\Alphabet;
 
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\DatamasterEmployeeController;
@@ -25,7 +29,7 @@ use App\Http\Controllers\ViolationController;
 use App\Http\Controllers\HiPkbController;
 use App\Http\Controllers\HiArticleController;
 use App\Http\Controllers\HiParagraphController;
-use App\Http\Controllers\HiLetterController;
+use App\Http\Controllers\HiAlphabetController;
 
 
 
@@ -127,6 +131,8 @@ Route::controller(ExcelMutationController::class)->group(function(){
 // DATA HI Violations
 Route::resource('hi/violations', ViolationController::class);
 
+Route::post('violation/get_type_violation', [ViolationController::class, 'get_type_violation'])->name('get_type_violation');
+
 // Route::get('/hi', function () {
 //     return view('hi.employees');
 // });
@@ -138,9 +144,9 @@ Route::resource('/hi/pkb', HiPkbController::class);
 Route::resource('/hi/articles', HiArticleController::class);
 
 // PKB -> paragraphs
-Route::resource('/hi/pkb/paragraphs', HiParagraphController::class);
+Route::resource('/hi/paragraphs', HiParagraphController::class);
 
-// PKB -> letters
-Route::resource('/hi/pkb/letters', HiLetterController::class);
+// PKB -> alphabets
+Route::resource('/hi/alphabets', HiAlphabetController::class);
 
 // Route::resource('/hi/investigations', HiEmployeeController::class);

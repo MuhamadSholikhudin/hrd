@@ -80,7 +80,7 @@
 <!-- Select2 -->
 <script src="{{asset('plugins/select2/js/select2.full.min.js') }}"></script>
 
-
+<script src=//code.jquery.com/jquery-3.5.1.min.js integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin=anonymous></script>
 
 
 <script src="{{ asset('dist/js/scriptdewe.js') }}"></script> 
@@ -100,13 +100,80 @@
 
     }
 
-  })
+  });
 
 
-)
+  $(function(){
+    $('#btn_proses').on('click', function() {
+
+$.ajaxSetup({
+      headers: {
+          'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+      }
+  });
+          //  var select_violation = 'notviolation';
+              var select_violation = document.getElementById("select_violation_oldest").value;
+              // var violation_now = document.getElementById("select_violation_last").value;
+              var keyword = document.getElementById("select_violation_last").value;
+              // var keyword = $(this).val();
+              // alert(keyword);
+$.ajax({
+type: "GET",
+url: "{{route('get_type_violation')}}",
+  // async: true,
+dataType: 'json',
+// data: {
+//   keyword: keyword,
+//     // pembeli: pembeli
+// },
+  success: function(html) {
+    alert(html);
+  }
+
+});
+});
+  });
+  // function btn_proses(){
+  
+//   var pembeli = document.getElementById("id_pembeli").value;
+// $("#hasil_cari").html(keyword);
+
+    // async: true,
+    // dataType: 'json',
+    // beforeSend: function() {
+    //     $("#hasil_cari").hide();
+    //     $("#tunggu").html('<div class="spinner-border" role="status"> <span class = "visually-hidden" >  </span> </div>');
+    // },
+    // success: function(html) {
+        // $("#tunggu").html('');
+        // $("#hasil_cari").show();
+        // $("#hasil_cari").html(html[1]);
+        // $("#PasswordInput").val("");
+        // alert(html);
+        // if (html[0] == 'terima_kasih') {
+        //     document.getElementById("terima_kasih").play();
+        // } else if (html[0] == 'coba_lagi') {
+        //     document.getElementById("coba_lagi").play();
+
+        // } else if (html[0] == 'data_tidak_terdaftar') {
+        //     document.getElementById("data_tidak_terdaftar").play();
+
+        // } else {
+
+        // }
+    // }
+// });
+
+                //  alert(select_violation);
+                  //  alert(select_violation + ' ' + violation_now);
+                  //  alert();
+
+                  
+
+
 document.addEventListener('trix-file-accept', function(e){
     e.preventDefault();
-  }
+  });
   // $(function () {
   //   $.validator.setDefaults({
   //     submitHandler: function () {

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->char('article', 5);
             $table->string('chapters')->nullable();
-            $table->text('article_sound')->nullable();           
+            $table->text('article_sound')->nullable();                  
             $table->timestamps();
         });
     }

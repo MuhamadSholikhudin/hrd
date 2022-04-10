@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('letters', function (Blueprint $table) {
+        Schema::create('alphabets', function (Blueprint $table) {
             $table->id();
-            $table->text('description')->nullable();     
+            $table->string('alphabet')->nullable();
+            $table->text('description')->nullable();
+            $table->string('firts_periode')->nullable();           
+            $table->string('last_periode')->nullable();         
             $table->foreignId('paragraph_id');      
             $table->timestamps();
         });

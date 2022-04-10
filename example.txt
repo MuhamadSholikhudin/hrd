@@ -226,3 +226,54 @@ public function import()
             'bagian'=> $row['bagian']
         ]);
     }
+
+
+
+                      if(select_violation == '' && violation_now == 'sp1'){
+                    document.getElementById("btn_modal_click1").click();
+                      document.getElementById("jpn1").value = "SP1";
+                    }
+                  if(select_violation == '' && violation_now == 'sp2'){
+                    document.getElementById("btn_modal_click1").click();
+                      document.getElementById("jpn1").value = "SP2";
+                    }
+                  if(select_violation == '' && violation_now == 'sp3'){
+                    document.getElementById("btn_modal_click1").click();
+                      document.getElementById("jpn1").value = "SP3";
+                    }
+                  if(select_violation == ' ' && violation_now == 'sp4'){
+                    document.getElementById("btn_modal_click1").click();
+                      document.getElementById("jpn1").value = "SP4";
+                    }
+                    if(select_violation == 'notviolation' && violation_now == 'sp1'){
+                      document.getElementById("btn_modal_click1").click();
+                      document.getElementById("jpn1").value = "SP1";
+                    }
+                    if(select_violation == 'sp1' && violation_now == 'sp1'){
+                      document.getElementById("btn_modal_click2").click();
+                      document.getElementById("jpn1").value = "SP2";
+                    // alert("SP 2");
+                    } 
+                    if(select_violation == 'sp1' && violation_now == 'sp2'){
+                    document.getElementById("btn_modal_click2").click();
+                      document.getElementById("jpn2").value = "SP3";
+                    }
+                    if(select_violation == 'sp2' && violation_now == 'sp1'){
+                      document.getElementById("btn_modal_click2").click();
+                      document.getElementById("jpn2").value = "SP3";
+                    }
+                    if(select_violation == 'sp2' && violation_now == 'sp2'){
+                    // alert("SP 4");
+                    document.getElementById("btn_modal_click2").click();
+                      document.getElementById("jpn2").value = "SP4";
+                    }
+                    if(select_violation == 'sp2' && violation_now == 'sp3'){
+                    // alert("SP 4");
+                    document.getElementById("btn_modal_click2").click();
+                      document.getElementById("jpn2").value = "SP4";
+                    }
+                    if(select_violation == 'sp3' && violation_now == 'sp4'){
+                    // alert("SP PHK");
+                    document.getElementById("btn_modal_click2").click();
+                      document.getElementById("jpn2").value = "PHK";
+                    }

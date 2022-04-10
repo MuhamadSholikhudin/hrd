@@ -203,7 +203,7 @@ class DatamasterMutationController extends Controller
     public function getedit($id)
     {
         // echo $id;
-        $mutatios = DB::table('mutatios')
+        $mutation = DB::table('mutatios')
             ->where('mutatios.id', '=', $id) 
             ->leftJoin('departments', 'mutatios.department_id', '=', 'departments.id')
             ->leftJoin('jobs', 'mutatios.job_id', '=', 'jobs.id')
@@ -212,7 +212,7 @@ class DatamasterMutationController extends Controller
 
 
         return  view('datamaster.mutatios.getedit', [
-            "mutatio" => $mutatios,
+            "mutation" => $mutation,
             'jobs' => Job::all(),
             'departments' => Department::all(),
         ]);
