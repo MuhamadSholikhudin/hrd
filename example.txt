@@ -277,3 +277,40 @@ public function import()
                     document.getElementById("btn_modal_click2").click();
                       document.getElementById("jpn2").value = "PHK";
                     }
+
+
+
+
+$awal  = date_create('2022-04-09');
+$akhir = date_create(); // waktu sekarang
+$diff  = date_diff( $awal, $akhir );
+
+echo 'Selisih waktu: '
+echo $diff->y . ' tahun, ';
+echo $diff->m . ' bulan, ';
+echo $diff->d . ' hari, ';
+echo $diff->h . ' jam, ';
+echo $diff->i . ' menit, ';
+echo $diff->s . ' detik, ';
+// Output: Selisih waktu: 28 tahun, 5 bulan, 9 hari, 13 jam, 7 menit, 7 detik
+
+echo 'Total selisih hari : ' . $diff->days;
+// Output: Total selisih hari: 10398
+
+
+
+// Cari data pelanggan terakhir 
+$sel_num_vio = DB::table('violations')->count();
+if($sel_num_vio == 0){
+  $sta_viol = 'notviolation';
+}else{
+  $sel_vio = DB::table('violations')->latest()->first();
+  $date_now = date('Y-m-d');
+  $date_sta = 
+  $diff  = date_diff( $date_sta, $date_now );
+  if($diff->d <= 0){
+    $sta_viol = 'notviolation';
+  }else{
+    $sta_viol = $sel_vio->status_violation';
+  }
+}

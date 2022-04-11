@@ -87,6 +87,7 @@ class ViolationController extends Controller
 
         return view('hi.violations.edit', [
             'employee' => $employee,
+            'violations' => DB::table('violations')->where('employee_id', $id)->get(),
             'alphabets' => Alphabet::all(),
             'jobs' => Job::all(),
             'departments' => Department::all()
@@ -118,10 +119,19 @@ class ViolationController extends Controller
     }
 
 
-    public function get_type_violation()
+    public function get_type_violation(Request $request)
     {
         //
-        $data = 'ok 1';
+        $sel_alphabet = DB::table('alphabets')->find($request->keyword);
+        $sel_paragraph = DB::table('paragraphs')->find($sel_alphabet->paragraph_id);
+        $sel_article = DB::table('articles')->find($sel_paragraph->article_id);
+
+        $status_type_violation = $sel_paragraph->type_of_verse;
+
+        // Perjanjian Kerja Bersama Pasal 27 ayat (4) huruf "t" Menitipkan dan/atau dititipi scanning absensi.
+
+        $data = [$status_type_violation,   'Perjanjian Kerja Bersama Pasal '. $sel_article->article.' ayat ('.$sel_paragraph->paragraph .') huruf "'. $sel_alphabet->alphabet.'" ' .  $sel_alphabet->description];
+        // $data = $status_type_violation;
         return response()->json($data);
     }
 }

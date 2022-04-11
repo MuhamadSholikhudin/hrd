@@ -7,6 +7,8 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Ionicons -->
@@ -103,36 +105,51 @@
   });
 
 
-  $(function(){
+  
     $('#btn_proses').on('click', function() {
 
-$.ajaxSetup({
-      headers: {
-          'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-      }
-  });
-          //  var select_violation = 'notviolation';
-              var select_violation = document.getElementById("select_violation_oldest").value;
-              // var violation_now = document.getElementById("select_violation_last").value;
-              var keyword = document.getElementById("select_violation_last").value;
-              // var keyword = $(this).val();
-              // alert(keyword);
-$.ajax({
-type: "GET",
-url: "{{route('get_type_violation')}}",
-  // async: true,
-dataType: 'json',
-// data: {
-//   keyword: keyword,
-//     // pembeli: pembeli
-// },
-  success: function(html) {
-    alert(html);
-  }
+      $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        //  var select_violation = 'notviolation';
+        var select_violation = document.getElementById("last_vio").value;
+        // var violation_now = document.getElementById("select_violation_last").value;
+        var keyword = document.getElementById("select_violation_last").value;
+        var keyword = document.getElementById("select_violation_last").value;
+        // var keyword = $(this).val();
+        // alert(keyword);
+        $.ajax({
+          type: "POST",
+          url: "{{route('get_type_violation')}}",
+          // async: true,
+          dataType: 'json',
+          data: {
+          keyword: keyword,
+            // pembeli: pembeli
+          },
+          success: function(data) {
+            // alert(data);
+            document.getElementById("btn_modal_click1").click();
+            $("#jpn1").val(data[0]);
+            $("#pkb1").text(data[1]);
+            // if (data[0] == 'terima_kasih') {
+            //     document.getElementById("terima_kasih").play();
+            // } else if (data[0] == 'coba_lagi') {
+            //     document.getElementById("coba_lagi").play();
 
-});
-});
-  });
+            // } else if (data[0] == 'data_tidak_terdaftar') {
+            //     document.getElementById("data_tidak_terdaftar").play();
+
+            // } else {
+
+            // }
+          }
+
+        });
+    });
+
   // function btn_proses(){
   
 //   var pembeli = document.getElementById("id_pembeli").value;

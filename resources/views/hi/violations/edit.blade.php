@@ -80,6 +80,31 @@
                 </tr>
               </thead>
               <tbody>
+              @foreach($violations as $violation):
+                <tr>
+                  <td>{{ $iteration->loop }}</td>
+                  <td>{{ $violation->date_violation }}</td>
+                  <td>{{ $violation->date_violation }} </td>
+                  <td>{{ $violation->alphabet_id }}</td>
+                  <td>{{ $violation->date_violation }}</td>
+                  <td>{{ $violation->violation_status  }}</td>
+                  <td>
+                      <a href="file:///c%3A/xampp/htdocs/hrd/resources/views/hi/violations/cetak_sp.html" class="btn  btn-outline-primary">
+                        Cetak                    </a>
+                          <!-- <a href="/hi/employees//edit" class="btn  btn-outline-warning">
+                        Edit
+                        </a> -->
+                        <!-- <form action="/hi/employees/" method="POST" class="d-inline ">
+                          @method('delete')
+                          @csrf
+                          <button class="btn  btn-outline-danger" onclick="return confirm(' Are you sure delete data ?')"> 
+                          Delete
+                        </button>
+                        </form> -->
+                  </td>
+                </tr>
+
+              @endforeach
                 <tr>
                   <td>1</td>
                   <td>2022-03-01</td>
@@ -279,16 +304,51 @@
             $ROM = 'XII';
           }
           echo $ROM;
-        ?>
 
-        <button type="button" id="btn_modal_click1" class="btn btn-default" style="display:none;" data-toggle="modal" data-target="#modal-xl2">
-          Launch Extra Large Modal
+          echo "<br/>";
+          $awal  = date_create('2022-04-10');
+          $akhir = date_create(); // waktu sekarang
+          $diff  = date_diff( $awal, $akhir );
+
+          echo 'Selisih waktu: ';
+          echo $diff->y . ' tahun, ';
+          echo $diff->m . ' bulan, ';
+          echo $diff->d . ' hari, ';
+          echo $diff->h . ' jam, ';
+          echo $diff->i . ' menit, ';
+          echo $diff->s . ' detik, ';
+
+          // Cari data pelanggan terakhir 
+          $sel_num_vio = DB::table('violations')->where('employee_id', $employee->id)->count();
+          if($sel_num_vio == 0){
+            $sta_viol = 'notviolation';
+          }else{
+            $sel_vio = DB::table('violations')->where('employee_id', $employee->id)->latest()->first();
+            $date_now = date('Y-m-d');
+            $date_sta = $sel_vio->date_violation;
+            $diff  = date_diff($date_sta, $date_now);
+
+            if($diff->d <= 0){
+              $sta_viol = 'notviolation';
+            }else{
+              $sta_viol = $sel_vio->status_violation;
+            }
+          }
+
+        ?>
+<!-- INISIASI AKUMULASI PELANGGARAN -->
+<input type="text" name="last_vio" value="{{$sta_viol}}" id="last_vio">
+<input type="text" name="id_emp" value="{{$employee->id}}" id="id_emp">
+
+
+        <button type="button" id="btn_modal_click1" class="btn btn-default" style="display:none;" data-toggle="modal" data-target="#modal-xl1">
+          Surat Peringatan asli
         </button>
         <div class="modal fade" id="modal-xl1">
           <div class="modal-dialog modal-xl">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Tambahkan pelanggaran</h4>
+                <h4 class="modal-title">Tambahkan pelanggaran 1</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -331,9 +391,9 @@
             
                 <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label">Pasal Yang dilanggar : </label>
-                  <div class="col-sm-10">
-                    <p>
-                    Perjanjian Kerja Bersama Pasal 27 ayat (4) huruf "t" Menitipkan dan/atau dititipi scanning absensi.
+                  <div class="col-sm-10" >
+
+                    <p id="pkb1">
                     </p>
                   </div>
                 </div> 
@@ -342,9 +402,7 @@
                   <div class="col-sm-10">
                       <form …>
                           <input id="x" type="hidden" name="content">
-                          <trix-editor input="x">
-                          -	Mencekrollkan absensi sdr. Arum Kusumaningtyas dan sdr. Arum Wahyunigsih pada Selasa, 5 April 2022
-                          </trix-editor>
+                          <trix-editor input="x"></trix-editor>
                         </form>
                     {{-- <input type="text" class="form-control" id="jpn" name="jpn" value="-	Mencekrollkan absensi sdr. Arum Kusumaningtyas dan sdr. Arum Wahyunigsih pada Selasa, 5 April 2022">      --}}
                   </div>
@@ -380,13 +438,13 @@
 
                 
         <button type="button" id="btn_modal_click2" class="btn btn-default" style="display:none;" data-toggle="modal" data-target="#modal-xl2">
-          Launch Extra Large Modal
+          Surat Peringatan Akumulasi
         </button>
         <div class="modal fade" id="modal-xl2">
           <div class="modal-dialog modal-xl">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Tambahkan pelanggaran</h4>
+                <h4 class="modal-title">Tambahkan pelanggaran 2</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>

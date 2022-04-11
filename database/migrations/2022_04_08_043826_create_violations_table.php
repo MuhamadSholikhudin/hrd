@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('part')->nullable();  
             $table->text('other_information')->nullable();     
             $table->foreignId('signature_id');  
-            $table->foreignId('letter_id');      
+            $table->foreignId('alphabet_id');      
             $table->foreignId('employee_id');      
             $table->timestamps();
         });

@@ -52,7 +52,7 @@
                         <label for="">BUNYI PASAL</label>
                         <textarea  class="form-control" id="" name="article_sound"  placeholder="Bunyi pasal"> {{ old('article_sound', $article->article_sound) }}</textarea>
                       </div>
-                      <div class="form-group row">
+                      <!-- <div class="form-group row">
                           <label for="bank_branch" class="col-sm-3 col-form-label">Periode</label>
                           <div class="col-sm-3">
                             <input type="year" class="form-control" id="bank_branch" name="firts_periode" value="{{ old('firts_periode', $article->firts_periode) }}" >
@@ -64,7 +64,7 @@
                           <div class="col-sm-3">
                               <input type="year" class="form-control" id="bank_branch" name="last_periode" value="{{ old('last_periode', $article->last_periode) }}" >
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="modal-footer justify-content-between">
                       <a href="/hi/articles" class="btn btn-default" data-dismiss="modal">kembali</a>
