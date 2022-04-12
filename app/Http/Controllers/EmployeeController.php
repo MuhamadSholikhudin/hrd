@@ -63,7 +63,68 @@ class EmployeeController extends Controller
                         // $date_of_birth_t = strtotime($x['date_of_birth']);             
                         // $date_of_birth = date('Y-m-d', $date_of_birth_t);
                         // $date = intval($row['date_of_birth']);
-                        
+
+                        // $date = $x['date_of_birth'];
+                        $date_of_birth_i = $x['date_of_birth'];
+                        if($date_of_birth_i == null){
+                            // $date = 'true';
+                            // $date_of_birth = '0000-00-00';
+                            $date_of_birth = NULL;
+                        }else{
+                            $date_of_birth = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['date_of_birth']);
+                        }
+
+                        $hire_date_i = $x['hire_date'];
+                        if($hire_date_i == null){
+                            // $date = 'true';
+                            // $hire_date = '0000-00-00';
+                             $hire_date = NULL;
+                        }else{
+                            $hire_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['hire_date']);
+                        }
+
+                        $end_of_contract_i = $x['end_of_contract'];
+                        if($end_of_contract_i == null){
+                            // $date = 'true';
+                            // $end_of_contract = '0000-00-00';
+                            $end_of_contract = NULL;
+                        }else{
+                            $end_of_contract = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['end_of_contract']);
+                        }
+
+                        $date_out_i = $x['date_out'];
+                        if($date_out_i == null){
+                            // $date = 'true';
+                            // $date_out = '0000-00-00';
+                            // $time_date_out = strtotime('00/00/0000');
+                            // $date_out = date('Y-m-d',$time_date_out);
+                            $date_out = NULL;
+
+                        }else{
+                            $date_out = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['date_out']);
+                        }
+// dd($date_out);
+                        $status_employee_i = $x['exit_statement'];
+                        if($status_employee_i == null){
+                            // $date = 'true';
+                            $status_employee = 'active';
+                        }elseif($status_employee_i == '-'){
+                            $status_employee = 'active';
+                        }
+                        else{
+                            $status_employee = 'notactive';
+                        }
+
+// $date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['date_of_birth']);
+// dd($date_of_birth);
+
+                        // if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",$date)) {
+                        // if (DateTime::createFromFormat('Y-m-d G:i:s', $date) !== FALSE) {
+                        //     $ty = 'true';
+                        // } else {
+                        //     $ty = 'false';
+                        // }
+                        // dd($ty);
 
 
                         // CEK hire_date
@@ -89,7 +150,7 @@ class EmployeeController extends Controller
                             $department_get = DB::table('departments')->where('department', '=', $x['department'])->first();
                             $department_id = $department_get->id;
                         }else{
-                            $department_id = 12;
+                            $department_id = 104;
                         }
 
                         // CEK job_level
@@ -98,7 +159,7 @@ class EmployeeController extends Controller
                             $job_get = DB::table('jobs')->where('job_level', '=', $x['job_level'])->first();
                             $job_id = $job_get->id;
                         }else{
-                            $job_id = 12;
+                            $job_id = 21;
                         }
 
                 // if($department_get == )
@@ -110,7 +171,7 @@ class EmployeeController extends Controller
                             'name'=> $x['name'],
                             'gender'=> $x['gender'],  
                             'place_of_birth'=> $x['place_of_birth'],
-                            'date_of_birth'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['date_of_birth']),
+                            'date_of_birth'=> $date_of_birth,
                             'marital_status'=> $x['marital_status'],
                             'religion'=> $x['religion'], 
                             'biological_mothers_name' => $x['biological_mothers_name'],
@@ -131,19 +192,19 @@ class EmployeeController extends Controller
                             'bank_account_number'=> $x['bank_account_number'],
                             'bpjs_ketenagakerjaan'=> $x['bpjs_ketenagakerjaan'],
                             'bpjs_kesehatan' => $x['bpjs_kesehatan'],
-                            'hire_date'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['hire_date']),
+                            'hire_date'=> $hire_date,
                             'employee_type'=> $x['employee_type'],
-                            'end_of_contract'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['end_of_contract']),
-                            'date_out'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['date_out']),
+                            'end_of_contract'=> $end_of_contract,
+                            'date_out'=> $date_out,
                             'exit_statement'=> $x['exit_statement'],
                             'cell'=> $x['cell'], 
                             'bagian'=> $x['bagian'],
                             'kode_ptkp'=> $x['kode_ptkp'],
-                            'year_ptkp'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['year_ptkp']),
+                            'year_ptkp'=> $x['year_ptkp'],
                             'educate'=> $x['educate'],
                             'major'=> $x['major'],
                             'finger_id' => $x['number_of_employees'],
-                            'status_employee' => 'active',
+                            'status_employee' => $status_employee,
                             'date_bpjs_ketenagakerjaan'=> date('Y-m-d'),
                             'date_bpjs_kesehatan'=> date('Y-m-d'),
                             'created_at' => date('Y-m-d H:i:s'),

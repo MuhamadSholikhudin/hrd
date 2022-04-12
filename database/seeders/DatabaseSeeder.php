@@ -128,6 +128,7 @@ class DatabaseSeeder extends Seeder
         Department::create([ "department" => "TECHNICAL SUPERMARKET"]);
         Department::create([ "department" => "TRAINING"]);
         Department::create([ "department" => "TRAINING CENTER"]);
+        Department::create([ "department" => "NONE"]);
         
         Job::create(["code_job_level" => "PD", "job_level" => "PRESIDEN DIREKTUR", "level" => "1"]);
         Job::create(["code_job_level" => "SD", "job_level" => "SENIOR DIREKTUR", "level" => "2"]);
@@ -149,6 +150,7 @@ class DatabaseSeeder extends Seeder
         Job::create(["code_job_level" => "PWT", "job_level" => "PERAWAT", "level" => "11"]);
         Job::create(["code_job_level" => "DRV", "job_level" => "DRIVER", "level" => "12"]);
         Job::create(["code_job_level" => "OP", "job_level" => "OPERATOR", "level" => "12"]);
+        Job::create(["code_job_level" => "OP", "job_level" => "NONE", "level" => "13"]);
 
 
 

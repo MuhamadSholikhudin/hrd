@@ -11,14 +11,19 @@ class Alphabet extends Model
 
     protected $guarded = ['id'];
 
-    protected $with = ['paragraph'];
+    protected $with = ['paragraph', ];
 
     protected $fillable = [
-        'letter', 'article',
+        'alphabet', 'description',
     ];
 
     public function paragraph()
     {
         return $this->belongsTo(Paragraph::class);
+    }
+
+    public function violations()
+    {
+        return $this->hasMany(Violation::class);
     }
 }

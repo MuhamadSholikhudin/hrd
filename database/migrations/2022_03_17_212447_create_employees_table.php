@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('place_of_birth')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->enum('marital_status', ['M', 'S'])->nullable();  
-            $table->enum('religion', ['MOSLEM','BUDHIST','CATHOLIC','CHRISTIAN','HINDU','KEPERCAYAAN','NONE'])->nullable();  
+            $table->string('religion')->nullable();  //, ['MOSLEM','BUDHIST','CATHOLIC','CHRISTIAN','HINDU','KEPERCAYAAN','NONE']
             $table->string('biological_mothers_name')->nullable();
             $table->string('national_id')->nullable();
             $table->text('address_jalan')->nullable();
@@ -50,8 +50,8 @@ return new class extends Migration
             $table->string('bpjs_kesehatan')->nullable();
             $table->date('date_bpjs_kesehatan')->nullable();
             $table->string('npwp')->nullable();
-            $table->enum('kode_ptkp', ['TK', 'K/0', 'K/1', 'K/2'])->nullable();
-            $table->date('year_ptkp')->nullable();
+            $table->char('kode_ptkp', 5)->nullable();
+            $table->char('year_ptkp', 4)->nullable();
             $table->string('bagian')->nullable();
             $table->string('cell')->nullable();   
             $table->string('status_employee')->nullable();   
