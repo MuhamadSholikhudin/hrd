@@ -24,11 +24,14 @@ return new class extends Migration
             $table->date('reporting_date');  
             $table->string('part')->nullable();
             $table->text('other_information')->nullable();
+                      
             $table->string('violation_status')->nullable();  
             $table->string('type_of_violation')->nullable();  
-            $table->char('violation_accumulation');  
+                        
+            $table->char('violation_accumulation');   
             $table->char('alphabet_accumulation');   
             $table->char('violation_accumulation2');  
+            
             $table->foreignId('alphabet_id');          
             $table->foreignId('signature_id');  
             $table->foreignId('employee_id');   

@@ -18,9 +18,11 @@ return new class extends Migration
             $table->string('alphabet')->nullable();
             $table->text('description')->nullable();
             $table->string('firts_periode')->nullable();           
-            $table->string('last_periode')->nullable();         
+            $table->string('last_periode')->nullable(); 
+            $table->string('alphabet_type');
+            $table->string('alphabet_accumulation');
             $table->foreignId('paragraph_id');      
-            $table->timestamps();
+            $table->timestamps(); 
         });
     }
 
@@ -31,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('letters');
+        Schema::dropIfExists('alphabets');
     }
 };
