@@ -31,6 +31,7 @@ return new class extends Migration
             $table->char('violation_accumulation');   
             $table->char('alphabet_accumulation');   
             $table->char('violation_accumulation2');  
+            $table->char('violation_accumulation3');  
             
             $table->foreignId('alphabet_id');          
             $table->foreignId('signature_id');  

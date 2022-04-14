@@ -27,6 +27,7 @@ class EmployeesImport implements ToCollection, WithHeadingRow
     // public function model(array $row)
     public function collection(Collection $rows)
     {
+        ini_set('max_execution_time', 7200);
         foreach ($rows as $row) 
         {
 

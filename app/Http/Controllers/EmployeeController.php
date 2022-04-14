@@ -42,6 +42,7 @@ class EmployeeController extends Controller
         // Excel::import(new EmployeesImport, request()->file('file'));
         // $path = $request->file('file_name')->getRealPath();
         // $data = Excel::load($path, function($reader) {})->get();
+            ini_set('max_execution_time', 7200);
         $data = Excel::import(new EmployeesImport, request()->file('file'));
 
         // $employees = (new EmployeesImport)->toArray('MASTER_DATA.xlsx');

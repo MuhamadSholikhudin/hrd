@@ -153,8 +153,13 @@
                     <p>Huruf</p>
                   </a>
                 </li>
-
               </ul>
+            </li>
+            <li class="nav-item">
+              <a href="/hi/default_texts" class="nav-link {{ Request::is('hi/signatures*') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>MANAGER AKTIF</p>
+              </a>
             </li>
             <li class="nav-item">
               <a href="/hi/default_texts" class="nav-link {{ Request::is('hi/default_texts*') ? 'active' : '' }}">

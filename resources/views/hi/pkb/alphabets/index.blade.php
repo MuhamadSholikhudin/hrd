@@ -49,7 +49,7 @@
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h4 class="modal-title">Tambah HUruf</h4>
+                      <h4 class="modal-title">Tambah Huruf</h4>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -75,6 +75,24 @@
                         <input type="text" class="form-control" id="alphabet" name="alphabet" placeholder=" Huruf">
                       </div>
 
+                      <div class="form-group">
+                        <label for="alphabet_type">Pasal Akumulasi</label>
+                        <select class="form-control" name="alphabet_type" id="alphabet_type" >
+                              <option value="no" selected>Tidak</option>
+                              <option value="accumulation" >Ya</option>
+                        </select>
+                      </div>
+                      <div class="form-group row" id="check_acummulation" style="display:none;">
+                        <label for="alphabet_acummulation" class="col-lg-2"></label>
+                        <div class="col-lg-10">
+                          @foreach($alphabets_accumulation as $accumulation)
+                            <div class="form-check">
+                              <input class="form-check-input chk" name="alphabet_accumulation[]" value="{{ $accumulation }}" type="checkbox">
+                              <label class="form-check-label">{{ $accumulation }}</label>
+                            </div>
+                          @endforeach
+                        </div>
+                      </div>
                       <div class="form-group">
                         <label for="description">Keterangan</label>
                         <textarea  class="form-control" id="" name="description" placeholder="Bunyi huruf"></textarea>

@@ -190,7 +190,7 @@
                   @foreach($alphabets as $alphabet):
                     <?php  $print_paragraph  = DB::table('paragraphs')->find($alphabet->paragraph_id); ?>
                     <?php  $print_article  = DB::table('articles')->find($print_paragraph->article_id); ?>
-                    <option value="{{$alphabet->id}}" selected>PASAL {{$print_article->article}} {{$print_paragraph->paragraph}} {{$alphabet->alphabet}} / {{$print_paragraph->sub_chapters}} / {{$alphabet->description}}</option>
+                    <option value="{{$alphabet->id}}" >PASAL {{$print_article->article}} {{$print_paragraph->paragraph}} {{$alphabet->alphabet}} / {{$print_paragraph->sub_chapters}} / {{$alphabet->description}}</option>
                   @endforeach
                 </select>
               </div>
@@ -405,6 +405,12 @@
                           <trix-editor input="x"></trix-editor>
                         </form>
                     {{-- <input type="text" class="form-control" id="jpn" name="jpn" value="-	Mencekrollkan absensi sdr. Arum Kusumaningtyas dan sdr. Arum Wahyunigsih pada Selasa, 5 April 2022">      --}}
+                  </div>
+                </div> 
+                <div class="form-group row">
+                  <label for="inputName" class="col-sm-2 col-form-label">Remainder : </label>
+                  <div class="col-sm-10" id="remainder">
+                    
                   </div>
                 </div> 
                 <div class="form-group row">

@@ -30,6 +30,7 @@ use App\Http\Controllers\HiPkbController;
 use App\Http\Controllers\HiArticleController;
 use App\Http\Controllers\HiParagraphController;
 use App\Http\Controllers\HiAlphabetController;
+use App\Http\Controllers\SignatureController;
 
 
 
@@ -149,4 +150,6 @@ Route::resource('/hi/paragraphs', HiParagraphController::class);
 // PKB -> alphabets
 Route::resource('/hi/alphabets', HiAlphabetController::class);
 
-// Route::resource('/hi/investigations', HiEmployeeController::class);
+// SIN+GNATURES
+Route::resource('/hi/signatures', SignatureController::class);
+Route::post('signatures/get_type_violation', [SignatureController::class, 'get_signature'])->name('get_signature');

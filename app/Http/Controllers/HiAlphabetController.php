@@ -21,17 +21,28 @@ class HiAlphabetController extends Controller
     {
         //
         $alphabets = Alphabet::oldest();
-        if(request('search')){
-            $alphabets->where('alphabet', 'like', '%' . request('search') . '%')
-                      ->orWhere('description', 'like', '%' . request('search') . '%')
-                      ->orWhere('last_periode', 'like', '%' . request('search') . '%')
-                      ->orWhere('firts_periode', 'like', '%' . request('search') . '%');
+        if(request('search_alphabets')){
+            $alphabets->where('alphabet', 'like', '%' . request('search_alphabets') . '%')
+                      ->orWhere('description', 'like', '%' . request('search_alphabets') . '%')
+                      ->orWhere('last_periode', 'like', '%' . request('search_alphabets') . '%')
+                      ->orWhere('firts_periode', 'like', '%' . request('search_alphabets') . '%');
                     //   ->orWhere('article_sound', 'like', '%' . request('search') . '%');
         }
+
+        $alphabets_accumulation = [
+            "Surat Peringatan Pertama",
+            "Surat Peringatan Kedua",
+            "Surat Peringatan Ketiga",
+            "Surat Peringatan Terakhir"
+            // ,
+            // "PHK Tanpa Pesangon",
+            // "PHK Pesangon"
+        ];
         
         return view('hi.pkb.alphabets.index', [
             'alphabets' => $alphabets->paginate(10),
             'paragraphs' => Paragraph::all(),
+            'alphabets_accumulation' => $alphabets_accumulation,
             'count' => DB::table('alphabets')->count()
              
         ]);
@@ -56,10 +67,20 @@ class HiAlphabetController extends Controller
     public function store(Request $request)
     {
         //
+        // dd($request->alphabet_accumulation);
+        if($request->alphabet_accumulation == null){
+            $implode = '';
+        }else{
+            $implode = implode(",", $request->alphabet_accumulation);
+        }
+
+
         DB::table('alphabets')->insert([
             'alphabet'=> $request->alphabet,
             'description'=> $request->description,
-            'paragraph_id'=> $request->paragraph_id, 
+            'paragraph_id'=> $request->paragraph_id,
+            'alphabet_type'=> $request->alphabet_type,
+            'alphabet_accumulation' => $implode, 
             'firts_periode'=> $request->firts_periode,
             'last_periode'=> $request->last_periode
             ]);
