@@ -18,11 +18,19 @@ return new class extends Migration
             $table->string('number_of_employees')->nullable();
             $table->string('finger_id')->nullable();
             $table->string('name')->nullable();
-            $table->enum('gender', ['M', 'F'])->nullable();  
+            // $table->enum('gender', ['M', 'F'])->nullable();  
+            $table->string('gender')->nullable();  
             $table->string('place_of_birth')->nullable();
             $table->date('date_of_birth')->nullable();
+<<<<<<< HEAD
             $table->enum('marital_status', ['M', 'S'])->nullable();  
             $table->string('religion')->nullable();  //, ['MOSLEM','BUDHIST','CATHOLIC','CHRISTIAN','HINDU','KEPERCAYAAN','NONE']
+=======
+            // $table->enum('marital_status', ['M', 'S', 'D', 'J','', null])->nullable();  
+            $table->string('marital_status')->nullable();  
+            $table->string('religion')->nullable();  
+            // $table->enum('religion', ['MOSLEM','BUDHIST','CATHOLIC','CHRISTIAN','HINDU','KEPERCAYAAN','NONE','', null])->nullable();  
+>>>>>>> 34e186f48505b067b76ae6d349389ccd8763cb71
             $table->string('biological_mothers_name')->nullable();
             $table->string('national_id')->nullable();
             $table->text('address_jalan')->nullable();
@@ -50,8 +58,14 @@ return new class extends Migration
             $table->string('bpjs_kesehatan')->nullable();
             $table->date('date_bpjs_kesehatan')->nullable();
             $table->string('npwp')->nullable();
+<<<<<<< HEAD
             $table->char('kode_ptkp', 5)->nullable();
             $table->char('year_ptkp', 4)->nullable();
+=======
+            // $table->enum('kode_ptkp', ['TK', 'K/0', 'K/1', 'K/2', 'J', 'J/0', 'J/1', 'J/2', 'D','', null])->nullable();
+            $table->string('kode_ptkp')->nullable();
+            $table->string('year_ptkp')->nullable();
+>>>>>>> 34e186f48505b067b76ae6d349389ccd8763cb71
             $table->string('bagian')->nullable();
             $table->string('cell')->nullable();   
             $table->string('status_employee')->nullable();   

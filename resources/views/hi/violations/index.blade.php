@@ -45,7 +45,7 @@
   <div class="card">
       <div class="card-header">
          <div class="card-tools">
-            <form action="/datamaster/employees" >     
+            <form action="/hi/violations" >     
                 <div class="input-group input-group-sm" style="width: 150px;">
                     <input type="text" name="search" value="{{ request('search') }}" class="form-control float-right" placeholder="Search">
                     <div class="input-group-append">

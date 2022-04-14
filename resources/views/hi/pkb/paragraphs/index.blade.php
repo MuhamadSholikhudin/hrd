@@ -85,12 +85,12 @@
                         <label for="type_of_verse">Jenis Ayat</label>
                         <select class="form-control select2bs4"  name="type_of_verse" id="type_of_verse">
                             <option value="Peringatan Lisan" selected>Peringatan Lisan</option>
-                            <option value="Surat Peringatan 1" selected>Surat Peringatan 1</option>
-                            <option value="Surat Peringatan 2" selected>Surat Peringatan 2</option>
-                            <option value="Surat Peringatan 3" selected>Surat Peringatan 3</option>
-                            <option value="Surat Peringatan Terakhir" selected>Surat Peringatan 4</option>
-                            <option value="PHK Pesangon" selected>PHK Pesangon</option>
-                            <option value="PHK Tanpa Peesangon" selected>PHK Tanpa Pesangon</option>
+                            <option value="Surat Peringatan Pertama" >Surat Peringatan Pertama</option>
+                            <option value="Surat Peringatan Kedua" >Surat Peringatan Kedua</option>
+                            <option value="Surat Peringatan Ketiga" >Surat Peringatan Ketiga</option>
+                            <option value="Surat Peringatan Terakhir" >Surat Peringatan Terakhir</option>
+                            <option value="PHK Tanpa Pesangon" >PHK Tanpa Pesangon</option>
+                            <option value="PHK Pesangon" >PHK Pesangon</option>
                         </select>
                       </div>
                     </div>

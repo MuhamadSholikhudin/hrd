@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name')->nullable();     
             $table->string('department')->nullable();     
             $table->string('part')->nullable();     
+            $table->string('status')->nullable();     
             $table->foreignId('employee_id');      
             $table->timestamps();
         });

@@ -16,7 +16,6 @@ class Employee extends Model
 
     protected $fillable = [
         'number_of_employees',	'name',	'gender','place_of_birth', 'gender', 'date_of_birth',
-
     ];
 
     public function scopeFilter($query, array $filters){
@@ -33,10 +32,7 @@ class Employee extends Model
         // }
     }
     
-    public function job()
-    {
-        return $this->belongsTo(Job::class);
-    }
+
 
     public function investigations()
     {
@@ -52,12 +48,22 @@ class Employee extends Model
     {
         return $this->hasMany(Employee::class);
     }
+    public function signatures()
+    {
+        return $this->hasMany(Employee::class);
+    }
+
     public function demomotions()
     {
         return $this->hasMany(Employee::class);
     }
+    
     public function department()
     {
         return $this->belongsTo(Department::class);
+    }
+    public function job()
+    {
+        return $this->belongsTo(Job::class);
     }
 }

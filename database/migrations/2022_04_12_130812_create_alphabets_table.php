@@ -21,7 +21,11 @@ return new class extends Migration
             $table->string('last_periode')->nullable(); 
             $table->string('alphabet_type');
             $table->string('alphabet_accumulation');
+<<<<<<< HEAD:database/migrations/2022_04_12_130812_create_alphabets_table.php
              $table->foreignId('paragraph_id');      
+=======
+            $table->foreignId('paragraph_id');      
+>>>>>>> 34e186f48505b067b76ae6d349389ccd8763cb71:database/migrations/2022_04_08_043806_create_alphabets_table.php
             $table->timestamps(); 
         });
     }

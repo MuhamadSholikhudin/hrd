@@ -150,7 +150,7 @@ class DatabaseSeeder extends Seeder
         Job::create(["code_job_level" => "PWT", "job_level" => "PERAWAT", "level" => "11"]);
         Job::create(["code_job_level" => "DRV", "job_level" => "DRIVER", "level" => "12"]);
         Job::create(["code_job_level" => "OP", "job_level" => "OPERATOR", "level" => "12"]);
-        Job::create(["code_job_level" => "OP", "job_level" => "NONE", "level" => "13"]);
+        Job::create(["code_job_level" => "NO", "job_level" => "NONE", "level" => "13"]);
 
 
 
