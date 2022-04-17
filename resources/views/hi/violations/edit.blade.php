@@ -336,9 +336,9 @@
           }
 
         ?>
-<!-- INISIASI AKUMULASI PELANGGARAN -->
-<input type="text" name="last_vio" value="{{$sta_viol}}" id="last_vio">
-<input type="text" name="id_emp" value="{{$employee->id}}" id="id_emp">
+        <!-- INISIASI AKUMULASI PELANGGARAN -->
+        <input type="text" name="last_vio" value="{{$sta_viol}}" id="last_vio">
+        <input type="text" name="id_emp" value="{{$employee->id}}" id="id_emp">
 
 
         <button type="button" id="btn_modal_click1" class="btn btn-default" style="display:none;" data-toggle="modal" data-target="#modal-xl1">
@@ -426,7 +426,9 @@
                   </div>
                   <label for="inputName" class="col-sm-3 col-form-label">Human Resource Development :</label>
                   <div class="col-sm-3">
-                    <input type="text" class="form-control" id="jpn" name="jpn" value="Nama manager">     
+                      <?php  $signature  = DB::table('signatures')->latest()->first(); ?>
+
+                    <input type="text" class="form-control" id="" name="jpn" value="{{ $signature->name }}">     
                   </div>
                 </div> 
 

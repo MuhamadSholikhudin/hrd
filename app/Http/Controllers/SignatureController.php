@@ -45,6 +45,15 @@ class SignatureController extends Controller
     public function store(Request $request)
     {
         //
+
+        DB::table('signatures')->insert([
+            'name'=> $request->name,
+            'department'=> $request->department, 
+            'part'=> $request->part,
+            'employee_id'=> $request->employee_id
+            ]);
+
+        return redirect('/hi/signatures/')->with('success', 'Data Ayat berhasil di tambahkan');
     }
 
     /**
@@ -64,9 +73,16 @@ class SignatureController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Signature $signature)
     {
-        //
+        
+        // $type_of_verse = ["Peringatan Lisan","Surat Peringatan 1","Surat Peringatan 2","Surat Peringatan 3","Surat Peringatan Terakhir","PHK Pesangon","PHK Tanpa Peesangon"];
+        return view('hi.signatures.edit', [
+            'status' => ['active', 'notactive'],
+            'signature' => $signature
+        ]);
+
+
     }
 
     /**
@@ -79,6 +95,18 @@ class SignatureController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        DB::table('signatures')
+            ->where('id', $request->id)
+            ->update([
+                'employee_id'=> $request->employee_id,
+                'name'=> $request->name,
+                'department'=> $request->department, 
+                'part'=> $request->part,
+                'employee_id'=> $request->employee_id
+            ]);
+
+            return redirect('/hi/signatures/')->with('success', 'Data signature berhasil di update');
     }
 
     /**
@@ -93,11 +121,15 @@ class SignatureController extends Controller
     }
 
     public function get_signature(Request $request){
+
         $signature_employee = $request->signature_employee;
 
         $employee = DB::table('employees')->find($signature_employee);
 
+        $department = DB::table('departments')->find($employee->department_id);
 
+        $data = [$employee->name,  $department->department,  $employee->bagian];
 
+        return response()->json($data);
     }
 }

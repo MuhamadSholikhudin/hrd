@@ -150,14 +150,16 @@ class ViolationController extends Controller
             $num_violation3 = DB::table('violations')
                 ->where('employee_id', $emp_id)
                 ->where('violation_accumulation3' , '!=' , '')
-                ->latest()
+                        ->where('status_violation','active')
+                        ->latest()
                 ->count();
 
             if($num_violation > 0){
                 $sel_violation3 = DB::table('violations')
                     ->where('employee_id', $emp_id)
                     ->where('violation_accumulation3' , '!=' , '')
-                    ->latest()
+                        ->where('status_violation','active')
+                        ->latest()
                     ->first();
 
             }else{
@@ -165,13 +167,15 @@ class ViolationController extends Controller
                 $num_violation2 = DB::table('violations')
                     ->where('employee_id', $emp_id)
                     ->where('violation_accumulation2' , '!=' , '')
-                    ->latest()
+                        ->where('status_violation','active')
+                        ->latest()
                     ->count();
 
                 if($num_violation2 > 0){
                     $sel_violation2 = DB::table('violations')
                         ->where('employee_id', $emp_id)
                         ->where('violation_accumulation2' , '!=' , '')
+                        ->where('status_violation','active')
                         ->latest()
                         ->first();
                 }else{
@@ -179,6 +183,7 @@ class ViolationController extends Controller
                     $num_violation = DB::table('violations')
                         ->where('employee_id', $emp_id)
                         ->where('violation_accumulation' , '!=' , '')
+                        ->where('status_violation','active')
                         ->latest()
                         ->count();
 

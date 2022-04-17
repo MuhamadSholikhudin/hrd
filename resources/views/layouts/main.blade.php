@@ -133,8 +133,8 @@
           success: function(data) {
             alert(data);
             $("#signature_name").val(data[0]);
-            $("#signature_department").text(data[1]);
-            $("#signature_part").text(data[2]);
+            $("#signature_department").val(data[1]);
+            $("#signature_part").val(data[2]);
 
           },error(){
             alert("error");
