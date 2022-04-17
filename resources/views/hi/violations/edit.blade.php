@@ -354,6 +354,8 @@
                 </button>
               </div>
               <div class="modal-body">
+                  <form role="form" action="/hi/violations" method="POST" enctype="multipart/form-data">
+                    @csrf
                 <!-- <p>One fine body&hellip;</p> -->
                 <div class="form-group row">
                   <label for="number_of_employees" class="col-sm-2 col-form-label">Nomer SP </label>
@@ -385,7 +387,7 @@
                 <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label">Jenis Pelangaran</label>
                   <div class="col-sm-3">
-                      <input type="text" class="form-control" id="jpn1" name="jpn1"  placeholder="Jenis Pelanggaran" >     
+                      <input type="text" class="form-control" id="jpn1" name="type_of_violation"  placeholder="Jenis Pelanggaran" >     
                   </div>
                 </div> 
             
@@ -435,8 +437,9 @@
               </div> 
               <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
               </div>
+            </form>
             </div>
             <!-- /.modal-content -->
           </div>

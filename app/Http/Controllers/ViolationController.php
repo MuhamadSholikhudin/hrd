@@ -59,7 +59,153 @@ class ViolationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //MELAKUKAN LOGIKA PELANGGARAN
+
+        $id_employee = $request->$id_employee;
+        $other_information = $request->other_information;
+        $date_of_violation = $request->date_of_violation;
+        $signature_id = $request->signature_id;
+        $type_of_violation = $request->type_of_violation;
+        $part = $request->part;
+        $alphabet_id = $request->alphabet_id;
+
+        // NO SP 001/SP-HRD/IV/2022
+
+/*
+$num_sp = DB::table('violations')->count();
+
+if($num_sp < 1){
+    $no_sp = 1;
+}elseif($num_sp > 0){
+$last_sp = DB::table('violations')
+->latest()
+->first();
+$no_sp = $last_sp->no_violation + 1;
+}
+
+$date = new \DateTime('2017-12-11 4:06:37');
+
+$date_year = date_format($date_of_violation, "Y"); //for Display Year
+$date_month =  date_format($date_of_violation, "m"); //for Display Month
+$date_day = date_format($date_of_violation, "d"); //for Display Date
+
+// $tahun = YEAR($date_of_violation);
+
+
+
+
+// Prints October 3, 1975 was on a Thursday
+//   echo "Oct 3, 1975 was on a ".gmdate("l", mktime(0,0,0,$date_day,$date_month,$date_year)) . "<br>";
+
+            // $day = gmdate($date_of_violation, time()+60*60*7);
+            $day = gmdate("l", mktime(0,0,0,$date_day,$date_month,$date_year));
+
+          if($day == 'Monday'){
+            $day_num = '1';
+            $day_indo = 'Senin';
+          }elseif($day == 'Tuesday'){
+            $day_num = '2';
+            $day_indo = 'Selasa';            
+          }elseif($day == 'Wednesday'){
+            $day_num = '3';
+            $day_indo = 'Rabu';            
+          }elseif($day == 'Thursday'){
+            $day_num = '4';
+            $day_indo = 'Kamis';            
+          }elseif($day == 'Friday'){
+            $day_num = '5';
+            $day_indo = 'Jumat';            
+          }elseif($day == 'Saturday'){
+            $day_num = '6';
+            $day_indo = 'Sabtu';            
+          }elseif($day == 'Sunday'){
+            $day_num = '7';
+            $day_indo = 'Minggu';            
+          }
+
+        
+          $month_n = gmdate("n", mktime(0,0,0,$date_day,$date_month,$date_year));
+          if($month_n == '1'){
+            $ROM = 'I';
+          }elseif($month_n == '2'){
+            $ROM = 'II';
+          }elseif($month_n == '3'){
+            $ROM = 'III';
+          }elseif($month_n == '4'){
+            $ROM = 'IV';
+          }elseif($month_n == '5'){
+            $ROM = 'V';
+          }elseif($month_n == '6'){
+            $ROM = 'VI';
+          }elseif($month_n == '7'){
+            $ROM = 'VII';
+          }elseif($month_n == '8'){
+            $ROM = 'VIII';
+          }elseif($month_n == '9'){
+            $ROM = 'IX';
+          }elseif($month_n == '10'){
+            $ROM = 'X';
+          }elseif($month_n == '11'){
+            $ROM = 'XI';
+          }elseif($month_n == '12'){
+            $ROM = 'XII';
+          }
+
+
+*/
+
+
+
+
+/* DB:table('violations')->insert(
+    [
+        'date_of_violation' => $date_of_violation,     
+        'no_violation' => $no_sp,   
+        'format' => '',    
+        'month_of_violation' => '',     
+        'violation_ROM' => $ROM ,   
+        'reporting_day' => '',     
+        'reporting_date' => '',   
+        'part' => $part,   
+        'other_information' => $other_information,   
+                  
+       'violation_status' => 'active',     
+        'type_of_violation' => $type_of_violation,   
+                    
+        'violation_accumulation' => $violation_accumulation,    
+        'alphabet_accumulation' => $alphabet_accumulation,    
+        'violation_accumulation2' => $violation_accumulation2,     
+        'violation_accumulation3' => $violation_accumulation3,   
+        
+        'alphabet_id' => $alphabet_id,           
+        'signature_id' => $signature_id,    
+        'employee_id' => $employee_id
+    ]
+    );
+
+    
+        $table->date('date_of_violation');     
+        $table->integer('no_violation');  
+        $table->string('format')->nullable();  
+        $table->string('month_of_violation')->nullable();  
+        $table->string('violation_ROM')->nullable();  
+        $table->string('reporting_day')->nullable();  
+        $table->date('reporting_date');  
+        $table->string('part')->nullable();
+        $table->text('other_information')->nullable();
+                  
+        $table->string('violation_status')->nullable();  
+        $table->string('type_of_violation')->nullable();  
+                    
+        $table->char('violation_accumulation');   
+        $table->char('alphabet_accumulation');   
+        $table->char('violation_accumulation2');  
+        $table->char('violation_accumulation3');  
+        
+        $table->foreignId('alphabet_id');          
+        $table->foreignId('signature_id');  
+        $table->foreignId('employee_id'); 
+        */
     }
 
     /**
