@@ -110,13 +110,12 @@ class EmployeeController extends Controller
                         }
 // dd($date_out);
                         $status_employee_i = $x['exit_statement'];
-                        if($status_employee_i == null){
+                        if($status_employee_i == null OR $x['date_out'] == null){
                             // $date = 'true';
                             $status_employee = 'active';
                         }elseif($status_employee_i == '-'){
                             $status_employee = 'active';
-                        }
-                        else{
+                        }else{
                             $status_employee = 'notactive';
                         }
 

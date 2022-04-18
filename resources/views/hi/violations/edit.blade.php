@@ -80,13 +80,13 @@
                 </tr>
               </thead>
               <tbody>
-              @foreach($violations as $violation):
+              @foreach($violations as $violation)
                 <tr>
-                  <td>{{ $iteration->loop }}</td>
-                  <td>{{ $violation->date_violation }}</td>
-                  <td>{{ $violation->date_violation }} </td>
+                  <td>{{ $violation->id }}</td>
+                  <td>{{ $violation->date_of_violation }}</td>
+                  <td>{{ $violation->date_end_violation }} </td>
                   <td>{{ $violation->alphabet_id }}</td>
-                  <td>{{ $violation->date_violation }}</td>
+                  <td>{{ $violation->type_of_violation }}</td>
                   <td>{{ $violation->violation_status  }}</td>
                   <td>
                       <a href="file:///c%3A/xampp/htdocs/hrd/resources/views/hi/violations/cetak_sp.html" class="btn  btn-outline-primary">
@@ -319,23 +319,27 @@
           // Cari data pelanggan terakhir 
           $sel_num_vio = DB::table('violations')->where('employee_id', $employee->id)->count();
           if($sel_num_vio == 0){
-            $sta_viol = 'notviolation';
+            $sta_viol = 'notactive';
+            $type_viol = 'notviolation';
           }else{
             $sel_vio = DB::table('violations')->where('employee_id', $employee->id)->latest()->first();
-            $date_now = date('Y-m-d');
-            $date_sta = $sel_vio->date_violation;
-            $diff  = date_diff($date_sta, $date_now);
+            $date_now = date_create();
+            $date_sta = date_create($sel_vio->date_end_violation);
+            $diffx  = date_diff($date_sta, $date_now);
 
-            if($diff->d <= 0){
-              $sta_viol = 'notviolation';
+            if($diffx->d <= 0){
+              $sta_viol = 'notactive';
+              $type_viol = 'notviolation';
             }else{
-              $sta_viol = $sel_vio->status_violation;
+              $sta_viol = $sel_vio->violation_status;
+              $type_viol = $sel_vio->type_of_violation;
             }
           }
 
         ?>
         <!-- INISIASI AKUMULASI PELANGGARAN -->
         <input type="text" name="last_vio" value="{{$sta_viol}}" id="last_vio">
+        <input type="text" name="last_type" value="{{$type_viol}}" id="last_type">
         <input type="text" name="id_emp" value="{{$employee->id}}" id="id_emp">
 
 
@@ -365,7 +369,7 @@
                 <div class="form-group row">
                   <label for="number_of_employees" class="col-sm-2 col-form-label">Nama </label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" id="employee_id" name="employee_id" value="{{  $employee->id  }}" placeholder="Nomer Induk Karyawan" >
+                      <input type="hidden" class="form-control" id="employee_id" name="employee_id" value="{{  $employee->id  }}" placeholder="Nomer Induk Karyawan" >
                       <input type="text" class="form-control" value="{{  $employee->name  }}" placeholder="Nomer Induk Karyawan" >
                   </div>
                   <label for="number_of_employees" class="col-sm-2 col-form-label">NIK</label>
@@ -386,13 +390,14 @@
                 <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label">Jenis Pelangaran</label>
                   <div class="col-sm-3">
+                      <input type="text" name="last_vio" value="{{$sta_viol}}" >
                       <input type="text" class="form-control" id="jpn1" name="type_of_violation"  placeholder="Jenis Pelanggaran" >     
                   </div>
                 </div> 
             
                 <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label">Pasal Yang dilanggar : </label>
-                  <input type="text" class="form-control" name="alphabet_id"  value="" placeholder="Alphabet ID" >                  
+                  <input type="text" class="form-control" id="alphabet_id" name="alphabet_id"  value="" placeholder="Alphabet ID" >                  
                   <div class="col-sm-10" >
 
                     <p id="pkb1">
@@ -402,10 +407,10 @@
                 <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label">Keterangan lain :</label>
                   <div class="col-sm-10">
-                      <form …>
+                      
                           <input id="x" type="hidden" name="other_information">
                           <trix-editor input="x"></trix-editor>
-                        </form>
+                        
                     {{-- <input type="text" class="form-control" id="jpn" name="jpn" value="-	Mencekrollkan absensi sdr. Arum Kusumaningtyas dan sdr. Arum Wahyunigsih pada Selasa, 5 April 2022">      --}}
                   </div>
                 </div> 
@@ -428,9 +433,9 @@
                   </div>
                   <label for="inputName" class="col-sm-3 col-form-label">Human Resource Development :</label>
                   <div class="col-sm-3">
-                      <?php  $signature  = DB::table('signatures')->where('status_signature', 'active')->latest()->first(); ?>
+                      <?php  $signature  = DB::table('signatures')->where('status_signature', 'active')->first(); ?>
 
-                    <input type="text" class="form-control" id="" name="signature_id" value="{{ $signature->signature_id }}">     
+                    <input type="hidden" class="form-control" id="" name="signature_id" value="{{ $signature->id }}">     
                     <input type="text" class="form-control" id=""  value="{{ $signature->name }}">     
                   </div>
                 </div> 
@@ -438,7 +443,7 @@
               </div> 
               <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary">Save</button>
               </div>
             </form>
             </div>

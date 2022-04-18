@@ -154,7 +154,7 @@
         var status_violant_last = document.getElementById("last_vio").value;
         var id_emp = document.getElementById("id_emp").value;
         var violation_now = document.getElementById("select_violation_last").value;
-        // var keyword = document.getElementById("select_violation_last").value;
+        var last_type = document.getElementById("last_type").value;
         // var keyword = $(this).val();
         // alert(status_violant_last + id_emp);
 
@@ -166,8 +166,8 @@
           data: {
             violation_now: violation_now,
             id_emp : id_emp,
-            status_violant_last : status_violant_last
-            // pembeli: pembeli
+            status_violant_last : status_violant_last,
+            last_type: last_type
           },
           success: function(data) {
             // alert(data);
@@ -175,6 +175,7 @@
             $("#jpn1").val(data[0]);
             $("#pkb1").text(data[1]);
             $("#remainder").text(data[2]);
+            $("#alphabet_id").val(violation_now);
             // if (data[0] == 'terima_kasih') {
             //     document.getElementById("terima_kasih").play();
             // } else if (data[0] == 'coba_lagi') {

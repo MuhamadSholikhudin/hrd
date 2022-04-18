@@ -103,6 +103,7 @@ class SignatureController extends Controller
                 'name'=> $request->name,
                 'department'=> $request->department, 
                 'part'=> $request->part,
+                'status_signature'=> $request->status_signature,
                 'employee_id'=> $request->employee_id
             ]);
 

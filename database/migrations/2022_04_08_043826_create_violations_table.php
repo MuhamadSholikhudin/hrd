@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('violations', function (Blueprint $table) {          
             $table->id();
             $table->date('date_of_violation');     
+            $table->date('date_end_violation');     
             $table->integer('no_violation');  
             $table->string('format')->nullable();  
             $table->string('month_of_violation')->nullable();  
