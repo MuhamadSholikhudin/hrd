@@ -196,9 +196,7 @@
               </div>
               <div class="col-sm-2">
               <button class="btn btn-button btn-primary"  onclick="btn_proses()" id="btn_proses" data-id="btn_proses" data-target="btn_proses" >Proses</button>
-              {{-- <script>
-
-                </script> --}}
+          
               </div>
             </div> 
           </div>
@@ -354,34 +352,35 @@
                 </button>
               </div>
               <div class="modal-body">
-                  <form role="form" action="/hi/violations" method="POST" enctype="multipart/form-data">
-                    @csrf
+              <form role="form" action="/hi/violations" method="POST" enctype="multipart/form-data">
+                @csrf
                 <!-- <p>One fine body&hellip;</p> -->
+  
                 <div class="form-group row">
                   <label for="number_of_employees" class="col-sm-2 col-form-label">Nomer SP </label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" id="number_of_employees" name="number_of_employees" value="{{$p_no_sp}}/SP-HRD/{{$ROM}}/{{date('Y')}}" placeholder="Nomer Induk Karyawan" >
+                      <input type="text" class="form-control" value="{{$p_no_sp}}/SP-HRD/{{$ROM}}/{{date('Y')}}" placeholder="Nomer Induk Karyawan" >
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="number_of_employees" class="col-sm-2 col-form-label">Nama </label>
                   <div class="col-sm-4">
-                      <input type="hidden" class="form-control" id="number_of_employees" name="id" value="{{  $employee->id  }}" placeholder="Nomer Induk Karyawan" >
-                      <input type="text" class="form-control" id="number_of_employees" name="number_of_employees" value="{{  $employee->name  }}" placeholder="Nomer Induk Karyawan" >
+                      <input type="text" class="form-control" id="employee_id" name="employee_id" value="{{  $employee->id  }}" placeholder="Nomer Induk Karyawan" >
+                      <input type="text" class="form-control" value="{{  $employee->name  }}" placeholder="Nomer Induk Karyawan" >
                   </div>
                   <label for="number_of_employees" class="col-sm-2 col-form-label">NIK</label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" id="number_of_employees" name="number_of_employees" value="{{  $employee->number_of_employees  }}" placeholder="Finger ID" >
+                      <input type="text" class="form-control" value="{{  $employee->number_of_employees  }}" placeholder="Finger ID" >
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="number_of_employees" class="col-sm-2 col-form-label">Jabatan </label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" id="number_of_employees" name="number_of_employees" value="{{  $job->job_level  }}" placeholder="Nomer Induk Karyawan" >
+                      <input type="text" class="form-control" id="job_level" name="job_level" value="{{  $job->job_level  }}" placeholder="Nomer Induk Karyawan" >
                   </div>
                   <label for="finger_id" class="col-sm-2 col-form-label">Bagian / Department</label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" id="finger_id" name="finger_id" value="{{  $department->department  }}" placeholder="Finger ID" >
+                      <input type="text" class="form-control" id="part" name="part" value="{{  $department->department  }}" placeholder="Finger ID" >
                   </div>
                 </div>
                 <div class="form-group row">
@@ -393,6 +392,7 @@
             
                 <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label">Pasal Yang dilanggar : </label>
+                  <input type="text" class="form-control" name="alphabet_id"  value="" placeholder="Alphabet ID" >                  
                   <div class="col-sm-10" >
 
                     <p id="pkb1">
@@ -403,7 +403,7 @@
                   <label for="inputName" class="col-sm-2 col-form-label">Keterangan lain :</label>
                   <div class="col-sm-10">
                       <form …>
-                          <input id="x" type="hidden" name="content">
+                          <input id="x" type="hidden" name="other_information">
                           <trix-editor input="x"></trix-editor>
                         </form>
                     {{-- <input type="text" class="form-control" id="jpn" name="jpn" value="-	Mencekrollkan absensi sdr. Arum Kusumaningtyas dan sdr. Arum Wahyunigsih pada Selasa, 5 April 2022">      --}}
@@ -424,13 +424,14 @@
                 <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label">Tanggal Surat :</label>
                   <div class="col-sm-2">
-                    <input type="date" class="form-control" id="jpn" name="jpn" value="<?= date('Y-m-d') ?>">     
+                    <input type="date" class="form-control" id="date_of_violation" name="date_of_violation" value="<?= date('Y-m-d') ?>">     
                   </div>
                   <label for="inputName" class="col-sm-3 col-form-label">Human Resource Development :</label>
                   <div class="col-sm-3">
-                      <?php  $signature  = DB::table('signatures')->latest()->first(); ?>
+                      <?php  $signature  = DB::table('signatures')->where('status_signature', 'active')->latest()->first(); ?>
 
-                    <input type="text" class="form-control" id="" name="jpn" value="{{ $signature->name }}">     
+                    <input type="text" class="form-control" id="" name="signature_id" value="{{ $signature->signature_id }}">     
+                    <input type="text" class="form-control" id=""  value="{{ $signature->name }}">     
                   </div>
                 </div> 
 

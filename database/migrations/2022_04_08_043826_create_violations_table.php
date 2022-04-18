@@ -21,17 +21,18 @@ return new class extends Migration
             $table->string('month_of_violation')->nullable();  
             $table->string('violation_ROM')->nullable();  
             $table->string('reporting_day')->nullable();  
-            $table->date('reporting_date');  
-            $table->string('part')->nullable();
+            $table->date('reporting_date')->nullable();  
+            $table->string('job_level')->nullable();
+            $table->string('department')->nullable();
             $table->text('other_information')->nullable();
                       
             $table->string('violation_status')->nullable();  
             $table->string('type_of_violation')->nullable();  
                         
-            $table->char('violation_accumulation');   
-            $table->char('alphabet_accumulation');   
-            $table->char('violation_accumulation2');  
-            $table->char('violation_accumulation3');  
+            $table->char('violation_accumulation')->nullable();   
+            $table->char('alphabet_accumulation')->nullable();   
+            $table->char('violation_accumulation2')->nullable();  
+            $table->char('violation_accumulation3')->nullable();  
             
             $table->foreignId('alphabet_id');          
             $table->foreignId('signature_id');  
