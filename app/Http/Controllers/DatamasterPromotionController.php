@@ -157,11 +157,25 @@ class DatamasterPromotionController extends Controller
                     ->where('employee_id', '=', $id) 
                     ->get();
 
+        $startwork_get = DB::table('startworks')
+                    ->where('employee_id', '=', $id)
+                    ->leftJoin('departments', 'startworks.department_id', '=', 'departments.id')
+                    ->leftJoin('jobs', 'startworks.job_id', '=', 'jobs.id')
+                    // ->leftJoin('employees', 'mutatios.employee_id', '=', 'employees.id')
+                    ->orderBy('startworks.id')
+                    ->limit(1)
+                    // ->where('votes', '=', 100)
+                    // ->where('age', '>', 35)
+                    ->get(); 
+                    // ->oldest() 
+                    // ->first();
+
         return view('datamaster.promotions.create', [
             'employee' => $employee,
             'jobs' => Job::all(),
             'departments' => Department::all(),
             'promotions' => $promotions,
+            'startwork_get' => $startwork_get,
             'get_job' => $get_job,
             'get_department' => $get_department
         ]);

@@ -121,7 +121,7 @@
     });
 
     var signature_employee = $(this).val();
-    // alert(signature_employee);
+    alert(signature_employee);
     $.ajax({
           type: "POST",
           url: "{{route('get_signature')}}",
@@ -156,7 +156,7 @@
         var violation_now = document.getElementById("select_violation_last").value;
         var last_type = document.getElementById("last_type").value;
         // var keyword = $(this).val();
-        // alert(status_violant_last + id_emp);
+        alert(status_violant_last + id_emp + violation_now + last_type);
 
         $.ajax({
           type: "POST",
@@ -173,9 +173,10 @@
             // alert(data);
             document.getElementById("btn_modal_click1").click();
             $("#jpn1").val(data[0]);
-            $("#pkb1").text(data[1]);
+            $("#pkb1").html(data[1]);
             $("#remainder").text(data[2]);
             $("#alphabet_id").val(violation_now);
+
             // if (data[0] == 'terima_kasih') {
             //     document.getElementById("terima_kasih").play();
             // } else if (data[0] == 'coba_lagi') {
@@ -188,7 +189,7 @@
 
             // }
           },error(){
-            alert("error");
+            alert(" Inputan error");
           }
 
         });

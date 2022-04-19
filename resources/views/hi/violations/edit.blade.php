@@ -60,21 +60,101 @@
           </div>
           <!-- /.card-body -->
         </div>
+      
       </div>
-      <div class="col-md-9">
+
+      <div class="col-md-3">
+        <!-- About Me Box -->
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Identitas</h3>
+          </div>
+          <div class="card-body mr-0">
+            <strong><i class="fas fa-address-card mr-1"></i> Kartu Tanda Penduduk</strong>
+            <table>
+              <tr>
+                  <td valign="top">NIK</td>
+                  <td valign="top">: {{  $employee->national_id  }}</td>
+                </tr>
+                <tr>
+                  <td valign="top">TTL</td>
+                  <td valign="top">: {{  $employee->place_of_birth  }}, {{  $employee->date_of_birth  }}</td>
+                </tr>
+                <tr>
+                  <td valign="top">Jenis Kelamin</td>
+                  <td valign="top">: {{  $employee->gender  }}</td>
+                </tr>
+                <tr>
+                  <td valign="top">Alamat</td>
+                  <td valign="top">: {{  $employee->address_jalan  }}</td>
+                </tr>
+                <tr>
+                  <td valign="top">Agama</td>
+                  <td valign="top">: {{  $employee->religion  }}</td>
+                </tr>
+                <tr>
+                  <td valign="top">Status nikah</td>
+                  <td valign="top">: {{  $employee->marital_status  }}</td>
+                </tr>
+                <tr>
+                  <td valign="top">Ibu Kandung</td>
+                  <td valign="top">: {{  $employee->biological_mothers_name  }}</td>
+                </tr>
+          </table>
+
+        <!-- </p> -->
+
+        <hr>
+        <strong><i class="fas fa-book mr-1"></i> Pendidikan</strong>
+          <table>
+            <tr>
+              <td valign="top">Pend Terakhir</td>
+              <td valign="top">: {{  $employee->educate  }}</td>
+            </tr>
+            <tr>
+              <td valign="top">Jurusan</td>
+              <td valign="top">: {{  $employee->major  }}</td>
+            </tr>
+          </table>
+        <hr>
+        <strong><i class="fas fa-book mr-1"></i> Email & Phone</strong>
+          <table>
+            <tr>
+              <td valign="top">Email</td>
+              <td valign="top">: {{  $employee->email  }}</td>
+            </tr>
+            <tr>
+              <td valign="top">Phone</td>
+              <td valign="top">: {{  $employee->phone  }}</td>
+            </tr>
+          </table>
+          </div>
+                    
+        </div>
+      </div>
+
+
+      <div class="col-md-6">
+      
+      </div>
+
+      <div class="col-md-12">
         <div class="card card-secondary">
           <div class="card-header">
             <h3 class="card-title">DAFTAR PELANGGARAN</h3>
           </div>
-          <div class="card-body">                       
+          <div class="card-body table-responsive">                       
             <table class="table table-hover text-nowrap">
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>date</th>
-                  <th>No Surat</th>
+                  <th>NO SP</th>
+                  <th>Tanggal SP</th>
+                  <th>Tanggal Berakhir</th>
+                  <th>Selang </th>
+                  <th>Pelangaran</th>
                   <th>Pasal</th>
-                  <th>Pelanggran</th>
+                  <th>Keterangan</th>
                   <th>Status </th>
                   <th>Aksi</th>
                 </tr>
@@ -83,14 +163,159 @@
               @foreach($violations as $violation)
                 <tr>
                   <td>{{ $violation->id }}</td>
-                  <td>{{ $violation->date_of_violation }}</td>
-                  <td>{{ $violation->date_end_violation }} </td>
-                  <td>{{ $violation->alphabet_id }}</td>
-                  <td>{{ $violation->type_of_violation }}</td>
+                  <td>
+                    <?php
+                      $date_violation_sp = new \DateTime($violation->date_of_violation .' 00:00:00');
+                      $date_year_sp = date_format($date_violation_sp, "Y"); //for Display Year
+                      $date_month_sp =  date_format($date_violation_sp, "m"); //for Display Month
+                      $date_day_sp = date_format($date_violation_sp, "d"); //for Display Date
+
+                      if(strlen($violation->no_violation) == '1'){
+                        $p_no_s = '00'. $violation->no_violation;
+                      }elseif(strlen($violation->no_violation) == '2'){
+                        $p_no_s = '0'.$violation->no_violation;
+                      }
+
+                    ?>
+                      {{$p_no_s}}/SP-HRD/{{$violation->violation_ROM}}/{{$date_year_sp}}
+                    </td>
+                  <td>
+                  <?php
+                    
+
+                    $day_sp = gmdate("l", mktime(0,0,0,$date_day_sp,$date_month_sp,$date_year_sp));
+
+                    // Hari Indonesia
+                    if($day_sp == 'Monday'){
+                      $day_indo_sp = 'Senin';
+                    }elseif($day_sp == 'Tuesday'){
+                      $day_indo_sp = 'Selasa';            
+                    }elseif($day_sp == 'Wednesday'){
+                      $day_indo_sp = 'Rabu';            
+                    }elseif($day_sp == 'Thursday'){
+                      $day_indo_sp = 'Kamis';            
+                    }elseif($day_sp == 'Friday'){
+                      $day_indo_sp = 'Jumat';            
+                    }elseif($day_sp == 'Saturday'){
+                      $day_indo_sp = 'Sabtu';            
+                    }elseif($day_sp == 'Sunday'){
+                      $day_indo_sp = 'Minggu';            
+                    }
+
+                    //Bulan Indonesia
+                    if($date_month_sp == '01'){
+                      $month_indo_sp = 'Januari';
+                    }elseif($date_month_sp == '02'){
+                      $month_indo_sp = 'Februari';            
+                    }elseif($date_month_sp == '03'){
+                      $month_indo_sp = 'Maret';            
+                    }elseif($date_month_sp == '04'){
+                      $month_indo_sp = 'April';            
+                    }elseif($day == '05'){
+                      $month_indo_sp = 'Mei';            
+                    }elseif($date_month_sp == '06'){
+                      $month_indo_sp = 'Juni';            
+                    }elseif($date_month_sp == '07'){
+                      $month_indo_sp = 'Juli';            
+                    }elseif($date_month_sp == '08'){
+                      $month_indo_sp = 'Agustus';            
+                    }elseif($date_month_sp == '09'){
+                      $month_indo_sp = 'September';            
+                    }elseif($date_month_sp == '10'){
+                      $month_indo_sp = 'Oktober';            
+                    }elseif($date_month_sp == '11'){
+                      $month_indo_sp = 'November';            
+                    }elseif($date_month_sp == '12'){
+                      $month_indo_sp = 'Desember';            
+                    }
+                  ?>
+                    {{ $day_indo_sp. ", ". $date_day_sp. " ". $month_indo_sp . " ". $date_year_sp }}
+                  </td>
+
+
+                  <td>
+                  <?php
+                    $date_violation_end = new \DateTime($violation->date_end_violation .' 00:00:00');
+                    $date_year = date_format($date_violation_end, "Y"); //for Display Year
+                    $date_month =  date_format($date_violation_end, "m"); //for Display Month
+                    $date_day = date_format($date_violation_end, "d"); //for Display Date
+
+                    $day = gmdate("l", mktime(0,0,0,$date_day,$date_month,$date_year));
+
+                    // Hari Indonesia
+                    if($day == 'Monday'){
+                      $day_indo = 'Senin';
+                    }elseif($day == 'Tuesday'){
+                      $day_indo = 'Selasa';            
+                    }elseif($day == 'Wednesday'){
+                      $day_indo = 'Rabu';            
+                    }elseif($day == 'Thursday'){
+                      $day_indo = 'Kamis';            
+                    }elseif($day == 'Friday'){
+                      $day_indo = 'Jumat';            
+                    }elseif($day == 'Saturday'){
+                      $day_indo = 'Sabtu';            
+                    }elseif($day == 'Sunday'){
+                      $day_indo = 'Minggu';            
+                    }
+
+                    //Bulan Indonesia
+                    if($date_month == '01'){
+                      $month_indo = 'Januari';
+                    }elseif($date_month == '02'){
+                      $month_indo = 'Februari';            
+                    }elseif($date_month == '03'){
+                      $month_indo = 'Maret';            
+                    }elseif($date_month == '04'){
+                      $month_indo = 'April';            
+                    }elseif($day == '05'){
+                      $month_indo = 'Mei';            
+                    }elseif($date_month == '06'){
+                      $month_indo = 'Juni';            
+                    }elseif($date_month == '07'){
+                      $month_indo = 'Juli';            
+                    }elseif($date_month == '08'){
+                      $month_indo = 'Agustus';            
+                    }elseif($date_month == '09'){
+                      $month_indo = 'September';            
+                    }elseif($date_month == '10'){
+                      $month_indo = 'Oktober';            
+                    }elseif($date_month == '11'){
+                      $month_indo = 'November';            
+                    }elseif($date_month == '12'){
+                      $month_indo = 'Desember';            
+                    }
+                  ?>
+                    {{ $day_indo. ", ". $date_day. " ". $month_indo . " ". $date_year }}
+                  </td>
+                  <td>
+                    <?php                     
+                      $awal_sp = time(); // Waktu sekarang
+                      $akhir_sp  = strtotime($violation->date_end_violation);
+                      $diff_sp  = $akhir_sp - $awal_sp;
+                        if($diff_sp > 0){
+                          $selang =  floor($diff_sp / (60 * 60 * 24)) . ' hari';
+                        }else{
+                          $selang = '';
+                        }
+                    ?>
+                    {{ $selang }}
+                    </td>
+                  <td>
+                  <?php
+                    if($violation->type_of_violation == 'Surat Peringatan Pertama'){
+                      $p = "SP I";
+                    }
+                  ?>
+                  {{ $p }}
+                  </td>
+                  <td>{{ $violation->violation_status  }}</td>
+                  <td><div>{{ $violation->other_information  }} </div></td>                
                   <td>{{ $violation->violation_status  }}</td>
                   <td>
                       <a href="file:///c%3A/xampp/htdocs/hrd/resources/views/hi/violations/cetak_sp.html" class="btn  btn-outline-primary">
-                        Cetak                    </a>
+                        Cetak                    
+                      </a>
                           <!-- <a href="/hi/employees//edit" class="btn  btn-outline-warning">
                         Edit
                         </a> -->
@@ -105,7 +330,7 @@
                 </tr>
 
               @endforeach
-                <tr>
+              <!--  <tr>
                   <td>1</td>
                   <td>2022-03-01</td>
                   <td>No. : 34/SP-HRD/IV/2022</td>
@@ -115,7 +340,7 @@
                   <td>
                       <a href="file:///c%3A/xampp/htdocs/hrd/resources/views/hi/violations/cetak_sp.html" class="btn  btn-outline-primary">
                         Cetak                    </a>
-                          <!-- <a href="/hi/employees//edit" class="btn  btn-outline-warning">
+                           <a href="/hi/employees//edit" class="btn  btn-outline-warning">
                         Edit
                         </a> -->
                         <!-- <form action="/hi/employees/" method="POST" class="d-inline ">
@@ -124,7 +349,7 @@
                           <button class="btn  btn-outline-danger" onclick="return confirm(' Are you sure delete data ?')"> 
                           Delete
                         </button>
-                        </form> -->
+                        </form> 
                   </td>
                 </tr>
                 <tr>
@@ -146,9 +371,9 @@
                           <button class="btn  btn-outline-danger" onclick="return confirm(' Are you sure delete data ?')"> 
                           Delete
                         </button>
-                        </form> -->
+                        </form> 
                   </td>
-                </tr>
+                </tr> -->
 
               </tbody>
             </table>
@@ -190,7 +415,7 @@
                   @foreach($alphabets as $alphabet):
                     <?php  $print_paragraph  = DB::table('paragraphs')->find($alphabet->paragraph_id); ?>
                     <?php  $print_article  = DB::table('articles')->find($print_paragraph->article_id); ?>
-                    <option value="{{$alphabet->id}}" >PASAL {{$print_article->article}} {{$print_paragraph->paragraph}} {{$alphabet->alphabet}} / {{$print_paragraph->sub_chapters}} / {{$alphabet->description}}</option>
+                    <option value="{{$alphabet->id}}" >PASAL {{$print_article->article}} {{$print_paragraph->paragraph}} {{$alphabet->alphabet_sound}} / {{$print_paragraph->sub_chapters}} / {{$alphabet->description}}</option>
                   @endforeach
                 </select>
               </div>
@@ -336,6 +561,17 @@
             }
           }
 
+          echo '<br>';
+          //memotong jumlah karakter
+          $kalimat="tutorial php bagaimana membatasi jumlah karakter yang ingin ditampilkan";
+          $jumlahkarakter=10;
+          $cetak = substr($kalimat, 0, $jumlahkarakter);
+          echo $cetak;
+
+          echo '<br>';
+
+
+
         ?>
         <!-- INISIASI AKUMULASI PELANGGARAN -->
         <input type="text" name="last_vio" value="{{$sta_viol}}" id="last_vio">
@@ -400,8 +636,9 @@
                   <input type="text" class="form-control" id="alphabet_id" name="alphabet_id"  value="" placeholder="Alphabet ID" >                  
                   <div class="col-sm-10" >
 
-                    <p id="pkb1">
-                    </p>
+                    <div id="pkb1">
+                    
+                    </div>
                   </div>
                 </div> 
                 <div class="form-group row">

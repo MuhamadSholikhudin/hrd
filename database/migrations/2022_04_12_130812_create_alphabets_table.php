@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('alphabets', function (Blueprint $table) {
             $table->id();
             $table->string('alphabet')->nullable();
-            $table->text('description')->nullable();
+            $table->text('alphabet_sound')->nullable();
             $table->string('firts_periode')->nullable();           
             $table->string('last_periode')->nullable(); 
             $table->string('alphabet_type');

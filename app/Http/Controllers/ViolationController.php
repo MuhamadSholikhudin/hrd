@@ -181,7 +181,7 @@ class ViolationController extends Controller
                 ->latest()
                 ->count();
 
-            if($num_violation > 0){
+            if($num_violation3 > 0){
                 $sel_violation3 = DB::table('violations')
                     ->where('employee_id', $employee_id)
                     ->where('violation_accumulation3' , '!=' , null)
@@ -269,13 +269,16 @@ class ViolationController extends Controller
         'violation_accumulation' => $violation_accumulation,    
         'violation_accumulation2' => $violation_accumulation2,     
         'violation_accumulation3' => $violation_accumulation3,   
+
+        'created_at' => date('Y-m-d H:i:s'),
+        'updated_at' => date('Y-m-d H:i:s'),
         
         'alphabet_id' => $alphabet_id,           
         'signature_id' => $signature_id,    
         'employee_id' => $employee_id
     ]);
 
-       redirect('hi/violations/' . $employee_id . '/edit');
+    return   redirect('hi/violations/' . $employee_id . '/edit');
 
 /*
         $table->date('date_of_violation');     
@@ -365,7 +368,7 @@ class ViolationController extends Controller
     {
 
         //ambil data employee_id, status_violant_last, violation_now, violation_id
-        $emp_id = $request->emp_id;
+        $emp_id = $request->id_emp;
         $status_violant_last = $request->status_violant_last;
         $violation_now = $request->violation_now;
         $last_type = $request->last_type;
@@ -388,133 +391,39 @@ class ViolationController extends Controller
             
             $data = [$status_type_violation,  $pasal_yang_dilanggar,  $remainder];
         }else{
-            //ADA PELANGGARAN AKTIF DAN BERAKUMULASI DENGAN PELANGGARAN SEBELUMNYA
-            $num_violation3 = DB::table('violations')
-                            ->where('employee_id', $emp_id)
-                            ->where('violation_accumulation3' , '!=' , null)
-                            ->where('violation_status','active')
-                            ->latest()
-                            ->count();
 
-            if($num_violation > 0){
-                $sel_violation3 = DB::table('violations')
-                                ->where('employee_id', $emp_id)
-                                ->where('violation_accumulation3' , '!=' , null)
-                                ->where('violation_status','active')
-                                ->latest()
-                                ->first();
-
-            }else{
-                //JIKA HANYA 
-                $num_violation2 = DB::table('violations')
-                                ->where('employee_id', $emp_id)
-                                ->where('violation_accumulation2' , '!=' , null)
-                                ->where('violation_status','active')
-                                ->latest()
-                                ->count();
-
-                if($num_violation2 > 0){
-                    $sel_violation2 = DB::table('violations')
-                                    ->where('employee_id', $emp_id)
-                                    ->where('violation_accumulation2' , '!=' , '')
-                                    ->where('violation_status','active')
-                                    ->latest()
-                                    ->first();
-                }else{
-
-                    $num_violation = DB::table('violations')
-                                    ->where('employee_id', $emp_id)
-                                    ->where('violation_accumulation' , '!=' , null)
-                                    ->where('violation_status','active')
-                                    ->latest()
-                                    ->count();
-
-                    if($num_violation > 0){
-                        $sel_violation = DB::table('violations')
-                                        ->where('employee_id', $emp_id)
-                                        ->where('violation_accumulation' , '!=' , null)
-                                        ->where('violation_status' ,  'active')
-                                        ->latest()
-                                        ->first();
-
-
-                            //Pasal yang di langgar
-                            $Pasal = 'Perjanjian Kerja Bersama Pasal 27 ayat (3) huruf "a" huruf "g" (akumulasi sekarang)  bunyi pasal akumulasi';
-
-                            $ket2 = 'Bobot Pelanggaran sekarang yaitu Perjanjian Kerja Bersama Pasal 27 ayat (2) huruf "g" (pasal pelanggaran Sekarang) bunyi pasal';
-                            $ket3 = 'Dalam masa Surat Peringatan Pertama (jenis_pelanggaran lalu)  Perjanjian Kerja Bersama Pasal 27 ayat (2) huruf "g" (pasal pelanggaran lalu) keterangan pelanggaran lalu';
-                            
-                            $status_type_violation = $sel_paragraph->type_of_verse;
-
-                            $data = [$status_type_violation,   'Perjanjian Kerja Bersama Pasal '. $sel_article->article.' ayat ('.$sel_paragraph->paragraph .') huruf "'. $sel_alphabet->alphabet.'" ' .  $sel_alphabet->description];
-                   
-                        }else{
-                            $sel_violation = DB::table('violations')
-                                            ->where('employee_id', $emp_id)
-                                            ->where('violation_status' ,  'active')
-                                            ->latest()
+            if($last_type == 'Surat Peringatan Pertama' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                $status_type_violation = 'Surat Peringatan Kedua';
+                
+                // Cari pasal akumulasi
+                $cari_pasal_akumulasi = DB::table('alphabets')
+                                            ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                            ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                            ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
+                                            ->where('alphabets.alphabet_accumulation', 'Surat Peringatan Pertama')
                                             ->first();
 
-                            if($last_type == 'Surat Peringatan Pertama' AND $sel_paragraph->type_of_verse== 'Surat Peringatan Pertama'){
-                                $status_type_violation = 'Surat Peringatan Kedua';
-                                
-                                // Cari pasal akumulasi
-                                $cari_pasal_akumulasi = DB::table('alphabets')
-                                                        ->leftJoin('paragraphs', 'alphabets.id', '=', 'paragraphs.paragraph_id')
-                                                        ->leftJoin('articles', 'articles.id', '=', 'articles.article_id')
-                                                        ->where('paragraphs.type_of_verse', $status_type_violation)
-                                                        ->where('alphabets.alphabet_accumulation', $status_type_violation)
-                                                        ->where('alphabets.first_periode' ,  $sel_alphabet->first_periode)
-                                                        ->where('alphabets.last_periode' ,  $sel_alphabet->last_periode)
-                                                        ->first();
-                                                        // ->leftJoin('posts', 'users.id', '=', 'posts.user_id')
-                                                        // ->get();
+                $pelanggran_sebelumnya = DB::table('violations')
+                            ->where('employee_id',  $emp_id) 
+                            ->latest()                       
+                            ->first();
 
-                                $pasal_yang_dilanggar = 'Perjanjian Kerja Bersama Pasal '. $cari_pasal_akumulasi->article.' ayat ('.$cari_pasal_akumulasi->paragraph .') huruf "'. $cari_pasal_akumulasi->alphabet.'" ' .  $cari_pasal_akumulasi->description;
-                                $remainder = 'Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal '. $sel_article->article.' ayat ('.$sel_paragraph->paragraph .') huruf "'. $sel_alphabet->alphabet.'" ' .  $sel_alphabet->description . 
-                                '<b/> Dalam masa ' . $sel_violation->type_of_violation;
-                                $data = [$status_type_violation,   $pasal_yang_dilanggar, ];
-    
-                            }elseif($last_type == 'Surat Peringatan Pertama' AND $sel_paragraph->type_of_verse== 'Surat Peringatan Kedua'){
+                $cari_pasal_sebelumnya = DB::table('alphabets')
+                            ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                            ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
+                            ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
+                            ->first();
+                            
+                $pasal_yang_dilanggar = 'Perjanjian Kerja Bersama Pasal '. $cari_pasal_akumulasi->article.' ayat   ('.$cari_pasal_akumulasi->paragraph .') huruf "'. $cari_pasal_akumulasi->alphabet.'" '. $cari_pasal_akumulasi->alphabet_sound;
 
-                            }elseif($last_type == 'Surat Peringatan Pertama' AND $sel_paragraph->type_of_verse== 'Surat Peringatan Ketiga'){
-
-                            }elseif($last_type == 'Surat Peringatan Pertama' AND $sel_paragraph->type_of_verse== 'Surat Peringatan Terakhir'){
-
-                            }elseif($last_type == 'Surat Peringatan Kedua' AND $sel_paragraph->type_of_verse== 'Surat Peringatan Pertama'){
-
-                            }elseif($last_type == 'Surat Peringatan Kedua' AND $sel_paragraph->type_of_verse== 'Surat Peringatan Kedua'){
-
-                            }elseif($last_type == 'Surat Peringatan Kedua' AND $sel_paragraph->type_of_verse== 'Surat Peringatan Ketiga'){
-
-                            }elseif($last_type == 'Surat Peringatan Kedua' AND $sel_paragraph->type_of_verse== 'Surat Peringatan Terakhir'){
-
-                            }elseif($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse== 'Surat Peringatan Pertama'){
-
-                            }elseif($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse== 'Surat Peringatan Kedua'){
-
-                            }elseif($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse== 'Surat Peringatan Ketiga'){
-
-                            }elseif($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse== 'Surat Peringatan Terakhir'){
-
-                            }elseif($last_type == 'Surat Peringatan Terakhir' AND $sel_paragraph->type_of_verse== 'Surat Peringatan Pertama'){
-
-                            }elseif($last_type == 'Surat Peringatan Terakhir' AND $sel_paragraph->type_of_verse== 'Surat Peringatan Kedua'){
-
-                            }elseif($last_type == 'Surat Peringatan Terakhir' AND $sel_paragraph->type_of_verse== 'Surat Peringatan Ketiga'){
-
-                            }
-
-                            // $status_type_violation = $sel_paragraph->type_of_verse;
-                            // $data = [$status_type_violation,   'Perjanjian Kerja Bersama Pasal '. $sel_article->article.' ayat ('.$sel_paragraph->paragraph .') huruf "'. $sel_alphabet->alphabet.'" ' .  $sel_alphabet->description];
-
-                    }
-
-                }
-
+                $remainder = '<p>Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal '. $sel_article->article.' ayat ('.$sel_paragraph->paragraph .') huruf "'. $sel_alphabet->alphabet.'" ' .  $sel_alphabet->alphabet_sound . 
+                '<b/> Dalam masa ' . $last_type . ' Perjanjian Kerja Bersama Pasal '. $cari_pasal_sebelumnya->article . ' ayat ('. $cari_pasal_sebelumnya->paragraph. ') huruf "'.$cari_pasal_sebelumnya->alphabet.'", ' .$pelanggran_sebelumnya->other_information .'</p>';
+                
+                $data = [ $status_type_violation, $pasal_yang_dilanggar, $remainder];
             }
-
         }
+
+
 
 
         // Perjanjian Kerja Bersama Pasal 27 ayat (4) huruf "t" Menitipkan dan/atau dititipi scanning absensi.
