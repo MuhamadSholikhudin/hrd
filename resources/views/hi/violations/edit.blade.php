@@ -610,7 +610,7 @@
                   </div>
                   <label for="number_of_employees" class="col-sm-2 col-form-label">NIK</label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" value="{{  $employee->number_of_employees  }}" placeholder="Finger ID" >
+                      <input type="text" class="form-control" value="{{  $employee->number_of_employees  }}" placeholder="" >
                   </div>
                 </div>
                 <div class="form-group row">
@@ -618,27 +618,26 @@
                   <div class="col-sm-4">
                       <input type="text" class="form-control" id="job_level" name="job_level" value="{{  $job->job_level  }}" placeholder="Nomer Induk Karyawan" >
                   </div>
-                  <label for="finger_id" class="col-sm-2 col-form-label">Bagian / Department</label>
+                  <label for="department" class="col-sm-2 col-form-label">Bagian / Department</label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" id="part" name="part" value="{{  $department->department  }}" placeholder="Finger ID" >
+                      <input type="text" class="form-control" id="department" name="department" value="{{  $department->department  }}" placeholder="Finger ID" >
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label">Jenis Pelangaran</label>
                   <div class="col-sm-3">
                       <input type="text" name="last_vio" value="{{$sta_viol}}" >
-                      <input type="text" class="form-control" id="jpn1" name="type_of_violation"  placeholder="Jenis Pelanggaran" >     
+                      <input type="text" name="last_type" value="{{$sta_viol}}"  >     
+                      <input type="text" class="form-control" id="jpn1"  placeholder="Jenis Pelanggaran" >     
                   </div>
                 </div> 
             
                 <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label">Pasal Yang dilanggar : </label>
                   <input type="text" class="form-control" id="alphabet_id" name="alphabet_id"  value="" placeholder="Alphabet ID" >                  
-                  <div class="col-sm-10" >
+                  <div class="col-sm-10" id="pkb1">
 
-                    <div id="pkb1">
-                    
-                    </div>
+
                   </div>
                 </div> 
                 <div class="form-group row">

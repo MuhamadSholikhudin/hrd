@@ -61,15 +61,17 @@ class ViolationController extends Controller
     {
         //MENANGKAP DATA REQUEST HTML
         $employee_id = $request->employee_id;
-        $other_information = $request->other_information;
-        $date_of_violation = $request->date_of_violation;
-        $signature_id = $request->signature_id;
-        $type_of_violation = $request->type_of_violation;
         $job_level = $request->job_level;
         $department = $request->department;
+        $signature_id = $request->signature_id;
+
+        $other_information = $request->other_information;
+        $date_of_violation = $request->date_of_violation;
+
+        $last_vio = $request->last_vio;
         $alphabet_id = $request->alphabet_id;
         $status_violant_last = $request->last_vio;
-        // dd($status_violant_last );
+        $last_type = $request->last_type;
 
 
         //MEMBUAT INPUTAN OTOMATIS SURAT
@@ -164,7 +166,7 @@ class ViolationController extends Controller
 
         
         //JIKA TIDAK ADA PELANGGARAN AKTIF
-        if($status_violant_last == 'notviolation'){
+        if($last_vio == 'notactive' AND $last_type == 'notviolation'){
             // $type_of_violation = $sel_paragraph->type_of_verse;
 
             $violation_accumulation = null;    
@@ -173,138 +175,68 @@ class ViolationController extends Controller
             $violation_accumulation3 = null;  
 
         }else{
-            //ADA PELANGGARAN AKTIF DAN BERAKUMULASI ADA 3 DENGAN PELANGGARAN SEBELUMNYA
-            $num_violation3 = DB::table('violations')
-                ->where('employee_id', $employee_id)
-                ->where('violation_accumulation3' , '!=' , null)
-                ->where('violation_status','active')
-                ->latest()
-                ->count();
+            if($last_type == 'Surat Peringatan Pertama' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                $status_type_violation = 'Surat Peringatan Kedua';
+                
+                // Cari pasal akumulasi
+                $cari_pasal_akumulasi = DB::table('alphabets')
+                                            ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                            ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                            ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
+                                            ->where('alphabets.alphabet_accumulation', 'Surat Peringatan Pertama')
+                                            ->select('alphabets.id')
+                                            ->first();
 
-            if($num_violation3 > 0){
-                $sel_violation3 = DB::table('violations')
-                    ->where('employee_id', $employee_id)
-                    ->where('violation_accumulation3' , '!=' , null)
-                    ->where('violation_status','active')
-                    ->latest()
-                    ->first();
-
-            }else{
-                //JIKA HANYA PELANGGARAN AKUMULASI ADA 2
-                $num_violation2 = DB::table('violations')
-                    ->where('employee_id', $employee_id)
-                    ->where('violation_accumulation2' , '!=' , null)
-                    ->where('violation_status','active')
-                    ->latest()
-                    ->count();
-
-                if($num_violation2 > 0){
-                    $sel_violation2 = DB::table('violations')
-                        ->where('employee_id', $employee_id)
-                        ->where('violation_accumulation2' , '!=' , null)
-                        ->where('violation_status','active')
-                        ->latest()
-                        ->first();
-                }else{
-                    //JIKA HANYA PELANGGARAN AKUMULASI ADA 1
-                    $num_violation = DB::table('violations')
-                        ->where('employee_id', $employee_id)
-                        ->where('violation_accumulation' , '!=' , null)
-                        ->where('violation_status','active')
-                        ->latest()
-                        ->count();
-
-                    if($num_violation > 0){
-                        $sel_violation = DB::table('violations')
-                            ->where('employee_id', $employee_id)
-                            ->where('violation_accumulation' , '!=' , null)
-                            ->latest()
+                $pelanggran_sebelumnya = DB::table('violations')
+                            ->where('employee_id',  $employee_id) 
+                            ->latest()                       
                             ->first();
 
-                            // Pasal yang di langgar
-                            $Pasal = 'Perjanjian Kerja Bersama Pasal 27 ayat (3) huruf "a" huruf "g" (akumulasi sekarang)  bunyi pasal akumulasi';
-                            $ket2 = 'Bobot Pelanggaran sekarang yaitu Perjanjian Kerja Bersama Pasal 27 ayat (2) huruf "g" (pasal pelanggaran Sekarang) bunyi pasal';
-                            $ket3 = 'Dalam masa Surat Peringatan Pertama (jenis_pelanggaran lalu)  Perjanjian Kerja Bersama Pasal 27 ayat (2) huruf "g" (pasal pelanggaran lalu) keterangan pelanggaran lalu';
+                $cari_pasal_sebelumnya = DB::table('alphabets')
+                            ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                            ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
+                            ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
+                            ->first();
                             
-                            $status_type_violation = $sel_paragraph->type_of_verse;
-                            $data = [$status_type_violation,   'Perjanjian Kerja Bersama Pasal '. $sel_article->article.' ayat ('.$sel_paragraph->paragraph .') huruf "'. $sel_alphabet->alphabet.'" ' .  $sel_alphabet->description];
-                            // ---------
-                            $violation_accumulation = $sel_violation->id;    
-                            $alphabet_accumulation = null;    
-                            $violation_accumulation2 = null;     
-                            $violation_accumulation3 = null;
-                    }else{
-                        // TIDAK ADA PELANGARAN AKUMULASI
-                        $violation_accumulation = null;   
-                        $alphabet_accumulation = null;  
-                        $violation_accumulation2 = null;    
-                        $violation_accumulation3 = null; 
-                    }
-                }
+
+                $violation_accumulation = $pelanggran_sebelumnya;    
+                $alphabet_accumulation = $cari_pasal_akumulasi->id;    
+                $violation_accumulation2 = null;    
+                $violation_accumulation3 = null;  
             }
+
         }
      
+        DB::table('violations')->insert([
+                'date_of_violation' => $date_of_violation,     
+                'date_end_violation' => $date_end_violation,     
+                'no_violation' => $no_sp,   
+                'format' => 'SP-HRD',    
+                'month_of_violation' => $month_n,     
+                'violation_ROM' => $ROM,   
+                'reporting_day' => '',     
+                'reporting_date' => null,   
+                'job_level' => $job_level,   
+                'department' => $department,   
+                'other_information' => $other_information,   
+                        
+                'violation_status' => 'active',     
+                'type_of_violation' => $type_of_violation,   
+            
+                'alphabet_accumulation' => $alphabet_accumulation,    
+                'violation_accumulation' => $violation_accumulation,    
+                'violation_accumulation2' => $violation_accumulation2,     
+                'violation_accumulation3' => $violation_accumulation3,   
 
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+                
+                'alphabet_id' => $alphabet_id,           
+                'signature_id' => $signature_id,    
+                'employee_id' => $employee_id
+            ]);
 
-
-
-
- DB::table('violations')->insert([
-        'date_of_violation' => $date_of_violation,     
-        'date_end_violation' => $date_end_violation,     
-        'no_violation' => $no_sp,   
-        'format' => 'SP-HRD',    
-        'month_of_violation' => $month_n,     
-        'violation_ROM' => $ROM,   
-        'reporting_day' => '',     
-        'reporting_date' => null,   
-        'job_level' => $job_level,   
-        'department' => $department,   
-        'other_information' => $other_information,   
-                  
-       'violation_status' => 'active',     
-       'type_of_violation' => $type_of_violation,   
-       
-       'alphabet_accumulation' => $alphabet_accumulation,    
-        'violation_accumulation' => $violation_accumulation,    
-        'violation_accumulation2' => $violation_accumulation2,     
-        'violation_accumulation3' => $violation_accumulation3,   
-
-        'created_at' => date('Y-m-d H:i:s'),
-        'updated_at' => date('Y-m-d H:i:s'),
-        
-        'alphabet_id' => $alphabet_id,           
-        'signature_id' => $signature_id,    
-        'employee_id' => $employee_id
-    ]);
-
-    return   redirect('hi/violations/' . $employee_id . '/edit');
-
-/*
-        $table->date('date_of_violation');     
-        $table->integer('no_violation');  
-        $table->string('format')->nullable();  
-        $table->string('month_of_violation')->nullable();  
-        $table->string('violation_ROM')->nullable();  
-        $table->string('reporting_day')->nullable();  
-        $table->date('reporting_date');  
-        $table->string('part')->nullable();
-        $table->text('other_information')->nullable();
-                  
-        $table->string('violation_status')->nullable();  
-        $table->string('type_of_violation')->nullable();  
-                    
-        $table->char('violation_accumulation');   
-        $table->char('alphabet_accumulation');   
-        $table->char('violation_accumulation2');  
-        $table->char('violation_accumulation3');  
-        
-        $table->foreignId('alphabet_id');          
-        $table->foreignId('signature_id');  
-        $table->foreignId('employee_id'); 
-
-     
-        */
+        return redirect('hi/violations/' . $employee_id . '/edit');
     }
 
     /**
