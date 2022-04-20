@@ -88,7 +88,7 @@ class ViolationController extends Controller
             $no_sp = $last_sp->no_violation + 1;
         }
 
-        $date_violation = new \DateTime($date_of_violation .' 4:06:37');
+        $date_violation = new \DateTime($date_of_violation .' 00:00:00');
 
         $date_year = date_format($date_violation, "Y"); //for Display Year
         $date_month =  date_format($date_violation, "m"); //for Display Month
@@ -100,7 +100,7 @@ class ViolationController extends Controller
 //   echo "Oct 3, 1975 was on a ".gmdate("l", mktime(0,0,0,$date_day,$date_month,$date_year)) . "<br>";
 
             // $day = gmdate($date_of_violation, time()+60*60*7);
-            $day = gmdate("l", mktime(0,0,0,$date_day,$date_month,$date_year));
+            $day = date("l", gmmktime(0,0,0, $date_month,$date_day, $date_year));
 
           if($day == 'Monday'){
             $day_num = '1';
@@ -125,31 +125,31 @@ class ViolationController extends Controller
             $day_indo = 'Minggu';            
           }
         
-          $month_n = gmdate("n", mktime(0,0,0,$date_day,$date_month,$date_year));
+           $month_n = date("n", gmmktime(0,0,0, $date_month, $date_day, $date_year));
           
           if($month_n == '1'){
             $ROM = 'I';
-          }elseif($month_n == '2'){
+          }elseif($month_n == 2){
             $ROM = 'II';
-          }elseif($month_n == '3'){
+          }elseif($month_n == 3){
             $ROM = 'III';
-          }elseif($month_n == '4'){
+          }elseif($month_n == 4){
             $ROM = 'IV';
-          }elseif($month_n == '5'){
+          }elseif($month_n == 5){
             $ROM = 'V';
-          }elseif($month_n == '6'){
+          }elseif($month_n == 6){
             $ROM = 'VI';
-          }elseif($month_n == '7'){
+          }elseif($month_n == 7){
             $ROM = 'VII';
-          }elseif($month_n == '8'){
+          }elseif($month_n == 8){
             $ROM = 'VIII';
-          }elseif($month_n == '9'){
+          }elseif($month_n == 9){
             $ROM = 'IX';
-          }elseif($month_n == '10'){
+          }elseif($month_n == 10){
             $ROM = 'X';
-          }elseif($month_n == '11'){
+          }elseif($month_n == 11){
             $ROM = 'XI';
-          }elseif($month_n == '12'){
+          }elseif($month_n == 12){
             $ROM = 'XII';
           }
 
@@ -157,71 +157,196 @@ class ViolationController extends Controller
           $date_end_violation = date('Y-m-d', strtotime('+180 days', strtotime($tgl1))); //operasi penjumlahan tanggal sebanyak 6 hari
           // echo $date_end_violation; //print tanggal
 
-        //   dd($date_end_violation);
+            //   dd($date_end_violation);
 
-        //LOGIKAN PENENTUAN MENDAPATKAN PELANGGARAN
-        $sel_alphabet = DB::table('alphabets')->find($alphabet_id);
-        $sel_paragraph = DB::table('paragraphs')->find($sel_alphabet->paragraph_id);
-        $sel_article = DB::table('articles')->find($sel_paragraph->article_id);
+            //LOGIKAN PENENTUAN MENDAPATKAN PELANGGARAN
+            $sel_alphabet = DB::table('alphabets')->find($alphabet_id);
+            $sel_paragraph = DB::table('paragraphs')->find($sel_alphabet->paragraph_id);
+            $sel_article = DB::table('articles')->find($sel_paragraph->article_id);
 
         
-        //JIKA TIDAK ADA PELANGGARAN AKTIF
-        if($last_vio == 'notactive' AND $last_type == 'notviolation'){
-            // $type_of_violation = $sel_paragraph->type_of_verse;
+            //JIKA TIDAK ADA PELANGGARAN AKTIF
+            if($last_vio == 'notactive' AND $last_type == 'notviolation'){
+                // $type_of_violation = $sel_paragraph->type_of_verse;
+                $status_type_violation = $sel_paragraph->type_of_verse;
 
-            $violation_accumulation = null;    
-            $alphabet_accumulation = null;    
-            $violation_accumulation2 = null;    
-            $violation_accumulation3 = null;  
-
-        }else{
-            if($last_type == 'Surat Peringatan Pertama' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
-                $status_type_violation = 'Surat Peringatan Kedua';
-                
-                // Cari pasal akumulasi
-                $cari_pasal_akumulasi = DB::table('alphabets')
-                                            ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-                                            ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
-                                            ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
-                                            ->where('alphabets.alphabet_accumulation', 'Surat Peringatan Pertama')
-                                            ->select('alphabets.id')
-                                            ->first();
-
-                $pelanggran_sebelumnya = DB::table('violations')
-                            ->where('employee_id',  $employee_id) 
-                            ->latest()                       
-                            ->first();
-
-                $cari_pasal_sebelumnya = DB::table('alphabets')
-                            ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-                            ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
-                            ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
-                            ->first();
-                            
-
-                $violation_accumulation = $pelanggran_sebelumnya;    
-                $alphabet_accumulation = $cari_pasal_akumulasi->id;    
+                $violation_accumulation = null;    
+                $alphabet_accumulation = null;    
                 $violation_accumulation2 = null;    
                 $violation_accumulation3 = null;  
-            }
 
+            }else{
+
+                // CARI PELANGGARAN AKUMULASI 3               
+                $num_vio_accumulation3 = DB::table('violations')
+                    ->where('employee_id',  $employee_id) 
+                    ->where('violation_accumulation', '!=',  null) 
+                    ->where('violation_accumulation2', '!=',  null) 
+                    ->where('violation_accumulation3', '!=',  null) 
+                    ->where('alphabet_accumulation', '!=',  null) 
+                    ->where('violation_status', 'active') 
+                    ->latest()                       
+                    ->count();
+
+                // dd($num_vio_accumulation3);
+                if($num_vio_accumulation3 > 0){
+                    return redirect('hi/violations/' . $employee_id . '/edit');
+                }else{
+
+                }
+
+
+                // CARI PELANGGARAN AKUMULASI 2               
+                $num_vio_accumulation2 = DB::table('violations')
+                        ->where('employee_id',  $employee_id) 
+                        ->where('violation_accumulation', '!=',  null) 
+                        ->where('violation_accumulation2', '!=',  null) 
+                        ->where('alphabet_accumulation', '!=',  null) 
+                        ->where('violation_status', 'active') 
+                        ->latest()                       
+                        ->count();
+
+                if($num_vio_accumulation2 > 0){
+                    // LOGIKA AKUMULSI KETIGA
+                    if($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                        $status_type_violation = 'Surat Peringatan Terakhir';
+                        
+                        // dd($status_type_violation);
+                        // Cari pasal akumulasi
+                        $cari_pasal_akumulasi = DB::table('alphabets')
+                                                    ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                                    ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                                    ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
+                                                    ->where('alphabets.alphabet_accumulation', 'Surat Peringatan Pertama')
+                                                    ->select('alphabets.id as id')
+                                                    ->first();
+    
+                        $pelanggran_sebelumnya = DB::table('violations')
+                                    ->where('employee_id',  $employee_id) 
+                                    ->latest()                       
+                                    ->first();
+    
+                        $pelanggran_sebelumnya2 = DB::table('violations')
+                                    ->where('employee_id',  $employee_id) 
+                                    ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
+                                    ->latest()                       
+                                    ->first();
+
+                        $pelanggran_sebelumnya3 = DB::table('violations')
+                                    ->where('employee_id',  $employee_id) 
+                                    ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
+                                    ->latest()                       
+                                    ->first();
+    
+                        $cari_pasal_sebelumnya = DB::table('alphabets')
+                                    ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                    ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                    ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
+                                    ->first();
+                                    
+                        $alphabet_accumulation = $cari_pasal_akumulasi->id;    
+                        $violation_accumulation = $pelanggran_sebelumnya->id;    
+                        $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
+                        $violation_accumulation3 = $pelanggran_sebelumnya3->id;  
+                    }
+                }else{
+                  
+                    // CARI PELANGGARAN AKUMULASI 1
+                    $num_vio_accumulation = DB::table('violations')
+                        ->where('employee_id',  $employee_id) 
+                        ->where('violation_accumulation', '!=',  null) 
+                        ->where('alphabet_accumulation', '!=',  null) 
+                        ->where('violation_status', 'active') 
+                        ->latest()                       
+                        ->count();
+
+                // dd($num_vio_accumulation);
+                if($num_vio_accumulation > 0){
+
+                    //LOGIKA AKUMULASI KEDUA
+                    if($last_type == 'Surat Peringatan Kedua' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                        $status_type_violation = 'Surat Peringatan Ketiga';
+                        
+                        // Cari pasal akumulasi
+                        $cari_pasal_akumulasi = DB::table('alphabets')
+                                                    ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                                    ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                                    ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
+                                                    ->where('alphabets.alphabet_accumulation', 'Surat Peringatan Pertama')
+                                                    ->select('alphabets.id as id')
+                                                    ->first();
+    
+                        $pelanggran_sebelumnya = DB::table('violations')
+                                    ->where('employee_id',  $employee_id) 
+                                    ->latest()                       
+                                    ->first();
+    
+                        $pelanggran_sebelumnya2 = DB::table('violations')
+                                    ->where('employee_id',  $employee_id) 
+                                    ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
+                                    ->latest()                       
+                                    ->first();
+    
+                        $cari_pasal_sebelumnya = DB::table('alphabets')
+                                    ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                    ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                    ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
+                                    ->first();
+                                    
+                        $alphabet_accumulation = $cari_pasal_akumulasi->id;    
+                        $violation_accumulation = $pelanggran_sebelumnya->id;    
+                        $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
+                        $violation_accumulation3 = null;  
+                    }
+                }else{
+                    //LOGIKA AKUMULSAI PRTAMA
+                    if($last_type == 'Surat Peringatan Pertama' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                        $status_type_violation = 'Surat Peringatan Kedua';
+                        
+                        // Cari pasal akumulasi
+                        $cari_pasal_akumulasi = DB::table('alphabets')
+                                                    ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                                    ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                                    ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
+                                                    ->where('alphabets.alphabet_accumulation', 'Surat Peringatan Pertama')
+                                                    ->select('alphabets.id as id')
+                                                    ->first();
+    
+                        $pelanggran_sebelumnya = DB::table('violations')
+                                    ->where('employee_id',  $employee_id) 
+                                    ->latest()                       
+                                    ->first();
+    
+                        $cari_pasal_sebelumnya = DB::table('alphabets')
+                                    ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                    ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                    ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
+                                    ->first();
+                                    
+                        $violation_accumulation = $pelanggran_sebelumnya->id;    
+                        $alphabet_accumulation = $cari_pasal_akumulasi->id;    
+                        $violation_accumulation2 = null;    
+                        $violation_accumulation3 = null;  
+                    }
+                }
+            }    
         }
      
-        DB::table('violations')->insert([
+            $data = [
                 'date_of_violation' => $date_of_violation,     
                 'date_end_violation' => $date_end_violation,     
                 'no_violation' => $no_sp,   
                 'format' => 'SP-HRD',    
                 'month_of_violation' => $month_n,     
                 'violation_ROM' => $ROM,   
-                'reporting_day' => '',     
+                'reporting_day' => null,     
                 'reporting_date' => null,   
                 'job_level' => $job_level,   
                 'department' => $department,   
                 'other_information' => $other_information,   
                         
                 'violation_status' => 'active',     
-                'type_of_violation' => $type_of_violation,   
+                'type_of_violation' => $status_type_violation,   
             
                 'alphabet_accumulation' => $alphabet_accumulation,    
                 'violation_accumulation' => $violation_accumulation,    
@@ -234,8 +359,9 @@ class ViolationController extends Controller
                 'alphabet_id' => $alphabet_id,           
                 'signature_id' => $signature_id,    
                 'employee_id' => $employee_id
-            ]);
-
+            ];
+            // dd($data);
+        DB::table('violations')->insert($data);
         return redirect('hi/violations/' . $employee_id . '/edit');
     }
 
@@ -313,54 +439,189 @@ class ViolationController extends Controller
 
         //LOGIKA MENAMPILKAN DATA PASAL DAN PASAL DELIK
         
-        //JIKA TIDAK ADA PELANGGARAN AKTIF
+        //GET JIKA TIDAK ADA PELANGGARAN AKTIF
         if($status_violant_last == 'notactive' AND $last_type == 'notviolation'){
             $status_type_violation = $sel_paragraph->type_of_verse;
 
-            $pasal_yang_dilanggar = 'Perjanjian Kerja Bersama Pasal '. $sel_article->article.' ayat ('.$sel_paragraph->paragraph .') huruf "'. $sel_alphabet->alphabet.'" ' .  $sel_alphabet->description;
+            $pasal_yang_dilanggar = 'Perjanjian Kerja Bersama Pasal '. $sel_article->article.' ayat ('.$sel_paragraph->paragraph .') huruf "'. $sel_alphabet->alphabet.'" ' .  $sel_alphabet->alphabet_sound;
             
             $remainder = '-';
+                // $data = [3,3,3];
             
             $data = [$status_type_violation,  $pasal_yang_dilanggar,  $remainder];
         }else{
 
-            if($last_type == 'Surat Peringatan Pertama' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
-                $status_type_violation = 'Surat Peringatan Kedua';
+            // CARI PELANGGARAN AKUMULASI 3
+            $num_vio_accumulation3 = DB::table('violations')
+                ->where('employee_id',  $emp_id) 
+                ->where('violation_accumulation', '!=',  null) 
+                ->where('violation_accumulation2', '!=',  null) 
+                ->where('violation_accumulation3', '!=',  null) 
+                ->where('alphabet_accumulation', '!=',  null) 
+                ->where('violation_status', 'active') 
+                ->latest()                       
+                ->count();
+
+            if($num_vio_accumulation3 > 0){
+
+                // GET LOGIKA AKUMULASI KEEMPAT
+                if($last_type == 'Surat Peringatan Terakhir' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                    $status_type_violation = 'PHK PESANGON';
+                    
+                    // Cari pasal akumulasi
+                    $cari_pasal_akumulasi = DB::table('alphabets')
+                                                ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                                ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                                ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
+                                                ->where('alphabets.alphabet_accumulation', 'Surat Peringatan Pertama')
+                                                ->first();
+
+                    $pelanggran_sebelumnya = DB::table('violations')
+                                ->where('employee_id',  $emp_id) 
+                                ->latest()                       
+                                ->first();
+
+                    $cari_pasal_sebelumnya = DB::table('alphabets')
+                                ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
+                                ->first();
+                                
+                    $pasal_yang_dilanggar = 'Perjanjian Kerja Bersama Pasal '. $cari_pasal_akumulasi->article.' ayat   ('.$cari_pasal_akumulasi->paragraph .') huruf "'. $cari_pasal_akumulasi->alphabet.'" '. $cari_pasal_akumulasi->alphabet_sound;
+
+                    $remainder = '<p>Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal '. $sel_article->article.' ayat ('.$sel_paragraph->paragraph .') huruf "'. $sel_alphabet->alphabet.'" ' .  $sel_alphabet->alphabet_sound . 
+                    '<b/> Dalam masa ' . $last_type . ' Perjanjian Kerja Bersama Pasal '. $cari_pasal_sebelumnya->article . ' ayat ('. $cari_pasal_sebelumnya->paragraph. ') huruf "'.$cari_pasal_sebelumnya->alphabet.'", ' .$pelanggran_sebelumnya->other_information .'</p>';
+                    
+                    $data = [ $status_type_violation, $pasal_yang_dilanggar, $remainder];
+                }
                 
-                // Cari pasal akumulasi
-                $cari_pasal_akumulasi = DB::table('alphabets')
-                                            ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-                                            ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
-                                            ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
-                                            ->where('alphabets.alphabet_accumulation', 'Surat Peringatan Pertama')
-                                            ->first();
-
-                $pelanggran_sebelumnya = DB::table('violations')
-                            ->where('employee_id',  $emp_id) 
-                            ->latest()                       
-                            ->first();
-
-                $cari_pasal_sebelumnya = DB::table('alphabets')
-                            ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-                            ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
-                            ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
-                            ->first();
-                            
-                $pasal_yang_dilanggar = 'Perjanjian Kerja Bersama Pasal '. $cari_pasal_akumulasi->article.' ayat   ('.$cari_pasal_akumulasi->paragraph .') huruf "'. $cari_pasal_akumulasi->alphabet.'" '. $cari_pasal_akumulasi->alphabet_sound;
-
-                $remainder = '<p>Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal '. $sel_article->article.' ayat ('.$sel_paragraph->paragraph .') huruf "'. $sel_alphabet->alphabet.'" ' .  $sel_alphabet->alphabet_sound . 
-                '<b/> Dalam masa ' . $last_type . ' Perjanjian Kerja Bersama Pasal '. $cari_pasal_sebelumnya->article . ' ayat ('. $cari_pasal_sebelumnya->paragraph. ') huruf "'.$cari_pasal_sebelumnya->alphabet.'", ' .$pelanggran_sebelumnya->other_information .'</p>';
                 
-                $data = [ $status_type_violation, $pasal_yang_dilanggar, $remainder];
+            }else{
+                
             }
+
+
+
+            // CARI PELANGGARAN AKUMULASI 2
+            $num_vio_accumulation2 = DB::table('violations')
+                    ->where('employee_id',  $emp_id) 
+                    ->where('violation_accumulation', '!=',  null) 
+                    ->where('violation_accumulation2', '!=',  null) 
+                    ->where('alphabet_accumulation', '!=',  null) 
+                    ->where('violation_status', 'active') 
+                    ->latest()                       
+                    ->count();
+
+            if($num_vio_accumulation2 > 0){
+                
+                // GET LOGIKA AKUMULASI KETIGA
+                if($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                    $status_type_violation = 'Surat Peringatan Ketiga';
+                    
+                    // Cari pasal akumulasi
+                    $cari_pasal_akumulasi = DB::table('alphabets')
+                                                ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                                ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                                ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
+                                                ->where('alphabets.alphabet_accumulation', 'Surat Peringatan Pertama')
+                                                ->first();
+    
+                    $pelanggran_sebelumnya = DB::table('violations')
+                                ->where('employee_id',  $emp_id) 
+                                ->latest()                       
+                                ->first();
+    
+                    $cari_pasal_sebelumnya = DB::table('alphabets')
+                                ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
+                                ->first();
+                                
+                    $pasal_yang_dilanggar = 'Perjanjian Kerja Bersama Pasal '. $cari_pasal_akumulasi->article.' ayat   ('.$cari_pasal_akumulasi->paragraph .') huruf "'. $cari_pasal_akumulasi->alphabet.'" '. $cari_pasal_akumulasi->alphabet_sound;
+    
+                    $remainder = '<p>Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal '. $sel_article->article.' ayat ('.$sel_paragraph->paragraph .') huruf "'. $sel_alphabet->alphabet.'" ' .  $sel_alphabet->alphabet_sound . 
+                    '<b/> Dalam masa ' . $last_type . ' Perjanjian Kerja Bersama Pasal '. $cari_pasal_sebelumnya->article . ' ayat ('. $cari_pasal_sebelumnya->paragraph. ') huruf "'.$cari_pasal_sebelumnya->alphabet.'", ' .$pelanggran_sebelumnya->other_information .'</p>';
+                    
+                    $data = [ $status_type_violation, $pasal_yang_dilanggar, $remainder];
+                }
+            }else{
+
+                $num_vio_accumulation = DB::table('violations')
+                    ->where('employee_id',  $emp_id) 
+                    ->where('violation_accumulation', '!=',  null) 
+                    ->where('alphabet_accumulation', '!=',  null) 
+                    ->where('violation_status', 'active') 
+                    ->latest()                       
+                    ->count();
+
+                if($num_vio_accumulation > 0){
+
+                    // GET LOGIKA AKUMULASI KEDUA
+                    if($last_type == 'Surat Peringatan Kedua' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                        $status_type_violation = 'Surat Peringatan Ketiga';
+                        
+                        // Cari pasal akumulasi
+                        $cari_pasal_akumulasi = DB::table('alphabets')
+                                                    ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                                    ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                                    ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
+                                                    ->where('alphabets.alphabet_accumulation', 'Surat Peringatan Pertama')
+                                                    ->first();
+        
+                        $pelanggran_sebelumnya = DB::table('violations')
+                                    ->where('employee_id',  $emp_id) 
+                                    ->latest()                       
+                                    ->first();
+        
+                        $cari_pasal_sebelumnya = DB::table('alphabets')
+                                    ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                    ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                    ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
+                                    ->first();
+                                    
+                        $pasal_yang_dilanggar = 'Perjanjian Kerja Bersama Pasal '. $cari_pasal_akumulasi->article.' ayat   ('.$cari_pasal_akumulasi->paragraph .') huruf "'. $cari_pasal_akumulasi->alphabet.'" '. $cari_pasal_akumulasi->alphabet_sound;
+        
+                        $remainder = '<p>Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal '. $sel_article->article.' ayat ('.$sel_paragraph->paragraph .') huruf "'. $sel_alphabet->alphabet.'" ' .  $sel_alphabet->alphabet_sound . 
+                        '<b/> Dalam masa ' . $last_type . ' Perjanjian Kerja Bersama Pasal '. $cari_pasal_sebelumnya->article . ' ayat ('. $cari_pasal_sebelumnya->paragraph. ') huruf "'.$cari_pasal_sebelumnya->alphabet.'", ' .$pelanggran_sebelumnya->other_information .'</p>';
+                        
+                        $data = [ $status_type_violation, $pasal_yang_dilanggar, $remainder];
+                    }
+                }else{
+
+                    // GET LOGIKA AKUMULASI PERTAMA
+                    if($last_type == 'Surat Peringatan Pertama' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                        $status_type_violation = 'Surat Peringatan Kedua';
+                        
+                        // Cari pasal akumulasi
+                        $cari_pasal_akumulasi = DB::table('alphabets')
+                                                    ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                                    ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                                    ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
+                                                    ->where('alphabets.alphabet_accumulation', 'Surat Peringatan Pertama')
+                                                    ->first();
+        
+                        $pelanggran_sebelumnya = DB::table('violations')
+                                    ->where('employee_id',  $emp_id) 
+                                    ->latest()                       
+                                    ->first();
+        
+                        $cari_pasal_sebelumnya = DB::table('alphabets')
+                                    ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                    ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                    ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
+                                    ->first();
+                                    
+                        $pasal_yang_dilanggar = 'Perjanjian Kerja Bersama Pasal '. $cari_pasal_akumulasi->article.' ayat   ('.$cari_pasal_akumulasi->paragraph .') huruf "'. $cari_pasal_akumulasi->alphabet.'" '. $cari_pasal_akumulasi->alphabet_sound;
+        
+                        $remainder = '<p>Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal '. $sel_article->article.' ayat ('.$sel_paragraph->paragraph .') huruf "'. $sel_alphabet->alphabet.'" ' .  $sel_alphabet->alphabet_sound . 
+                        '<b/> Dalam masa ' . $last_type . ' Perjanjian Kerja Bersama Pasal '. $cari_pasal_sebelumnya->article . ' ayat ('. $cari_pasal_sebelumnya->paragraph. ') huruf "'.$cari_pasal_sebelumnya->alphabet.'", ' .$pelanggran_sebelumnya->other_information .'</p>';
+                        
+                        $data = [ $status_type_violation, $pasal_yang_dilanggar, $remainder];
+                    }
+                }
+            }    
         }
 
-
-
-
-        // Perjanjian Kerja Bersama Pasal 27 ayat (4) huruf "t" Menitipkan dan/atau dititipi scanning absensi.
-
-        // $data = $status_type_violation;
         return response()->json($data);
     }
 }

@@ -42,7 +42,7 @@
                 {{  $department->department  }} 
             </p>
             <ul class="list-group list-group-unbordered mb-3">
-              <li class="list-group-item">
+              <!-- <li class="list-group-item">
                 <b>Tgl masuk</b> <a class="float-right">{{  $employee->hire_date  }}</a>
               </li>
               <li class="list-group-item">
@@ -50,7 +50,7 @@
               </li>
               <li class="list-group-item">
                 <b>Phone Number</b> <a class="float-right">{{  $employee->phone  }}</a>
-              </li>
+              </li> -->
               <!-- <li class="list-group-item">
                 <b>Create at</b> <a class="float-right">{{  $employee->created_at  }}</a>
               </li> -->
@@ -63,16 +63,19 @@
       
       </div>
 
-      <div class="col-md-3">
+      <div class="col-md-9">
         <!-- About Me Box -->
-        <div class="card card-primary">
+        <div class="card row card-primary">
           <div class="card-header">
             <h3 class="card-title">Identitas</h3>
           </div>
-          <div class="card-body mr-0">
-            <strong><i class="fas fa-address-card mr-1"></i> Kartu Tanda Penduduk</strong>
-            <table>
-              <tr>
+
+          <div class="row">
+            <div class="col-md-5">
+              <div class="card-body mr-0 mb-0">
+                <strong><i class="fas fa-address-card mr-1"></i> Kartu Tanda Penduduk</strong>
+              <table>
+                <tr>
                   <td valign="top">NIK</td>
                   <td valign="top">: {{  $employee->national_id  }}</td>
                 </tr>
@@ -100,43 +103,45 @@
                   <td valign="top">Ibu Kandung</td>
                   <td valign="top">: {{  $employee->biological_mothers_name  }}</td>
                 </tr>
-          </table>
+              </table>
+            </div>
 
-        <!-- </p> -->
+            </div>
 
-        <hr>
-        <strong><i class="fas fa-book mr-1"></i> Pendidikan</strong>
-          <table>
-            <tr>
-              <td valign="top">Pend Terakhir</td>
-              <td valign="top">: {{  $employee->educate  }}</td>
-            </tr>
-            <tr>
-              <td valign="top">Jurusan</td>
-              <td valign="top">: {{  $employee->major  }}</td>
-            </tr>
-          </table>
-        <hr>
-        <strong><i class="fas fa-book mr-1"></i> Email & Phone</strong>
-          <table>
-            <tr>
-              <td valign="top">Email</td>
-              <td valign="top">: {{  $employee->email  }}</td>
-            </tr>
-            <tr>
-              <td valign="top">Phone</td>
-              <td valign="top">: {{  $employee->phone  }}</td>
-            </tr>
-          </table>
+            <div class="col-md-5">
+              <div class="card-body mr-0 mb-0">  
+          <!-- <hr> -->
+              <strong><i class="fas fa-book mr-1"></i> Pendidikan</strong>
+              <table>
+                <tr>
+                  <td valign="top">Pend Terakhir</td>
+                  <td valign="top">: {{  $employee->educate  }}</td>
+                </tr>
+                <tr>
+                  <td valign="top">Jurusan</td>
+                  <td valign="top">: {{  $employee->major  }}</td>
+                </tr>
+              </table>
+              <hr>
+              <strong><i class="fas fa-book mr-1"></i> Email & Phone</strong>
+              <table>
+                <tr>
+                  <td valign="top">Email</td>
+                  <td valign="top">: {{  $employee->email  }}</td>
+                </tr>
+                <tr>
+                  <td valign="top">Phone</td>
+                  <td valign="top">: {{  $employee->phone  }}</td>
+                </tr>
+              </table>
+            </div>
           </div>
-                    
-        </div>
+        </div>            
       </div>
+    </div>
 
 
-      <div class="col-md-6">
-      
-      </div>
+
 
       <div class="col-md-12">
         <div class="card card-secondary">
@@ -305,6 +310,13 @@
                   <?php
                     if($violation->type_of_violation == 'Surat Peringatan Pertama'){
                       $p = "SP I";
+                    }elseif($violation->type_of_violation == 'Surat Peringatan Kedua'){
+                      $p = "SP II";
+                    
+                    }elseif($violation->type_of_violation == 'Surat Peringatan Ketiga'){
+                      $p = "SP III";
+                    }elseif($violation->type_of_violation == 'Surat Peringatan Terakhir'){
+                      $p = "SP IV";
                     }
                   ?>
                   {{ $p }}
@@ -426,19 +438,32 @@
             </div> 
           </div>
         </div>
-
         <?php
-          $date_now = date('Y-m-d');
-          echo date("l, d F Y", strtotime($date_now));
-          echo '<br>';
-          echo $day = gmdate("l", time()+60*60*7);
-          echo '<br>';
-          echo $month_m = gmdate("m", time()+60*60*7);
-          echo '<br>';
-          echo $month_n = gmdate("n", time()+60*60*7);
+        
+        $date_violation = new \DateTime(date('Y-m-d') .' 4:06:37' );
 
-          $m_month = "'". $month_m ."'";
-          echo '<br>';
+        echo $date_year = date_format($date_violation, "Y"); //for Display Year
+        echo $date_month =  date_format($date_violation, "m"); //for Display Month
+        echo $date_day = date_format($date_violation, "d"); //for Display Date
+
+ // Prints: October 3, 1975 was on a Friday
+echo "Oct 3, 1975 was on a ".date("l", gmmktime(0,0,0, 04, 20, 2022));
+        echo '<br>';
+
+        // echo $date_month;
+        echo '<br>';
+
+        $date_now = date('Y-m-d');
+        echo date("l, d F Y", strtotime($date_now));
+        echo '<br>';
+        echo $day = gmdate("l", time()+60*60*7);
+        echo '<br>';
+        echo $month_m = gmdate("m", time()+60*60*7);
+        echo '<br>';
+        echo $month_n = gmdate("n", time()+60*60*7);
+
+        $m_month = "'". $month_m ."'";
+        echo '<br>';
 
           $tgl1 = $date_now;// pendefinisian tanggal awal
           $tgl2 = date('Y-m-d', strtotime('+180 days', strtotime($tgl1))); //operasi penjumlahan tanggal sebanyak 6 hari
@@ -447,8 +472,8 @@
 
           // Nomer SP
          echo $num_no_sp = DB::table('violations')
-                          ->where('month_of_violation', '=', $m_month)
-                          ->count();
+                            ->where('month_of_violation', '=', $m_month)
+                            ->count();
           echo '<br>';
           if($num_no_sp == 0){
             $no_sp = 1;
@@ -507,7 +532,7 @@
             $ROM = 'II';
           }elseif($month_n == '3'){
             $ROM = 'III';
-          }elseif($month_n == '4'){
+          }elseif($month_n == 4){
             $ROM = 'IV';
           }elseif($month_n == '5'){
             $ROM = 'V';
@@ -627,7 +652,7 @@
                   <label for="inputName" class="col-sm-2 col-form-label">Jenis Pelangaran</label>
                   <div class="col-sm-3">
                       <input type="text" name="last_vio" value="{{$sta_viol}}" >
-                      <input type="text" name="last_type" value="{{$sta_viol}}"  >     
+                      <input type="text" name="last_type" value="{{$type_viol}}"  >     
                       <input type="text" class="form-control" id="jpn1"  placeholder="Jenis Pelanggaran" >     
                   </div>
                 </div> 
@@ -637,17 +662,13 @@
                   <input type="text" class="form-control" id="alphabet_id" name="alphabet_id"  value="" placeholder="Alphabet ID" >                  
                   <div class="col-sm-10" id="pkb1">
 
-
                   </div>
                 </div> 
                 <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label">Keterangan lain :</label>
                   <div class="col-sm-10">
-                      
-                          <input id="x" type="hidden" name="other_information">
-                          <trix-editor input="x"></trix-editor>
-                        
-                    {{-- <input type="text" class="form-control" id="jpn" name="jpn" value="-	Mencekrollkan absensi sdr. Arum Kusumaningtyas dan sdr. Arum Wahyunigsih pada Selasa, 5 April 2022">      --}}
+                    <input id="x" type="hidden" name="other_information">
+                    <trix-editor input="x"></trix-editor>
                   </div>
                 </div> 
                 <div class="form-group row">
