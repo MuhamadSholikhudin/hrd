@@ -164,7 +164,7 @@
               <tbody>
               @foreach($violations as $violation)
                 <tr>
-                  <td>{{ $violation->id }}</td>
+                  <td>{{ $loop->iteration }}</td>
                   <td>
                     <?php
                       $date_violation_sp = new \DateTime($violation->date_of_violation .' 00:00:00');
@@ -236,58 +236,58 @@
 
 
                   <td>
-                  <?php
-                    $date_violation_end = new \DateTime($violation->date_end_violation .' 00:00:00');
-                    $date_year = date_format($date_violation_end, "Y"); //for Display Year
-                    $date_month =  date_format($date_violation_end, "m"); //for Display Month
-                    $date_day = date_format($date_violation_end, "d"); //for Display Date
+                    <?php
+                      $date_violation_end = new \DateTime($violation->date_end_violation .' 00:00:00');
+                      $date_year = date_format($date_violation_end, "Y"); //for Display Year
+                      $date_month =  date_format($date_violation_end, "m"); //for Display Month
+                      $date_day = date_format($date_violation_end, "d"); //for Display Date
 
-                    $day = gmdate("l", mktime(0,0,0,$date_day,$date_month,$date_year));
+                      $day = gmdate("l", mktime(0,0,0,$date_day,$date_month,$date_year));
 
-                    // Hari Indonesia
-                    if($day == 'Monday'){
-                      $day_indo = 'Senin';
-                    }elseif($day == 'Tuesday'){
-                      $day_indo = 'Selasa';            
-                    }elseif($day == 'Wednesday'){
-                      $day_indo = 'Rabu';            
-                    }elseif($day == 'Thursday'){
-                      $day_indo = 'Kamis';            
-                    }elseif($day == 'Friday'){
-                      $day_indo = 'Jumat';            
-                    }elseif($day == 'Saturday'){
-                      $day_indo = 'Sabtu';            
-                    }elseif($day == 'Sunday'){
-                      $day_indo = 'Minggu';            
-                    }
+                      // Hari Indonesia
+                      if($day == 'Monday'){
+                        $day_indo = 'Senin';
+                      }elseif($day == 'Tuesday'){
+                        $day_indo = 'Selasa';            
+                      }elseif($day == 'Wednesday'){
+                        $day_indo = 'Rabu';            
+                      }elseif($day == 'Thursday'){
+                        $day_indo = 'Kamis';            
+                      }elseif($day == 'Friday'){
+                        $day_indo = 'Jumat';            
+                      }elseif($day == 'Saturday'){
+                        $day_indo = 'Sabtu';            
+                      }elseif($day == 'Sunday'){
+                        $day_indo = 'Minggu';            
+                      }
 
-                    //Bulan Indonesia
-                    if($date_month == '01'){
-                      $month_indo = 'Januari';
-                    }elseif($date_month == '02'){
-                      $month_indo = 'Februari';            
-                    }elseif($date_month == '03'){
-                      $month_indo = 'Maret';            
-                    }elseif($date_month == '04'){
-                      $month_indo = 'April';            
-                    }elseif($day == '05'){
-                      $month_indo = 'Mei';            
-                    }elseif($date_month == '06'){
-                      $month_indo = 'Juni';            
-                    }elseif($date_month == '07'){
-                      $month_indo = 'Juli';            
-                    }elseif($date_month == '08'){
-                      $month_indo = 'Agustus';            
-                    }elseif($date_month == '09'){
-                      $month_indo = 'September';            
-                    }elseif($date_month == '10'){
-                      $month_indo = 'Oktober';            
-                    }elseif($date_month == '11'){
-                      $month_indo = 'November';            
-                    }elseif($date_month == '12'){
-                      $month_indo = 'Desember';            
-                    }
-                  ?>
+                      //Bulan Indonesia
+                      if($date_month == '01'){
+                        $month_indo = 'Januari';
+                      }elseif($date_month == '02'){
+                        $month_indo = 'Februari';            
+                      }elseif($date_month == '03'){
+                        $month_indo = 'Maret';            
+                      }elseif($date_month == '04'){
+                        $month_indo = 'April';            
+                      }elseif($day == '05'){
+                        $month_indo = 'Mei';            
+                      }elseif($date_month == '06'){
+                        $month_indo = 'Juni';            
+                      }elseif($date_month == '07'){
+                        $month_indo = 'Juli';            
+                      }elseif($date_month == '08'){
+                        $month_indo = 'Agustus';            
+                      }elseif($date_month == '09'){
+                        $month_indo = 'September';            
+                      }elseif($date_month == '10'){
+                        $month_indo = 'Oktober';            
+                      }elseif($date_month == '11'){
+                        $month_indo = 'November';            
+                      }elseif($date_month == '12'){
+                        $month_indo = 'Desember';            
+                      }
+                    ?>
                     {{ $day_indo. ", ". $date_day. " ". $month_indo . " ". $date_year }}
                   </td>
                   <td>
@@ -301,24 +301,33 @@
                           $selang = '';
                         }
                     ?>
-                    {{ $selang }}
+                      {{ $selang }}
                     </td>
                   <td>
-                  <?php
-                    if($violation->type_of_violation == 'Surat Peringatan Pertama'){
-                      $p = "SP I";
-                    }elseif($violation->type_of_violation == 'Surat Peringatan Kedua'){
-                      $p = "SP II";
-                    
-                    }elseif($violation->type_of_violation == 'Surat Peringatan Ketiga'){
-                      $p = "SP III";
-                    }elseif($violation->type_of_violation == 'Surat Peringatan Terakhir'){
-                      $p = "SP IV";
-                    }
-                  ?>
-                  {{ $p }}
+                    <?php
+                      if($violation->type_of_violation == 'Surat Peringatan Pertama'){
+                        $p = "SP I";
+                      }elseif($violation->type_of_violation == 'Surat Peringatan Kedua'){
+                        $p = "SP II";
+                      
+                      }elseif($violation->type_of_violation == 'Surat Peringatan Ketiga'){
+                        $p = "SP III";
+                      }elseif($violation->type_of_violation == 'Surat Peringatan Terakhir'){
+                        $p = "SP IV";
+                      }
+                    ?>
+                    {{ $p }}
                   </td>
-                  <td>{{ $violation->violation_status  }}</td>
+                  <td>
+                    <?php 
+                      // Pasal 
+                      $alphabet  = DB::table('alphabets')->find($violation->alphabet_id); 
+                      $paragraph  = DB::table('paragraphs')->find($alphabet->paragraph_id); 
+                      $article  = DB::table('articles')->find($paragraph->article_id); 
+
+                    ?>
+                    {{ $article->article . ' ayat '. $paragraph->paragraph .' huruf '. $alphabet->alphabet}}
+                  </td>
                   <td><div>{{ $violation->other_information  }} </div></td>                
                   <td>{{ $violation->violation_status  }}</td>
                   <td>
@@ -339,50 +348,7 @@
                 </tr>
 
               @endforeach
-              <!--  <tr>
-                  <td>1</td>
-                  <td>2022-03-01</td>
-                  <td>No. : 34/SP-HRD/IV/2022</td>
-                  <td> Pasal 27 ayat (2) huruf "c"</td>
-                  <td>SP 1 </td>
-                  <td>Aktif</td>
-                  <td>
-                      <a href="file:///c%3A/xampp/htdocs/hrd/resources/views/hi/violations/cetak_sp.html" class="btn  btn-outline-primary">
-                        Cetak                    </a>
-                           <a href="/hi/employees//edit" class="btn  btn-outline-warning">
-                        Edit
-                        </a> -->
-                        <!-- <form action="/hi/employees/" method="POST" class="d-inline ">
-                          @method('delete')
-                          @csrf
-                          <button class="btn  btn-outline-danger" onclick="return confirm(' Are you sure delete data ?')"> 
-                          Delete
-                        </button>
-                        </form> 
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>2022-03-01</td>
-                  <td>No. : 35/SP-HRD/IV/2022</td>
-                  <td> Pasal 27 ayat (3) huruf "b"</td>
-                  <td><input type="text" name="select_violation_oldest" class="form-control" id="select_violation_oldest"></td>
-                  <td>Aktif</td>
-                  <td>
-                      <a href="file:///c%3A/xampp/htdocs/hrd/resources/views/hi/violations/cetak_sp.html" target="_blna" class="btn  btn-outline-primary">
-                        Cetak                    </a>
-                          <!-- <a href="/hi/employees//edit" class="btn  btn-outline-warning">
-                        Edit
-                        </a> -->
-                        <!-- <form action="/hi/employees/" method="POST" class="d-inline ">
-                          @method('delete')
-                          @csrf
-                          <button class="btn  btn-outline-danger" onclick="return confirm(' Are you sure delete data ?')"> 
-                          Delete
-                        </button>
-                        </form> 
-                  </td>
-                </tr> -->
+
 
               </tbody>
             </table>
@@ -654,15 +620,15 @@
                 <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label">Jenis Pelangaran</label>
                   <div class="col-sm-3">
-                      <input type="text" name="last_vio" value="{{$sta_viol}}" >
-                      <input type="text" name="last_type" value="{{$type_viol}}"  >     
+                      <input type="hidden" name="last_vio" value="{{$sta_viol}}" >
+                      <input type="hidden" name="last_type" value="{{$type_viol}}"  >     
                       <input type="text" class="form-control" id="jpn1"  placeholder="Jenis Pelanggaran" >     
                   </div>
                 </div> 
             
                 <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label">Pasal Yang dilanggar : </label>
-                  <input type="text" class="form-control" id="alphabet_id" name="alphabet_id"  value="" placeholder="Alphabet ID" >                  
+                  <input type="hidden" class="form-control" id="alphabet_id" name="alphabet_id"  value="" placeholder="Alphabet ID" >                  
                   <div class="col-sm-10" id="pkb1">
 
                   </div>
@@ -676,7 +642,12 @@
                 </div> 
                 <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label">Remainder : </label>
-                  <div class="col-sm-10" id="remainder">
+                  <div class="col-sm-10" id="remainder1">
+                    
+                  </div>
+
+                  <label for="inputName" class="col-sm-2 col-form-label"></label>
+                  <div class="col-sm-10" id="remainder2">
                     
                   </div>
                 </div> 

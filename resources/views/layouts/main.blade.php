@@ -174,7 +174,8 @@
             document.getElementById("btn_modal_click1").click();
             $("#jpn1").val(data[0]);
             $("#pkb1").html(data[1]);
-            $("#remainder").text(data[2]);
+            $("#remainder1").text(data[2]);
+            $("#remainder2").text(data[3]);
             $("#alphabet_id").val(violation_now);
 
             // if (data[0] == 'terima_kasih') {
