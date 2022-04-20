@@ -41,20 +41,8 @@
                 {{  $job->job_level  }} <br>
                 {{  $department->department  }} 
             </p>
-            <ul class="list-group list-group-unbordered mb-3">
-              <!-- <li class="list-group-item">
-                <b>Tgl masuk</b> <a class="float-right">{{  $employee->hire_date  }}</a>
-              </li>
-              <li class="list-group-item">
-                <b>Email</b> <a class="float-right">{{  $employee->email  }}</a>
-              </li>
-              <li class="list-group-item">
-                <b>Phone Number</b> <a class="float-right">{{  $employee->phone  }}</a>
-              </li> -->
-              <!-- <li class="list-group-item">
-                <b>Create at</b> <a class="float-right">{{  $employee->created_at  }}</a>
-              </li> -->
-            </ul>
+            {{-- <ul class="list-group list-group-unbordered mb-3">
+            </ul> --}}
 
             <a href="#" class="btn btn-primary btn-block"><b>{{ $employee->status_employee }}</b></a>
           </div>
@@ -65,80 +53,89 @@
 
       <div class="col-md-9">
         <!-- About Me Box -->
-        <div class="card row card-primary">
+        <div class="card card-primary">
           <div class="card-header">
             <h3 class="card-title">Identitas</h3>
           </div>
+          <div class="card-body">
+            
+            <div class="row">
+              <div class="col-md-6">
+                  <strong><i class="fas fa-address-card mr-1"></i> Kartu Tanda Penduduk</strong>
+                  <table>
+                    <tr>
+                      <td valign="top">NIK</td>
+                      <td valign="top">: {{  $employee->national_id  }}</td>
+                    </tr>
+                    <tr>
+                      <td valign="top">TTL</td>
+                      <td valign="top">: {{  $employee->place_of_birth  }}, {{  $employee->date_of_birth  }}</td>
+                    </tr>
+                    <tr>
+                      <td valign="top">Jenis Kelamin</td>
+                      <td valign="top">: {{  $employee->gender  }}</td>
+                    </tr>
+                    <tr>
+                      <td valign="top">Alamat</td>
+                      <td valign="top">: {{  $employee->address_jalan  }}</td>
+                    </tr>
+                    <tr>
+                      <td valign="top">Agama</td>
+                      <td valign="top">: {{  $employee->religion  }}</td>
+                    </tr>
+                    <tr>
+                      <td valign="top">Status nikah</td>
+                      <td valign="top">: {{  $employee->marital_status  }}</td>
+                    </tr>
+                    <tr>
+                      <td valign="top">Ibu Kandung</td>
+                      <td valign="top">: {{  $employee->biological_mothers_name  }}</td>
+                    </tr>
+                  </table>
+    
+    
+     
 
-          <div class="row">
-            <div class="col-md-5">
-              <div class="card-body mr-0 mb-0">
-                <strong><i class="fas fa-address-card mr-1"></i> Kartu Tanda Penduduk</strong>
-              <table>
-                <tr>
-                  <td valign="top">NIK</td>
-                  <td valign="top">: {{  $employee->national_id  }}</td>
-                </tr>
-                <tr>
-                  <td valign="top">TTL</td>
-                  <td valign="top">: {{  $employee->place_of_birth  }}, {{  $employee->date_of_birth  }}</td>
-                </tr>
-                <tr>
-                  <td valign="top">Jenis Kelamin</td>
-                  <td valign="top">: {{  $employee->gender  }}</td>
-                </tr>
-                <tr>
-                  <td valign="top">Alamat</td>
-                  <td valign="top">: {{  $employee->address_jalan  }}</td>
-                </tr>
-                <tr>
-                  <td valign="top">Agama</td>
-                  <td valign="top">: {{  $employee->religion  }}</td>
-                </tr>
-                <tr>
-                  <td valign="top">Status nikah</td>
-                  <td valign="top">: {{  $employee->marital_status  }}</td>
-                </tr>
-                <tr>
-                  <td valign="top">Ibu Kandung</td>
-                  <td valign="top">: {{  $employee->biological_mothers_name  }}</td>
-                </tr>
-              </table>
+                  <p></p>
+              </div>
+
+              <div class="col-md-6">
+                  <strong><i class="fas fa-book mr-1"></i> Pendidikan</strong>
+                  <table>
+                    <tr>
+                      <td valign="top">Pend Terakhir</td>
+                      <td valign="top">: {{  $employee->educate  }}</td>
+                    </tr>
+                    <tr>
+                      <td valign="top">Jurusan</td>
+                      <td valign="top">: {{  $employee->major  }}</td>
+                    </tr>
+                  </table>
+                  <hr>
+                  <strong><i class="fas fa-book mr-1"></i> Email & Phone</strong>
+                  <table>
+                    <tr>
+                      <td valign="top">Email</td>
+                      <td valign="top">: {{  $employee->email  }}</td>
+                    </tr>
+                    <tr>
+                      <td valign="top">Phone</td>
+                      <td valign="top">: {{  $employee->phone  }}</td>
+                    </tr>
+                  </table>
+              </div>
+
+
             </div>
 
-            </div>
 
-            <div class="col-md-5">
-              <div class="card-body mr-0 mb-0">  
-          <!-- <hr> -->
-              <strong><i class="fas fa-book mr-1"></i> Pendidikan</strong>
-              <table>
-                <tr>
-                  <td valign="top">Pend Terakhir</td>
-                  <td valign="top">: {{  $employee->educate  }}</td>
-                </tr>
-                <tr>
-                  <td valign="top">Jurusan</td>
-                  <td valign="top">: {{  $employee->major  }}</td>
-                </tr>
-              </table>
-              <hr>
-              <strong><i class="fas fa-book mr-1"></i> Email & Phone</strong>
-              <table>
-                <tr>
-                  <td valign="top">Email</td>
-                  <td valign="top">: {{  $employee->email  }}</td>
-                </tr>
-                <tr>
-                  <td valign="top">Phone</td>
-                  <td valign="top">: {{  $employee->phone  }}</td>
-                </tr>
-              </table>
-            </div>
+
+
+
+
           </div>
         </div>            
       </div>
-    </div>
 
 
 
@@ -325,7 +322,7 @@
                   <td><div>{{ $violation->other_information  }} </div></td>                
                   <td>{{ $violation->violation_status  }}</td>
                   <td>
-                      <a href="file:///c%3A/xampp/htdocs/hrd/resources/views/hi/violations/cetak_sp.html" class="btn  btn-outline-primary">
+                      <a href="/hi/violations/{{$violation->id }}" class="btn  btn-outline-primary">
                         Cetak                    
                       </a>
                           <!-- <a href="/hi/employees//edit" class="btn  btn-outline-warning">
@@ -438,6 +435,9 @@
             </div> 
           </div>
         </div>
+
+{{-- Displaynone --}}
+<div style="display:none;">
         <?php
         
         $date_violation = new \DateTime(date('Y-m-d') .' 4:06:37' );
@@ -446,8 +446,8 @@
         echo $date_month =  date_format($date_violation, "m"); //for Display Month
         echo $date_day = date_format($date_violation, "d"); //for Display Date
 
- // Prints: October 3, 1975 was on a Friday
-echo "Oct 3, 1975 was on a ".date("l", gmmktime(0,0,0, 04, 20, 2022));
+      // Prints: October 3, 1975 was on a Friday
+        echo "Oct 3, 1975 was on a ".date("l", gmmktime(0,0,0, 04, 20, 2022));
         echo '<br>';
 
         // echo $date_month;
@@ -603,7 +603,10 @@ echo "Oct 3, 1975 was on a ".date("l", gmmktime(0,0,0, 04, 20, 2022));
         <input type="text" name="last_type" value="{{$type_viol}}" id="last_type">
         <input type="text" name="id_emp" value="{{$employee->id}}" id="id_emp">
 
+        
 
+</div>
+{{-- Displaynone --}}
         <button type="button" id="btn_modal_click1" class="btn btn-default" style="display:none;" data-toggle="modal" data-target="#modal-xl1">
           Surat Peringatan asli
         </button>
@@ -611,7 +614,7 @@ echo "Oct 3, 1975 was on a ".date("l", gmmktime(0,0,0, 04, 20, 2022));
           <div class="modal-dialog modal-xl">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Tambahkan pelanggaran 1</h4>
+                <h4 class="modal-title">Form pelanggaran</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>

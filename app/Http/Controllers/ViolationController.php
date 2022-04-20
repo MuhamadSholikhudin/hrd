@@ -11,6 +11,7 @@ use App\Models\Department;
 use App\Models\Alphabet;
 use App\Models\Article;
 use App\Models\Paragraph;
+use App\Models\Violation;
 
 class ViolationController extends Controller
 {
@@ -373,7 +374,14 @@ class ViolationController extends Controller
      */
     public function show($id)
     {
+        // echo 'oke';
         //
+        $violation = DB::table('violations')->where('id', $id)
+                    ->first();
+
+        return view('hi.violations.cetak_sp', [
+            'violation' => $violation
+        ]);
     }
 
     /**
