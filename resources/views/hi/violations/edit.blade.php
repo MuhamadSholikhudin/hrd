@@ -9,6 +9,79 @@
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1>Employees Detail</h1>
+
+          <?php
+          // data actual
+
+          echo $hari_apa = date('Y-m-d');
+          echo '<br>';
+
+          $data_hari = 30;
+          $data_bulan = 8;
+          $data_tahun = 2022;
+
+          //data manipulasi
+          $jumlah_bulan = $data_bulan + 6;
+          if($jumlah_bulan > 12){
+            $cari_bulan = $jumlah_bulan - 12;
+            $m_bulan = $cari_bulan;
+            $m_tahun = $data_tahun + 1;
+            $m_day = cal_days_in_month(CAL_GREGORIAN, $m_bulan, $m_tahun);
+          }else{
+            $m_bulan = $jumlah_bulan;
+            $m_tahun = $data_tahun;
+            $m_day = cal_days_in_month(CAL_GREGORIAN, $m_bulan, $m_tahun); 
+          }
+
+          // manipulasi hari
+          if($data_hari == 1 AND $m_bulan == 1){
+            $bulan_fix = 12;
+            $tahun_fix =  $m_tahun - 1;
+            $hari_fix = cal_days_in_month(CAL_GREGORIAN, $bulan_fix, $tahun_fix);
+          }elseif($data_hari == 1){
+            $bulan_fix = $m_bulan - 1;
+            $tahun_fix = $m_tahun;
+            $hari_fix = cal_days_in_month(CAL_GREGORIAN, $bulan_fix, $tahun_fix);
+          }elseif($data_hari <= $m_day){
+            $bulan_fix = $m_bulan;
+            $tahun_fix = $m_tahun;
+            $hari_fix = $data_hari - 1;
+          }elseif($data_hari > $m_day){
+            $bulan_fix = $m_bulan;
+            $tahun_fix = $m_tahun;
+            $hari_fix = cal_days_in_month(CAL_GREGORIAN, $bulan_fix, $tahun_fix);
+          }
+          // 
+            // $number_day = cal_days_in_month(CAL_GREGORIAN, 8, 2003); // 31
+            // echo "There were {$number_day} days in August 2003";
+            echo '<br>';
+            // $test = new DateTime('02/31/2011');
+
+            if(strlen($hari_fix) == '1'){
+              $hari_s = '0'. $hari_fix;
+            }elseif(strlen($hari_fix) == '2'){
+              $hari_s = $hari_fix;
+            }
+
+            if(strlen($bulan_fix) == '1'){
+              $bulan_s = '0'. $bulan_fix;
+            }elseif(strlen($bulan_fix) == '2'){
+              $bulan_s = $bulan_fix;
+            }
+
+
+            echo '<br>';
+            echo $te = $bulan_s. "/".$hari_s."/".$tahun_fix;
+ 
+            echo '<br>';            
+            $test = new DateTime($te);
+            echo date_format($test, 'Y-m-d'); 
+            echo '<br>';
+            
+          ?>
+          {{ $hari_fix. " ". $bulan_fix ." ". $tahun_fix}}
+
+
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -305,7 +378,9 @@
                     </td>
                   <td>
                     <?php
-                      if($violation->type_of_violation == 'Surat Peringatan Pertama'){
+                      if($violation->type_of_violation == 'Peringatan Lisan'){
+                        $p = "SP Lisan";
+                      }elseif($violation->type_of_violation == 'Surat Peringatan Pertama'){
                         $p = "SP I";
                       }elseif($violation->type_of_violation == 'Surat Peringatan Kedua'){
                         $p = "SP II";
@@ -313,7 +388,7 @@
                       }elseif($violation->type_of_violation == 'Surat Peringatan Ketiga'){
                         $p = "SP III";
                       }elseif($violation->type_of_violation == 'Surat Peringatan Terakhir'){
-                        $p = "SP IV";
+                        $p = "SP Terakhir";
                       }
                     ?>
                     {{ $p }}
@@ -331,7 +406,7 @@
                   <td><div>{{ $violation->other_information  }} </div></td>                
                   <td>{{ $violation->violation_status  }}</td>
                   <td>
-                      <a href="/hi/violations/{{$violation->id }}" class="btn  btn-outline-primary">
+                      <a href="/hi/violations/{{$violation->id }}" target="_blank" class="btn  btn-outline-primary">
                         Cetak                    
                       </a>
                           <!-- <a href="/hi/employees//edit" class="btn  btn-outline-warning">
@@ -597,7 +672,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="number_of_employees" class="col-sm-2 col-form-label">Nama </label>
+                  <label for="name" class="col-sm-2 col-form-label">Nama </label>
                   <div class="col-sm-4">
                       <input type="hidden" class="form-control" id="employee_id" name="employee_id" value="{{  $employee->id  }}" placeholder="Nomer Induk Karyawan" >
                       <input type="text" class="form-control" value="{{  $employee->name  }}" placeholder="Nomer Induk Karyawan" >
@@ -608,7 +683,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="number_of_employees" class="col-sm-2 col-form-label">Jabatan </label>
+                  <label for="job_level" class="col-sm-2 col-form-label">Jabatan </label>
                   <div class="col-sm-4">
                       <input type="text" class="form-control" id="job_level" name="job_level" value="{{  $job->job_level  }}" placeholder="Nomer Induk Karyawan" >
                   </div>
@@ -658,15 +733,15 @@
                   
                 </div> 
                 <div class="form-group row">
-                  <label for="inputName" class="col-sm-2 col-form-label">Tanggal Surat :</label>
+                  <label for="date_of_violation" class="col-sm-2 col-form-label">Tanggal Surat :</label>
                   <div class="col-sm-2">
                     <input type="date" class="form-control" id="date_of_violation" name="date_of_violation" value="<?= date('Y-m-d') ?>">     
                   </div>
-                  <label for="inputName" class="col-sm-3 col-form-label">Human Resource Development :</label>
+                  <label for="sgn_id" class="col-sm-3 col-form-label">Human Resource Development :</label>
                   <div class="col-sm-3">
                       <?php  $signature  = DB::table('signatures')->where('status_signature', 'active')->first(); ?>
 
-                    <input type="hidden" class="form-control" id="" name="signature_id" value="{{ $signature->id }}">     
+                    <input type="hidden" class="form-control" id="sgn_id" name="signature_id" value="{{ $signature->id }}">     
                     <input type="text" class="form-control" id=""  value="{{ $signature->name }}">     
                   </div>
                 </div> 
@@ -707,21 +782,21 @@
                 </div>
 
                 <div class="form-group row">
-                  <label for="number_of_employees" class="col-sm-2 col-form-label">Nama </label>
+                  <label for="name" class="col-sm-2 col-form-label">Nama </label>
                   <div class="col-sm-4">
                       <input type="text" class="form-control" id="name" name="name" value="{{$employee->name}}" placeholder="Nomer Induk Karyawan" >
                   </div>
-                  <label for="finger_id" class="col-sm-2 col-form-label">NIK</label>
+                  <label for="number_of_employees" class="col-sm-2 col-form-label">NIK</label>
                   <div class="col-sm-4">
                       <input type="text" class="form-control" id="number_of_employees" name="number_of_employees" value="{{$employee->number_of_employees}}" placeholder="Finger ID" >
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="number_of_employees" class="col-sm-2 col-form-label">Jabatan </label>
+                  <label for="job_level" class="col-sm-2 col-form-label">Jabatan </label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" id="number_of_employees" name="job_level" value="{{  $job->job_level  }}" placeholder="Nomer Induk Karyawan" >
+                      <input type="text" class="form-control" id="job_level" name="job_level" value="{{  $job->job_level  }}" placeholder="Nomer Induk Karyawan" >
                   </div>
-                  <label for="finger_id" class="col-sm-2 col-form-label">Bagian / Department</label>
+                  <label for="department" class="col-sm-2 col-form-label">Bagian / Department</label>
                   <div class="col-sm-4">
                       <input type="text" class="form-control" id="department" name="department" value="{{  $department->department  }}" placeholder="Finger ID" >
                   </div>

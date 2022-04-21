@@ -155,6 +155,8 @@ class ViolationController extends Controller
           }
 
           $tgl1 = $date_of_violation;// pendefinisian tanggal awal
+
+          //Pembuatan 6 bulan berakhir
           $date_end_violation = date('Y-m-d', strtotime('+180 days', strtotime($tgl1))); //operasi penjumlahan tanggal sebanyak 6 hari
           // echo $date_end_violation; //print tanggal
 
@@ -215,35 +217,35 @@ class ViolationController extends Controller
                         // dd($status_type_violation);
                         // Cari pasal akumulasi
                         $cari_pasal_akumulasi = DB::table('alphabets')
-                                                    ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-                                                    ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
-                                                    ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
-                                                    ->where('alphabets.alphabet_accumulation', 'Surat Peringatan Pertama')
-                                                    ->select('alphabets.id as id')
-                                                    ->first();
+                            ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                            ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                            ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
+                            ->where('alphabets.alphabet_accumulation', 'Surat Peringatan Pertama')
+                            ->select('alphabets.id as id')
+                            ->first();
     
                         $pelanggran_sebelumnya = DB::table('violations')
-                                    ->where('employee_id',  $employee_id) 
-                                    ->latest()                       
-                                    ->first();
+                            ->where('employee_id',  $employee_id) 
+                            ->latest()                       
+                            ->first();
     
                         $pelanggran_sebelumnya2 = DB::table('violations')
-                                    ->where('employee_id',  $employee_id) 
-                                    ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
-                                    ->latest()                       
-                                    ->first();
+                            ->where('employee_id',  $employee_id) 
+                            ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
+                            ->latest()                       
+                            ->first();
 
                         $pelanggran_sebelumnya3 = DB::table('violations')
-                                    ->where('employee_id',  $employee_id) 
-                                    ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
-                                    ->latest()                       
-                                    ->first();
+                            ->where('employee_id',  $employee_id) 
+                            ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
+                            ->latest()                       
+                            ->first();
     
                         $cari_pasal_sebelumnya = DB::table('alphabets')
-                                    ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-                                    ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
-                                    ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
-                                    ->first();
+                            ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                            ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
+                            ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
+                            ->first();
                                     
                         $alphabet_accumulation = $cari_pasal_akumulasi->id;    
                         $violation_accumulation = $pelanggran_sebelumnya->id;    
@@ -270,29 +272,29 @@ class ViolationController extends Controller
                         
                         // Cari pasal akumulasi
                         $cari_pasal_akumulasi = DB::table('alphabets')
-                                                    ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-                                                    ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
-                                                    ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
-                                                    ->where('alphabets.alphabet_accumulation', 'Surat Peringatan Pertama')
-                                                    ->select('alphabets.id as id')
-                                                    ->first();
+                            ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                            ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                            ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
+                            ->where('alphabets.alphabet_accumulation', 'Surat Peringatan Pertama')
+                            ->select('alphabets.id as id')
+                            ->first();
     
                         $pelanggran_sebelumnya = DB::table('violations')
-                                    ->where('employee_id',  $employee_id) 
-                                    ->latest()                       
-                                    ->first();
+                            ->where('employee_id',  $employee_id) 
+                            ->latest()                       
+                            ->first();
     
                         $pelanggran_sebelumnya2 = DB::table('violations')
-                                    ->where('employee_id',  $employee_id) 
-                                    ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
-                                    ->latest()                       
-                                    ->first();
+                            ->where('employee_id',  $employee_id) 
+                            ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
+                            ->latest()                       
+                            ->first();
     
                         $cari_pasal_sebelumnya = DB::table('alphabets')
-                                    ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-                                    ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
-                                    ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
-                                    ->first();
+                            ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                            ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
+                            ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
+                            ->first();
                                     
                         $alphabet_accumulation = $cari_pasal_akumulasi->id;    
                         $violation_accumulation = $pelanggran_sebelumnya->id;    
@@ -306,23 +308,23 @@ class ViolationController extends Controller
                         
                         // Cari pasal akumulasi
                         $cari_pasal_akumulasi = DB::table('alphabets')
-                                                    ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-                                                    ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
-                                                    ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
-                                                    ->where('alphabets.alphabet_accumulation', 'Surat Peringatan Pertama')
-                                                    ->select('alphabets.id as id')
-                                                    ->first();
+                            ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                            ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                            ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
+                            ->where('alphabets.alphabet_accumulation', 'Surat Peringatan Pertama')
+                            ->select('alphabets.id as id')
+                            ->first();
     
                         $pelanggran_sebelumnya = DB::table('violations')
-                                    ->where('employee_id',  $employee_id) 
-                                    ->latest()                       
-                                    ->first();
+                            ->where('employee_id',  $employee_id) 
+                            ->latest()                       
+                            ->first();
     
                         $cari_pasal_sebelumnya = DB::table('alphabets')
-                                    ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-                                    ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
-                                    ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
-                                    ->first();
+                            ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                            ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
+                            ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
+                            ->first();
                                     
                         $violation_accumulation = $pelanggran_sebelumnya->id;    
                         $alphabet_accumulation = $cari_pasal_akumulasi->id;    
@@ -487,22 +489,22 @@ class ViolationController extends Controller
                 }
                     // Cari pasal akumulasi
                     $cari_pasal_akumulasi = DB::table('alphabets')
-                                                ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-                                                ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
-                                                ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
-                                                ->where('alphabet_accumulation', 'like', '%' . $sel_paragraph->type_of_verse . '%')
-                                                ->first();
+                        ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                        ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                        ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
+                        ->where('alphabet_accumulation', 'like', '%' . $sel_paragraph->type_of_verse . '%')
+                        ->first();
 
                     $pelanggran_sebelumnya = DB::table('violations')
-                                ->where('employee_id',  $emp_id) 
-                                ->latest()                       
-                                ->first();
+                        ->where('employee_id',  $emp_id) 
+                        ->latest()                       
+                        ->first();
 
                     $cari_pasal_sebelumnya = DB::table('alphabets')
-                                ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-                                ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
-                                ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
-                                ->first();
+                        ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                        ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
+                        ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
+                        ->first();
                                 
                     $pasal_yang_dilanggar = 'Perjanjian Kerja Bersama Pasal '. $cari_pasal_akumulasi->article.' ayat   ('.$cari_pasal_akumulasi->paragraph .') huruf "'. $cari_pasal_akumulasi->alphabet.'" '. $cari_pasal_akumulasi->alphabet_sound;
 
@@ -510,11 +512,7 @@ class ViolationController extends Controller
                     $remainder2 = 'Dalam masa ' . $last_type . ' Perjanjian Kerja Bersama Pasal '. $cari_pasal_sebelumnya->article . ' ayat ('. $cari_pasal_sebelumnya->paragraph. ') huruf "'.$cari_pasal_sebelumnya->alphabet.'", ' .$pelanggran_sebelumnya->other_information;
 
                     $data = [ $status_type_violation, $pasal_yang_dilanggar, $remainder1, $remainder2];
-                
-                
-                
-                
-                
+                    
             }else{
                 // CARI PELANGGARAN AKUMULASI 2
                 $num_vio_accumulation2 = DB::table('violations')
@@ -539,22 +537,22 @@ class ViolationController extends Controller
                         
                         // Cari pasal akumulasi
                         $cari_pasal_akumulasi = DB::table('alphabets')
-                                                    ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-                                                    ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
-                                                    ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
-                                                    ->where('alphabet_accumulation', 'like', '%' . $sel_paragraph->type_of_verse . '%')
-                                                    ->first();
+                            ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                            ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                            ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
+                            ->where('alphabet_accumulation', 'like', '%' . $sel_paragraph->type_of_verse . '%')
+                            ->first();
         
                         $pelanggran_sebelumnya = DB::table('violations')
-                                    ->where('employee_id',  $emp_id) 
-                                    ->latest()                       
-                                    ->first();
+                            ->where('employee_id',  $emp_id) 
+                            ->latest()                       
+                            ->first();
         
                         $cari_pasal_sebelumnya = DB::table('alphabets')
-                                    ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-                                    ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
-                                    ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
-                                    ->first();
+                            ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                            ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
+                            ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
+                            ->first();
                                     
                         $pasal_yang_dilanggar = 'Perjanjian Kerja Bersama Pasal '. $cari_pasal_akumulasi->article.' ayat   ('.$cari_pasal_akumulasi->paragraph .') huruf "'. $cari_pasal_akumulasi->alphabet.'" '. $cari_pasal_akumulasi->alphabet_sound;
         
@@ -593,22 +591,22 @@ class ViolationController extends Controller
                         }
                             // Cari pasal akumulasi
                             $cari_pasal_akumulasi = DB::table('alphabets')
-                                                        ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-                                                        ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
-                                                        ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
-                                                        ->where('alphabet_accumulation', 'like', '%' . $sel_paragraph->type_of_verse . '%')
-                                                        ->first();
+                                ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
+                                ->where('alphabet_accumulation', 'like', '%' . $sel_paragraph->type_of_verse . '%')
+                                ->first();
             
                             $pelanggran_sebelumnya = DB::table('violations')
-                                        ->where('employee_id',  $emp_id) 
-                                        ->latest()                       
-                                        ->first();
+                                ->where('employee_id',  $emp_id) 
+                                ->latest()                       
+                                ->first();
             
                             $cari_pasal_sebelumnya = DB::table('alphabets')
-                                        ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-                                        ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
-                                        ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
-                                        ->first();
+                                ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
+                                ->first();
                                         
                             $pasal_yang_dilanggar = 'Perjanjian Kerja Bersama Pasal '. $cari_pasal_akumulasi->article.' ayat   ('.$cari_pasal_akumulasi->paragraph .') huruf "'. $cari_pasal_akumulasi->alphabet.'" '. $cari_pasal_akumulasi->alphabet_sound;
             
@@ -648,25 +646,23 @@ class ViolationController extends Controller
 
                             // Cari pasal akumulasi
                             $cari_pasal_akumulasi = DB::table('alphabets')
-                                                        ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-                                                        ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
-                                                        ->where('paragraphs.type_of_verse', $status_type_violation)
-                                                        // ->where('alphabets.alphabet_accumulation', $sel_paragraph->type_of_verse)
-
-                                                        ->where('alphabet_accumulation', 'like', '%' . $sel_paragraph->type_of_verse . '%')
-
-                                                        ->first();
+                                ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                ->where('paragraphs.type_of_verse', $status_type_violation)
+                                // ->where('alphabets.alphabet_accumulation', $sel_paragraph->type_of_verse)
+                                ->where('alphabet_accumulation', 'like', '%' . $sel_paragraph->type_of_verse . '%')
+                                ->first();
             
                             $pelanggran_sebelumnya = DB::table('violations')
-                                        ->where('employee_id',  $emp_id) 
-                                        ->latest()                       
-                                        ->first();
+                                ->where('employee_id',  $emp_id) 
+                                ->latest()                       
+                                ->first();
             
                             $cari_pasal_sebelumnya = DB::table('alphabets')
-                                        ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-                                        ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
-                                        ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
-                                        ->first();
+                                ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
+                                ->first();
                                         
                             $pasal_yang_dilanggar = 'Perjanjian Kerja Bersama Pasal '. $cari_pasal_akumulasi->article.' ayat   ('.$cari_pasal_akumulasi->paragraph .') huruf "'. $cari_pasal_akumulasi->alphabet.'" '. $cari_pasal_akumulasi->alphabet_sound;
             
