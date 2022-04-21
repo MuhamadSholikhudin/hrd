@@ -158,6 +158,68 @@ class ViolationController extends Controller
 
           //Pembuatan 6 bulan berakhir
           $date_end_violation = date('Y-m-d', strtotime('+180 days', strtotime($tgl1))); //operasi penjumlahan tanggal sebanyak 6 hari
+          
+          echo $hari_apa = date('Y-m-d');
+
+        
+        $d_l = date("d", gmmktime(0,0,0, $date_month, $date_day, $date_year));
+        $n_l = date("n", gmmktime(0,0,0, $date_month, $date_day, $date_year));
+        $y_l = date("Y", gmmktime(0,0,0, $date_month, $date_day, $date_year));
+ 
+          $data_hari = $d_l;
+          $data_bulan = $n_l;
+          $data_tahun = $y_l;
+
+          //data manipulasi
+          $jumlah_bulan = $data_bulan + 6;
+          if($jumlah_bulan > 12){
+            $cari_bulan = $jumlah_bulan - 12;
+            $m_bulan = $cari_bulan;
+            $m_tahun = $data_tahun + 1;
+            $m_day = cal_days_in_month(CAL_GREGORIAN, $m_bulan, $m_tahun);
+          }else{
+            $m_bulan = $jumlah_bulan;
+            $m_tahun = $data_tahun;
+            $m_day = cal_days_in_month(CAL_GREGORIAN, $m_bulan, $m_tahun); 
+          }
+
+          // manipulasi hari
+          if($data_hari == 1 AND $m_bulan == 1){
+            $bulan_fix = 12;
+            $tahun_fix =  $m_tahun - 1;
+            $hari_fix = cal_days_in_month(CAL_GREGORIAN, $bulan_fix, $tahun_fix);
+          }elseif($data_hari == 1){
+            $bulan_fix = $m_bulan - 1;
+            $tahun_fix = $m_tahun;
+            $hari_fix = cal_days_in_month(CAL_GREGORIAN, $bulan_fix, $tahun_fix);
+          }elseif($data_hari <= $m_day){
+            $bulan_fix = $m_bulan;
+            $tahun_fix = $m_tahun;
+            $hari_fix = $data_hari - 1;
+          }elseif($data_hari > $m_day){
+            $bulan_fix = $m_bulan;
+            $tahun_fix = $m_tahun;
+            $hari_fix = cal_days_in_month(CAL_GREGORIAN, $bulan_fix, $tahun_fix);
+          }
+
+            if(strlen($hari_fix) == '1'){
+              $hari_s = '0'. $hari_fix;
+            }elseif(strlen($hari_fix) == '2'){
+              $hari_s = $hari_fix;
+            }
+
+            if(strlen($bulan_fix) == '1'){
+              $bulan_s = '0'. $bulan_fix;
+            }elseif(strlen($bulan_fix) == '2'){
+              $bulan_s = $bulan_fix;
+            }
+
+            $te = $bulan_s. "/".$hari_s."/".$tahun_fix;
+            $test = new DateTime($te);
+            $date_end_violation = date_format($test, 'Y-m-d'); 
+
+
+          
           // echo $date_end_violation; //print tanggal
 
             //   dd($date_end_violation);

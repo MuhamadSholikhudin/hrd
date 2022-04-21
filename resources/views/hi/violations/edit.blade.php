@@ -10,15 +10,35 @@
         <div class="col-sm-6">
           <h1>Employees Detail</h1>
 
+          
+          
+
           <?php
           // data actual
-
           echo $hari_apa = date('Y-m-d');
+
+          $date_violation = new \DateTime($hari_apa .' 00:00:00');
+          echo '<br>';
+          echo $date_year = date_format($date_violation, "Y"); //for Display Year
+          echo '<br>';
+          echo $date_month =  date_format($date_violation, "m"); //for Display Month
+          echo '<br>';
+          echo $date_day = date_format($date_violation, "d"); //for Display Date
           echo '<br>';
 
-          $data_hari = 30;
-          $data_bulan = 8;
-          $data_tahun = 2022;
+          echo $d_l = date("d", gmmktime(0,0,0, $date_month, $date_day, $date_year));
+          echo '<br>';
+          echo $n_l = date("n", gmmktime(0,0,0, $date_month, $date_day, $date_year));
+          echo '<br>';
+          echo $y_l = date("Y", gmmktime(0,0,0, $date_month, $date_day, $date_year));
+          echo '<br>';
+
+          echo $tw = $d_l + $n_l + $y_l;
+
+
+          $data_hari = $d_l;
+          $data_bulan = $n_l;
+          $data_tahun = $y_l;
 
           //data manipulasi
           $jumlah_bulan = $data_bulan + 6;
