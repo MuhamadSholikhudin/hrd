@@ -50,6 +50,10 @@ Route::get('/', function () {
 });
 
 
+
+Route::get('/example', function () {
+    return view('example');
+});
 //HRD IT
 
 // Route::get('/hi/employees', function () {

@@ -1054,3 +1054,33 @@ $hasil = mysql_query($query);
             }
 
         }
+
+
+// MENDEFINISIKAN
+// file:///Y:/1604000001.JPG
+define('IMAGE_FOLDER', 'G:/load');
+if (file_exists(IMAGE_FOLDER . '/img1.png')) {
+    echo 'Yes, there is the image "load/img1.png"';
+} else {
+    echo 'No, there is no such an image file "load/img1.png"';
+}
+
+///logika karyawan tetap
+
+           $tanggal_hari_ini = date('Y-m-d');// pendefinisian tanggal awal
+
+          $countdown_date1 = date('Y-m-d', strtotime('-93 days', strtotime($tanggal_hari_ini))); //operasi penjumlahan tanggal sebanyak 6 hari
+          $countdown_date2 = date('Y-m-d', strtotime('-120 days', strtotime($tanggal_hari_ini))); //operasi penjumlahan tanggal sebanyak 6 hari
+
+    //tampilkan data hire_date
+        DB::table('employees')
+            ->where('date_out', null)
+            ->where('exit_statement', null)
+            ->where('hire_date', '>=', $countdown_date2)
+            ->where('hire_date', '<=', $countdown_date1)
+            ->update([
+                'employee_type' => '1-Permanent'
+            ]);
+
+
+

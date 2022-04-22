@@ -100,7 +100,7 @@ class ViolationController extends Controller
 // Prints October 3, 1975 was on a Thursday
 //   echo "Oct 3, 1975 was on a ".gmdate("l", mktime(0,0,0,$date_day,$date_month,$date_year)) . "<br>";
 
-            // $day = gmdate($date_of_violation, time()+60*60*7);
+            $day = gmdate($date_of_violation, time()+60*60*7);
             $day = date("l", gmmktime(0,0,0, $date_month,$date_day, $date_year));
 
           if($day == 'Monday'){
@@ -159,7 +159,7 @@ class ViolationController extends Controller
           //Pembuatan 6 bulan berakhir
           $date_end_violation = date('Y-m-d', strtotime('+180 days', strtotime($tgl1))); //operasi penjumlahan tanggal sebanyak 6 hari
           
-          echo $hari_apa = date('Y-m-d');
+        //   echo $hari_apa = date('Y-m-d');
 
         
         $d_l = date("d", gmmktime(0,0,0, $date_month, $date_day, $date_year));
@@ -214,9 +214,9 @@ class ViolationController extends Controller
               $bulan_s = $bulan_fix;
             }
 
-            $te = $bulan_s. "/".$hari_s."/".$tahun_fix;
-            $test = new DateTime($te);
-            $date_end_violation = date_format($test, 'Y-m-d'); 
+            // $te = $bulan_s. "/".$hari_s."/".$tahun_fix;
+            // $test = new DateTime($te);
+            // $date_end_violation = date_format($test, 'Y-m-d'); 
 
 
           
@@ -459,6 +459,21 @@ class ViolationController extends Controller
         //
         $employee = DB::table('employees')->where('id', $id)
                     ->first();
+
+
+        $date_now = date('Y-m-d');
+        $cari_status_violation = DB::table('violations')
+            ->where('date_end_violation', '<=', $date_now)
+            ->get(); 
+
+        foreach($cari_status_violation as $sta_vio):
+            DB::table('violations')
+                ->where('employee_id', $employee->id)
+                ->update([
+                    'status_vilation' => 'notactive'
+                 ]);
+        endforeach;
+
 
         return view('hi.violations.edit', [
             'employee' => $employee,

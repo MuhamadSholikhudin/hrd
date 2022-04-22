@@ -9,99 +9,6 @@
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1>Employees Detail</h1>
-
-          
-          
-
-          <?php
-          // data actual
-          echo $hari_apa = date('Y-m-d');
-
-          $date_violation = new \DateTime($hari_apa .' 00:00:00');
-          echo '<br>';
-          echo $date_year = date_format($date_violation, "Y"); //for Display Year
-          echo '<br>';
-          echo $date_month =  date_format($date_violation, "m"); //for Display Month
-          echo '<br>';
-          echo $date_day = date_format($date_violation, "d"); //for Display Date
-          echo '<br>';
-
-          echo $d_l = date("d", gmmktime(0,0,0, $date_month, $date_day, $date_year));
-          echo '<br>';
-          echo $n_l = date("n", gmmktime(0,0,0, $date_month, $date_day, $date_year));
-          echo '<br>';
-          echo $y_l = date("Y", gmmktime(0,0,0, $date_month, $date_day, $date_year));
-          echo '<br>';
-
-          echo $tw = $d_l + $n_l + $y_l;
-
-
-          $data_hari = $d_l;
-          $data_bulan = $n_l;
-          $data_tahun = $y_l;
-
-          //data manipulasi
-          $jumlah_bulan = $data_bulan + 6;
-          if($jumlah_bulan > 12){
-            $cari_bulan = $jumlah_bulan - 12;
-            $m_bulan = $cari_bulan;
-            $m_tahun = $data_tahun + 1;
-            $m_day = cal_days_in_month(CAL_GREGORIAN, $m_bulan, $m_tahun);
-          }else{
-            $m_bulan = $jumlah_bulan;
-            $m_tahun = $data_tahun;
-            $m_day = cal_days_in_month(CAL_GREGORIAN, $m_bulan, $m_tahun); 
-          }
-
-          // manipulasi hari
-          if($data_hari == 1 AND $m_bulan == 1){
-            $bulan_fix = 12;
-            $tahun_fix =  $m_tahun - 1;
-            $hari_fix = cal_days_in_month(CAL_GREGORIAN, $bulan_fix, $tahun_fix);
-          }elseif($data_hari == 1){
-            $bulan_fix = $m_bulan - 1;
-            $tahun_fix = $m_tahun;
-            $hari_fix = cal_days_in_month(CAL_GREGORIAN, $bulan_fix, $tahun_fix);
-          }elseif($data_hari <= $m_day){
-            $bulan_fix = $m_bulan;
-            $tahun_fix = $m_tahun;
-            $hari_fix = $data_hari - 1;
-          }elseif($data_hari > $m_day){
-            $bulan_fix = $m_bulan;
-            $tahun_fix = $m_tahun;
-            $hari_fix = cal_days_in_month(CAL_GREGORIAN, $bulan_fix, $tahun_fix);
-          }
-          // 
-            // $number_day = cal_days_in_month(CAL_GREGORIAN, 8, 2003); // 31
-            // echo "There were {$number_day} days in August 2003";
-            echo '<br>';
-            // $test = new DateTime('02/31/2011');
-
-            if(strlen($hari_fix) == '1'){
-              $hari_s = '0'. $hari_fix;
-            }elseif(strlen($hari_fix) == '2'){
-              $hari_s = $hari_fix;
-            }
-
-            if(strlen($bulan_fix) == '1'){
-              $bulan_s = '0'. $bulan_fix;
-            }elseif(strlen($bulan_fix) == '2'){
-              $bulan_s = $bulan_fix;
-            }
-
-
-            echo '<br>';
-            echo $te = $bulan_s. "/".$hari_s."/".$tahun_fix;
- 
-            echo '<br>';            
-            $test = new DateTime($te);
-            echo date_format($test, 'Y-m-d'); 
-            echo '<br>';
-            
-          ?>
-          {{ $hari_fix. " ". $bulan_fix ." ". $tahun_fix}}
-
-
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -113,6 +20,9 @@
     </div><!-- /.container-fluid -->
   </section>
 
+
+
+
 <!-- Main content -->
   <section class="content">
 
@@ -122,6 +32,10 @@
         <div class="card card-primary card-outline">
           <div class="card-body box-profile">
             <div class="text-center">
+
+
+            <!-- <img class="profile-user-img img-fluid img-circle" src="http://10.10.100.148/hwi/Photo/10000/{{  $employee->number_of_employees  }}.jpg" alt="User profile picture"> -->
+            
               <img class="profile-user-img img-fluid img-circle" src="{{asset('dist/img/user4-128x128.jpg')}}" alt="User profile picture">
             </div>
             <h3 class="profile-username text-center">{{  $employee->name  }}</h3>
@@ -485,7 +399,7 @@
                   @foreach($alphabets as $alphabet):
                     <?php  $print_paragraph  = DB::table('paragraphs')->find($alphabet->paragraph_id); ?>
                     <?php  $print_article  = DB::table('articles')->find($print_paragraph->article_id); ?>
-                    <option value="{{$alphabet->id}}" >PASAL {{$print_article->article}} {{$print_paragraph->paragraph}} {{$alphabet->alphabet_sound}} / {{$print_paragraph->sub_chapters}} / {{$alphabet->description}}</option>
+                    <option value="{{$alphabet->id}}" >PASAL {{$print_article->article}} {{$print_paragraph->paragraph}} {{$alphabet->alphabet}} {{$alphabet->alphabet_sound}} / {{$print_paragraph->sub_chapters}} / {{$alphabet->description}}</option>
                   @endforeach
                 </select>
               </div>
