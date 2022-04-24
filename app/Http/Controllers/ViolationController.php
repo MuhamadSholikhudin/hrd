@@ -68,6 +68,7 @@ class ViolationController extends Controller
 
         $other_information = $request->other_information;
         $date_of_violation = $request->date_of_violation;
+        $reporting_date = $request->reporting_date;
 
         $last_vio = $request->last_vio;
         $alphabet_id = $request->alphabet_id;
@@ -89,7 +90,7 @@ class ViolationController extends Controller
             $no_sp = $last_sp->no_violation + 1;
         }
 
-        $date_violation = new \DateTime($date_of_violation .' 00:00:00');
+        $date_violation = new \DateTime($reporting_date .' 00:00:00');
 
         $date_year = date_format($date_violation, "Y"); //for Display Year
         $date_month =  date_format($date_violation, "m"); //for Display Month
@@ -154,10 +155,10 @@ class ViolationController extends Controller
             $ROM = 'XII';
           }
 
-          $tgl1 = $date_of_violation;// pendefinisian tanggal awal
+        //   $tgl1 = $date_of_violation;// pendefinisian tanggal awal
 
           //Pembuatan 6 bulan berakhir
-          $date_end_violation = date('Y-m-d', strtotime('+180 days', strtotime($tgl1))); //operasi penjumlahan tanggal sebanyak 6 hari
+        //   $date_end_violation = date('Y-m-d', strtotime('+180 days', strtotime($tgl1))); //operasi penjumlahan tanggal sebanyak 6 hari
           
         //   echo $hari_apa = date('Y-m-d');
 
@@ -214,9 +215,9 @@ class ViolationController extends Controller
               $bulan_s = $bulan_fix;
             }
 
-            // $te = $bulan_s. "/".$hari_s."/".$tahun_fix;
-            // $test = new DateTime($te);
-            // $date_end_violation = date_format($test, 'Y-m-d'); 
+            $te = $bulan_s. "/".$hari_s."/".$tahun_fix;
+            $test = new \DateTime($te);
+            $date_end_violation = date_format($test, 'Y-m-d'); 
 
 
           
@@ -470,7 +471,7 @@ class ViolationController extends Controller
             DB::table('violations')
                 ->where('employee_id', $employee->id)
                 ->update([
-                    'status_vilation' => 'notactive'
+                    'violation_status' => 'notactive'
                  ]);
         endforeach;
 
@@ -753,5 +754,16 @@ class ViolationController extends Controller
         }
 
         return response()->json($data);
+    }
+
+
+    
+
+    public function list()
+    {
+        return view('hi.violations.list', [
+            'violations' => DB::table('violations')->paginate(10),
+            'count' => DB::table('violations')->count()
+        ]);
     }
 }

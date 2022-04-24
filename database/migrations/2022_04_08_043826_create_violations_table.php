@@ -16,13 +16,14 @@ return new class extends Migration
         Schema::create('violations', function (Blueprint $table) {          
             $table->id();
             $table->date('date_of_violation');     
-            $table->date('date_end_violation');     
+            $table->date('date_end_violation');
+            $table->date('reporting_date')->nullable();  
             $table->integer('no_violation');  
             $table->string('format')->nullable();  
             $table->string('month_of_violation')->nullable();  
             $table->string('violation_ROM')->nullable();  
             $table->string('reporting_day')->nullable();  
-            $table->date('reporting_date')->nullable();  
+
             $table->string('job_level')->nullable();
             $table->string('department')->nullable();
             $table->text('other_information')->nullable();
@@ -30,6 +31,7 @@ return new class extends Migration
             $table->string('violation_status')->nullable();  
             $table->string('type_of_violation')->nullable();  
                         
+            $table->float('accumulation', 3, 3)->nullable();   
             $table->char('violation_accumulation')->nullable();   
             $table->char('alphabet_accumulation')->nullable();   
             $table->char('violation_accumulation2')->nullable();  

@@ -25,6 +25,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchController;
 
 use App\Http\Controllers\ViolationController;
+use App\Http\Controllers\HiViolationController;
 
 use App\Http\Controllers\HiPkbController;
 use App\Http\Controllers\HiArticleController;
@@ -135,6 +136,11 @@ Route::controller(ExcelMutationController::class)->group(function(){
 
 // DATA HI Violations
 Route::resource('hi/violations', ViolationController::class);
+
+Route::get('/violations/list', [ViolationController::class, 'list']);
+
+
+Route::resource('hi/hiviolations', HiViolationController::class);
 
 Route::post('violation/get_type_violation', [ViolationController::class, 'get_type_violation'])->name('get_type_violation');
 

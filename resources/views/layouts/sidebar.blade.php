@@ -25,8 +25,8 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item {{ Request::is('datamaster') ? 'menu-open' : '' }}">
-          <a href="#" class="nav-link {{ Request::is('datamaster') ? 'active' : '' }} ">
+          <li class="nav-item {{ Request::is('datamaster*') ? ' menu-open' : '' }}">
+          <a href="#" class="nav-link {{ Request::is('datamaster/employees') ? 'active' : '' }} ">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Data Master
@@ -87,7 +87,7 @@
 
 
 
-        <li class="nav-item  ">
+        <li class="nav-item {{ Request::is('violations*') ? ' menu-open' : '' }}  {{ Request::is('hi*') ? ' menu-open' : '' }}">
           <a href="#" class="nav-link  ">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
@@ -95,28 +95,49 @@
               <i class="right fas fa-angle-left"></i>
             </p>
           </a>
-          <ul class="nav nav-treeview  "  {{ Request::is('hi*') ? ' style="display:block;"' : '' }}  >
-            <li class="nav-item">
+          <ul class="nav nav-treeview ">
+            
+            {{-- <li class="nav-item">
               <a href="/hi/violations" class="nav-link {{ Request::is('hi/violations*') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Pelanggaran</p>
               </a>
+            </li> --}}
+
+
+            <li class="nav-item {{ Request::is('violations*') ? 'menu-is-opening menu-open' : '' }} {{ Request::is('hi/violations') ? 'menu-is-opening menu-open' : '' }}">
+              <a href="/hi/violations" class="nav-link {{ Request::is('hi/violations') ? 'active' : '' }}">
+                <i class="fas fa-circle nav-icon"></i>
+                <p>
+                  Pelanggaran
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/hi/violations" class="nav-link {{ Request::is('hi/violations') ? 'active' : '' }}">
+                    <i class="far fa-dot-circle nav-icon"></i>
+                    <p>Karyawan</p>
+                  </a>
+                </li>
+                <li class="nav-item ">
+                  <a href="/violations/list" class="nav-link {{ Request::is('violations/list') ? 'active' : '' }}">
+                    <i class="far fa-dot-circle nav-icon"></i>
+                    <p>List Pelanggaran</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-dot-circle nav-icon"></i>
+                    <p>Level 3</p>
+                  </a>
+                </li>
+              </ul>
             </li>
-            {{-- <li class="nav-item">
-              <a href="/bpjs" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>BPJS</p>
-              </a>
-            </li> --}}
-            {{-- <li class="nav-item">
-              <a href="./gaji_tunjangan.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>GAJI / TUNJANGAN</p>
-              </a>
-            </li> --}}
+
             <li class="nav-item">
               <a href="/hi/layoffs" class="nav-link {{ Request::is('hi/layoffs*') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
+                <i class="fas fa-circle nav-icon"></i>
                 <p>PHK</p>
               </a>
             </li>
@@ -157,13 +178,13 @@
             </li>
             <li class="nav-item">
               <a href="/hi/signatures" class="nav-link {{ Request::is('hi/signatures*') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
+                <i class="fas fa-circle nav-icon"></i>
                 <p>MANAGER AKTIF</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="/hi/default_texts" class="nav-link {{ Request::is('hi/default_texts*') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
+                <i class="fas fa-circle nav-icon"></i>
                 <p>DEFAULT TEXT</p>
               </a>
             </li>

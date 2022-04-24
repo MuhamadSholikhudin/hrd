@@ -600,6 +600,10 @@
                 <!-- <p>One fine body&hellip;</p> -->
   
                 <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label">Tanggal Laporan</label>
+                    <div class="col-sm-4">
+                        <input type="date" name="reporting_date" class="form-control" required>
+                    </div>
                   <label for="number_of_employees" class="col-sm-2 col-form-label">Nomer SP </label>
                   <div class="col-sm-4">
                       <input type="text" class="form-control" value="{{$p_no_sp}}/SP-HRD/{{$ROM}}/{{date('Y')}}" placeholder="Nomer Induk Karyawan" >
