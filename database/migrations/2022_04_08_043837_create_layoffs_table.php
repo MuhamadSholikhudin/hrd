@@ -18,6 +18,8 @@ return new class extends Migration
             $table->date('layoff_date');     
             $table->date('layoff_date_start');     
             $table->string('type_of_layoff')->nullable();     
+            $table->string('layoff_description')->nullable();     
+            $table->integer('no_layoff')->nullable();     
             $table->foreignId('alphabet_id');      
             $table->foreignId('employee_id');      
             $table->timestamps();

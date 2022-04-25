@@ -172,5 +172,10 @@ Route::post('signatures/get_type_violation', [SignatureController::class, 'get_s
 
 // LAYOFFS
 Route::resource('/hi/layoffs', LayoffController::class);
+
 Route::post('layoffs/get_karyawan_phk', [LayoffController::class, 'get_karyawan_phk'])->name('get_karyawan_phk');
+
+Route::get('layoffs/karyawan_phk', [LayoffController::class, 'karyawan_phk'])->name('karyawan_phk');
+
+Route::post('layoffs/get_pasal_phk', [LayoffController::class, 'get_pasal_phk'])->name('get_pasal_phk');
 

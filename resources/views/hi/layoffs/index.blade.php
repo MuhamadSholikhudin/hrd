@@ -47,11 +47,12 @@
             <tbody>
             @foreach($layoffs as $layoff):
               <tr>
-                <td>{{$iteration}}</td>
+                <td>{{$layoff->id}}</td>
                 <td>{{ $layoff->layoff_date }}</td>
                 <td>{{ $layoff->layoff_date_start }}</td>
                 <td>{{ $layoff->type_of_layoff }}</td>
                 <td>{{ $layoff->alphabet_id }}</td>
+                <td>{{$layoff->employee_id}}</td>
                 <td>{{$layoff->employee_id}}</td>
               </tr>
             @endforeach
