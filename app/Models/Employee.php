@@ -10,7 +10,7 @@ class Employee extends Model
 
 
     use HasFactory;
-    // protected $guarded = ['id'];
+    protected $guarded = ['id'];
     protected $with = ['job', 'department'];
 
 
@@ -65,5 +65,10 @@ class Employee extends Model
     public function job()
     {
         return $this->belongsTo(Job::class);
+    }
+
+    public function layoffs()
+    {
+        return $this->hasMany(Employee::class);
     }
 }

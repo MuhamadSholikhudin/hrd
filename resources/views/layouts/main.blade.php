@@ -114,6 +114,8 @@
     }
   });
 
+  // Signature
+
   $('#signature_employee').change(function() {
     $.ajaxSetup({
         headers: {
@@ -144,6 +146,7 @@
         });
   });
   
+  // Proses pencarian pelanggaran
     $('#btn_proses').on('click', function() {
 
       $.ajaxSetup({
@@ -197,91 +200,46 @@
         });
     });
 
-  // function btn_proses(){
-  
-//   var pembeli = document.getElementById("id_pembeli").value;
-// $("#hasil_cari").html(keyword);
 
-    // async: true,
-    // dataType: 'json',
-    // beforeSend: function() {
-    //     $("#hasil_cari").hide();
-    //     $("#tunggu").html('<div class="spinner-border" role="status"> <span class = "visually-hidden" >  </span> </div>');
-    // },
-    // success: function(html) {
-        // $("#tunggu").html('');
-        // $("#hasil_cari").show();
-        // $("#hasil_cari").html(html[1]);
-        // $("#PasswordInput").val("");
-        // alert(html);
-        // if (html[0] == 'terima_kasih') {
-        //     document.getElementById("terima_kasih").play();
-        // } else if (html[0] == 'coba_lagi') {
-        //     document.getElementById("coba_lagi").play();
+    // PHK
+    $('#karyawan_phk').change(function() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
-        // } else if (html[0] == 'data_tidak_terdaftar') {
-        //     document.getElementById("data_tidak_terdaftar").play();
+    var karyawan_phk = $(this).val();
+    // alert(karyawan_phk);
+    $.ajax({
+          type: "POST",
+          url: "{{route('get_karyawan_phk')}}",
+          // async: true,
+          dataType: 'json',
+          data: {
+            karyawan_phk: karyawan_phk
+          },
+          success: function(data) {
+            // alert(data);
+            $("#nama_phk").html(data[0]);
+            $("#sml").val(data[0]);
+            $("#bagian_phk").html(data[1]);
+            $("#id_no_phk").html(data[2]);
+            $("#department_phk").html(data[3]);
+            $("#job_phk").html(data[4]);
+            $("#hire_date_phk").html(data[5]);
 
-        // } else {
+          },error(){
+            alert("error");
+          }
 
-        // }
-    // }
-// });
-
-                //  alert(select_violation);
-                  //  alert(select_violation + ' ' + violation_now);
-                  //  alert();
-
-                  
-
+        });
+  });
 
   document.addEventListener('trix-file-accept', function(e){
     e.preventDefault();
   });
-  // $(function () {
-  //   $.validator.setDefaults({
-  //     submitHandler: function () {
-  //       alert( "Form successful submitted!" );
-  //     }
-  //   });
-  //   $('#quickForm').validate({
-  //     rules: {
-  //       email: {
-  //         required: true,
-  //         email: true,
-  //       },
-  //       password: {
-  //         required: true,
-  //         minlength: 5
-  //       },
-  //       terms: {
-  //         required: true
-  //       },
-  //     },
-  //     messages: {
-  //       email: {
-  //         required: "Please enter a email address",
-  //         email: "Please enter a valid email address"
-  //       },
-  //       password: {
-  //         required: "Please provide a password",
-  //         minlength: "Your password must be at least 5 characters long"
-  //       },
-  //       terms: "Please accept our terms"
-  //     },
-  //     errorElement: 'span',
-  //     errorPlacement: function (error, element) {
-  //       error.addClass('invalid-feedback');
-  //       element.closest('.form-group').append(error);
-  //     },
-  //     highlight: function (element, errorClass, validClass) {
-  //       $(element).addClass('is-invalid');
-  //     },
-  //     unhighlight: function (element, errorClass, validClass) {
-  //       $(element).removeClass('is-invalid');
-  //     }
-  //   });
-  // });
+ 
   </script>
 </body>
 </html>

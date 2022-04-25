@@ -555,9 +555,11 @@
             if($diffx->d <= 0){
               $sta_viol = 'notactive';
               $type_viol = 'notviolation';
+              $last_accumulation = 0;
             }else{
               $sta_viol = $sel_vio->violation_status;
               $type_viol = $sel_vio->type_of_violation;
+              $last_accumulation = $sel_vio->accumulation;
             }
           }
 
@@ -635,6 +637,7 @@
                   <div class="col-sm-3">
                       <input type="hidden" name="last_vio" value="{{$sta_viol}}" >
                       <input type="hidden" name="last_type" value="{{$type_viol}}"  >     
+                      <input type="hidden" name="last_accumulation" value="{{$last_accumulation}}"  >     
                       <input type="text" class="form-control" id="jpn1"  placeholder="Jenis Pelanggaran" >     
                   </div>
                 </div> 
@@ -649,8 +652,9 @@
                 <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label">Keterangan lain :</label>
                   <div class="col-sm-10">
-                    <input id="x" type="hidden" name="other_information">
-                    <trix-editor input="x"></trix-editor>
+                    <!-- <input id="x" type="hidden" name="other_information">
+                    <trix-editor input="x"></trix-editor> -->
+                    <textarea name="other_information" class="form-control" id="" rows="10"></textarea>
                   </div>
                 </div> 
                 <div class="form-group row">
@@ -658,7 +662,6 @@
                   <div class="col-sm-10" id="remainder1">
                     
                   </div>
-
                   <label for="inputName" class="col-sm-2 col-form-label"></label>
                   <div class="col-sm-10" id="remainder2">
                     

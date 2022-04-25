@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('layoffs', function (Blueprint $table) {
             $table->id();
             $table->date('layoff_date');     
+            $table->date('layoff_date_start');     
             $table->string('type_of_layoff')->nullable();     
+            $table->foreignId('alphabet_id');      
             $table->foreignId('employee_id');      
             $table->timestamps();
         });

@@ -2,14 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Models\HiEmployee;
+// Models Data master
 use App\Models\Employee;
-use App\Models\Jon;
+use App\Models\Job;
 use App\Models\Department;
+
+//Model Hi
+use App\Models\HiEmployee;
 use App\Models\Paragraph;
 use App\Models\Article;
 use App\Models\Alphabet;
 
+//Controller Datamaster
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\DatamasterEmployeeController;
 use App\Http\Controllers\DatamasterPromotionController;
@@ -24,9 +28,10 @@ use App\Http\Controllers\HiEmployeeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchController;
 
+// Controller HI
 use App\Http\Controllers\ViolationController;
 use App\Http\Controllers\HiViolationController;
-
+use App\Http\Controllers\LayoffController;
 use App\Http\Controllers\HiPkbController;
 use App\Http\Controllers\HiArticleController;
 use App\Http\Controllers\HiParagraphController;
@@ -160,6 +165,12 @@ Route::resource('/hi/paragraphs', HiParagraphController::class);
 // PKB -> alphabets
 Route::resource('/hi/alphabets', HiAlphabetController::class);
 
-// SIN+GNATURES
+// SIGNATURES
 Route::resource('/hi/signatures', SignatureController::class);
 Route::post('signatures/get_type_violation', [SignatureController::class, 'get_signature'])->name('get_signature');
+
+
+// LAYOFFS
+Route::resource('/hi/layoffs', LayoffController::class);
+Route::post('layoffs/get_karyawan_phk', [LayoffController::class, 'get_karyawan_phk'])->name('get_karyawan_phk');
+

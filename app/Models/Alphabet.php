@@ -14,7 +14,7 @@ class Alphabet extends Model
     protected $with = ['paragraph', ];
 
     protected $fillable = [
-        'alphabet', 'description',
+        'alphabet', 'description', 'layoffs',
     ];
 
     public function paragraph()
@@ -24,6 +24,11 @@ class Alphabet extends Model
 
     public function violations()
     {
-        return $this->hasMany(Violation::class);
+        return $this->belongsTo(Violation::class);
+    }
+
+    public function layoffs()
+    {
+        return $this->hasMany(Alphabet::class);
     }
 }
