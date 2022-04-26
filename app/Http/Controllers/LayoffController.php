@@ -124,12 +124,12 @@ class LayoffController extends Controller
           $ROM = 'XII';
         }
 
-
         DB::table('layoffs')->insert([
             'alphabet_id' => $request->alphabet_id,
             'employee_id' => $request->employee_id,
             'layoff_description' => $request->layoff_description,
             'no_layoff' => $no_lf,
+            'rom_layoff' => $ROM,
             'layoff_date_start' => $request->layoff_date_start,
             'layoff_date' => $request->layoff_date
         ]);
@@ -157,8 +157,19 @@ class LayoffController extends Controller
     public function edit($id)
     {
         //
+
+        $layoff = DB::table('layoffs')->find($id);
+
+        $employee = DB::table('employees')->find($layoff->employee_id);        
+        $job = DB::table('jobs')->find($employee->job_id);
+        $department = DB::table('departments')->find($employee->department_id);
+
+
         return view('hi.layoffs.edit',[
-            'layoff' => DB::table('layoffs')->find($id)
+            'alphabets' => Alphabet::all(),
+            'layoff' => $layoff,
+            'job' => $job,
+            'department' => $department
         ]);
     }
 
@@ -172,6 +183,17 @@ class LayoffController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        DB::table('layoffs')
+            ->where('id', $id)
+            ->update([
+                'alphabet_id' => $request->alphabet_id,
+                'layoff_description' => $request->layoff_description,
+                'layoff_date_start' => $request->layoff_date_start,
+                'layoff_date' => $request->layoff_date
+        ]);
+
+        return redirect('/hi/layoffs');
     }
 
     /**

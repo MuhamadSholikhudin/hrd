@@ -38,7 +38,22 @@
               
             </u>
             <br>
-              NO. 2/SK-PHK/HRD-HWI/IV/2022 <br>
+              <?php 
+              $num_latest = DB::table('layoffs')
+                ->whereMonth('created_at', Carbon::now()->month) 
+                ->count(); 
+
+                if($num_latest < 1){
+                  $no_lf = 1;
+              }elseif($num_latest > 0){
+                  $latest = DB::table('layoffs')
+                      ->latest()
+                      ->first();
+                  $nono_lf_sp = $latest->no_layoff + 1;
+              }
+              ?>
+
+              NO. {{$nono_lf_sp}}/SK-PHK/HRD-HWI/IV/{{date('Y')}} <br>
               TENTANG<br>
               PEMUTUSAN HUBUNGAN KERJA
             
@@ -62,7 +77,7 @@
                   @endforeach
                 </select>
                 {{--                 Perjanjian Kerja Bersama Pasal 27. Jenis Pelanggaran dan Sanksi ayat (6) tentang Pemutusan Hubungan Kerja (PHK) tanpa memberikan Pesangon. I. Pengusaha dapat melakukan Pemutusan Hubungan Kerja (PHK) tanpa memberikan Pesangon, apabila melakukan kesalahan berat sebagai berikut : e. Terbukti menyerang, menganiaya, mengancam, atau mengintimidasi teman sekerja atau Pengusaha di lingkungan perusahaan.s
- --}} 
+                --}} 
                 <p id="isi_text">
 
                 </p>

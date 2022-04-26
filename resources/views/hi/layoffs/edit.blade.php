@@ -38,7 +38,14 @@
               
             </u>
             <br>
-              NO. 2/SK-PHK/HRD-HWI/IV/2022 <br>
+              <?php 
+
+              $date_layoff = new \DateTime($layoff->$date_layoff .' 00:00:00');
+              $date_layoff_year = date_format($date_layoff, "Y"); //for Display Year
+
+              ?>
+
+              NO. {{$layoff->no_layoff}}/SK-PHK/HRD-HWI/{{ $layoff->rom_layoff}}/{{$date_layoff_year}} <br>
               TENTANG<br>
               PEMUTUSAN HUBUNGAN KERJA
             
@@ -47,6 +54,8 @@
           <table>
             <form action="/hi/layoffs/" method="POST" enctype="multipart/form-data">
               @csrf
+              @method('put')
+              <input type="hidden" name="id" value="{{$layoff->id}}">
             <tr>
               <td valign="top">Membaca</td>
               <td valign="top">:</td>
@@ -56,15 +65,26 @@
                   <option value="" >Pilih PASAL </option>
                   
                   @foreach($alphabets as $alphabet):
-                    <?php  $print_paragraph  = DB::table('paragraphs')->find($alphabet->paragraph_id); ?>
-                    <?php  $print_article  = DB::table('articles')->find($print_paragraph->article_id); ?>
-                    <option value="{{$alphabet->id}}" >PASAL {{$print_article->article}} {{$print_paragraph->paragraph}} {{$alphabet->alphabet}} {{$alphabet->alphabet_sound}} / {{$print_paragraph->sub_chapters}} / {{$alphabet->description}}</option>
+                    @if(old('alphabet_id', $layoff->alphabet_id) == $alphabet->id)
+                      
+                      <?php  $print_alphabet  = DB::table('alphabets')->find($layoff->alphabet_id); ?>
+                      <?php  $print_paragraph  = DB::table('paragraphs')->find($print_alphabet->paragraph_id); ?>
+                      <?php  $print_article  = DB::table('articles')->find($print_paragraph->article_id); ?>
+                      
+                      <option value="{{ $layoff->alphabet_id }}" selected>PASAL {{$print_article->article}} {{$print_paragraph->paragraph}} {{$alphabet->alphabet}} {{$alphabet->alphabet_sound}} / {{$print_paragraph->sub_chapters}} / {{$alphabet->description}} </option>
+
+                    @else
+                      <?php  $print_paragraph  = DB::table('paragraphs')->find($alphabet->paragraph_id); ?>
+                      <?php  $print_article  = DB::table('articles')->find($print_paragraph->article_id); ?>
+                      <option value="{{$alphabet->id}}" >PASAL {{$print_article->article}} {{$print_paragraph->paragraph}} {{$alphabet->alphabet}} {{$alphabet->alphabet_sound}} / {{$print_paragraph->sub_chapters}} / {{$alphabet->description}}</option>
+                    @endif
+                    
                   @endforeach
                 </select>
                 {{--                 Perjanjian Kerja Bersama Pasal 27. Jenis Pelanggaran dan Sanksi ayat (6) tentang Pemutusan Hubungan Kerja (PHK) tanpa memberikan Pesangon. I. Pengusaha dapat melakukan Pemutusan Hubungan Kerja (PHK) tanpa memberikan Pesangon, apabila melakukan kesalahan berat sebagai berikut : e. Terbukti menyerang, menganiaya, mengancam, atau mengintimidasi teman sekerja atau Pengusaha di lingkungan perusahaan.s
  --}} 
                 <p id="isi_text">
-
+                  {{$layoff->alphabet_id}}
                 </p>
               </div>
               </td>
@@ -73,7 +93,7 @@
               <td valign="top">Menimbang</td>
               <td valign="top">:</td>
               <td valign="top">
-              <textarea name="layoff_description" id="" class="form-control" required>Laporan Hasil Investigasi tanggal 4 April 2022</textarea>
+              <textarea name="layoff_description" id="" class="form-control" required>{{$layoff->layoff_description}}</textarea>
               </td>
             </tr>
             <tr>
@@ -104,30 +124,30 @@
                   <tr>
                     <td>Nama</td>
                     <td>:</td>
-                    <td id="nama_phk"> </td>
+                    <td id="nama_phk"> {{$employee->name}}</td>
 
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     
                     <td>Bagian</td>
                     <td>:</td>
-                    <td id="bagian_phk"></td>
+                    <td id="bagian_phk">{{$employee->bagian}}</td>
                   </tr>
 
                   <tr>
                     <td>ID No.</td>
                     <td>:</td>
-                    <td id="id_no_phk"> </td>
+                    <td id="id_no_phk"> {{$employee->number_of_employees}}</td>
 
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     
                     <td>Departemen</td>
                     <td>:</td>
-                    <td id="department_phk"></td>
+                    <td id="department_phk">{{$department->department}}</td>
                   </tr>
                   <tr>
                     <td>Jabatan</td>
                     <td>:</td>
-                    <td id="job_phk"> </td>
+                    <td id="job_phk">{{$job->job_level}} </td>
 
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     
@@ -137,7 +157,7 @@
                   </tr>
                   <tr>
                     <td colspan="7">
-                    Terhitung mulai, <input type="date" style="width: 100px;   border-radius: 1px; border: #555;" name="layoff_date_start" id="" required> 
+                    Terhitung mulai, <input type="date" style="width: 100px;   border-radius: 1px; border: #555;" name="layoff_date_start" value="{{$layoff->layoff_date_start}}" id="" required> 
                     </td>
                   </tr>
                 </table>
@@ -148,7 +168,7 @@
               <td valign="top">Kedua</td>
               <td valign="top">:</td>
               <td valign="top">
-              Sejak dikeluarkan   Surat   Keputusan  ini  antara  Sdr. <small id="sml"> </small> dan PT. HWA SEUNG INDONESIA akan segera menyelesaikan hak dan kewajiban masing-masing.
+              Sejak dikeluarkan   Surat   Keputusan  ini  antara  Sdr. {{$employee->name}} dan PT. HWA SEUNG INDONESIA akan segera menyelesaikan hak dan kewajiban masing-masing.
               </td>
             </tr>
             <tr>

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('type_of_layoff')->nullable();     
             $table->string('layoff_description')->nullable();     
             $table->integer('no_layoff')->nullable();     
+            $table->string('rom_layoff')->nullable();     
             $table->foreignId('alphabet_id');      
             $table->foreignId('employee_id');      
             $table->timestamps();

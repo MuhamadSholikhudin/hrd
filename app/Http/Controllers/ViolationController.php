@@ -79,7 +79,9 @@ class ViolationController extends Controller
         //MEMBUAT INPUTAN OTOMATIS SURAT
         // NO SP 001/SP-HRD/IV/2022
 
-        $num_sp = DB::table('violations')->count();
+        $num_sp = DB::table('violations')
+            ->whereMonth('created_at', Carbon::now()->month)  
+            ->count();
 
         if($num_sp < 1){
             $no_sp = 1;
@@ -414,6 +416,7 @@ class ViolationController extends Controller
                 'violation_status' => 'active',     
                 'type_of_violation' => $status_type_violation,   
             
+                'accumulation' => $accumulation,    
                 'alphabet_accumulation' => $alphabet_accumulation,    
                 'violation_accumulation' => $violation_accumulation,    
                 'violation_accumulation2' => $violation_accumulation2,     
