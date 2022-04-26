@@ -79,9 +79,7 @@ class ViolationController extends Controller
         //MEMBUAT INPUTAN OTOMATIS SURAT
         // NO SP 001/SP-HRD/IV/2022
 
-        $num_sp = DB::table('violations')
-            ->whereMonth('created_at', Carbon::now()->month)  
-            ->count();
+        $num_sp = DB::table('violations')->count();
 
         if($num_sp < 1){
             $no_sp = 1;
@@ -98,10 +96,10 @@ class ViolationController extends Controller
         $date_month =  date_format($date_violation, "m"); //for Display Month
         $date_day = date_format($date_violation, "d"); //for Display Date
 
-// $tahun = YEAR($date_of_violation);
+            // $tahun = YEAR($date_of_violation);
 
-// Prints October 3, 1975 was on a Thursday
-//   echo "Oct 3, 1975 was on a ".gmdate("l", mktime(0,0,0,$date_day,$date_month,$date_year)) . "<br>";
+            // Prints October 3, 1975 was on a Thursday
+            //   echo "Oct 3, 1975 was on a ".gmdate("l", mktime(0,0,0,$date_day,$date_month,$date_year)) . "<br>";
 
             $day = gmdate($date_of_violation, time()+60*60*7);
             $day = date("l", gmmktime(0,0,0, $date_month,$date_day, $date_year));
@@ -235,8 +233,20 @@ class ViolationController extends Controller
         
             //JIKA TIDAK ADA PELANGGARAN AKTIF
             if($last_vio == 'notactive' AND $last_type == 'notviolation'){
-                // $type_of_violation = $sel_paragraph->type_of_verse;
+
                 $status_type_violation = $sel_paragraph->type_of_verse;
+
+                if($sel_paragraph->type_of_verse == "Peringatan Lisan"){
+                    $accumulation = 0.5;                                                                                                                
+                }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Pertama"){
+                    $accumulation = 1;                                                                                                                                                
+                }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Kedua"){
+                    $accumulation = 2;                                                                                                                                                
+                }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Ketiga"){
+                    $accumulation = 3;                                                                                                                                                
+                }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Terakhir"){
+                    $accumulation = 4;                                                                                                                                                
+                }
 
                 $violation_accumulation = null;    
                 $alphabet_accumulation = null;    
@@ -246,22 +256,23 @@ class ViolationController extends Controller
             }else{
 
                 // CARI PELANGGARAN AKUMULASI 3               
-                $num_vio_accumulation3 = DB::table('violations')
-                    ->where('employee_id',  $employee_id) 
-                    ->where('violation_accumulation', '!=',  null) 
-                    ->where('violation_accumulation2', '!=',  null) 
-                    ->where('violation_accumulation3', '!=',  null) 
-                    ->where('alphabet_accumulation', '!=',  null) 
-                    ->where('violation_status', 'active') 
-                    ->latest()                       
-                    ->count();
+                // $num_vio_accumulation3 = DB::table('violations')
+                //     ->where('employee_id',  $employee_id) 
+                //     ->where('violation_accumulation', '!=',  null) 
+                //     ->where('violation_accumulation2', '!=',  null) 
+                //     ->where('violation_accumulation3', '!=',  null) 
+                //     ->where('alphabet_accumulation', '!=',  null) 
+                //     ->where('violation_status', 'active') 
+                //     ->latest()                       
+                //     ->count();
 
-                // dd($num_vio_accumulation3);
-                if($num_vio_accumulation3 > 0){
-                    return redirect('hi/violations/' . $employee_id . '/edit');
-                }else{
+                // // dd($num_vio_accumulation3);
+                // if($num_vio_accumulation3 > 0){
+                    // LOGIKA AKUMULSI KEEMPAT
+                //     return redirect('hi/violations/' . $employee_id . '/edit');
+                // }else{
 
-                }
+                // }
 
 
                 // CARI PELANGGARAN AKUMULASI 2               
@@ -332,9 +343,90 @@ class ViolationController extends Controller
                 if($num_vio_accumulation > 0){
 
                     //LOGIKA AKUMULASI KEDUA
-                    if($last_type == 'Surat Peringatan Kedua' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                    if($last_type == 'Peringatan Lisan' AND $last_accumulation = 0.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                        $status_type_violation = 'Surat Peringatan Pertama';
+                        $accumulation = 1;
+                    }elseif($last_type == 'Surat Peringatan Pertama' AND $last_accumulation = 1 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                        $status_type_violation = 'Peringatan Lisan';
+                        $accumulation = 1.5;                            
+                    }elseif($last_type == 'Peringatan Lisan' AND $last_accumulation = 1.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                        $status_type_violation = 'Surat Peringatan Kedua';
+                        $accumulation = 2;                                                        
+                    }elseif($last_type == 'Surat Peringatan Kedua'  AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                        $status_type_violation = 'Peringatan Lisan';
+                        $accumulation = 2.5;                                                        
+                    }elseif($last_type == 'Peringatan Lisan'  AND $last_accumulation = 2.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                        $status_type_violation = 'Peringatan Ketiga';
+                        $accumulation = 3;                                                        
+                    }elseif($last_type == 'Surat Peringatan Ketiga'  AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                        $status_type_violation = 'Peringatan Lisan';
+                        $accumulation = 3.5;                                                        
+                    }elseif($last_type == 'Peringatan Lisan'  AND $last_accumulation = 3.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                        $status_type_violation = 'Surat Peringatan Terakhir';
+                        $accumulation = 4;                                                        
+                    }elseif($last_type == 'Surat Peringatan Terakhir'  AND $last_accumulation = 3.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                        $status_type_violation = 'Surat Peringatan Terakhir';
+                        $accumulation = 4.5;                                                        
+                    }
+
+                    //Surat Peringatan Pertama
+                    elseif($last_type == 'Surat Peringatan Pertama'  AND $last_accumulation = 1 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                        $status_type_violation = 'Surat Peringatan Kedua';
+                        $accumulation = 2;                                                        
+                    }elseif($last_type == 'Surat Peringatan Kedua'  AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
                         $status_type_violation = 'Surat Peringatan Ketiga';
-                        
+                        $accumulation = 3;                                                        
+                    }elseif($last_type == 'Surat Peringatan Ketiga'  AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                        $status_type_violation = 'Surat Peringatan Terakhir';
+                        $accumulation = 4;                                                        
+                    }elseif($last_type == 'Surat Peringatan Terakhir'  AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                        $status_type_violation = 'PHK';
+                        $accumulation = 5;                                                        
+                    }
+
+                    //Surat Peringatan Kedua
+                    elseif($last_type == 'Surat Peringatan Kedua' AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
+                        $status_type_violation = 'Surat Peringatan Terakhir';
+                        $accumulation = 4;                                                                                    
+                    }elseif($last_type == 'Surat Peringatan Terakhir' AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
+                        $status_type_violation = 'PHK';
+                        $accumulation = 5;                                                                                                                
+                    }
+                    elseif($last_type == 'Surat Peringatan Kedua' AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                        $status_type_violation = 'Surat Peringatan Terakhir';
+                        $accumulation = 4;                                                                                                                
+                    }
+
+                    // Surat Peringatan Ketiga
+                    // elseif($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                    //     $status_type_violation = 'Surat Peringatan Terakhir';
+                    // }
+                    elseif($last_type == 'Surat Peringatan Ketiga' AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
+                        $status_type_violation = 'Surat Peringatan Terakhir';
+                        $accumulation = 4;                                                                                                                                            
+                    }elseif($last_type == 'Surat Peringatan Ketiga' AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                        $status_type_violation = 'Surat Peringatan Terakhir';
+                        $accumulation = 4;                                                                                                                                                                        
+                    }
+                    elseif($last_type == 'Surat Peringatan Terakhir' AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                        $status_type_violation = 'PHK';
+                        $accumulation = 5;                                                                                                                
+                    }
+                    else{
+                        $status_type_violation = $sel_paragraph->type_of_verse;
+
+                        if($sel_paragraph->type_of_verse == "Peringatan Lisan"){
+                            $accumulation = 0.5;                                                                                                                
+                        }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Pertama"){
+                            $accumulation = 1;                                                                                                                                                
+                        }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Kedua"){
+                            $accumulation = 2;                                                                                                                                                
+                        }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Ketiga"){
+                            $accumulation = 3;                                                                                                                                                
+                        }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Terakhir"){
+                            $accumulation = 4;                                                                                                                                                
+                        }
+                    }                        
                         // Cari pasal akumulasi
                         $cari_pasal_akumulasi = DB::table('alphabets')
                             ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
@@ -365,21 +457,135 @@ class ViolationController extends Controller
                         $violation_accumulation = $pelanggran_sebelumnya->id;    
                         $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
                         $violation_accumulation3 = null;  
-                    }
+                    
                 }else{
-                    //LOGIKA AKUMULSAI PRTAMA
-                    if($last_type == 'Surat Peringatan Pertama' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                    //LOGIKA AKUMULSAI PERTAMA
+                    if($last_type == 'Peringatan Lisan' AND $last_accumulation = 0.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                        $status_type_violation = 'Surat Peringatan Pertama';
+                        $accumulation = 1;
+                    }elseif($last_type == 'Surat Peringatan Pertama' AND $last_accumulation = 1 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                        $status_type_violation = 'Peringatan Lisan';
+                        $accumulation = 1.5;                            
+                    }elseif($last_type == 'Peringatan Lisan' AND $last_accumulation = 1.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
                         $status_type_violation = 'Surat Peringatan Kedua';
+                        $accumulation = 2;                                                        
+                    }elseif($last_type == 'Surat Peringatan Kedua'  AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                        $status_type_violation = 'Peringatan Lisan';
+                        $accumulation = 2.5;                                                        
+                    }elseif($last_type == 'Peringatan Lisan'  AND $last_accumulation = 2.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                        $status_type_violation = 'Peringatan Ketiga';
+                        $accumulation = 3;                                                        
+                    }elseif($last_type == 'Surat Peringatan Ketiga'  AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                        $status_type_violation = 'Peringatan Lisan';
+                        $accumulation = 3.5;                                                        
+                    }elseif($last_type == 'Peringatan Lisan'  AND $last_accumulation = 3.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                        $status_type_violation = 'Surat Peringatan Terakhir';
+                        $accumulation = 4;                                                        
+                    }elseif($last_type == 'Surat Peringatan Terakhir'  AND $last_accumulation = 3.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                        $status_type_violation = 'Surat Peringatan Terakhir';
+                        $accumulation = 4.5;                                                        
+                    }
+
+                    elseif($last_type == 'Peringatan Lisan' AND $last_accumulation = 0.5 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                        $status_type_violation = 'Surat Peringatan Pertama';
+                        $accumulation = 1.5;
+                    }
+                    elseif($last_type == 'Peringatan Lisan' AND $last_accumulation = 0.5 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
+                        $status_type_violation = 'Surat Peringatan Kedua';
+                        $accumulation = 2.5;
+                    }
+                    elseif($last_type == 'Peringatan Lisan' AND $last_accumulation = 0.5 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                        $status_type_violation = 'Surat Peringatan Ketiga';
+                        $accumulation = 3.5;
+                    }
+
+                    //Surat Peringatan Pertama
+                    elseif($last_type == 'Surat Peringatan Pertama'  AND $last_accumulation = 1 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                        $status_type_violation = 'Surat Peringatan Kedua';
+                        $accumulation = 2;                                                        
+                    }elseif($last_type == 'Surat Peringatan Kedua'  AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                        $status_type_violation = 'Surat Peringatan Ketiga';
+                        $accumulation = 3;                                                        
+                    }elseif($last_type == 'Surat Peringatan Ketiga'  AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                        $status_type_violation = 'Surat Peringatan Terakhir';
+                        $accumulation = 4;                                                        
+                    }elseif($last_type == 'Surat Peringatan Terakhir'  AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                        $status_type_violation = 'PHK';
+                        $accumulation = 5;                                                        
+                    }
+
+                    //Surat Peringatan Kedua
+                    elseif($last_type == 'Surat Peringatan Kedua' AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
+                        $status_type_violation = 'Surat Peringatan Terakhir';
+                        $accumulation = 4;                                                                                    
+                    }elseif($last_type == 'Surat Peringatan Terakhir' AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
+                        $status_type_violation = 'PHK';
+                        $accumulation = 5;                                                                                                                
+                    }
+                    elseif($last_type == 'Surat Peringatan Kedua' AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                        $status_type_violation = 'Surat Peringatan Terakhir';
+                        $accumulation = 4;                                                                                                                
+                    }
+
+                    // Surat Peringatan Ketiga
+                    // elseif($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                    //     $status_type_violation = 'Surat Peringatan Terakhir';
+                    // }
+                    
+                    elseif($last_type == 'Surat Peringatan Ketiga' AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
+                        $status_type_violation = 'Surat Peringatan Terakhir';
+                        $accumulation = 4;                                                                                                                                            
+                    }elseif($last_type == 'Surat Peringatan Ketiga' AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                        $status_type_violation = 'Surat Peringatan Terakhir';
+                        $accumulation = 4;                                                                                                                                                                        
+                    }
+                    elseif($last_type == 'Surat Peringatan Terakhir' AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                        $status_type_violation = 'PHK';
+                        $accumulation = 5;                                                                                                                
+                    }
+                    else{
+                        $status_type_violation = $sel_paragraph->type_of_verse;
+
+                        if($sel_paragraph->type_of_verse == "Peringatan Lisan"){
+                            $accumulation = 0.5;                                                                                                                
+                        }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Pertama"){
+                            $accumulation = 1;                                                                                                                                                
+                        }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Kedua"){
+                            $accumulation = 2;                                                                                                                                                
+                        }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Ketiga"){
+                            $accumulation = 3;                                                                                                                                                
+                        }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Terakhir"){
+                            $accumulation = 4;                                                                                                                                                
+                        }
+                    }
                         
                         // Cari pasal akumulasi
-                        $cari_pasal_akumulasi = DB::table('alphabets')
+
+                        $num_pasal_akumulasi = DB::table('alphabets')
                             ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
                             ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
-                            ->where('paragraphs.type_of_verse', 'Surat Peringatan Kedua')
-                            ->where('alphabets.alphabet_accumulation', 'Surat Peringatan Pertama')
+                            ->where('paragraphs.type_of_verse', $sel_paragraph->type_of_verse)
+                            ->where('alphabets.alphabet_accumulation', $status_type_violation)
                             ->select('alphabets.id as id')
-                            ->first();
-    
+                            ->count();
+
+                        if($num_pasal_akumulasi > 0){
+                            $cari_pasal_akumulasi = DB::table('alphabets')
+                                ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                ->where('paragraphs.type_of_verse', $sel_paragraph->type_of_verse)
+                                ->where('alphabets.alphabet_accumulation', $status_type_violation)
+                                ->select('alphabets.id as id')
+                                ->first();
+                        }else{
+                            $cari_pasal_akumulasi = DB::table('alphabets')
+                                ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                ->where('alphabets.alphabet_accumulation', $status_type_violation)
+                                ->select('alphabets.id as id')
+                                ->first();
+                        }
+                            
                         $pelanggran_sebelumnya = DB::table('violations')
                             ->where('employee_id',  $employee_id) 
                             ->latest()                       
@@ -395,7 +601,6 @@ class ViolationController extends Controller
                         $alphabet_accumulation = $cari_pasal_akumulasi->id;    
                         $violation_accumulation2 = null;    
                         $violation_accumulation3 = null;  
-                    }
                 }
             }    
         }
@@ -521,6 +726,7 @@ class ViolationController extends Controller
         $status_violant_last = $request->status_violant_last;
         $violation_now = $request->violation_now;
         $last_type = $request->last_type;
+        $last_accumulation = $request->last_accumulation;
 
         //
         $sel_alphabet = DB::table('alphabets')->find($request->violation_now);
@@ -559,15 +765,91 @@ class ViolationController extends Controller
             if($num_vio_accumulation3 > 0){
 
                 // GET LOGIKA AKUMULASI KEEMPAT
-                if($last_type == 'Surat Peringatan Terakhir' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
-                    $status_type_violation = 'PHK PESANGON';
-                }elseif($last_type == 'Surat Peringatan Terakhir' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
-                    $status_type_violation = 'PHK PESANGON';
-                }elseif($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
-                    $status_type_violation = 'PHK PESANGON';
-                }elseif($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Terakhir'){
-                    $status_type_violation = 'PHK PESANGON';
-                }
+                        // GET LOGIKA AKUMULASI PERINGATAN LISAN
+                        if($last_type == 'Peringatan Lisan' AND $last_accumulation = 0.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Surat Peringatan Pertama';
+                            $accumulation = 1;
+                        }elseif($last_type == 'Surat Peringatan Pertama' AND $last_accumulation = 1 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Peringatan Lisan';
+                            $accumulation = 1.5;                            
+                        }elseif($last_type == 'Peringatan Lisan' AND $last_accumulation = 1.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Surat Peringatan Kedua';
+                            $accumulation = 2;                                                        
+                        }elseif($last_type == 'Surat Peringatan Kedua'  AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Peringatan Lisan';
+                            $accumulation = 2.5;                                                        
+                        }elseif($last_type == 'Peringatan Lisan'  AND $last_accumulation = 2.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Peringatan Ketiga';
+                            $accumulation = 3;                                                        
+                        }elseif($last_type == 'Surat Peringatan Ketiga'  AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Peringatan Lisan';
+                            $accumulation = 3.5;                                                        
+                        }elseif($last_type == 'Peringatan Lisan'  AND $last_accumulation = 3.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                        
+                        }elseif($last_type == 'Surat Peringatan Terakhir'  AND $last_accumulation = 3.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4.5;                                                        
+                        }
+
+                        //Surat Peringatan Pertama
+                        elseif($last_type == 'Surat Peringatan Pertama'  AND $last_accumulation = 1 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                            $status_type_violation = 'Surat Peringatan Kedua';
+                            $accumulation = 2;                                                        
+                        }elseif($last_type == 'Surat Peringatan Kedua'  AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                            $status_type_violation = 'Surat Peringatan Ketiga';
+                            $accumulation = 3;                                                        
+                        }elseif($last_type == 'Surat Peringatan Ketiga'  AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                            $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                        
+                        }elseif($last_type == 'Surat Peringatan Terakhir'  AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                            $status_type_violation = 'PHK';
+                            $accumulation = 5;                                                        
+                        }
+
+                        //Surat Peringatan Kedua
+                        elseif($last_type == 'Surat Peringatan Kedua' AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
+                            $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                                                    
+                        }elseif($last_type == 'Surat Peringatan Terakhir' AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
+                            $status_type_violation = 'PHK';
+                            $accumulation = 5;                                                                                                                
+                        }
+                        elseif($last_type == 'Surat Peringatan Kedua' AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                            $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                                                                                
+                        }
+
+                        // Surat Peringatan Ketiga
+                        // elseif($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                        //     $status_type_violation = 'Surat Peringatan Terakhir';
+                        // }
+                        elseif($last_type == 'Surat Peringatan Ketiga' AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
+                            $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                                                                                                            
+                        }elseif($last_type == 'Surat Peringatan Ketiga' AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                            $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                                                                                                                                        
+                        }
+                        elseif($last_type == 'Surat Peringatan Terakhir' AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                            $status_type_violation = 'PHK';
+                            $accumulation = 5;                                                                                                                
+                        }
+                        else{
+                            $status_type_violation = $sel_paragraph->type_of_verse;
+
+                            if($sel_paragraph->type_of_verse == "Peringatan Lisan"){
+                                $accumulation = 0.5;                                                                                                                
+                            }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Pertama"){
+                                $accumulation = 1;                                                                                                                                                
+                            }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Kedua"){
+                                $accumulation = 2;                                                                                                                                                
+                            }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Ketiga"){
+                                $accumulation = 3;                                                                                                                                                
+                            }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Terakhir"){
+                                $accumulation = 4;                                                                                                                                                
+                            }
+                        }
                     // Cari pasal akumulasi
                     $cari_pasal_akumulasi = DB::table('alphabets')
                         ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
@@ -608,13 +890,91 @@ class ViolationController extends Controller
                 if($num_vio_accumulation2 > 0){
                     
                     // GET LOGIKA AKUMULASI KETIGA
-                    if($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
-                        $status_type_violation = 'Surat Peringatan Terakhir';
-                    }elseif($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
-                        $status_type_violation = 'Surat Peringatan Terakhir';
-                    }elseif($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
-                        $status_type_violation = 'Surat Peringatan Terakhir';
-                    }
+                        // GET LOGIKA AKUMULASI PERINGATAN LISAN
+                        if($last_type == 'Peringatan Lisan' AND $last_accumulation = 0.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Surat Peringatan Pertama';
+                            $accumulation = 1;
+                        }elseif($last_type == 'Surat Peringatan Pertama' AND $last_accumulation = 1 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Peringatan Lisan';
+                            $accumulation = 1.5;                            
+                        }elseif($last_type == 'Peringatan Lisan' AND $last_accumulation = 1.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Surat Peringatan Kedua';
+                            $accumulation = 2;                                                        
+                        }elseif($last_type == 'Surat Peringatan Kedua'  AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Peringatan Lisan';
+                            $accumulation = 2.5;                                                        
+                        }elseif($last_type == 'Peringatan Lisan'  AND $last_accumulation = 2.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Peringatan Ketiga';
+                            $accumulation = 3;                                                        
+                        }elseif($last_type == 'Surat Peringatan Ketiga'  AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Peringatan Lisan';
+                            $accumulation = 3.5;                                                        
+                        }elseif($last_type == 'Peringatan Lisan'  AND $last_accumulation = 3.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                        
+                        }elseif($last_type == 'Surat Peringatan Terakhir'  AND $last_accumulation = 3.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4.5;                                                        
+                        }
+
+                        //Surat Peringatan Pertama
+                        elseif($last_type == 'Surat Peringatan Pertama'  AND $last_accumulation = 1 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                            $status_type_violation = 'Surat Peringatan Kedua';
+                            $accumulation = 2;                                                        
+                        }elseif($last_type == 'Surat Peringatan Kedua'  AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                            $status_type_violation = 'Surat Peringatan Ketiga';
+                            $accumulation = 3;                                                        
+                        }elseif($last_type == 'Surat Peringatan Ketiga'  AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                            $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                        
+                        }elseif($last_type == 'Surat Peringatan Terakhir'  AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                            $status_type_violation = 'PHK';
+                            $accumulation = 5;                                                        
+                        }
+
+                        //Surat Peringatan Kedua
+                        elseif($last_type == 'Surat Peringatan Kedua' AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
+                            $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                                                    
+                        }elseif($last_type == 'Surat Peringatan Terakhir' AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
+                            $status_type_violation = 'PHK';
+                            $accumulation = 5;                                                                                                                
+                        }
+                        elseif($last_type == 'Surat Peringatan Kedua' AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                            $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                                                                                
+                        }
+
+                        // Surat Peringatan Ketiga
+                        // elseif($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                        //     $status_type_violation = 'Surat Peringatan Terakhir';
+                        // }
+                        elseif($last_type == 'Surat Peringatan Ketiga' AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
+                            $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                                                                                                            
+                        }elseif($last_type == 'Surat Peringatan Ketiga' AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                            $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                                                                                                                                        
+                        }
+                        elseif($last_type == 'Surat Peringatan Terakhir' AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                            $status_type_violation = 'PHK';
+                            $accumulation = 5;                                                                                                                
+                        }
+                        else{
+                            $status_type_violation = $sel_paragraph->type_of_verse;
+
+                            if($sel_paragraph->type_of_verse == "Peringatan Lisan"){
+                                $accumulation = 0.5;                                                                                                                
+                            }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Pertama"){
+                                $accumulation = 1;                                                                                                                                                
+                            }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Kedua"){
+                                $accumulation = 2;                                                                                                                                                
+                            }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Ketiga"){
+                                $accumulation = 3;                                                                                                                                                
+                            }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Terakhir"){
+                                $accumulation = 4;                                                                                                                                                
+                            }
+                        }
                         
                         // Cari pasal akumulasi
                         $cari_pasal_akumulasi = DB::table('alphabets')
@@ -655,20 +1015,90 @@ class ViolationController extends Controller
                     if($num_vio_accumulation > 0){
 
                         // GET LOGIKA AKUMULASI KEDUA
-                        if($last_type == 'Surat Peringatan Kedua' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
-                            $status_type_violation = 'Surat Peringatan Ketiga';
-                        }elseif($last_type == 'Surat Peringatan Kedua' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
-                            $status_type_violation = 'Surat Peringatan Ketiga';
-                        }elseif($last_type == 'Surat Peringatan Kedua' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                        // GET LOGIKA AKUMULASI  PERINGATAN LISAN
+                        if($last_type == 'Peringatan Lisan' AND $last_accumulation = 0.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Surat Peringatan Pertama';
+                            $accumulation = 1;
+                        }elseif($last_type == 'Surat Peringatan Pertama' AND $last_accumulation = 1 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Peringatan Lisan';
+                            $accumulation = 1.5;                            
+                        }elseif($last_type == 'Peringatan Lisan' AND $last_accumulation = 1.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Surat Peringatan Kedua';
+                            $accumulation = 2;                                                        
+                        }elseif($last_type == 'Surat Peringatan Kedua'  AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Peringatan Lisan';
+                            $accumulation = 2.5;                                                        
+                        }elseif($last_type == 'Peringatan Lisan'  AND $last_accumulation = 2.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Peringatan Ketiga';
+                            $accumulation = 3;                                                        
+                        }elseif($last_type == 'Surat Peringatan Ketiga'  AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Peringatan Lisan';
+                            $accumulation = 3.5;                                                        
+                        }elseif($last_type == 'Peringatan Lisan'  AND $last_accumulation = 3.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
                             $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                        
+                        }elseif($last_type == 'Surat Peringatan Terakhir'  AND $last_accumulation = 3.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4.5;                                                        
                         }
 
-                        elseif($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                        //Surat Peringatan Pertama
+                        elseif($last_type == 'Surat Peringatan Pertama'  AND $last_accumulation = 1 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                            $status_type_violation = 'Surat Peringatan Kedua';
+                            $accumulation = 2;                                                        
+                        }elseif($last_type == 'Surat Peringatan Kedua'  AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                            $status_type_violation = 'Surat Peringatan Ketiga';
+                            $accumulation = 3;                                                        
+                        }elseif($last_type == 'Surat Peringatan Ketiga'  AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
                             $status_type_violation = 'Surat Peringatan Terakhir';
-                        }elseif($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
+                            $accumulation = 4;                                                        
+                        }elseif($last_type == 'Surat Peringatan Terakhir'  AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                            $status_type_violation = 'PHK';
+                            $accumulation = 5;                                                        
+                        }
+
+                        //Surat Peringatan Kedua
+                        elseif($last_type == 'Surat Peringatan Kedua' AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
                             $status_type_violation = 'Surat Peringatan Terakhir';
-                        }elseif($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                            $accumulation = 4;                                                                                    
+                        }elseif($last_type == 'Surat Peringatan Terakhir' AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
+                            $status_type_violation = 'PHK';
+                            $accumulation = 5;                                                                                                                
+                        }
+                        elseif($last_type == 'Surat Peringatan Kedua' AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
                             $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                                                                                
+                        }
+
+                        // Surat Peringatan Ketiga
+                        // elseif($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                        //     $status_type_violation = 'Surat Peringatan Terakhir';
+                        // }
+                        elseif($last_type == 'Surat Peringatan Ketiga' AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
+                            $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                                                                                                            
+                        }elseif($last_type == 'Surat Peringatan Ketiga' AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                            $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                                                                                                                                        
+                        }
+                        elseif($last_type == 'Surat Peringatan Terakhir' AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                            $status_type_violation = 'PHK';
+                            $accumulation = 5;                                                                                                                
+                        }
+                        else{
+                            $status_type_violation = $sel_paragraph->type_of_verse;
+
+                            if($sel_paragraph->type_of_verse == "Peringatan Lisan"){
+                                $accumulation = 0.5;                                                                                                                
+                            }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Pertama"){
+                                $accumulation = 1;                                                                                                                                                
+                            }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Kedua"){
+                                $accumulation = 2;                                                                                                                                                
+                            }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Ketiga"){
+                                $accumulation = 3;                                                                                                                                                
+                            }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Terakhir"){
+                                $accumulation = 4;                                                                                                                                                
+                            }
                         }
                             // Cari pasal akumulasi
                             $cari_pasal_akumulasi = DB::table('alphabets')
@@ -698,52 +1128,117 @@ class ViolationController extends Controller
                         
                     }else{
 
-                        // GET LOGIKA AKUMULASI PERTAMA
-
-                        if($last_type == 'Peringatan Lisan' AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                        // GET LOGIKA AKUMULASI PERTAMA PERINGATAN LISAN
+                        if($last_type == 'Peringatan Lisan' AND $last_accumulation = 0.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
                             $status_type_violation = 'Surat Peringatan Pertama';
-                        }elseif($last_type == 'Surat Peringatan Pertama' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                            $accumulation = 1;
+                        }elseif($last_type == 'Surat Peringatan Pertama' AND $last_accumulation = 1 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Peringatan Lisan';
+                            $accumulation = 1.5;                            
+                        }elseif($last_type == 'Peringatan Lisan' AND $last_accumulation = 1.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
                             $status_type_violation = 'Surat Peringatan Kedua';
-                        }elseif($last_type == 'Surat Peringatan Pertama' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
-                            $status_type_violation = 'Surat Peringatan Ketiga';
-                        }elseif($last_type == 'Surat Peringatan Pertama' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                            $accumulation = 2;                                                        
+                        }elseif($last_type == 'Surat Peringatan Kedua'  AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Peringatan Lisan';
+                            $accumulation = 2.5;                                                        
+                        }elseif($last_type == 'Peringatan Lisan'  AND $last_accumulation = 2.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Peringatan Ketiga';
+                            $accumulation = 3;                                                        
+                        }elseif($last_type == 'Surat Peringatan Ketiga'  AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Peringatan Lisan';
+                            $accumulation = 3.5;                                                        
+                        }elseif($last_type == 'Peringatan Lisan'  AND $last_accumulation = 3.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
                             $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                        
+                        }elseif($last_type == 'Surat Peringatan Terakhir'  AND $last_accumulation = 3.5 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
+                            $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4.5;                                                        
                         }
 
-                        if($last_type == 'Peringatan Lisan' AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
-                            $status_type_violation = 'Surat Peringatan Pertama';
-                        }elseif($last_type == 'Surat Peringatan Pertama' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                        //Surat Peringatan Pertama
+                        elseif($last_type == 'Surat Peringatan Pertama'  AND $last_accumulation = 1 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
                             $status_type_violation = 'Surat Peringatan Kedua';
-                        }elseif($last_type == 'Surat Peringatan Pertama' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
+                            $accumulation = 2;                                                        
+                        }elseif($last_type == 'Surat Peringatan Kedua'  AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
                             $status_type_violation = 'Surat Peringatan Ketiga';
-                        }elseif($last_type == 'Surat Peringatan Pertama' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                            $accumulation = 3;                                                        
+                        }elseif($last_type == 'Surat Peringatan Ketiga'  AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
                             $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                        
+                        }elseif($last_type == 'Surat Peringatan Terakhir'  AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                            $status_type_violation = 'PHK';
+                            $accumulation = 5;                                                        
                         }
 
-                        elseif($last_type == 'Surat Peringatan Kedua' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
-                            $status_type_violation = 'Surat Peringatan Ketiga';
-                        }elseif($last_type == 'Surat Peringatan Kedua' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
-                            $status_type_violation = 'Surat Peringatan Ketiga';
-                        }elseif($last_type == 'Surat Peringatan Kedua' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                        //Surat Peringatan Kedua
+                        elseif($last_type == 'Surat Peringatan Kedua' AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
                             $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                                                    
+                        }elseif($last_type == 'Surat Peringatan Terakhir' AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
+                            $status_type_violation = 'PHK';
+                            $accumulation = 5;                                                                                                                
+                        }
+                        elseif($last_type == 'Surat Peringatan Kedua' AND $last_accumulation = 2 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                            $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                                                                                
                         }
 
-                        elseif($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                        // Surat Peringatan Ketiga
+                        // elseif($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
+                        //     $status_type_violation = 'Surat Peringatan Terakhir';
+                        // }
+                        elseif($last_type == 'Surat Peringatan Ketiga' AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
                             $status_type_violation = 'Surat Peringatan Terakhir';
-                        }elseif($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
+                            $accumulation = 4;                                                                                                                                            
+                        }elseif($last_type == 'Surat Peringatan Ketiga' AND $last_accumulation = 3 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
                             $status_type_violation = 'Surat Peringatan Terakhir';
-                        }elseif($last_type == 'Surat Peringatan Ketiga' AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
-                            $status_type_violation = 'Surat Peringatan Terakhir';
+                            $accumulation = 4;                                                                                                                                                                        
+                        }
+                        elseif($last_type == 'Surat Peringatan Terakhir' AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
+                            $status_type_violation = 'PHK';
+                            $accumulation = 5;                                                                                                                
+                        }
+                        else{
+                            $status_type_violation = $sel_paragraph->type_of_verse;
+
+                            if($sel_paragraph->type_of_verse == "Peringatan Lisan"){
+                                $accumulation = 0.5;                                                                                                                
+                            }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Pertama"){
+                                $accumulation = 1;                                                                                                                                                
+                            }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Kedua"){
+                                $accumulation = 2;                                                                                                                                                
+                            }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Ketiga"){
+                                $accumulation = 3;                                                                                                                                                
+                            }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Terakhir"){
+                                $accumulation = 4;                                                                                                                                                
+                            }
                         }
 
                             // Cari pasal akumulasi
-                            $cari_pasal_akumulasi = DB::table('alphabets')
+                            $num_pasal_akumulasi = DB::table('alphabets')
                                 ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
                                 ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
                                 ->where('paragraphs.type_of_verse', $status_type_violation)
                                 // ->where('alphabets.alphabet_accumulation', $sel_paragraph->type_of_verse)
                                 ->where('alphabet_accumulation', 'like', '%' . $sel_paragraph->type_of_verse . '%')
-                                ->first();
+                                ->count();
+
+                            if($num_pasal_akumulasi > 0){
+                                $cari_pasal_akumulasi = DB::table('alphabets')
+                                    ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                    ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                    ->where('paragraphs.type_of_verse', $status_type_violation)
+                                    // ->where('alphabets.alphabet_accumulation', $sel_paragraph->type_of_verse)
+                                    ->where('alphabet_accumulation', 'like', '%' . $sel_paragraph->type_of_verse . '%')
+                                    ->first();
+                            }else{
+                                $cari_pasal_akumulasi = DB::table('alphabets')
+                                    ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                                    ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                                    ->where('paragraphs.type_of_verse', $status_type_violation)
+                                    ->where('alphabet_accumulation', 'like', '%' . $sel_paragraph->type_of_verse . '%')
+                                    ->first();
+                            }
             
                             $pelanggran_sebelumnya = DB::table('violations')
                                 ->where('employee_id',  $emp_id) 

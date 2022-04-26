@@ -546,6 +546,8 @@
           if($sel_num_vio == 0){
             $sta_viol = 'notactive';
             $type_viol = 'notviolation';
+            $last_accumulation = 0;
+            
           }else{
             $sel_vio = DB::table('violations')->where('employee_id', $employee->id)->latest()->first();
             $date_now = date_create();
@@ -579,6 +581,7 @@
         <input type="text" name="last_vio" value="{{$sta_viol}}" id="last_vio">
         <input type="text" name="last_type" value="{{$type_viol}}" id="last_type">
         <input type="text" name="id_emp" value="{{$employee->id}}" id="id_emp">
+        <input type="text" name="last_accumulation" value="{{$last_accumulation}}"  >     
 
         
 
@@ -635,9 +638,10 @@
                 <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label">Jenis Pelangaran</label>
                   <div class="col-sm-3">
-                      <input type="hidden" name="last_vio" value="{{$sta_viol}}" >
-                      <input type="hidden" name="last_type" value="{{$type_viol}}"  >     
-                      <input type="hidden" name="last_accumulation" value="{{$last_accumulation}}"  >     
+                      <input type="text" name="last_vio" value="{{$sta_viol}}" >
+                      <input type="text" name="last_type" value="{{$type_viol}}"  >     
+                      <input type="text" name="last_accumulation" value="{{$last_accumulation}}"  >     
+
                       <input type="text" class="form-control" id="jpn1"  placeholder="Jenis Pelanggaran" >     
                   </div>
                 </div> 
@@ -654,7 +658,7 @@
                   <div class="col-sm-10">
                     <!-- <input id="x" type="hidden" name="other_information">
                     <trix-editor input="x"></trix-editor> -->
-                    <textarea name="other_information" class="form-control" id="" rows="10"></textarea>
+                    <textarea name="other_information" class="form-control" id="" rows="4"></textarea>
                   </div>
                 </div> 
                 <div class="form-group row">
