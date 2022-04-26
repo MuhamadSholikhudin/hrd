@@ -256,3 +256,53 @@ Author: MuhamadSholikhudin <muhammadsholihudin18@gmail.com>
 Date:   Tue Mar 29 15:39:33 2022 +0700
 
     Factory and Model
+
+[33mcommit a008f3bf4143b1b2e1d558f1f76ea2d9051fc76f[m
+Merge: 3a36fd8 25770a1
+Author: MuhamadSholikhudin <muhammadsholihudin18@gmail.com>
+Date:   Tue Mar 29 12:45:31 2022 +0700
+
+    Merge branch 'main' of https://github.com/MuhamadSholikhudin/hrd into main
+
+[33mcommit 3a36fd88356b568157737b24468cfa2387fa9e4b[m
+Author: MuhamadSholikhudin <muhammadsholihudin18@gmail.com>
+Date:   Tue Mar 29 12:45:11 2022 +0700
+
+    composer
+
+[33mcommit 25770a12a67abf7d0f2b91ae98f82db6890bf2b7[m
+Author: MuhamadSholikhudin <muhammadsholihudin18@gmail.com>
+Date:   Fri Mar 25 05:26:38 2022 +0700
+
+    mempelajari laravel
+
+[33mcommit 5fa54a3da7d2343d7d27e6ca4397929267637448[m
+Merge: b1d6b4f 26f4251
+Author: MuhamadSholikhudin <muhammadsholihudin18@gmail.com>
+Date:   Thu Mar 24 00:39:43 2022 +0700
+
+    pagi 24-03-2022
+
+[33mcommit b1d6b4feaa77c78331755bd2d6ece9bd7f40cfc2[m
+Author: MuhamadSholikhudin <muhammadsholihudin18@gmail.com>
+Date:   Wed Mar 23 17:28:53 2022 +0700
+
+    sabtu sore 23-03-2022
+
+[33mcommit 26f425101d23387fb9d4daa3cbba399841fb2956[m
+Author: MuhamadSholikhudin <muhammadsholihudin18@gmail.com>
+Date:   Wed Mar 23 15:56:51 2022 +0700
+
+    pagination
+
+[33mcommit 95ec04f4d88d516b6aae44e91867dbd4ad0b6c0c[m
+Author: MuhamadSholikhudin <muhammadsholihudin18@gmail.com>
+Date:   Wed Mar 23 03:44:13 2022 +0700
+
+    uploads
+
+[33mcommit 17073520d51c0574d3f2f9e053c7127d9e6787d4[m
+Author: MuhamadSholikhudin <muhammadsholihudin18@gmail.com>
+Date:   Wed Mar 23 03:42:32 2022 +0700
+
+    first commit
