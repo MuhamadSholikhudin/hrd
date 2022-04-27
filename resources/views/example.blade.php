@@ -22,7 +22,160 @@
 
   <br>
   <br>
-  
+  <?php 
+function sum($satu, $dua){
+  if ($satu == 'Satu'){
+    
+    echo "ini ". $satu;
+  }
+  echo '<br>';
+  if ($dua == 'Dua'){
+    
+    echo "ini". $satu;
+  }
+  // echo "ini ". $dua;
+}
+
+sum('Satu', "Dua");
+echo '<br>';
+
+function get_accumulation(string $last_type, float $last_accumulation, string $sel_paragraph_type_of_verse)
+{
+            // GET LOGIKA AKUMULASI PERTAMA PERINGATAN LISAN
+            if($last_type == 'Peringatan Lisan' AND $last_accumulation = 0.5 AND $sel_paragraph_type_of_verse == 'Peringatan Lisan'){
+                $status_type_violation = 'Surat Peringatan Pertama';
+                $accumulation = 1;
+            }elseif($last_type == 'Surat Peringatan Pertama' AND $last_accumulation = 1 AND $sel_paragraph_type_of_verse == 'Peringatan Lisan'){
+                $status_type_violation = 'Peringatan Lisan';
+                $accumulation = 1.5;                            
+            }elseif($last_type == 'Peringatan Lisan' AND $last_accumulation = 1.5 AND $sel_paragraph_type_of_verse == 'Peringatan Lisan'){
+                $status_type_violation = 'Surat Peringatan Kedua';
+                $accumulation = 2;                                                        
+            }elseif($last_type == 'Surat Peringatan Kedua'  AND $last_accumulation = 2 AND $sel_paragraph_type_of_verse == 'Peringatan Lisan'){
+                $status_type_violation = 'Peringatan Lisan';
+                $accumulation = 2.5;                                                        
+            }elseif($last_type == 'Peringatan Lisan'  AND $last_accumulation = 2.5 AND $sel_paragraph_type_of_verse == 'Peringatan Lisan'){
+                $status_type_violation = 'Peringatan Ketiga';
+                $accumulation = 3;                                                        
+            }elseif($last_type == 'Surat Peringatan Ketiga'  AND $last_accumulation = 3 AND $sel_paragraph_type_of_verse == 'Peringatan Lisan'){
+                $status_type_violation = 'Peringatan Lisan';
+                $accumulation = 3.5;                                                        
+            }elseif($last_type == 'Peringatan Lisan'  AND $last_accumulation = 3.5 AND $sel_paragraph_type_of_verse == 'Peringatan Lisan'){
+                $status_type_violation = 'Surat Peringatan Terakhir';
+                $accumulation = 4;                                                        
+            }elseif($last_type == 'Surat Peringatan Terakhir'  AND $last_accumulation = 3.5 AND $sel_paragraph_type_of_verse == 'Peringatan Lisan'){
+                $status_type_violation = 'Surat Peringatan Terakhir';
+                $accumulation = 4.5;                                                        
+            }
+    
+            //Surat Peringatan Pertama
+            elseif($last_type == 'Surat Peringatan Pertama'  AND $last_accumulation = 1 AND $sel_paragraph_type_of_verse == 'Surat Peringatan Pertama'){
+                $status_type_violation = 'Surat Peringatan Kedua';
+                $accumulation = 2;                                                        
+            }elseif($last_type == 'Surat Peringatan Kedua'  AND $last_accumulation = 2 AND $sel_paragraph_type_of_verse == 'Surat Peringatan Pertama'){
+                $status_type_violation = 'Surat Peringatan Ketiga';
+                $accumulation = 3;                                                        
+            }elseif($last_type == 'Surat Peringatan Ketiga'  AND $last_accumulation = 3 AND $sel_paragraph_type_of_verse == 'Surat Peringatan Pertama'){
+                $status_type_violation = 'Surat Peringatan Terakhir';
+                $accumulation = 4;                                                        
+            }elseif($last_type == 'Surat Peringatan Terakhir'  AND $last_accumulation = 4 AND $sel_paragraph_type_of_verse == 'Surat Peringatan Pertama'){
+                $status_type_violation = 'PHK';
+                $accumulation = 5;                                                        
+            }
+    
+    
+    
+            //Surat Peringatan Kedua
+            elseif($last_type == 'Peringatan Lisan' AND $last_accumulation >= 0.5 AND $sel_paragraph_type_of_verse == 'Surat Peringatan Kedua'){
+                $status_type_violation = 'Surat Peringatan Kedua';
+                $accumulation = 4;                                                                                    
+            }
+            elseif($last_type == 'Surat Peringatan Pertama' AND $last_accumulation >= 1 AND $sel_paragraph_type_of_verse == 'Surat Peringatan Kedua'){
+                $status_type_violation = 'Surat Peringatan Ketiga';
+                $accumulation = 4;                                                                                    
+            }
+            elseif($last_type == 'Surat Peringatan Kedua' AND $last_accumulation >= 2 AND $sel_paragraph_type_of_verse == 'Surat Peringatan Kedua'){
+                $status_type_violation = 'Surat Peringatan Terakhir';
+                $accumulation = 4;                                                                                    
+            }elseif($last_type == 'Surat Peringatan Terakhir' AND $last_accumulation = 4 AND $sel_paragraph_type_of_verse == 'Surat Peringatan Kedua'){
+                $status_type_violation = 'PHK';
+                $accumulation = 5;                                                                                                                
+            }
+    
+            elseif($last_type == 'Surat Peringatan Kedua' AND $last_accumulation >= 2 AND $sel_paragraph_type_of_verse == 'Surat Peringatan Pertama'){
+                $status_type_violation = 'Surat Peringatan Ketiga';
+                $accumulation = 3;                                                                                                                
+            }
+    
+            elseif($last_type == 'Surat Peringatan Kedua' AND $last_accumulation >= 2 AND $sel_paragraph_type_of_verse == 'Surat Peringatan Ketiga'){
+                $status_type_violation = 'Surat Peringatan Terakhir';
+                $accumulation = 4;                                                                                                                
+            }
+    
+            // Surat Peringatan Ketiga
+            // elseif($last_type == 'Surat Peringatan Ketiga' AND $last_accumulation >= 3 AND $sel_paragraph_type_of_verse == 'Peringatan Lisan'){
+            //     $status_type_violation = 'Surat Peringatan Terakhir';
+            // }
+    
+            elseif($last_type == 'Surat Peringatan Pertama' AND $last_accumulation >= 1 AND $sel_paragraph_type_of_verse == 'Surat Peringatan Ketiga'){
+                $status_type_violation = 'Surat Peringatan Terakhir';
+                $accumulation = 4;                                                                                                                                            
+            }
+            elseif($last_type == 'Surat Peringatan Ketiga' AND $last_accumulation = 3 AND $sel_paragraph_type_of_verse == 'Surat Peringatan Kedua'){
+                $status_type_violation = 'Surat Peringatan Terakhir';
+                $accumulation = 4;                                                                                                                                            
+            }elseif($last_type == 'Surat Peringatan Ketiga' AND $last_accumulation = 3 AND $sel_paragraph_type_of_verse == 'Surat Peringatan Ketiga'){
+                $status_type_violation = 'Surat Peringatan Terakhir';
+                $accumulation = 4;                                                                                                                                                                        
+            }
+            elseif($last_type == 'Surat Peringatan Terakhir' AND $last_accumulation = 4 AND $sel_paragraph_type_of_verse == 'Surat Peringatan Ketiga'){
+                $status_type_violation = 'PHK';
+                $accumulation = 5;                                                                                                                
+            }
+    
+    
+            // Surat Peringatan Terakhir
+            elseif($last_type == 'Surat Peringatan Pertama' AND $last_accumulation >= 1 AND $sel_paragraph_type_of_verse == 'Surat Peringatan Terakhir'){
+                $status_type_violation = 'PHK';
+                $accumulation = 5;                                                                                                                
+            }
+            else{
+                $status_type_violation = $sel_paragraph_type_of_verse;
+    
+                if($sel_paragraph_type_of_verse == "Peringatan Lisan"){
+                    $accumulation = 0.5;                                                                                                                
+                }elseif($sel_paragraph_type_of_verse == "Surat Peringatan Pertama"){
+                    $accumulation = 1;                                                                                                                                                
+                }elseif($sel_paragraph_type_of_verse == "Surat Peringatan Kedua"){
+                    $accumulation = 2;                                                                                                                                                
+                }elseif($sel_paragraph_type_of_verse == "Surat Peringatan Ketiga"){
+                    $accumulation = 3;                                                                                                                                                
+                }elseif($sel_paragraph_type_of_verse == "Surat Peringatan Terakhir"){
+                    $accumulation = 4;                                                                                                                                                
+                }
+            }
+
+            echo $accumulation;
+            echo '<br>';
+            echo $status_type_violation;
+            echo '<br>';
+            
+            echo $status_type_violation;
+            
+        };
+
+        $last_type = "Surat Peringatan Terakhir";
+        $last_accumulation = 4;
+        $sel_paragraph_type_of_verse = "Surat Peringatan Pertama";
+        get_accumulation($last_type, $last_accumulation, $sel_paragraph_type_of_verse);
+
+
+
+
+?>
+
+
+
   <?php
     // if (isset($_GET['user']))
     // {
@@ -30,9 +183,9 @@
     //   $skinURL = "http://s3.amazonaws.com/MinecraftSkins/".$user.".png";
     // } 
     //   $user = $_GET['user'];
-      $user = '1604000001';
+      // $user = '1604000001';
 
-      $skinURL = "http://10.10.100.148/hwi/Photo/10000/".  $user  .".jpg";
+      // $skinURL = "http://10.10.100.148/hwi/Photo/10000/".  $user  .".jpg";
     
     // $debugImage = imagecreatefrompng("http://10.10.100.148/hwi/Photo/10000/".  $user  .".jpg");
     // if (empty($debugImage)) // here it checks if $debugImage is empty (doesn't work)
@@ -41,12 +194,12 @@
     // }
     // $skin = imagecreatefrompng($skinURL);
 
-    if (file_exists("http://10.10.100.148/hwi/Photo/10000/1604000001.png"))
-      {
-          $skinURL = 'http://www.minecraft.net/images/char.png';
-      }else{
-        echo 'gagal';
-      }
+    // if (file_exists("http://10.10.100.148/hwi/Photo/10000/1604000001.png"))
+    //   {
+    //       $skinURL = 'http://www.minecraft.net/images/char.png';
+    //   }else{
+    //     echo 'gagal';
+    //   }
 ?>
   <br>
 
