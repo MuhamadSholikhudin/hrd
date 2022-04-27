@@ -131,16 +131,38 @@ class HiViolationController extends Controller
                         $alphabet_id = $request->alphabet_id;
 
 
-                        $last_vio = $request->last_vio;
-                        $status_violant_last = $request->last_vio;
-                        $last_type = $request->last_type;
-                        $accumulation = $request->last_type;
+                        $sel_num_vio = DB::table('violations')->where('employee_id', $employee->id)->count();
+                        if($sel_num_vio == 0){
+                          $sta_viol = 'notactive';
+                          $type_viol = 'notviolation';
+                          $last_accumulation = 0;
+                          
+                        }else{
+                          $sel_vio = DB::table('violations')->where('employee_id', $employee->id)->latest()->first();
+                          $date_now = date_create();
+                          $date_sta = date_create($sel_vio->date_end_violation);
+                          $diffx  = date_diff($date_sta, $date_now);
+              
+                          if($diffx->d <= 0){
+                            $sta_viol = 'notactive';
+                            $type_viol = 'notviolation';
+                            $last_accumulation = 0;
+                          }else{
+                            $sta_viol = $sel_vio->violation_status;
+                            $type_viol = $sel_vio->type_of_violation;
+                            $last_accumulation = $sel_vio->accumulation;
+                          }
+                        }
+
+
+                        $last_vio = $sta_viol;
+                        $status_violant_last = $sta_viol;
+                        $last_type = $type_viol;
+                        $accumulation = $last_accumulation;
 
 
 
-
-
-
+                        
 
                         $data = [
                             'date_of_violation' => $date_of_violation,     

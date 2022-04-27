@@ -906,6 +906,53 @@ INSERT INTO `alphabets`
 ('b','Pekerja sudah diberikan Sanksi SP II (dua), yang masa berlakunya belum habis tetapi melakukan pelanggaran kembali yang bobot sanksinya SP II (dua) atau SP III (tiga).',5,'2022','2024'),
 ('c','Pekerja sudah diberikan Sanksi SP III (tiga), yang masa berlakunya belum habis tetapi melakukan pelanggaran kembali yang bobot sanksinya SP III (tiga) atau SP II (dua) atau SP I (satu).',5,'2022','2024');
 
+('a','Pekerja sudah diberikan Sanksi SP I (satu), yang masa berlakunya belum habis tetapi melakukan pelanggaran kembali yang bobot sanksinya SP III (tiga).','2022','2024','yes','5'),
+('b','Pekerja sudah diberikan Sanksi SP II (dua), yang masa berlakunya belum habis tetapi melakukan pelanggaran kembali yang bobot sanksinya SP II (dua) atau SP III (tiga).','2022','2024','yes','5'),
+('c','Pekerja sudah diberikan Sanksi SP III (tiga), yang masa berlakunya belum habis tetapi melakukan pelanggaran kembali yang bobot sanksinya SP III (tiga) atau SP II (dua) atau SP I (satu).','2022','2024','yes','5'),
+
+('I a','Terbukti melakukan penipuan, pencurian, atau penggelapan barang dan/ atau uang milik perusahaan, atau milik pekerja.','2022','2024','','6'),
+('I b','Terbukti memberikan keterangan palsu atau yang dipalsukan sehingga merugikan perusahaan.','2022','2024','','6'),
+('I c','Terbukti mabuk, meminum minuman keras yang memabukkan, memakai dan/atau mengedarkan narkoba, psikotropika, dan zak adiktif lainnya di lingkungan perusahaan.','2022','2024','','6'),
+('I d','Terbukti melakukan perbuatan asusila atau perjudian di lingkungan kerja.','2022','2024','','6'),
+('I e','Terbukti menyerang, menganiaya, mengancam, atau mengintimidasi teman sekerja atau Pengusaha di lingkungan perusahaan.','2022','2024','','6'),
+('I f','Terbukti membujuk teman sekerja dan Pengusaha untuk melakukan perbuatan yang bertentangan dengan peraturan perundang-undangan.','2022','2024','','6'),
+('I g','Terbukti dengan sengaja merusak atau membiarkan dalam keadaan bahaya barang milik Perusahaan yang mengakibatkan kerugian bagi perusahaan.','2022','2024','','6'),
+('I h','Terbukti dengan sengaja membiarkan teman sekerja atau Pengusaha dalam keadaan bahaya di tempat kerja.','2022','2024','','6'),
+('I i','Terbukti membongkar atau membocorkan rahasia perusahaan yang seharusnya dirahasiakan kecuali untuk kepentingan Negara.','2022','2024','','6'),
+('I j','Terbukti melakukan pemotongan dan pengambilan gaji tanpa kuasa dan kesepakatan tertulis dari kedua belah pihak.','2022','2024','','6'),
+('I k','Terbukti melakukan dan/atau menjadi (rentenir) didalam lingkungan perusahaan.','2022','2024','','6'),
+('I l','Terbukti membawa barang milik Perusahaan tanpa ijin dari perusahaan atau atasan.','2022','2024','','6'),
+('I m','Terbukti tidak bekerja dengan baik akibat minum minuman keras atau obat obatan terlarang yang dilakukan diluar perusahaan.','2022','2024','','6'),
+('I n','Terbukti memungut dan atau memberikan Rekrutmen Fee di lingkungan perusahaan.','2022','2024','','6'),
+('I o','Tebukti pekerja telah menerima Surat Peringatan yang masih berlaku karena alasan mangkir atau karena faktor kesengajaan dengan bobot sanksinya SP I/ II/ III, bila ditambah dengan kasus baru (alasan yang sama) menjadi lebih dari SP III atau SP terakhir.','2022','2024','','6'),
+('I p','Terbukti menjelekkan/ mencemarkan nama baik sesama Pekerja, atasan, bawahan sehingga mengakibatkan kerugian bagi Pengusaha.','2022','2024','','6'),
+('I q','Terbukti merokok di tempat-tempat yang berbahaya dan/atau mudah terbakar yang dapat menimbulkan kerusakan dan kerugian bagi Perusahaan, seperti:
+q.1. Ruang Laboratorium 
+q.2. Ruang Penyimpan Gas 
+q.3. Ruang Laminating 
+q.4. Ruang Packing 
+q.5. Gudang Material 
+q.6. Gudang Kimia
+','2022','2024','','6'),
+('I r','Terbukti melakukan pungutan dan/atau menerima imbalan uang/barang dalam proses penambahan material atau proses kelancaran produksi.','2022','2024','','6'),
+('I s','Terbukti Petugas Satpam dalam pemeriksaan pekerja melakukan pelecehan atau kekerasan.','2022','2024','','6'),
+('I t','Petugas satuan pengaman (SATPAM) memergoki pelaku pencurian, penipuan kejahatan, penganiayaan, penggelapan, tindakan asusila, tidak melakukan penangkapan dan/atau tidak melaporkan kepada atasan untuk diambil tindakan/ proses sesuai ketentuan yang berlaku.','2022','2024','','6'),
+('II 1','Pekerja tertangkap tangan.','2022','2024','','6'),
+('II 2','Ada pengaduan dari Pekerja yang bersangkutan atau rekan kerjanya.','2022','2024','','6'),
+('II 3','Bukti lain berupa laporan kejadian yang dibuat oleh pihak yang berwenang di perusahaan dan didukung oleh sekurang-kurangnya (dua) orang saksi, atau','2022','2024','','6'),
+('II 4','Ada putusan pengadilan yang telah mempunyai kekuatan hukum mengikat.','2022','2024','','6'),
+('III','Pekerja/buruh yang diputus hubungan kerjanya berdasarkan alasan sebagaimana dimaksud pada ayat (6), dapat memperoleh uang penggantian hak sebagai dimaksud dalam Pasal 156 ayat (4) Undang Undang No.13 Tahun 2003 Tentang Ketenagakerjaan.','2022','2024','','6'),
+('IV','Bagi Pekerja/buruh sebagaimana dimaksud pada ayat (6) yang tugas dan fungsinya tidak mewakili kepentingan pengusaha secara langsung, diberikan uang pisah yang besarnya dan pelaksanaannya diatur dalam perjanjian kerja bersama.','2022','2024','','6'),
+
+('a','Pekerja telah menerima pembinaan dan SP III atau SP terakhir dan tetapi melakukan pelanggaran kembali dengan kesalahan yang tidak sama dengan SP sebelumnya; dan bobot sanksinya SP I, SP II atau SP III','2022','2024','','7'),
+('b','Terbukti menyuruh, membiarkan, mengijinkan kepeda pekerja lain untuk memakai peralatan mesin/ barang investaris Perusahaan tanpa seiijin pimpinan perusahaan yang mengakibatkan kerugian Perusahaan.','2022','2024','','7'),
+('c','Tanpa seijin atasan yang berwenang, menggunakan mesin atau barang, peralatan milik perusahaan untuk keperluan pribadi mengakibatkan kerugian perusahaan.','2022','2024','','7'),
+('d','Petugas satuan pengaman (SATPAM) memergoki pelaku pencurian, penipuan kejahatan, penganiayaan, penggelapan, tindakan asusila, tidak bisa melakukan penangkapan dan menyerahkan kepada atasan, untuk diambil tindakan/ proses sesuai ketentuan yang berlaku.','2022','2024','','7'),
+('e','Tanpa alasan yang tepat dan jelas menolak dipindahtugaskan kerjanya ke bagian lain (menolak mutasi).','2022','2024','','7'),
+('f','Dengan sengaja sering mengganggu pekerjaan orang lain sehingga merugikan perusahaan/ orang lain.','2022','2024','','7'),
+('g','Melakukan Pekerjaan secara tidak baik/ serampangan/ asal-asalan dengan sengaja dan merugikan perusahaan/ orang lain.','2022','2024','','7'),
+('h','Pada saat perjanjian diadakan, memberikan keterangan atau data palsu atau yang dipalsukan untuk membuat pengusaha/ petugas percaya.','2022','2024','','7')
+
 
 <?php
  

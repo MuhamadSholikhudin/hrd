@@ -159,7 +159,7 @@
         var violation_now = document.getElementById("select_violation_last").value;
         var last_type = document.getElementById("last_type").value;
         // var keyword = $(this).val();
-        alert(status_violant_last + id_emp + violation_now + last_type);
+        // alert(status_violant_last + id_emp + violation_now + last_type);
 
         $.ajax({
           type: "POST",
@@ -207,7 +207,7 @@
             'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
         }
     });
-// alert("Pasal ");
+    // alert("Pasal ");
     var pasal_phk = $(this).val();
     // alert(pasal_phk);
     $.ajax({

@@ -34,9 +34,9 @@
             <div class="text-center">
 
 
-            <!-- <img class="profile-user-img img-fluid img-circle" src="http://10.10.100.148/hwi/Photo/10000/{{  $employee->number_of_employees  }}.jpg" alt="User profile picture"> -->
+            <img class="profile-user-img img-fluid img-circle" src="http://10.10.100.148/hwi/Photo/10000/{{  $employee->number_of_employees  }}.jpg" alt="User profile picture">
             
-              <img class="profile-user-img img-fluid img-circle" src="{{asset('dist/img/user4-128x128.jpg')}}" alt="User profile picture">
+              <!-- <img class="profile-user-img img-fluid img-circle" src="{{asset('dist/img/user4-128x128.jpg')}}" alt="User profile picture"> -->
             </div>
             <h3 class="profile-username text-center">{{  $employee->name  }}</h3>
             <p class="text-muted text-center">
@@ -412,7 +412,7 @@
         </div>
 
 {{-- Displaynone --}}
-<div style="display:none;">
+<div >
         <?php
         
         $date_violation = new \DateTime(date('Y-m-d') .' 4:06:37' );

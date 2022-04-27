@@ -64,11 +64,12 @@ class LayoffController extends Controller
             $no_lf = $last_lf->no_layoff + 1;
         }
 
-    //     $date_violation = new \DateTime($reporting_date .' 00:00:00');
+        $date = $request->layoff_date;
+        $date_violation = new \DateTime($date .' 00:00:00');
 
-    //     $date_year = date_format($date_violation, "Y"); //for Display Year
-    //     $date_month =  date_format($date_violation, "m"); //for Display Month
-    //     $date_day = date_format($date_violation, "d");
+        $date_year = date_format($date_violation, "Y"); //for Display Year
+        $date_month =  date_format($date_violation, "m"); //for Display Month
+        $date_day = date_format($date_violation, "d");
 
     //     $day = gmdate($date_of_violation, time()+60*60*7);
     //     $day = date("l", gmmktime(0,0,0, $date_month,$date_day, $date_year));

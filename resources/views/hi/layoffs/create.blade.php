@@ -40,7 +40,8 @@
             <br>
               <?php 
               $num_latest = DB::table('layoffs')
-                ->whereMonth('created_at', Carbon::now()->month) 
+                // ->whereMonth('created_at', Carbon::now()->month) 
+                ->whereMonth('layoff_date', '04') 
                 ->count(); 
 
                 if($num_latest < 1){
@@ -51,9 +52,10 @@
                       ->first();
                   $nono_lf_sp = $latest->no_layoff + 1;
               }
+              echo $num_latest;
               ?>
 
-              NO. {{$nono_lf_sp}}/SK-PHK/HRD-HWI/IV/{{date('Y')}} <br>
+              NO. {{$no_lf}}/SK-PHK/HRD-HWI/IV/{{ date('Y') }} <br>
               TENTANG<br>
               PEMUTUSAN HUBUNGAN KERJA
             

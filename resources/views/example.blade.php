@@ -22,6 +22,32 @@
 
   <br>
   <br>
+  
+  <?php
+    // if (isset($_GET['user']))
+    // {
+    //   $user = $_GET['user'];
+    //   $skinURL = "http://s3.amazonaws.com/MinecraftSkins/".$user.".png";
+    // } 
+    //   $user = $_GET['user'];
+      $user = '1604000001';
+
+      $skinURL = "http://10.10.100.148/hwi/Photo/10000/".  $user  .".jpg";
+    
+    // $debugImage = imagecreatefrompng("http://10.10.100.148/hwi/Photo/10000/".  $user  .".jpg");
+    // if (empty($debugImage)) // here it checks if $debugImage is empty (doesn't work)
+    // {
+    //     $skinURL = 'http://www.minecraft.net/images/char.png';
+    // }
+    // $skin = imagecreatefrompng($skinURL);
+
+    if (file_exists("http://10.10.100.148/hwi/Photo/10000/1604000001.png"))
+      {
+          $skinURL = 'http://www.minecraft.net/images/char.png';
+      }else{
+        echo 'gagal';
+      }
+?>
   <br>
 
 
@@ -29,16 +55,14 @@
 
             // file:///Y:/1604000001.JPG
             define('IMAGE_FOLDER', 'file:///Y:/');
-            if (file_exists('file:///Y:/1604000001.JPG')) {
-                echo 'Yes, there is the image "load/img1.png"';
+            if (file_exists('http://10.10.100.148/hwi/Photo/10000/1604000001.jpg')) {
+                echo 'Yes';
             echo '<br>';
             echo     file_exists('file:///Y:/1604000001.JPG');
 
-            ?>
-            <img src="file:///Y:/1604000001.JPG">
-            <?php
+          
             } else {
-                echo 'No, there is no such an image file "load/img1.png"';
+                echo 'No';
             }
             echo '<br>';
 
