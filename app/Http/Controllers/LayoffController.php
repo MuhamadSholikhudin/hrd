@@ -38,8 +38,17 @@ class LayoffController extends Controller
     public function create()
     {
         //
+        // $alphabet = DB::table('alphabets')
+            // ->rightJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+            // ->where('paragraphs.type_of_verse', 'Pemutusan Hubungan Kerja')
+        //     // ->select('alphabets.id as id' , 'paragraphs.id as paragraph_id')
+            // ->get();
+
+        $alphabet = DB::select( DB::raw("SELECT * FROM alphabets
+        WHERE paragraph_id = 6") );
+
         return view('hi.layoffs.create',[
-            'alphabets' => Alphabet::all(),
+            'alphabets' =>  $alphabet,
             'employees' => Employee::all()
         ]);
     }
@@ -147,6 +156,14 @@ class LayoffController extends Controller
     public function show($id)
     {
         //
+
+    $layoff = DB::table('layoffs')->find($id);
+
+        return view('hi.layoffs.cetak',[
+            'layoff' => $layoff,
+            // 'job' => $job,
+            // 'department' => $department
+        ]);
     }
 
     /**
@@ -214,7 +231,11 @@ class LayoffController extends Controller
         $sel_paragraph = DB::table('paragraphs')->find($sel_alphabet->paragraph_id);
         $sel_article = DB::table('articles')->find($sel_paragraph->article_id);
         
-        $pasal = 'Perjanjian Kerja Bersama Pasal '.$sel_article->article.'. Jenis Pelanggaran dan Sanksi ayat ('.$sel_paragraph->paragraph.') tentang Pemutusan Hubungan Kerja (PHK) tanpa memberikan Pesangon. I. Pengusaha dapat melakukan Pemutusan Hubungan Kerja (PHK) tanpa memberikan Pesangon, apabila melakukan kesalahan berat sebagai berikut : '.$sel_alphabet->alphabet.'. '.$sel_alphabet->alphabet_sound.'';
+        $pasal = 'Perjanjian Kerja Bersama Pasal '.$sel_article->article.'. Jenis Pelanggaran dan Sanksi ayat ('.$sel_paragraph->paragraph.') 
+        
+        
+        tentang '.$sel_paragraph->description .'. '.$sel_alphabet->alphabet_sound.'';
+        // I. Pengusaha dapat melakukan Pemutusan Hubungan Kerja (PHK) tanpa memberikan Pesangon, apabila melakukan kesalahan berat sebagai berikut : '
         // $pasal = '1';
         $employees = DB::table('employees')
             ->select('id','number_of_employees', 'name')

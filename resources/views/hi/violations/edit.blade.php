@@ -323,6 +323,8 @@
                         $p = "SP III";
                       }elseif($violation->type_of_violation == 'Surat Peringatan Terakhir'){
                         $p = "SP Terakhir";
+                      }elseif($violation->type_of_violation == 'Pemutusan Hubungan Kerja'){
+                        $p = "PHK";
                       }
                     ?>
                     {{ $p }}
@@ -399,7 +401,7 @@
                   @foreach($alphabets as $alphabet):
                     <?php  $print_paragraph  = DB::table('paragraphs')->find($alphabet->paragraph_id); ?>
                     <?php  $print_article  = DB::table('articles')->find($print_paragraph->article_id); ?>
-                    <option value="{{$alphabet->id}}" >PASAL {{$print_article->article}} {{$print_paragraph->paragraph}} {{$alphabet->alphabet}} {{$alphabet->alphabet_sound}} / {{$print_paragraph->sub_chapters}} / {{$alphabet->description}}</option>
+                    <option value="{{$alphabet->id}}" >PASAL {{$print_article->article}} {{$print_paragraph->paragraph}} {{$alphabet->alphabet}} {{$alphabet->alphabet_sound}} / {{$print_paragraph->sub_chapters}} / {{$alphabet->alphabet_sound}}</option>
                   @endforeach
                 </select>
               </div>

@@ -48,44 +48,49 @@
             @foreach($layoffs as $layoff):
               <tr>
                 <td>{{$layoff->id}}</td>
+
+                <?php 
+                      $d_l = new \DateTime($layoff->layoff_date .' 00:00:00');
+                      $year = date_format($d_l, "Y"); //for Display Year
+
+                ?>
+                <td>{{ $layoff->no_layoff .'/SK-PHK/HRD-HWI/'.$layoff->rom_layoff.'/'. $year   }}</td>
                 <td>{{ $layoff->layoff_date }}</td>
-                <td>{{ $layoff->layoff_date_start }}</td>
-                <td>{{ $layoff->type_of_layoff }}</td>
-                <td>{{ $layoff->alphabet_id }}</td>
-                <td>{{$layoff->employee_id}}</td>
-                <td>{{$layoff->employee_id}}</td>
+                <td>
+                  {{ $layoff->layoff_date_start }}
+                </td>
+                <td>
+
+                  <?php  $print_alphabet  = DB::table('alphabets')->find($layoff->alphabet_id); ?>
+                  <?php  $print_paragraph  = DB::table('paragraphs')->find($print_alphabet->paragraph_id); ?>
+                  <?php  $print_article  = DB::table('articles')->find($print_paragraph->article_id); ?>
+                    
+
+                  {{
+                  $pal = "Pasal ". $print_article->article. " ayat " . $print_paragraph->paragraph. " " . $print_alphabet->alphabet }}
+
+                </td>
+                <td>{{$layoff->layoff_description}}</td>
+                <td>
+                  <a href="/hi/layoffs/{{$layoff->id }}" target="_blank" class="btn  btn-outline-primary">
+                    Cetak                    
+                  </a>
+
+                  <form action="/hi/layoffs/" method="POST" class="d-inline ">
+                        @method('delete')
+                        @csrf
+                        <button class="btn  btn-outline-danger" onclick="return confirm(' Are you sure delete data ?')"> 
+                          Delete
+                        </button>
+                    </form> 
+                
+                
+
+
+                </td>
               </tr>
             @endforeach
-              <tr>
-                <td>2.</td>
-                <td>Clean database</td>
-                <td>
-                  <div class="progress progress-xs">
-                    <div class="progress-bar bg-warning" style="width: 70%"></div>
-                  </div>
-                </td>
-                <td><span class="badge bg-warning">70%</span></td>
-              </tr>
-              <tr>
-                <td>3.</td>
-                <td>Cron job running</td>
-                <td>
-                  <div class="progress progress-xs progress-striped active">
-                    <div class="progress-bar bg-primary" style="width: 30%"></div>
-                  </div>
-                </td>
-                <td><span class="badge bg-primary">30%</span></td>
-              </tr>
-              <tr>
-                <td>4.</td>
-                <td>Fix and squish bugs</td>
-                <td>
-                  <div class="progress progress-xs progress-striped active">
-                    <div class="progress-bar bg-success" style="width: 90%"></div>
-                  </div>
-                </td>
-                <td><span class="badge bg-success">90%</span></td>
-              </tr>
+
             </tbody>
           </table>
         </div>

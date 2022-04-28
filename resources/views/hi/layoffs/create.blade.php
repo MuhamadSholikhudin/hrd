@@ -50,9 +50,9 @@
                   $latest = DB::table('layoffs')
                       ->latest()
                       ->first();
-                  $nono_lf_sp = $latest->no_layoff + 1;
+                  $no_lf = $latest->no_layoff + 1;
               }
-              echo $num_latest;
+              // echo $num_latest;
               ?>
 
               NO. {{$no_lf}}/SK-PHK/HRD-HWI/IV/{{ date('Y') }} <br>
@@ -69,20 +69,18 @@
               <td valign="top">:</td>
               <td valign="top">
               <div>              
-                <select class="form-control select2bs4 " name="alphabet_id" style="width: 100%;" id="pasal_phk">
+                <select class="form-control select2bs4 " name="alphabet_id" style="width-max: 100%;" id="pasal_phk">
                   <option value="" >Pilih PASAL </option>
-                  
                   @foreach($alphabets as $alphabet):
                     <?php  $print_paragraph  = DB::table('paragraphs')->find($alphabet->paragraph_id); ?>
                     <?php  $print_article  = DB::table('articles')->find($print_paragraph->article_id); ?>
-                    <option value="{{$alphabet->id}}" >PASAL {{$print_article->article}} {{$print_paragraph->paragraph}} {{$alphabet->alphabet}} {{$alphabet->alphabet_sound}} / {{$print_paragraph->sub_chapters}} / {{$alphabet->description}}</option>
+                    <option value="{{$alphabet->id}}" >PASAL {{$print_article->article}} {{$print_paragraph->paragraph}} {{$alphabet->alphabet}} {{$alphabet->alphabet_sound}} / {{$print_paragraph->sub_chapters}} / {{$alphabet->alphabet_sound}}</option>
                   @endforeach
                 </select>
-                {{--                 Perjanjian Kerja Bersama Pasal 27. Jenis Pelanggaran dan Sanksi ayat (6) tentang Pemutusan Hubungan Kerja (PHK) tanpa memberikan Pesangon. I. Pengusaha dapat melakukan Pemutusan Hubungan Kerja (PHK) tanpa memberikan Pesangon, apabila melakukan kesalahan berat sebagai berikut : e. Terbukti menyerang, menganiaya, mengancam, atau mengintimidasi teman sekerja atau Pengusaha di lingkungan perusahaan.s
-                --}} 
-                <p id="isi_text">
+           
+                <div id="isi_text" style="width:100%;">
 
-                </p>
+                </div>
               </div>
               </td>
             </tr>
@@ -90,14 +88,14 @@
               <td valign="top">Menimbang</td>
               <td valign="top">:</td>
               <td valign="top">
-              <textarea name="layoff_description" id="" class="form-control" required>Laporan Hasil Investigasi tanggal 4 April 2022</textarea>
+              <textarea name="layoff_description" id="layoff_description" class="form-control" required></textarea>
               </td>
             </tr>
             <tr>
               <td valign="top">Mengingat</td>
               <td valign="top">:</td>
               <td valign="top">
-              Undang-Undang No. 13 Tahun 2003 Tentang Ketenagakerjaan dan peraturan pelaksanaannya
+                Undang-Undang No. 13 Tahun 2003 Tentang Ketenagakerjaan dan peraturan pelaksanaannya
               </td>
             </tr>
 

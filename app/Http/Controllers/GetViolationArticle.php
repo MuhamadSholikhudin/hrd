@@ -38,7 +38,7 @@
         $status_type_violation = 'Surat Peringatan Terakhir';
         $accumulation = 4;                                                        
     }elseif($last_type == 'Surat Peringatan Terakhir'  AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
-        $status_type_violation = 'PHK';
+        $status_type_violation = 'Pemutusan Hubungan Kerja';
         $accumulation = 5;                                                        
     }
 
@@ -57,7 +57,7 @@
         $status_type_violation = 'Surat Peringatan Terakhir';
         $accumulation = 4;                                                                                    
     }elseif($last_type == 'Surat Peringatan Terakhir' AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
-        $status_type_violation = 'PHK';
+        $status_type_violation = 'Pemutusan Hubungan Kerja';
         $accumulation = 5;                                                                                                                
     }
 
@@ -88,13 +88,13 @@
         $accumulation = 4;                                                                                                                                                                        
     }
     elseif($last_type == 'Surat Peringatan Terakhir' AND $last_accumulation = 4 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
-        $status_type_violation = 'PHK';
+        $status_type_violation = 'Pemutusan Hubungan Kerja';
         $accumulation = 5;                                                                                                                
     }
 
     // Surat Peringatan Terakhir
     elseif($last_type == 'Surat Peringatan Pertama' AND $last_accumulation >= 1 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Terakhir'){
-        $status_type_violation = 'PHK';
+        $status_type_violation = 'Pemutusan Hubungan Kerja';
         $accumulation = 5;                                                                                                                
     }
     else{

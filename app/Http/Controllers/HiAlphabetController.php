@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Maatwebsite\Excel\Concerns\ToArray;
+use Maatwebsite\Excel\Facades\Excel;
+
+use App\Exports\AlphabetsExport;
+
 use App\Models\Article;
 use App\Models\Paragraph;
 use App\Models\Alphabet;
@@ -145,6 +150,12 @@ class HiAlphabetController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function export() 
+    {
+        return Excel::download(new AlphabetsExport, 'Alphabets.xlsx');
     }
 }
 

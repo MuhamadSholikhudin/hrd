@@ -144,8 +144,13 @@ Route::resource('hi/violations', ViolationController::class);
 
 Route::get('/violations/list', [ViolationController::class, 'list']);
 
-
 Route::resource('hi/hiviolations', HiViolationController::class);
+
+Route::controller(HiViolationController::class)->group(function(){
+    Route::get('exportviolations', 'export')->name('violations.export');
+    Route::post('importviolations', 'import')->name('violations.import');
+    // Route::post('updatealphabets', 'update')->name('alphabets.update');
+});
 
 Route::post('violation/get_type_violation', [ViolationController::class, 'get_type_violation'])->name('get_type_violation');
 
@@ -164,6 +169,13 @@ Route::resource('/hi/paragraphs', HiParagraphController::class);
 
 // PKB -> alphabets
 Route::resource('/hi/alphabets', HiAlphabetController::class);
+
+//EXCEL IMPORT END EXPORT VIOLATIONS
+Route::controller(HiAlphabetController::class)->group(function(){
+    Route::get('exportalphabets', 'export')->name('alphabets.export');
+    Route::post('importalphabets', 'import')->name('alphabets.import');
+    // Route::post('updatealphabets', 'update')->name('alphabets.update');
+});
 
 // SIGNATURES
 Route::resource('/hi/signatures', SignatureController::class);

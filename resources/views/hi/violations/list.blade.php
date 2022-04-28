@@ -43,10 +43,61 @@
 
   <!-- Default box -->
   <div class="card">
-      <div class="card-header">
-         <div class="card-tools">
-            <form action="/hi/violations/list" >     
-                <div class="input-group input-group-sm" style="width: 200px;">
+    <div class="card-header">
+        <!-- Kelola karyawan =>   -->
+        <!-- &nbsp; -->
+        <!-- Button trigger modal -->
+        <!-- <a href="/datamaster/employees/create" class="btn btn-outline-primary " >
+          <i class="fa fa-plus" data-toggle="tooltip" data-placement="bottom" title="Tambah 1 Karyawan"></i>
+        </a> -->
+        <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+        <a class="btn btn-outline-primary" data-toggle="modal"  data-target="#excel_pelanggaran_baru" >
+        <i class="fa fa-arrow-up"  data-toggle="tooltip" data-placement="bottom" title="Upload Excel Tambah Data Pelanggaran Baru "></i>
+        </a>
+        <!-- Modal -->
+        <div class="modal fade" id="excel_pelanggaran_baru" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload excel Data Pelanggran Baru</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p class="text-justify-right">
+                    <a href="{{asset('excel/FORMAT_UPLOAD_PELANGGARAN.xlsx')}}">Format Upload Pelangaran</a>
+                    <br>
+                  </p>
+              <form action="{{ route('violations.import') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="input-group">
+                    <div class="custom-file">
+
+                        <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                    </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Uploads</button>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="/exportemployees" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="bottom" title="Download Excel Data Karyawan">
+          <i class="fas fa-download"></i>
+        </a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{{ route('alphabets.export') }}" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download Excel Alphabet ID">
+          <i class="fas fa-download"></i>
+        </a>
+        <div class="card-tools">
+            <form action="/datamaster/employees" >     
+                <div class="input-group input-group-sm" style="width: 150px;">
                     <input type="text" name="search" value="{{ request('search') }}" class="form-control float-right" placeholder="Search">
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
@@ -227,6 +278,8 @@
                               $p = "SP III";
                             }elseif($violation->type_of_violation == 'Surat Peringatan Terakhir'){
                               $p = "SP Terakhir";
+                            }elseif($violation->type_of_violation == 'Pemutusan Hubungan Kerja'){
+                              $p = "PHK";
                             }
                           ?>
                           {{ $p }}
@@ -250,13 +303,13 @@
                                 <!-- <a href="/hi/employees//edit" class="btn  btn-outline-warning">
                               Edit
                               </a> -->
-                              <!-- <form action="/hi/employees/" method="POST" class="d-inline ">
-                                @method('delete')
-                                @csrf
-                                <button class="btn  btn-outline-danger" onclick="return confirm(' Are you sure delete data ?')"> 
-                                Delete
-                              </button>
-                              </form> -->
+                               <form action="/hi/violations/" method="POST" class="d-inline ">
+                                  @method('delete')
+                                  @csrf
+                                  <button class="btn  btn-outline-danger" onclick="return confirm(' Are you sure delete data ?')"> 
+                                    Delete
+                                  </button>
+                              </form> 
                         </td>
                       </tr>
       

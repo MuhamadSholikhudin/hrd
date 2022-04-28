@@ -209,11 +209,11 @@
     });
     // alert("Pasal ");
     var pasal_phk = $(this).val();
-    // alert(pasal_phk);
+    alert(pasal_phk);
     $.ajax({
           type: "POST",
           url: "{{route('get_pasal_phk')}}",
-          async: false,  
+          // async: false,  
           dataType: 'json',
           data: {
             pasal_phk: pasal_phk
@@ -231,10 +231,10 @@
                   html += '<option value="' + obj[i].id +'">'+ obj[i].number_of_employees +' ' + obj[i].name +'</option>';
             }
               $('#karyawan_phk').html(html);
+              $('#isi_text').text(data[0]);
 
               // $('#karyawan_phk').html('<option value="get3" id="karyawan_phk3" >Pilih3</option>');
               // $('#karyawan_phk').append('<option value="get3" id="karyawan_phk3" >Pilih3</option>');
-              $('#isi_text').text(data[0]);
 
           },error(){
             alert("error");

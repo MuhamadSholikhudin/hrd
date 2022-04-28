@@ -47,94 +47,90 @@
   <!-- Default box -->
   <div class="card">
       <div class="card-header">
-        
-
-
-<!-- Kelola karyawan =>   -->
-&nbsp;
-<!-- Button trigger modal -->
-<a href="/datamaster/employees/create" class="btn btn-outline-primary " >
-  <i class="fa fa-plus" data-toggle="tooltip" data-placement="bottom" title="Tambah 1 Karyawan"></i>
-</a>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a class="btn btn-outline-primary" data-toggle="modal"  data-target="#excel_karyawan_baru" >
-<i class="fa fa-arrow-up"  data-toggle="tooltip" data-placement="bottom" title="Upload Excel Tambah Data Karyawan Baru "></i>
-</a>
-<!-- Modal -->
-<div class="modal fade" id="excel_karyawan_baru" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Upload excel data karyawan baru</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <p class="text-justify-right">
-                <a href="{{asset('excel/FORMAT_MASTER_DATA.xlsx')}}">Format Master Data</a>
-                <br>
-              </p>
-        <form action="{{ route('employees.import') }}" method="POST" enctype="multipart/form-data">
-          @csrf
-          <div class="input-group">
-              <div class="custom-file">
-
-                  <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
-                  <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+        <!-- Kelola karyawan =>   -->
+        &nbsp;
+        <!-- Button trigger modal -->
+        <a href="/datamaster/employees/create" class="btn btn-outline-primary " >
+          <i class="fa fa-plus" data-toggle="tooltip" data-placement="bottom" title="Tambah 1 Karyawan"></i>
+        </a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="btn btn-outline-primary" data-toggle="modal"  data-target="#excel_karyawan_baru" >
+        <i class="fa fa-arrow-up"  data-toggle="tooltip" data-placement="bottom" title="Upload Excel Tambah Data Karyawan Baru "></i>
+        </a>
+        <!-- Modal -->
+        <div class="modal fade" id="excel_karyawan_baru" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload excel data karyawan baru</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
               </div>
+              <div class="modal-body">
+                  <p class="text-justify-right">
+                      <a href="{{asset('excel/FORMAT_MASTER_DATA.xlsx')}}">Format Master Data</a>
+                      <br>
+                    </p>
+              <form action="{{ route('employees.import') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="input-group">
+                    <div class="custom-file">
+
+                        <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                    </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Uploads</button>
+              </div>
+            </form>
+            </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Uploads</button>
-        </div>
-      </form>
-      </div>
-    </div>
-  </div>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a class="btn btn-outline-primary" data-toggle="modal"  data-target="#excel_karyawan_update" >
-<i class="fas fa-upload" data-toggle="tooltip" data-placement="bottom" title="Upload Excel Update Data Karyawan"></i>
-</a>
-<!-- Modal -->
-<div class="modal fade"  id="excel_karyawan_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Upload excel Update data karyawan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form action="{{ route('employees.update') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-      <div class="modal-body">
-        <p class="text-justify-right">
-          <a href="{{asset('excel/FORMAT_UPDATE_MASTER_DATA.xlsx')}}">Format Update Master Data</a>
-          <br>
-        </p>
-        <div class="input-group">
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
-              <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="btn btn-outline-primary" data-toggle="modal"  data-target="#excel_karyawan_update" >
+          <i class="fas fa-upload" data-toggle="tooltip" data-placement="bottom" title="Upload Excel Update Data Karyawan"></i>
+        </a>
+        <!-- Modal -->
+        <div class="modal fade"  id="excel_karyawan_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload excel Update data karyawan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form action="{{ route('employees.update') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+              <div class="modal-body">
+                <p class="text-justify-right">
+                  <a href="{{asset('excel/FORMAT_UPDATE_MASTER_DATA.xlsx')}}">Format Update Master Data</a>
+                  <br>
+                </p>
+                <div class="input-group">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
+                      <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                    </div>
+                    </div>
+                </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+              </form>
             </div>
-            </div>
+          </div>
         </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
 
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="/exportemployees" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="bottom" title="Download Excel Data Karyawan">
-<i class="fas fa-download"></i>
-</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="/exportemployees" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="bottom" title="Download Excel Data Karyawan">
+          <i class="fas fa-download"></i>
+        </a>
         <div class="card-tools">
             <form action="/datamaster/employees" >     
                 <div class="input-group input-group-sm" style="width: 150px;">
