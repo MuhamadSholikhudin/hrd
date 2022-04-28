@@ -10,6 +10,34 @@ CREATE TABLE `user` (
   `date_created` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+CREATE TABLE `access_menus` (
+  `id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `menu_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `menus` (
+  `id` int(11) NOT NULL,
+  `menu` varchar(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `roles` (
+  `id` int(11) NOT NULL,
+  `role` varchar(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `sub_menus` (
+  `id` int(11) NOT NULL,
+  `menu_id` int(11) NOT NULL,
+  `title` varchar(128) NOT NULL,
+  `url` varchar(128) NOT NULL,
+  `icon` varchar(128) NOT NULL,
+  `is_active` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 --
 -- Dumping data for table `user`
 --
@@ -32,8 +60,12 @@ CREATE TABLE `user_access_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `user_access_menu`
+-- Dumping data for table `access_menus`
 --
+
+    $table->id();
+    $table->integer('role_id')->nullable();
+    $table->integer('menu_id')->nullable();
 
 INSERT INTO `user_access_menu` (`id`, `role_id`, `menu_id`) VALUES
 (1, 1, 1),
@@ -53,8 +85,13 @@ CREATE TABLE `user_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `user_menu`
+-- Dumping data for table `user_menus`
+-- Dumping data for table `menus`
 --
+
+    $table->id();
+    $table->string('menu')->nullable();
+
 
 INSERT INTO `user_menu` (`id`, `menu`) VALUES
 (1, 'Admin'),
@@ -73,8 +110,12 @@ CREATE TABLE `user_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `user_role`
+-- Dumping data for table `user_roles`
+-- Dumping data for table `roles`
 --
+    $table->id();
+    $table->string('role')->nullable();
+
 
 INSERT INTO `user_role` (`id`, `role`) VALUES
 (1, 'Administrator'),
@@ -96,8 +137,16 @@ CREATE TABLE `user_sub_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `user_sub_menu`
+-- Dumping data for table `sub_menus`
 --
+
+    $table->id();
+    $table->integer('menu_id')->nullable();
+    $table->string('title');
+    $table->string('url');
+    $table->string('icon')->nullable();
+    $table->integer('is_active')->nullable();
+
 
 INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `is_active`) VALUES
 (1, 1, 'Dashboard', 'admin', 'fas fa-fw fa-tachometer-alt', 1),

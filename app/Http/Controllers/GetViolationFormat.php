@@ -1,14 +1,5 @@
 <?php 
-        $num_sp = DB::table('violations')->count();
 
-        if($num_sp < 1){
-            $no_sp = 1;
-        }elseif($num_sp > 0){
-            $last_sp = DB::table('violations')
-                ->latest()
-                ->first();
-            $no_sp = $last_sp->no_violation + 1;
-        }
 
         $date_violation = new \DateTime($reporting_date .' 00:00:00');
 

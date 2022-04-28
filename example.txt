@@ -21,8 +21,6 @@ Job::create(["code_job_level" => "DRV", "job_level" => "DRIVER", "level" => "12"
 Job::create(["code_job_level" => "OP", "job_level" => "OPERATOR", "level" => "12"]);
 
 
-
-
 JOb Level
 INSERT INTO `jobs`( `code_job_level`, `job_level`, `level`) VALUES 
 ("PD", "PRESIDEN DIREKTUR", "1"),
