@@ -13,6 +13,8 @@ use App\Models\Paragraph;
 use App\Models\Article;
 use App\Models\Alphabet;
 
+use App\Http\Controllers\LoginController;
+
 //Controller Datamaster
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\DatamasterEmployeeController;
@@ -190,4 +192,10 @@ Route::post('layoffs/get_karyawan_phk', [LayoffController::class, 'get_karyawan_
 Route::get('layoffs/karyawan_phk', [LayoffController::class, 'karyawan_phk'])->name('karyawan_phk');
 
 Route::post('layoffs/get_pasal_phk', [LayoffController::class, 'get_pasal_phk'])->name('get_pasal_phk');
+
+// LOGIN AUTHENTICATION
+Route::get('/login', [LoginController::class, 'index']);
+Route::post('/login', [LoginController::class, 'authenticate']);
+// Route::post('/logout', [LoginController::class, 'logout']);
+
 
