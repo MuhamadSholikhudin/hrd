@@ -22,7 +22,15 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         // Employee::factory(50000)->create();
         // User::factory(1)->create();
+        
         // Investigation::factory(30000)->create();
+        User::create([ 
+            "name" => "admin",
+            "email" => "admin@gmail.com",
+            "password" => bcrypt("admin"),
+            "role_id" => 1,
+            "is_active" => 1,
+            ]);
 
 
         Department::create([ "department" => "ACCOUNTING"]);

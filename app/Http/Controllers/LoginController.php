@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\DB;
+
+
 class LoginController extends Controller
 {
     //
@@ -24,17 +27,26 @@ class LoginController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
+
+        // $cek_login = DB::table("users")
+        //     ->where('email', $request->email)
+        //     ->where('password', $request->password)
+        //     ->count();
+        // if($cek_login > 0){
+        //     $value = $request->session()->get('key');
+        //     return redirect()->intended('datamaster/employees');
+        // }
  
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
  
-            return redirect()->intended('dashboard');
+            return redirect()->intended('datamaster/employees ');
         }
 
-        // dd($credentials);
+        // dd($oke);
  
         return back()->with(
-            'loginError' , 'The provided credentials do not match our records.',
+            'loginError' , 'Username atau password anda salah.',
         );
 
         // return back()->withErrors([

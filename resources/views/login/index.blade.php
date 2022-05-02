@@ -39,12 +39,11 @@
     <div class="card-body login-card-body">
 
     @if(session()->has('loginError'))
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
-              <strong>
-                {{ session('loginError') }}
 
-              </strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      <div class="alert alert-info alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h5><i class="icon fas fa-exclamation-triangle"></i> Alert!</h5>
+        {{ session('loginError') }}
       </div>
     @endif
 

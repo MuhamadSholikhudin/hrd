@@ -40,6 +40,13 @@ use App\Http\Controllers\HiParagraphController;
 use App\Http\Controllers\HiAlphabetController;
 use App\Http\Controllers\SignatureController;
 
+// MANAGEMENT ROLES
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\SubMenuController;
+use App\Http\Controllers\AccessMenuController;
+
+
 
 
 /*
@@ -75,6 +82,12 @@ Route::get('/example', function () {
 Route::controller(UserController::class)->group(function(){
     Route::get('users', 'index');
     Route::get('users-export', 'export')->name('users.export');
+    Route::post('users-import', 'import')->name('users.import');
+
+    //CRUD USER
+    Route::get('userslist', 'list')->name('users.list');
+    Route::get('users/create', 'create')->name('users.create');
+    Route::get('users/{users:id}/edit', 'edit')->name('users.edit');
     Route::post('users-import', 'import')->name('users.import');
 });
 
@@ -197,5 +210,20 @@ Route::post('layoffs/get_pasal_phk', [LayoffController::class, 'get_pasal_phk'])
 Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'authenticate']);
 // Route::post('/logout', [LoginController::class, 'logout']);
+
+
+// ROLES
+Route::resource('/roles', RoleController::class);
+
+
+// MENUS
+Route::resource('/menus', MenuController::class);
+
+// SUB MENUS
+Route::resource('/sub_menus', SubMenuController::class);
+
+// ACCESS MENUS
+Route::resource('/access_menus', AccessMenuController::class);
+
 
 

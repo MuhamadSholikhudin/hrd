@@ -9,6 +9,8 @@
   <div class="row mb-2">
     <div class="col-sm-6">
       <h1>Karyawan 
+    
+       {{ auth()->user()->name }}
 
 
       </h1>

@@ -25,7 +25,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item {{ Request::is('datamaster*') ? ' menu-open' : '' }}">
+          <li class="nav-item {{ Request::is('datamaster*') ? ' menu-open' : '' }} {{ Request::is('jobs*') ? ' menu-open' : '' }} {{ Request::is('departments*') ? ' menu-open' : '' }}">
           <a href="#" class="nav-link {{ Request::is('datamaster/employees') ? 'active' : '' }} ">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
@@ -106,7 +106,7 @@
 
 
             <li class="nav-item {{ Request::is('violations*') ? 'menu-is-opening menu-open' : '' }} {{ Request::is('hi/violations') ? 'menu-is-opening menu-open' : '' }}">
-              <a href="/hi/violations" class="nav-link {{ Request::is('hi/violations') ? 'active' : '' }}">
+              <a href="/hi/violations" class="nav-link ">
                 <i class="fas fa-circle nav-icon"></i>
                 <p>
                   Pelanggaran
@@ -123,7 +123,7 @@
                 <li class="nav-item ">
                   <a href="/violations/list" class="nav-link {{ Request::is('violations/list') ? 'active' : '' }}">
                     <i class="far fa-dot-circle nav-icon"></i>
-                    <p>List Pelanggaran</p>
+                    <p>Data Master SP</p>
                   </a>
                 </li>
                 <li class="nav-item">
@@ -188,21 +188,133 @@
                 <p>DEFAULT TEXT</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="/jobs" class="nav-link {{ Request::is('jobs*') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>JOB LEVEL</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="/departments" class="nav-link {{ Request::is('departments*') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>DEPARTEMEN</p>
-              </a>
-            </li>
+            
           </ul>
         </li>
 
+
+        <li class="nav-item ">
+            <a href="#" class="nav-link  ">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                MANAGEMENT USER 
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview ">
+              
+              {{-- <li class="nav-item">
+                <a href="/hi/violations" class="nav-link {{ Request::is('hi/violations*') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Pelanggaran</p>
+                </a>
+              </li> --}}
+  
+  
+              {{-- <li class="nav-item ">
+                <a href="/" class="nav-link ">
+                  <i class="fas fa-circle nav-icon"></i>
+                  <p>
+                    Pelanggaran
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="/hi/violations" class="nav-link ">
+                      <i class="far fa-dot-circle nav-icon"></i>
+                      <p>Karyawan</p>
+                    </a>
+                  </li>
+                  <li class="nav-item ">
+                    <a href="/violations/list" class="nav-link ">
+                      <i class="far fa-dot-circle nav-icon"></i>
+                      <p>Data Master SP</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <i class="far fa-dot-circle nav-icon"></i>
+                      <p>Level 3</p>
+                    </a>
+                  </li>
+                </ul>
+              </li> --}}
+  
+              <li class="nav-item">
+                <a href="/userslist" class="nav-link {{ Request::is('hi/layoffs*') ? 'active' : '' }}">
+                  <i class="fas fa-circle nav-icon"></i>
+                  <p>User</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/roles" class="nav-link ">
+                  <i class="fas fa-circle nav-icon"></i>
+                  <p>Roles</p>
+                </a>
+              </li>
+               <li class="nav-item">
+                <a href="/menus" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Menu</p>
+                </a>
+              </li> 
+               <li class="nav-item">
+                <a href="/sub_menus" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Sub Menu</p>
+                </a>
+              </li> 
+              <li class="nav-item">
+                <a href="/access_menus" class="nav-link ">
+                  <i class="fas fa-circle nav-icon"></i>
+                  <p>Access Menu</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/hi/pkb" class="nav-link {{ Request::is('hi/pkb*') ? 'active' : '' }}">
+                  <i class="nav-icon fas fa-circle"></i>
+                  <p>
+                    PKB
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview" style="display: none;">
+                  <li class="nav-item">
+                    <a href="/hi/articles" class="nav-link {{ Request::is('hi/articles*') ? 'active' : '' }}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Pasal</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/hi/paragraphs" class="nav-link {{ Request::is('hi/paragraphs*') ? 'active' : '' }}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Ayat</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/hi/alphabets" class="nav-link {{ Request::is('hi/alphabets*') ? 'active' : '' }}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Huruf</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a href="/hi/signatures" class="nav-link {{ Request::is('hi/signatures*') ? 'active' : '' }}">
+                  <i class="fas fa-circle nav-icon"></i>
+                  <p>MANAGER AKTIF</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/hi/default_texts" class="nav-link {{ Request::is('hi/default_texts*') ? 'active' : '' }}">
+                  <i class="fas fa-circle nav-icon"></i>
+                  <p>DEFAULT TEXT</p>
+                </a>
+              </li>
+              
+            </ul>
+          </li>
 
           {{-- <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
