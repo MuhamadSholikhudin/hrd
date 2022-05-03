@@ -25,6 +25,54 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+
+<?php
+$sess_role_id = auth()->user()->role_id;
+$access_menus = DB::table('access_menus')->where('role_id', $sess_role_id)->get();
+
+foreach($access_menus as $acs)
+$menu = DB::table('menus')->find($access_menus->menu_id);
+ 
+ $sub_menus = DB::table('sub_menus')->where('menu_id', $acs->menu_id)->get();
+?>
+<li class="nav-item 
+<?php
+foreach($sub_menus as $sub_menu)
+
+echo Request::is($sub_menu->url) ? 'menu-open' : ''
+
+endforeach
+?>
+">
+          <a href="#" class="nav-link {{ Request::is('datamaster/employees') ? 'active' : '' }} ">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              {{ $menu->menu }}
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+<ul class="nav nav-treeview">
+
+<?php
+foreach($sub_menus as $sub_menu)
+?>
+
+<li class="nav-item">
+              <a href="{{$sub_menu->url}}" class="nav-link {{ Request::is($sub_menu->url) ? 'active' : '' }}">
+                <i class="{{$sub_menu->icon}} nav-icon"></i>
+                <p>{{$sub_menu->title}}</p>
+              </a>
+            </li>
+<?php
+endforeach
+?>
+</ul>
+        </li>
+<?php
+endforeach
+?>
+<hr>
+
           <li class="nav-item {{ Request::is('datamaster*') ? ' menu-open' : '' }} {{ Request::is('jobs*') ? ' menu-open' : '' }} {{ Request::is('departments*') ? ' menu-open' : '' }}">
           <a href="#" class="nav-link {{ Request::is('datamaster/employees') ? 'active' : '' }} ">
             <i class="nav-icon fas fa-tachometer-alt"></i>
