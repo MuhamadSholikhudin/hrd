@@ -73,6 +73,15 @@ class RoleController extends Controller
     public function edit($id)
     {
         //
+
+        $role = DB::table('roles')->find($id);
+        $menus = DB::table('menus')->get();
+
+        return view('roles.edit', [
+            'role' => $role,
+            'menus' => $menus
+        ]);
+        
     }
 
     /**

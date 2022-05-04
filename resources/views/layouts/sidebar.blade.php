@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="../../index3.html" class="brand-link">
-      <img src="{{ asset('/dist/img/AdminLTELogo.png')}}"
+    <a href="#" class="brand-link">
+      <img src="{{ asset('/img/HR System.png')}}"
            alt="AdminLTE Logo"
            class="brand-image img-circle elevation-3"
            style="opacity: .8">
@@ -16,7 +16,7 @@
           <img src="{{ asset('/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">{{auth()->user()->name}}</a>
         </div>
       </div>
 
@@ -26,116 +26,49 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-<?php
-$sess_role_id = auth()->user()->role_id;
-$access_menus = DB::table('access_menus')->where('role_id', $sess_role_id)->get();
-
-foreach($access_menus as $acs)
-$menu = DB::table('menus')->find($access_menus->menu_id);
+               <?php
+               $sess_role_id = auth()->user()->role_id;
+               $access_menus = DB::table('access_menus')->where('role_id', $sess_role_id)->get();
  
- $sub_menus = DB::table('sub_menus')->where('menu_id', $acs->menu_id)->get();
-?>
-<li class="nav-item 
-<?php
-foreach($sub_menus as $sub_menu)
+               foreach($access_menus as $acs):
+                $menu = DB::table('menus')->find($acs->menu_id);
+                
+                $sub_menus = DB::table('sub_menus')->where('menu_id', $acs->menu_id)->get();
 
-echo Request::is($sub_menu->url) ? 'menu-open' : ''
-
-endforeach
-?>
-">
-          <a href="#" class="nav-link {{ Request::is('datamaster/employees') ? 'active' : '' }} ">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
-            <p>
-              {{ $menu->menu }}
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-<ul class="nav nav-treeview">
-
-<?php
-foreach($sub_menus as $sub_menu)
-?>
-
-<li class="nav-item">
-              <a href="{{$sub_menu->url}}" class="nav-link {{ Request::is($sub_menu->url) ? 'active' : '' }}">
-                <i class="{{$sub_menu->icon}} nav-icon"></i>
-                <p>{{$sub_menu->title}}</p>
-              </a>
-            </li>
-<?php
-endforeach
-?>
-</ul>
-        </li>
-<?php
-endforeach
-?>
-<hr>
-
-          <li class="nav-item {{ Request::is('datamaster*') ? ' menu-open' : '' }} {{ Request::is('jobs*') ? ' menu-open' : '' }} {{ Request::is('departments*') ? ' menu-open' : '' }}">
-          <a href="#" class="nav-link {{ Request::is('datamaster/employees') ? 'active' : '' }} ">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
-            <p>
-              Data Master
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="/datamaster/employees" class="nav-link {{ Request::is('datamaster/employees*') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Karyawan</p>
-              </a>
-            </li>
-            {{-- <li class="nav-item">
-              <a href="/bpjs" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>BPJS</p>
-              </a>
-            </li> --}}
-            {{-- <li class="nav-item">
-              <a href="./gaji_tunjangan.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>GAJI / TUNJANGAN</p>
-              </a>
-            </li> --}}
-            <li class="nav-item">
-              <a href="/datamaster/promotions" class="nav-link {{ Request::is('datamaster/promotions*') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>PROMOSI</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="/datamaster/demotions" class="nav-link {{ Request::is('datamaster/demotions*') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>DEMOSI</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="/datamaster/mutations" class="nav-link {{ Request::is('datamaster/mutations*') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>MUTASI</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="/jobs" class="nav-link {{ Request::is('jobs*') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>JOB LEVEL</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="/departments" class="nav-link {{ Request::is('departments*') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>DEPARTEMEN</p>
-              </a>
-            </li>
-          </ul>
-        </li>
+             ?>
+             
+               <li class="nav-item  @foreach($sub_menus as $sub_menu):  <?php $url_menu = $sub_menu->url; $url_1 = substr($url_menu, 1); $open_url = $url_1.'*'; ?> {{Request::is($open_url) ?  'menu-open' : ''}} @endforeach">
+                 <a href="#" class="nav-link ">
+                   <i class="nav-icon fas fa-tachometer-alt"></i>
+                   <p>
+                     {{ $menu->menu }}
+                     <i class="right fas fa-angle-left"></i>
+                   </p>
+                 </a>
+                 <ul class="nav nav-treeview">
+                 <?php
+                   foreach($sub_menus as $sub_menu):
+                 ?>
+                   <li class="nav-item">
+                     <a href="{{$sub_menu->url}}" class="nav-link <?php $url_s = substr($sub_menu->url, 1); $open_url_s = $url_s.'*'; ?> {{ Request::is($open_url_s) ? 'active' : '' }} ">
+                       <i class="{{$sub_menu->icon}} nav-icon"></i>
+                       <p>{{$sub_menu->title}}</p>
+                     </a>
+                   </li>
+                 <?php
+                   endforeach;
+                 ?>
+           </ul>
+         </li>
+        <?php
+          endforeach;
+        ?>
 
 
 
-        <li class="nav-item {{ Request::is('violations*') ? ' menu-open' : '' }}  {{ Request::is('hi*') ? ' menu-open' : '' }}">
+
+
+     {{--   <li class="nav-item {{ Request::is('violations*') ? ' menu-open' : '' }}  {{ Request::is('hi*') ? ' menu-open' : '' }}">
           <a href="#" class="nav-link  ">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
@@ -145,12 +78,12 @@ endforeach
           </a>
           <ul class="nav nav-treeview ">
             
-            {{-- <li class="nav-item">
+             <li class="nav-item">
               <a href="/hi/violations" class="nav-link {{ Request::is('hi/violations*') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Pelanggaran</p>
               </a>
-            </li> --}}
+            </li> 
 
 
             <li class="nav-item {{ Request::is('violations*') ? 'menu-is-opening menu-open' : '' }} {{ Request::is('hi/violations') ? 'menu-is-opening menu-open' : '' }}">
@@ -240,7 +173,7 @@ endforeach
           </ul>
         </li>
 
-
+--}}
         <li class="nav-item ">
             <a href="#" class="nav-link  ">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -516,7 +449,7 @@ endforeach
               </li>
             </ul>
           </li> --}}
-          <li class="nav-header">EXAMPLES</li>
+          {{-- <li class="nav-header">EXAMPLES</li>
           <li class="nav-item">
             <a href="../calendar.html" class="nav-link">
               <i class="nav-icon far fa-calendar-alt"></i>
@@ -525,7 +458,7 @@ endforeach
                 <span class="badge badge-info right">2</span>
               </p>
             </a>
-          </li>
+          </li> --}}
           {{-- <li class="nav-item">
             <a href="../gallery.html" class="nav-link">
               <i class="nav-icon far fa-image"></i>

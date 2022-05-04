@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('password');
             $table->integer('role_id')->nullable();
             $table->integer('is_active')->nullable();
-            $table->integer('date_created')->nullable();
+            // $table->date('date_created')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

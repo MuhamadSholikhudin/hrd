@@ -11,8 +11,9 @@ use App\Imports\UsersImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\User;
 
-use Illuminate\Support\Facades\Crypt;
+
 use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Crypt;
 
   
 class UserController extends Controller
@@ -49,10 +50,27 @@ class UserController extends Controller
             'count' => User::count()
         ]);
     }
+
+    public function store(Request $request)
+    {
+        DB::table('users')->insert([ 
+            "name" => $request->name,
+            "email" => $request->email,
+            "password" => bcrypt($request->password),
+            "role_id" => $request->role_id,
+            "is_active" => $request->is_active,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
+            ]);
+
+        return redirect('/userslist');
+    }
+
+
     public function edit($id)
     {
         $user = User::find($id);
-        
+
         $is_active = ["active" => 1, "Not active" =>0];
         $roles = DB::table('roles')->get();
         return view('users.edit', [
@@ -61,6 +79,42 @@ class UserController extends Controller
             'is_active' => $is_active,
             'count' => User::count()
         ]);
+    }
+
+    public function update(Request $request)
+    {
+        DB::table('users')
+        ->where('id', $request->id)
+        ->update([ 
+            "name" => $request->name,
+            "email" => $request->email,
+            "role_id" => $request->role_id,
+            "is_active" => $request->is_active,
+            'updated_at' => date('Y-m-d H:i:s')
+            ]);
+
+            return redirect('/userslist');
+    }
+
+    public function password($id)
+    {
+        $user = User::find($id);
+
+        return view('users.changepassword', [
+            'user' => $user,
+        ]);
+    }
+
+    public function changepassword(Request $request)
+    {
+        DB::table('users')
+        ->where('id', $request->id)
+        ->update([ 
+            "password" => bcrypt($request->password),
+            'updated_at' => date('Y-m-d H:i:s')
+            ]);
+
+            return redirect('/userslist');
     }
 
         

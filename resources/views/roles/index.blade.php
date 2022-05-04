@@ -61,13 +61,13 @@
 
               <td>{{ $role->role }}</td>
               <td>
-                  <a href="/jobs/{{ $role->id }}" class="btn  btn-outline-primary">
+                  <a href="/roles/{{ $role->id }}" class="btn  btn-outline-primary">
                     Show
                   </a>
-                      <a href="/jobs/{{ $role->id }}/edit" class="btn  btn-outline-warning">
+                      <a href="/roles/{{ $role->id }}/edit" class="btn  btn-outline-warning">
                     Edit
                     </a>
-                    <form action="/jobs/{{ $role->id }}" method="POST" class="d-inline ">
+                    <form action="/roles/{{ $role->id }}" method="POST" class="d-inline ">
                       @method('delete')
                       @csrf
                       <button class="btn  btn-outline-danger" onclick="return confirm(' Are you sure delete data ?')"> 

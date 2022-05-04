@@ -54,7 +54,7 @@
     <div class="float-right d-none d-sm-block">
       <b>Version</b> 3.0.3-pre
     </div>
-    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
+    <strong>Copyright &copy; 2022-<?= date('Y') ?> </strong> All rights
     reserved.
   </footer>
 
@@ -278,6 +278,31 @@
 
         });
   });
+
+  //ROLE ACCESS
+  $('.form-check-input').on('click', function() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    const menuId = $(this).data('menu');
+    const roleId = $(this).data('role');
+
+    $.ajax({
+        url: "{{route('changeaccess')}}",
+        type: 'POST',
+        data: {
+            menuId: menuId,
+            roleId: roleId
+        },
+        success: function() {
+            document.location.href = "/roles/"+roleId+"/edit" ;
+        }
+    });
+
+});
 
   document.addEventListener('trix-file-accept', function(e){
     e.preventDefault();

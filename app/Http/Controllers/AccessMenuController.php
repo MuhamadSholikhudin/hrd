@@ -100,4 +100,25 @@ class AccessMenuController extends Controller
     {
         //
     }
+
+    public function changeaccess(Request $request)
+    {
+        //
+        $menu_id = $request->menuId;
+        $role_id = $request->roleId;
+
+        $num_access = DB::table('access_menus')->where('menu_id', $menu_id)->where('role_id', $role_id)->count();
+        
+        if($num_access > 0){
+            DB::table('access_menus')
+            ->where('menu_id', $menu_id)
+            ->where('role_id',  $role_id)
+            ->delete();
+        }else{
+            DB::table('access_menus')->insert([
+                'menu_id' => $menu_id,
+                'role_id' => $role_id
+            ]);
+        }
+    }
 }

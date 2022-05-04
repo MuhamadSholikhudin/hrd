@@ -10,7 +10,7 @@
       <div class="col-sm-6">
         <h1>Users</h1> 
         <br>
-        <a href="/user/create" class="btn  btn-info">+ Add user</a>
+        <a href="/users/create" class="btn  btn-info">+ Add user</a>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -63,13 +63,13 @@
               <td>{{ $user->email }}</td>
               <td>{{ $user->password }}</td>
               <td>
-                  <a href="/jobs/{{ $user->id }}" class="btn  btn-outline-primary">
-                    Show
+                  <a href="/users/{{ $user->id }}/password" class="btn  btn-outline-primary">
+                    Change Password
                   </a>
-                      <a href="/jobs/{{ $user->id }}/edit" class="btn  btn-outline-warning">
+                      <a href="/users/{{ $user->id }}/edit" class="btn  btn-outline-warning">
                     Edit
                     </a>
-                    <form action="/jobs/{{ $user->id }}" method="POST" class="d-inline ">
+                    <form action="/users/{{ $user->id }}" method="POST" class="d-inline ">
                       @method('delete')
                       @csrf
                       <button class="btn  btn-outline-danger" onclick="return confirm(' Are you sure delete data ?')"> 
