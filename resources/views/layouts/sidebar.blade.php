@@ -68,7 +68,7 @@
 
 
 
-     {{--   <li class="nav-item {{ Request::is('violations*') ? ' menu-open' : '' }}  {{ Request::is('hi*') ? ' menu-open' : '' }}">
+        <li class="nav-item {{ Request::is('violations*') ? ' menu-open' : '' }}  {{ Request::is('hi*') ? ' menu-open' : '' }}">
           <a href="#" class="nav-link  ">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
@@ -173,7 +173,7 @@
           </ul>
         </li>
 
---}}
+
         <li class="nav-item ">
             <a href="#" class="nav-link  ">
               <i class="nav-icon fas fa-tachometer-alt"></i>

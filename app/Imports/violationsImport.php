@@ -62,6 +62,7 @@ class violationsImport implements ToCollection, WithHeadingRow
                     // $alphabet_id = floor($x['alphabet_id']);
                     $alphabet_id = 9;
 
+                    
 
                     $sel_num_vio = DB::table('violations')->where('employee_id', $employee->id)->count();
                     if($sel_num_vio == 0){
@@ -98,12 +99,12 @@ class violationsImport implements ToCollection, WithHeadingRow
                       ->count();
             
                     if($num_sp < 1){
-                        $no_sp = 1;
+                        $no_sp = floor($x['no_violation']);
                     }elseif($num_sp > 0){
                         $last_sp = DB::table('violations')
                             ->latest()
                             ->first();
-                        $no_sp = $last_sp->no_violation + 1;
+                        $no_sp = $last_sp->no_violation + floor($x['no_violation']);
                     }
 
                     require_once 'GetViolationFormat.php';

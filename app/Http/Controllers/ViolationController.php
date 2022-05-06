@@ -74,6 +74,20 @@ class ViolationController extends Controller
         //MEMBUAT INPUTAN OTOMATIS SURAT
         // NO SP 001/SP-HRD/IV/2022
 
+        $month_m = date('m');
+
+        $num_no_sp = DB::table('violations')
+          ->whereMonth('date_of_violation',  $month_m)
+          ->count();
+       
+        if($num_no_sp < 1){
+            $no_sp = 1;
+        }elseif($num_no_sp > 0){
+            $sel_no_sp = DB::table('violations')
+              ->latest()->first();
+          $no_sp = $sel_no_sp->no_violation + 1 ;
+        }
+
         require_once 'GetViolationFormat.php';
 
         //LOGIKAN PENENTUAN MENDAPATKAN PELANGGARAN
@@ -221,7 +235,7 @@ class ViolationController extends Controller
             'month_of_violation' => $month_n,     
             'violation_ROM' => $ROM,   
             'reporting_day' => null,     
-            'reporting_date' => null,   
+            'reporting_date' => $reporting_date,   
             'job_level' => $job_level,   
             'department' => $department,   
             'other_information' => $other_information,   
@@ -242,7 +256,7 @@ class ViolationController extends Controller
             'signature_id' => $signature_id,    
             'employee_id' => $employee_id
         ];
-
+        // dd($data);
         DB::table('violations')->insert($data);
         return redirect('hi/violations/' . $employee_id . '/edit');
     }

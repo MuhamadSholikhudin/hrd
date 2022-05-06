@@ -7,6 +7,9 @@
         $date_month =  date_format($date_violation, "m"); //for Display Month
         $date_day = date_format($date_violation, "d"); //for Display Date
 
+
+        
+
             // $tahun = YEAR($date_of_violation);
 
             // Prints October 3, 1975 was on a Thursday

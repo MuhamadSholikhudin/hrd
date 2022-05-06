@@ -95,6 +95,49 @@
         <a href="{{ route('alphabets.export') }}" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download Excel Alphabet ID">
           <i class="fas fa-download"></i>
         </a>
+
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{{ route('alphabets.export') }}" class="btn btn-warning" data-toggle="modal"  data-target="#pdf_violation" data-toggle="tooltip" data-placement="bottom" title="Download Excel Alphabet ID">
+          <i class="fas fa-print"></i>
+        </a>
+        <div class="modal fade" id="pdf_violation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Export Pelanggran ke PDF</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form action="/violation-pdf" method="POST" enctype="multipart/form-data">
+                @csrf
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-5">
+                    <input type="number" name="awal" class="form-control" >
+                  </div>
+                  <div class="col-2">
+                    <p class="text-center">
+
+                      -
+                    </p>
+                  </div>
+                  <div class="col-5">
+                    <input type="number" name="akhir" class="form-control">
+                  </div>
+                </div>
+              
+                
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Convert</button>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
         <div class="card-tools">
             <form action="/datamaster/employees" >     
                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -175,7 +218,7 @@
                             $month_indo_sp = 'Maret';            
                           }elseif($date_month_sp == '04'){
                             $month_indo_sp = 'April';            
-                          }elseif($day == '05'){
+                          }elseif($date_month_sp == '05'){
                             $month_indo_sp = 'Mei';            
                           }elseif($date_month_sp == '06'){
                             $month_indo_sp = 'Juni';            

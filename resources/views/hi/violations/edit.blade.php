@@ -220,7 +220,7 @@
                       $month_indo_sp = 'Maret';            
                     }elseif($date_month_sp == '04'){
                       $month_indo_sp = 'April';            
-                    }elseif($day == '05'){
+                    }elseif($date_month_sp == '05'){
                       $month_indo_sp = 'Mei';            
                     }elseif($date_month_sp == '06'){
                       $month_indo_sp = 'Juni';            
@@ -456,10 +456,9 @@
             $no_sp = 1;
           }elseif($num_no_sp > 0){
             $sel_no_sp = DB::table('violations')
-                          ->latest();
+              ->latest();
 
-                          $no_sp = $sel_no_sp + 1 ;
-
+              $no_sp = $sel_no_sp + 1 ;
           }
 
           $var = 1234567;
