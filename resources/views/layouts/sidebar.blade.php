@@ -17,6 +17,9 @@
         </div>
         <div class="info">
           <a href="#" class="d-block">{{auth()->user()->name}}</a>
+
+
+
         </div>
       </div>
 
@@ -28,7 +31,17 @@
 
                <?php
                $sess_role_id = auth()->user()->role_id;
-               $access_menus = DB::table('access_menus')->where('role_id', $sess_role_id)->get();
+
+              //  $num_access_menus = DB::table('access_menus')
+              //     ->where('role_id', $sess_role_id)
+              //     ->count();
+
+               $access_menus = DB::table('access_menus')
+                  // ->leftJoin('menus')
+                  ->rightJoin('menus', 'access_menus.menu_id', '=', 'menus.id')
+                  ->where('access_menus.role_id', $sess_role_id)
+                  ->orderBy('menus.menu', 'asc')
+                  ->get();
  
                foreach($access_menus as $acs):
                 $menu = DB::table('menus')->find($acs->menu_id);
@@ -39,7 +52,8 @@
              
                <li class="nav-item  @foreach($sub_menus as $sub_menu):  <?php $url_menu = $sub_menu->url; $url_1 = substr($url_menu, 1); $open_url = $url_1.'*'; ?> {{Request::is($open_url) ?  'menu-open' : ''}} @endforeach">
                  <a href="#" class="nav-link ">
-                   <i class="nav-icon fas fa-tachometer-alt"></i>
+                   <!-- <i class="nav-icon fas fa-table"></i> -->
+                   <i class="fa-regular fa-folder-open"></i>
                    <p>
                      {{ $menu->menu }}
                      <i class="right fas fa-angle-left"></i>
@@ -66,7 +80,7 @@
 
 
 
-
+{{--
 
         <li class="nav-item {{ Request::is('violations*') ? ' menu-open' : '' }}  {{ Request::is('hi*') ? ' menu-open' : '' }}">
           <a href="#" class="nav-link  ">
@@ -184,15 +198,15 @@
             </a>
             <ul class="nav nav-treeview ">
               
-              {{-- <li class="nav-item">
+              <li class="nav-item">
                 <a href="/hi/violations" class="nav-link {{ Request::is('hi/violations*') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pelanggaran</p>
                 </a>
-              </li> --}}
+              </li> 
   
   
-              {{-- <li class="nav-item ">
+               <li class="nav-item ">
                 <a href="/" class="nav-link ">
                   <i class="fas fa-circle nav-icon"></i>
                   <p>
@@ -220,7 +234,7 @@
                     </a>
                   </li>
                 </ul>
-              </li> --}}
+              </li> 
   
               <li class="nav-item">
                 <a href="/userslist" class="nav-link {{ Request::is('hi/layoffs*') ? 'active' : '' }}">
@@ -297,6 +311,8 @@
             </ul>
           </li>
 
+          --}}
+          
           {{-- <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>

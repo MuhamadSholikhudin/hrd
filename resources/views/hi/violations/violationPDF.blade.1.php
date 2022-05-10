@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- <title>Cetak Laporan Surat</title> -->
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     <style>
         hr.new5 {
@@ -15,66 +15,32 @@
             border-radius: 0px;
             width: 100%;
         }
-
-        #kop {
-        /* padding-top: 10px;
-        padding-bottom: 20px;
-        padding-left: 30px; */
-        /* padding-right: 40px; */
-        }
-
-        body{
-            padding: 0;
-        }
-
-        h4 {
-            margin: 0 0 10px 0;
-        }
     </style>
 </head>
 
 <body>
-    @foreach($violations as $violation)
-        <!-- <table width="100%">
-            <tr>
-                <td width="25" align="center"><img src="{{ public_path('storage/') . '/img/HWASEUNG.png' }}" width="60%"></td>
-                <td width="50" align="center"><h1>Gemscool Game Portal Pertama Indonesia</h1><br><h2>Jakarta</h2></td>
-                <td width="25" align="center"><img src="Logo DN.jpg" width="100%"></td>
-            </tr>
-        </table> -->
-        <table width="100%">
-            <tr>
-                <td width="12" ><img src="{{ public_path('storage/') . '/img/HWASEUNG.png' }}" width="100%"></td>
-                <td width="88" align="center" >
-                    
-                    <p class="text-center" id="kop">
-                    <h4 >
-                    PT. HWA SEUNG INDONESIA
-                    </h4>
-                    
-                    <b>
-                        Jalan Krasak Banyuputih RT.09 RW.03 Kecamatan Kalinyamatan Kabupaten Jepara, <br>
-                        Provinsi Jawa Tengah, Indonesia 59467 Tel: (0291) 7512198 Fax: (0291) 7512191
-
-                    </b>
-                    </p>
-                
-                    <!-- <h4 class="text-center">PT. HWA SEUNG INDONESIA</h4>
-                    <h5 class="text-center">Jalan Krasak Banyuputih RT.09 RW.03 Kecamatan Kalinyamatan Kabupaten Jepara,</h5>
-                    <h5 class="text-center">Provinsi Jawa Tengah, Indonesia 59467 Tel: (0291) 7512198 Fax: (0291) 7512191</h5>
-                 -->
-                </td>
-            </tr>
-        </table>
-        <hr class="new5">
-
-
-
+@foreach($violations as $violation)
     <section class="content">
         <div class="container-fluid">
 
             <div class="card border-0 p-0">
+                <div class="header p-4">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <!-- echo asset('storage/file.txt'); -->
+                            <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTh3za7Bz3_6dogu-wy4ogEh2GX3JNR1QuIVw&usqp=CAU" alt="" width="100%" height="80px"> -->
+                            <img src="{{ public_path('storage/') . '/img/HWASEUNG.png' }}" alt="" width="100px" height="80px">
+                        </div>
+                        <div class="col-md-10">
+                            <h3 class="text-center">PT. HWA SEUNG INDONESIA</h3>
+                            <h5 class="text-center">Jalan Krasak Banyuputih RT.09 RW.03 Kecamatan Kalinyamatan Kabupaten Jepara,</h5>
+                            <h5 class="text-center">Provinsi Jawa Tengah, Indonesia 59467 Tel: (0291) 7512198 Fax: (0291) 7512191</h5>
+                        </div>
+                        <br>
+                        <hr class="new5">
+                    </div>
 
+                </div>
                 <div class="body">
      
                     <h3 class="text-center ">

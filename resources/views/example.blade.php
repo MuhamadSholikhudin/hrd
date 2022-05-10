@@ -14,6 +14,9 @@
     <h1>Hello, world!</h1>
     <div class="container">
 
+    <img src="{{ asset('storage/') . '/img/HWASEUNG.png' }}" alt="" width="100%" height="80px">
+
+
     <div class="d-flex justify-content-center" style="">
     <div class="spinner-border spinner-border-sm" style="width: 6rem; height: 6rem; display:none;" role="status">
         <span class="sr-only">Loading...</span>

@@ -231,6 +231,7 @@ Route::resource('/sub_menus', SubMenuController::class)->middleware('auth');
 Route::resource('/access_menus', AccessMenuController::class)->middleware('auth');
 Route::post('access_menus/changeaccess', [AccessMenuController::class, 'changeaccess'])->name('changeaccess')->middleware('auth');
 
+//PDF
 Route::get('generate-pdf', [PDFController::class, 'generatePDF']);
 Route::post('violation-pdf', [PDFController::class, 'violationPDF']);
 

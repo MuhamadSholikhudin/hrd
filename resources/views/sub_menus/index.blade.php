@@ -61,8 +61,8 @@
               @foreach ($sub_menus as $sub_menu)
             <tr>
               <td>{{ $sub_menu->id }}</td>
-
-              <td>{{ $sub_menu->menu_id }}</td>
+              <?php $menu = DB::table('menus')->find($sub_menu->menu_id) ?>
+              <td>{{ $menu->menu }}</td>
               <td>{{ $sub_menu->title }}</td>
               <td>{{ $sub_menu->url }}</td>
               <td>{{ $sub_menu->icon }}</td>

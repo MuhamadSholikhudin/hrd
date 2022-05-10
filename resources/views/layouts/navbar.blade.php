@@ -12,7 +12,7 @@
         <a href="#" class="nav-link">Contact</a>
       </li> --}}
 
-      <marquee  behavior="alternate" ><h2> HUMAN RESOURCE INFORMATION SYSTEM PT HWASEUNG INDONESIA</h2></marquee >
+      <marquee><h2> HUMAN RESOURCE INFORMATION SYSTEM PT HWASEUNG INDONESIA</h2></marquee >
     </ul>
 
     <!-- SEARCH FORM -->

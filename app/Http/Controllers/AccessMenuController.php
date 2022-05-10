@@ -115,10 +115,35 @@ class AccessMenuController extends Controller
             ->where('role_id',  $role_id)
             ->delete();
         }else{
+
+            $hari = date('Y-m-d H:i:s');
+
+
             DB::table('access_menus')->insert([
                 'menu_id' => $menu_id,
-                'role_id' => $role_id
+                'role_id' => $role_id,
+                'created_at' => $hari,
+                'updated_at' => $hari
             ]);
+
+            $sel_acs_mn = DB::table('access_menus')
+                ->where('created_at' , $hari)
+                ->where('updated_at' , $hari)
+                ->first();
+
+            $sel_sub_mn = DB::table('sub_menus')
+                ->where('menu_id' , $sel_acs_mn->menu_id)
+                ->get();
+
+            foreach($sel_sub_mn as $sub_menu):
+                DB::table('methods')->insert([
+                    'access_menu_id' => $sel_acs_mn->id,
+                    'add' => 'false',
+                    'delete' => 'false',
+                    'view' => 'false'
+                ]);
+            endforeach;
+
         }
     }
 }
