@@ -299,10 +299,42 @@
         },
         success: function() {
             document.location.href = "/roles/"+roleId+"/edit" ;
+        },error(){
+            alert("Coba lagi");
+          }
+    });
+
+  });
+
+    // Methods 
+    $('.method').on('click', function() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
         }
     });
 
-});
+    const roleId = $(this).data('role');
+    const methodId = $(this).data('method');
+    const val = $(this).val();
+
+    $.ajax({
+        url: "{{route('changeaccess_method')}}",
+        type: 'POST',
+        data: {
+            methodId: methodId,
+            val: val
+        },
+        success: function() {
+
+            document.location.href = "/roles/"+roleId+"/edit" ;
+        },error(){
+            alert("Coba lagi");
+          }
+    });
+   
+
+  });
 
   document.addEventListener('trix-file-accept', function(e){
     e.preventDefault();

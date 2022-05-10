@@ -102,19 +102,27 @@
 
                                             //Cari data method sub menu
                                           $sel_sb_mn = DB::table('methods')
-                                            ->where('access_menu_id', $menu->id)
+                                            ->where('access_menu_id', $sel_acs_mn->id)
                                             ->where('sub_menu_id', $sub_menu->id)
                                             ->get();
+                                          foreach ($sel_sb_mn as $sel_mtd) : ?>
+                                              
+                                          <input type="checkbox" class="method" value="edit" data-method="{{ $sel_mtd->id}}" data-role="{{ $role->id }}" <?php if($sel_mtd->edit == 'true'){  echo  'checked="checked"'; }else{ } ?>   name="edit" id=""> edit |
+                                          <input type="checkbox" class="method"  value="delete" data-method="{{ $sel_mtd->id}}" data-role="{{ $role->id }}" <?php if($sel_mtd->delete == 'true'){  echo  'checked="checked"'; }else{ } ?> id=""> delete |
+                                          <input type="checkbox" class="method" value="view" data-method="{{ $sel_mtd->id}}" data-role="{{ $role->id }}" <?php if($sel_mtd->view == 'true'){  echo  'checked="checked"'; }else{ } ?> id=""> view  |
+                                          
+                                          <?php    endforeach;              
 
-                                        }else{
-
+                                        }else{ ?>
+                                          <input type="checkbox" name="" id="" disabled> edit |
+                                          <input type="checkbox" name="" id="" disabled> delete |
+                                          <input type="checkbox" name="" id="" disabled> view  |
+                
+                                      <?php
                                         }
                                       
                                       ?>
-                                      <input type="checkbox" name="" id=""> edit |
-                                      <input type="checkbox" name="" id=""> delete |
-                                      <input type="checkbox" name="" id=""> view  |
-
+                        
                                       &nbsp;&nbsp;&nbsp;&nbsp;
                                      <b> {{$sub_menu->title}} </b> <br>
                                     @endforeach

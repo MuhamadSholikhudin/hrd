@@ -230,6 +230,7 @@ Route::resource('/sub_menus', SubMenuController::class)->middleware('auth');
 // ACCESS MENUS
 Route::resource('/access_menus', AccessMenuController::class)->middleware('auth');
 Route::post('access_menus/changeaccess', [AccessMenuController::class, 'changeaccess'])->name('changeaccess')->middleware('auth');
+Route::post('access_menus/changeaccess_method', [AccessMenuController::class, 'changeaccess_method'])->name('changeaccess_method');
 
 //PDF
 Route::get('generate-pdf', [PDFController::class, 'generatePDF']);

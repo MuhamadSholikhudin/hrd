@@ -110,14 +110,26 @@ class AccessMenuController extends Controller
         $num_access = DB::table('access_menus')->where('menu_id', $menu_id)->where('role_id', $role_id)->count();
         
         if($num_access > 0){
+
+
+            $sel_acs_mn = DB::table('access_menus')
+                ->where('menu_id', $menu_id)
+                ->where('role_id',  $role_id)
+                ->first();
+
+
+            DB::table('methods')
+                ->where('access_menu_id', $sel_acs_mn->id)
+                ->delete();
+
             DB::table('access_menus')
-            ->where('menu_id', $menu_id)
-            ->where('role_id',  $role_id)
-            ->delete();
+                ->where('menu_id', $menu_id)
+                ->where('role_id',  $role_id)
+                ->delete();
+
         }else{
 
             $hari = date('Y-m-d H:i:s');
-
 
             DB::table('access_menus')->insert([
                 'menu_id' => $menu_id,
@@ -138,12 +150,81 @@ class AccessMenuController extends Controller
             foreach($sel_sub_mn as $sub_menu):
                 DB::table('methods')->insert([
                     'access_menu_id' => $sel_acs_mn->id,
-                    'add' => 'false',
+                    'sub_menu_id' => $sub_menu->id,
+                    'edit' => 'false',
                     'delete' => 'false',
-                    'view' => 'false'
+                    'view' => 'false',
+                    'created_at' => $hari,
+                    'updated_at' => $hari
                 ]);
             endforeach;
+/* */
+        }
+    }
+
+    public function changeaccess_method(Request $request){
+
+        $methodId = $request->methodId;
+        $val = $request->val;
+        $hari = date('Y-m-d H:i:s');
+
+        $mtd_sel = DB::table('methods')
+            ->where('id' , $methodId)
+            ->first();
+
+        if($val == 'edit'){
+            $num_mtd_sel = DB::table('methods')
+                ->where('id' , $methodId)
+                ->where('edit' , 'true')
+                ->count();
+
+            if($num_mtd_sel > 0){
+                $edit = 'false';
+            }else{
+                $edit = 'true';
+            }
+
+             $delete = $mtd_sel->delete;
+             $view = $mtd_sel->view;
+
+        }elseif($val == 'delete'){
+            $num_mtd_sel = DB::table('methods')
+                ->where('id' , $methodId)
+                ->where('delete' , 'true')
+                ->count();
+
+            if($num_mtd_sel > 0){
+                $delete = 'false';
+            }else{
+                $delete = 'true';
+            }
+             $edit = $mtd_sel->edit;
+             $view = $mtd_sel->view;
+
+        }elseif($val == 'view'){
+            $num_mtd_sel = DB::table('methods')
+                ->where('id' , $methodId)
+                ->where('view' , 'true')
+                ->count();
+
+            if($num_mtd_sel > 0){
+                $view = 'false';
+            }else{
+                $view = 'true';
+            }
+             $edit = $mtd_sel->edit;
+             $delete = $mtd_sel->delete;
+        }else{
 
         }
+
+        DB::table('methods')
+            ->where('id', $methodId)
+            ->update([
+                'edit' => $edit,
+                'delete' => $delete,
+                'view' => $view,
+                'updated_at' => $hari
+        ]);
     }
 }
