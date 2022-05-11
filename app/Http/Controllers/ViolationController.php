@@ -273,6 +273,8 @@ class ViolationController extends Controller
                     ->first();
 
         return view('hi.violations.cetak_sp', [
+            
+            
             'violation' => $violation
         ]);
     }
@@ -307,6 +309,8 @@ class ViolationController extends Controller
             ->get();
 
         return view('hi.violations.edit', [
+            
+            
             'employee' => $employee,
             'violations' => DB::table('violations')->where('employee_id', $id)->get(),
             'alphabets' => $alphabet,
@@ -436,6 +440,8 @@ class ViolationController extends Controller
     public function list()
     {
         return view('hi.violations.list', [
+            
+            
             'violations' => DB::table('violations')->paginate(10),
             'count' => DB::table('violations')->count()
         ]);

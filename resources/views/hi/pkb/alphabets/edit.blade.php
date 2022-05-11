@@ -8,14 +8,14 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>PASAL PKB</h1> 
+        <h1>HURUF PKB</h1> 
         <br>
         {{-- <a href="/hi/articles/create" class="btn  btn-info">+ Add article</a> --}}
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">Blank Page</li>
+          <li class="breadcrumb-item active">Huruf Page</li>
         </ol>
       </div>
     </div>
@@ -29,7 +29,7 @@
     <div class="col-lg-9">
         <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Form Edit Pasal</h3>
+              <h3 class="card-title">Form Edit HUruf PKB</h3>
              </div>
              <div class="card-body">
 
@@ -61,8 +61,8 @@
                             </div>
       
                             <div class="form-group">
-                              <label for="description">Keterangan</label>
-                              <textarea  class="form-control" id="" name="description" placeholder="Bunyi huruf">{{ old('description', $alphabet->description) }}</textarea>
+                              <label for="alphabet_sound">Keterangan</label>
+                              <textarea  class="form-control" id="" name="alphabet_sound" placeholder="Bunyi huruf">{{ old('alphabet_sound', $alphabet->alphabet_sound) }}</textarea>
                             </div>
                             <div class="form-group row">
                               <label for="bank_branch" class="col-sm-3 col-form-label">Periode</label>

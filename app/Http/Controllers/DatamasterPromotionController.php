@@ -38,6 +38,8 @@ class DatamasterPromotionController extends Controller
         }
 
         return view('datamaster.promotions.index', [
+            
+            
             'employees' => $employees->paginate(15),
             'count' => DB::table('employees')->count()             
         ]);
@@ -123,6 +125,8 @@ class DatamasterPromotionController extends Controller
             // ->first();
 
         return view('datamaster.promotions.show', [
+            
+            
             'employee' => $employee,
             'jobs' => Job::all(),
             'startwork_get' => $startwork_get,
@@ -171,6 +175,8 @@ class DatamasterPromotionController extends Controller
                     // ->first();
 
         return view('datamaster.promotions.create', [
+            
+            
             'employee' => $employee,
             'jobs' => Job::all(),
             'departments' => Department::all(),
@@ -217,6 +223,8 @@ class DatamasterPromotionController extends Controller
 
 
         return  view('datamaster.promotions.getedit', [
+            
+            
             "promotion" => $promotions,
             'jobs' => Job::all(),
             'departments' => Department::all(),

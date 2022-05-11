@@ -29,7 +29,7 @@
   <!-- Default box -->
   <div class="card">
       <div class="card-header">
-        <h3 class="card-title">Responsive Hover Table</h3>
+        <h3 class="card-title">Data Departemen</h3>
 
         <div class="card-tools">
         <form action="/departments" >     
@@ -59,19 +59,19 @@
               <td>{{ $department->id }}</td>
               <td>{{ $department->department }}</td>
               <td>
-                  <a href="/departments/{{ $department->id }}" class="btn  btn-outline-primary">
+                  {{-- <a href="/departments/{{ $department->id }}" class="btn  btn-outline-primary">
                     Show
-                  </a>
-                      <a href="/departments/{{ $department->id }}/edit" class="btn  btn-outline-warning">
+                  </a> --}}
+                    <a href="/departments/{{ $department->id }}/edit" class="btn  btn-outline-warning">
                     Edit
                     </a>
-                    <form action="/departments/{{ $department->id }}" method="POST" class="d-inline ">
+                    {{-- <form action="/departments/{{ $department->id }}" method="POST" class="d-inline ">
                       @method('delete')
                       @csrf
                       <button class="btn  btn-outline-danger" onclick="return confirm(' Are you sure delete data ?')"> 
                       Delete
                     </button>
-                    </form>
+                    </form> --}}
               </td>
             </tr>
             @endforeach
@@ -82,10 +82,9 @@
       </div>
       <div class="card-footer">
         {{-- <h3 class="card-title">Responsive Hover Table</h3> --}}
-        <div class="row justify-content-center mb-3">
-          <div class="col-lg-6">
+        <div class="pagination pagination-sm m-0 float-right">
             {{ $departments->links() }}
-          </div>
+          
         </div>
       </div>
      

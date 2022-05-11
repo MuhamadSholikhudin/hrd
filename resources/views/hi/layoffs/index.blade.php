@@ -76,7 +76,7 @@
                     Cetak                    
                   </a>
 
-                  <form action="/hi/layoffs/" method="POST" class="d-inline ">
+                  <form action="/hi/layoffs/{{$layoff->id }}" method="POST" class="d-inline ">
                         @method('delete')
                         @csrf
                         <button class="btn  btn-outline-danger" onclick="return confirm(' Are you sure delete data ?')"> 

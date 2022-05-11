@@ -34,6 +34,8 @@ class HiEmployeeController extends Controller
         }
 
         return view('hi.employees.index', [
+            
+            
             'employees' => $employees->paginate(15)
              
         ]);
@@ -49,6 +51,8 @@ class HiEmployeeController extends Controller
         //
         return view('hi.employees.create'
         , [
+            
+            
             'employees' => Employee::all()
         ]
     );
@@ -93,6 +97,8 @@ class HiEmployeeController extends Controller
                 ->get();
 
         return view('hi.employees.show', [
+            
+            
             'employee' => $employee,
             'investigations' => $investigation
         ]);
@@ -113,6 +119,8 @@ class HiEmployeeController extends Controller
         // ]);
         return view('hi.employees.create'
         , [
+            
+            
             'employees' => Employee::all()
         ]
     );

@@ -17,6 +17,8 @@ class MenuController extends Controller
     {
         //
         return view('menus.index', [
+            
+            
             'menus' => DB::table('menus')->get(),
             'count' => DB::table('menus')->count()
         ]);

@@ -45,6 +45,8 @@ class HiAlphabetController extends Controller
         ];
         
         return view('hi.pkb.alphabets.index', [
+            
+            
             'alphabets' => $alphabets->paginate(10),
             'paragraphs' => Paragraph::all(),
             'alphabets_accumulation' => $alphabets_accumulation,
@@ -114,6 +116,8 @@ class HiAlphabetController extends Controller
     {
         //
         return view('hi.pkb.alphabets.edit', [
+            
+            
             'alphabet' => $alphabet,
             'paragraphs' => Paragraph::all()
     ]);

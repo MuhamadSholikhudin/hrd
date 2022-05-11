@@ -277,7 +277,7 @@
                         $month_indo = 'Maret';            
                       }elseif($date_month == '04'){
                         $month_indo = 'April';            
-                      }elseif($day == '05'){
+                      }elseif($date_month == '05'){
                         $month_indo = 'Mei';            
                       }elseif($date_month == '06'){
                         $month_indo = 'Juni';            

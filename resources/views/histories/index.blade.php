@@ -57,7 +57,11 @@
                 <tr>
                     <td> <a href="#"  class="histories" data-id="{{ $history->id }}" data-role="{{ $history->role_id }}">{{ $history->id }}</a> </td>
                     <td>{{ $history->created_at }}</td>
-                    <td>{{ $history->user_id }}</td>
+                    <td>
+                      <?php
+                        $user = DB::table('users')->where('id', $history->user_id)->first();   
+                      ?>
+                      {{  $user->name }}</td>
                     <td>{{ $history->action }}</td>
                     <td>{{ $history->remark }}</td>
                 </tr>

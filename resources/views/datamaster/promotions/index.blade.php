@@ -49,11 +49,11 @@
 
 
 <!-- Kelola karyawan =>   -->
-&nbsp;
+{{-- &nbsp; --}}
 <!-- Button trigger modal -->
-<a href="/datamaster/promotions/create" class="btn btn-outline-primary " >
+{{-- <a href="/datamaster/promotions/create" class="btn btn-outline-primary " >
   <i class="fa fa-plus" data-toggle="tooltip" data-placement="bottom" title="Tambah 1 Promosi"></i>
-</a>
+</a> --}}
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a class="btn btn-outline-primary" data-toggle="modal"  data-target="#excel_karyawan_baru" >
 <i class="fa fa-arrow-up"  data-toggle="tooltip" data-placement="bottom" title="Upload Excel Tambah Data Karyawan Baru "></i>
@@ -90,11 +90,12 @@
       </div>
     </div>
   </div>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{{-- 
         <a href="/exportpromotions" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="bottom" title="Download Excel Data Karyawan">
           <i class="fas fa-download"></i>
-        </a>
+        </a> --}}
         <div class="card-tools">
             <form action="/datamaster/promotions" >     
                 <div class="input-group input-group-sm" style="width: 150px;">

@@ -17,6 +17,8 @@ class SubMenuController extends Controller
     {
         //
         return view('sub_menus.index', [
+            
+            
             'sub_menus' => DB::table('sub_menus')->get(),
             'count' => DB::table('sub_menus')->count()
         ]);
@@ -32,7 +34,9 @@ class SubMenuController extends Controller
         //
         $is_active = ["active" => 1, "Not active" =>0];
         $menus = DB::table('menus')->get();
-        return view('sub_menus.create',[
+        return view('sub_menus.create', [
+            
+            
             'menus' => $menus,
             'is_active' => $is_active
             ]);

@@ -171,7 +171,7 @@ Route::resource('hi/hiviolations', HiViolationController::class)->middleware('au
 Route::controller(HiViolationController::class)->group(function(){
     Route::get('exportviolations', 'export')->name('violations.export')->middleware('auth');
     Route::post('importviolations', 'import')->name('violations.import')->middleware('auth');
-    // Route::post('updatealphabets', 'update')->name('alphabets.update');
+    Route::post('deleteviolations', 'hapus')->name('deleteviolations');
 });
 
 Route::post('violation/get_type_violation', [ViolationController::class, 'get_type_violation'])->name('get_type_violation');

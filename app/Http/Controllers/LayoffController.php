@@ -12,6 +12,7 @@ use App\Models\Alphabet;
 use App\Models\Article;
 use App\Models\Paragraph;
 use App\Models\Violation;
+use App\Models\Layoff;
 
 class LayoffController extends Controller
 {
@@ -25,6 +26,8 @@ class LayoffController extends Controller
         //
         
         return view('hi.layoffs.index', [
+            
+            
             'layoffs' => DB::table('layoffs')->paginate(10),
             'count' => DB::table('layoffs')->count()
         ]);
@@ -223,6 +226,8 @@ class LayoffController extends Controller
     public function destroy($id)
     {
         //
+        Layoff::destroy($id);
+        return redirect('/hi/layoffs');
     }
 
     public function get_pasal_phk(Request $request){

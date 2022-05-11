@@ -20,6 +20,8 @@ class SignatureController extends Controller
         //
         // echo 'signatures';
         return view('hi.signatures.index', [
+            
+            
             'signatures' => DB::table('signatures')->get(),
             'employees' => DB::table('employees')->get(),
             'count' => DB::table('signatures')->count()        

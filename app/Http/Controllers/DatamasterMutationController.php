@@ -164,6 +164,8 @@ class DatamasterMutationController extends Controller
             // ->first();
 
         return view('datamaster.mutations.create', [
+            
+            
             'employee' => $employee,
             'jobs' => Job::all(),
             'startwork_get' => $startwork_get,
@@ -212,6 +214,8 @@ class DatamasterMutationController extends Controller
 
 
         return  view('datamaster.mutatios.getedit', [
+            
+            
             "mutation" => $mutation,
             'jobs' => Job::all(),
             'departments' => Department::all(),

@@ -33,6 +33,8 @@ class UserController extends Controller
         $users = User::get();
   
         return view('users.list', [
+            
+            
             'users' => $users,
             'count' => User::count()
         ]);
@@ -45,6 +47,8 @@ class UserController extends Controller
         $is_active = ["active" => 1, "Not active" =>0];
         $roles = DB::table('roles')->get();
         return view('users.create', [
+            
+            
             'roles' => $roles,
             'is_active' => $is_active,
             'count' => User::count()
@@ -74,6 +78,8 @@ class UserController extends Controller
         $is_active = ["active" => 1, "Not active" =>0];
         $roles = DB::table('roles')->get();
         return view('users.edit', [
+            
+            
             'user' => $user,
             'roles' => $roles,
             'is_active' => $is_active,

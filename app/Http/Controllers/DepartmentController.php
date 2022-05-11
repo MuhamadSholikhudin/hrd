@@ -21,6 +21,7 @@ class DepartmentController extends Controller
         }
 
         return view('departments.index', [
+            
             'departments' => $departments->paginate(15)
              
         ]);
@@ -63,6 +64,8 @@ class DepartmentController extends Controller
     public function show(Department $department)
     {
         return view('departments.show', [
+            
+            
             'department' => $department
         ]);
     }
@@ -77,6 +80,8 @@ class DepartmentController extends Controller
     {
         //
         return view('departments.edit', [
+            
+            
             'department' => $department
         ]);
     }

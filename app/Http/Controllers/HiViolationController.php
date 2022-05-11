@@ -29,6 +29,8 @@ class HiViolationController extends Controller
     {
         //
         return view('hi.violations.list', [
+            
+            
             'violations' => Violation::all()->paginate(10),
             'count' => DB::table('employees')->count()
         ]);
@@ -95,9 +97,18 @@ class HiViolationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    // public function destroy(Violation $violation)
+    public function destroy(Request $requset) 
     {
-        //
+            // Violation::destroy($violation->id);
+        DB::table('violations')->where('id', $requset->id)->delete();
+        return redirect('violations/list');
+    }
+    public function hapus(Request $requset) 
+    {
+            // Violation::destroy($violation->id);
+        DB::table('violations')->where('id', $requset->id)->delete();
+        return redirect('violations/list');
     }
 
     public function import() 

@@ -29,7 +29,7 @@
   <!-- Default box -->
   <div class="card">
       <div class="card-header">
-        <h3 class="card-title">Responsive Hover Table</h3>
+        <h3 class="card-title">Data Job Level</h3>
 
         <div class="card-tools">
         <form action="/jobs" >     
@@ -63,19 +63,16 @@
               <td>{{ $job->job_level }}</td>
               <td>{{ $job->level }}</td>
               <td>
-                  <a href="/jobs/{{ $job->id }}" class="btn  btn-outline-primary">
-                    Show
-                  </a>
-                      <a href="/jobs/{{ $job->id }}/edit" class="btn  btn-outline-warning">
+                  <a href="/jobs/{{ $job->id }}/edit" class="btn  btn-outline-warning">
                     Edit
-                    </a>
-                    <form action="/jobs/{{ $job->id }}" method="POST" class="d-inline ">
+                  </a>
+                    {{-- <form action="/jobs/{{ $job->id }}" method="POST" class="d-inline ">
                       @method('delete')
                       @csrf
                       <button class="btn  btn-outline-danger" onclick="return confirm(' Are you sure delete data ?')"> 
                       Delete
                     </button>
-                    </form>
+                    </form> --}}
               </td>
             </tr>
             @endforeach
@@ -86,11 +83,11 @@
       </div>
       <div class="card-footer">
         {{-- <h3 class="card-title">Responsive Hover Table</h3> --}}
-        <div class="row justify-content-center mb-3">
-          <div class="col-lg-6">
-            {{ $jobs->links() }}
-          </div>
+      
+        <div class="pagination pagination-sm m-0 float-right">
+          {{ $jobs->links() }}
         </div>
+        
       </div>
      
       <!-- /.card-body -->

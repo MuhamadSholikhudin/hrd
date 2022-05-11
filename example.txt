@@ -1133,4 +1133,24 @@ if (file_exists(IMAGE_FOLDER . '/img1.png')) {
             ]);
 
 
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="fas fa-sign-out"></i>
+          {{-- <span class="badge badge-warning navbar-badge">15</span> --}}
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          {{-- <span class="dropdown-item dropdown-header">15 Notifications</span> --}}
+          {{-- <div class="dropdown-divider"></div> --}}
+          <form action="/logout" method="post">
+            @csrf
+            <button type="submit" class="dropdown-item">
+              <i class="fas fa-sign-out mr-2"></i> SIGN OUT
+            </button>
+          </form>
 
+          <span class="float-right text-muted text-sm">3 mins</span>
+          <div class="dropdown-divider"></div>
+           <a href="#" class="dropdown-item">
+            <i class="fas fa-users mr-2"></i> 8 friend requests
+            <span class="float-right text-muted text-sm">12 hours</span>
+          </a>
+          <div class="dropdown-divider"></div> 

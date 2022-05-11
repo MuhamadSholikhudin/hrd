@@ -358,12 +358,13 @@
         data: {
           id: id,
         },
-        success: function() {
-            // $('#proses_date').html(data[0]);
-            // $('#proses_action').html(data[1]);
-            // $('#proses_keterangan').html(data[2]);
-            // $('#proses_oleh').html(data[3]);
-            // $('#proses_bagian').html(data[4]);
+        success: function(data) {
+          // alert(id);
+            $('#proses_date').html(data[0]);
+            $('#proses_action').html(data[1]);
+            $('#proses_keterangan').html(data[2]);
+            $('#proses_oleh').html(data[3]);
+            $('#proses_bagian').html(data[4]);
 
         },error(){
             alert("Coba lagi");

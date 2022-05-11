@@ -61,7 +61,7 @@ CREATE TABLE `methods` (
 CREATE TABLE `histories` (
   `id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
   `user_id` int(11) NOT NULL,
-  `action` int(11) NOT NULL,
+  `action` varchar(128) NOT NULL,
   `remark` varchar(128) NOT NULL,
   `role_id` int(11) NOT NULL,
     created_at timestamp NULL,

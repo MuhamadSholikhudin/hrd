@@ -26,6 +26,8 @@ class HiArticleController extends Controller
                 }
                 
                 return view('hi.pkb.articles.index', [
+                    
+                    
                     'articles' => $articles->paginate(10),
                     // 'articles' => DB::table('articles')->get(),
                     'count' => DB::table('articles')->count()
@@ -82,6 +84,8 @@ class HiArticleController extends Controller
     {
         //
         return view('hi.pkb.articles.edit', [
+            
+            
             'article' => $article
         ]);
     }

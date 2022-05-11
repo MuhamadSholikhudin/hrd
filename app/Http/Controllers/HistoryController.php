@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+
+use Carbon\Carbon;
+
+  
 
 class HistoryController extends Controller
 {
@@ -14,10 +19,14 @@ class HistoryController extends Controller
         // echo 'oke';
 
         // $histories = DB::table('histories')->get();
+        // $m_histories = DB::table('histories') ->limit(5)->get();
 
         return view('histories.index', [
+            
+            
             'histories' => DB::table('histories')->paginate(10),
             'count' => DB::table('histories')->count()
+            
              
         ]);
 
@@ -27,13 +36,15 @@ class HistoryController extends Controller
     {
         $id = $request->id;
 
-        // $sel_histories = DB::table('histories')
-        //     ->where('id', $id )
-        //     ->first();
+        $sel_histories = DB::table('histories')
+            ->where('id', $id )
+            ->first();
 
-        // $data = [$sel_histories->created_at, $sel_histories->action, $sel_histories->remark,  $sel_histories->user_id,  $sel_histories->role_id];
+        $user = DB::table('users')->where('id', $sel_histories->user_id)->first();
+        $role = DB::table('roles')->where('id', $sel_histories->role_id)->first();
+        $data = [$sel_histories->created_at, $sel_histories->action, $sel_histories->remark,  $user->name,  $role->role];
 
-        // return response()->json($data);
+        return response()->json($data);
 
     }
 }

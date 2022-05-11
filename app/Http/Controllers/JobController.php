@@ -22,6 +22,8 @@ class JobController extends Controller
         }
 
         return view('jobs.index', [
+            
+            
             'jobs' => $jobs->paginate(15)
              
         ]);
@@ -65,6 +67,8 @@ class JobController extends Controller
     public function show(Job $job)
     {
         return view('jobs.show', [
+            
+            
             'job' => $job
         ]);
     }
@@ -79,6 +83,8 @@ class JobController extends Controller
     {
         //
         return view('jobs.edit', [
+            
+            
             'job' => $job
         ]);
     }

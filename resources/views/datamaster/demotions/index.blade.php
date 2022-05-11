@@ -156,6 +156,5 @@
 
 </section>
 <!-- /.content -->
-</div>
 
 @endsection

@@ -31,7 +31,7 @@
                 <div class="header p-4">
                     <div class="row">
                         <div class="col-md-2">
-                            <img src="{{asset('img/HWASEUNG.PNG')}}" alt="" width="100%" height="80px">
+                            <img src="{{asset('img/HWASEUNG.PNG')}}" alt="" width="150px" height="80px">
                         </div>
                         <div class="col-md-10">
                             <h3 class="text-center">PT. HWA SEUNG INDONESIA</h3>
@@ -212,7 +212,7 @@
                                         $month_indo_sp = 'Maret';            
                                         }elseif($date_month_sp == '04'){
                                         $month_indo_sp = 'April';            
-                                        }elseif($day == '05'){
+                                        }elseif($date_month_sp == '05'){
                                         $month_indo_sp = 'Mei';            
                                         }elseif($date_month_sp == '06'){
                                         $month_indo_sp = 'Juni';            

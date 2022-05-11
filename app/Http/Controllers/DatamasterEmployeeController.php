@@ -38,6 +38,8 @@ class DatamasterEmployeeController extends Controller
 
         
         return view('datamaster.employees.index', [
+            
+            
             'employees' => $employees->paginate(10),
             'count' => DB::table('employees')->count()
              
@@ -60,6 +62,8 @@ class DatamasterEmployeeController extends Controller
         $grade_salary = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
         //
         return view('datamaster.employees.create', [
+            
+            
             'jobs' => Job::all(),
             'departments' => Department::all(),
             'employees' => Employee::all(),
@@ -177,6 +181,8 @@ class DatamasterEmployeeController extends Controller
 
         $salary = DB::table('salaries')->where('employee_id', $employee->id)->first();
         return view('datamaster.employees.show', [
+            
+            
             'employee' => $employee,
             'salary' => $salary
         ]);
@@ -206,6 +212,8 @@ class DatamasterEmployeeController extends Controller
 
         $salary = DB::table('salaries')->where('employee_id', $employee->id)->first();
         return view('datamaster.employees.edit', [
+            
+            
             'employee' => $employee,
             'salary' => $salary,
             'jobs' => Job::all(),

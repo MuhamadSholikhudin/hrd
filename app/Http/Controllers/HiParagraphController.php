@@ -90,6 +90,8 @@ class HiParagraphController extends Controller
         $type_of_verse = ["Peringatan Lisan","Surat Peringatan 1","Surat Peringatan 2","Surat Peringatan 3","Surat Peringatan Terakhir","PHK Pesangon","PHK Tanpa Peesangon"];
 
         return view('hi.pkb.paragraphs.edit', [
+            
+            
             'articles' => Article::all(),
             'paragraph' => $paragraph,
             'type_of_verse' => $type_of_verse

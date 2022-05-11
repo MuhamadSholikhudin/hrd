@@ -8,14 +8,14 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>PASAL PKB HURUF</h1> 
+        <h1>HURUF PKB</h1> 
         <br>
         {{-- <a href="/hi/articles/create" class="btn  btn-info">+ Add article</a> --}}
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">HURUF Page</li>
+          <li class="breadcrumb-item"><a href="#">Huruf Pkb</a></li>
+          <li class="breadcrumb-item active">Page</li>
         </ol>
       </div>
     </div>
@@ -29,7 +29,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-              <h3 class="card-title">List Ayat</h3>
+              <h3 class="card-title">List Huruf</h3>
   
               <div class="card-tools">
                   <form action="/hi/alphabets" >     
@@ -149,7 +149,7 @@
                     
                     </td>
                     <td>{{ $alphabet->alphabet }}</td>
-                    <td>{{ $alphabet->description }}</td>
+                    <td>{{ $alphabet->alphabet_sound }}</td>
                     <td> {{ $print2_paragraph->type_of_verse }}</td>
                     <td>{{ $alphabet->last_periode}} - {{ $alphabet->firts_periode }}</td>
                     <td>

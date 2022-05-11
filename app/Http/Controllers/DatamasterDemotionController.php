@@ -32,6 +32,8 @@ class DatamasterDemotionController extends Controller
         }
 
         return view('datamaster.demotions.index', [
+            
+            
             'employees' => $employees->paginate(15),
             'count' => DB::table('employees')->count()
              
@@ -46,7 +48,10 @@ class DatamasterDemotionController extends Controller
     public function create()
     {
         //
-        return view('datamaster.demotions.create');
+        return view('datamaster.demotions.create',[
+            
+            'count_histories' => DB::table('histories')->count()
+        ]);
     }
 
     /**
@@ -118,6 +123,8 @@ class DatamasterDemotionController extends Controller
             // ->first();
 
         return view('datamaster.demotions.show', [
+            
+            
             'employee' => $employee,
             'jobs' => Job::all(),
             'startwork_get' => $startwork_get,
@@ -167,6 +174,8 @@ class DatamasterDemotionController extends Controller
             // ->first();
 
         return view('datamaster.demotions.create', [
+            
+            
             'employee' => $employee,
             'startwork_get' => $startwork_get,
             'jobs' => Job::all(),
@@ -214,6 +223,8 @@ class DatamasterDemotionController extends Controller
 
 
         return  view('datamaster.demotions.getedit', [
+            
+            
             "demotion" => $demotions,
             'jobs' => Job::all(),
             'departments' => Department::all(),
