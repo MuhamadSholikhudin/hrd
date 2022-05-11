@@ -46,6 +46,8 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\SubMenuController;
 use App\Http\Controllers\AccessMenuController;
 
+use App\Http\Controllers\HistoryController;
+
 
 use App\Http\Controllers\PDFController;
 
@@ -236,3 +238,21 @@ Route::post('access_menus/changeaccess_method', [AccessMenuController::class, 'c
 Route::get('generate-pdf', [PDFController::class, 'generatePDF']);
 Route::post('violation-pdf', [PDFController::class, 'violationPDF']);
 
+// Livewire
+Route::get('history-datatables', function () {
+    return view('histories.default');
+});
+
+
+Route::controller(historyController::class)->group(function(){
+    Route::get('histories', 'index')->name('histories');
+    Route::post('histories_view', 'histories_view')->name('histories_view');
+    // Route::post('updatealphabets', 'update')->name('alphabets.update');
+});
+
+// Route::get('histories', function () {
+   
+//     return view('histories.index', [
+//         'histories' => DB::table('histories')->get()->paginate(10)
+//     ]);
+// });

@@ -57,6 +57,17 @@ CREATE TABLE `methods` (
     updated_at timestamp NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+CREATE TABLE `histories` (
+  `id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `action` int(11) NOT NULL,
+  `remark` varchar(128) NOT NULL,
+  `role_id` int(11) NOT NULL,
+    created_at timestamp NULL,
+    updated_at timestamp NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `user`
 --

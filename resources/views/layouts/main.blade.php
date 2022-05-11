@@ -36,6 +36,7 @@
   }
 </style>
 
+
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -336,10 +337,48 @@
 
   });
 
+
+      // Histiries 
+    $('.histories').on('click', function() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    const id = $(this).data('id');
+    // const methodId = $(this).data('method');
+    // const val = $(this).val();
+
+    // alert(id);
+
+    $.ajax({
+        url: "{{route('histories_view')}}",
+        type: 'POST',
+        data: {
+          id: id,
+        },
+        success: function() {
+            // $('#proses_date').html(data[0]);
+            // $('#proses_action').html(data[1]);
+            // $('#proses_keterangan').html(data[2]);
+            // $('#proses_oleh').html(data[3]);
+            // $('#proses_bagian').html(data[4]);
+
+        },error(){
+            alert("Coba lagi");
+          }
+    });
+   
+
+  });
+
   document.addEventListener('trix-file-accept', function(e){
     e.preventDefault();
   });
  
   </script>
+
+
 </body>
 </html>

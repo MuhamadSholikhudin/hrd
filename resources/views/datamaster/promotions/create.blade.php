@@ -89,6 +89,83 @@
 
           <!-- NAV PILLS -->
           <div class="col-md-9">
+          <?php 
+                  // Cari sub menu dari 
+                  
+                  //  $num_access_menus = DB::table('access_menus')
+                  //     ->where('role_id', $sess_role_id)
+                  //     ->count();
+                  echo '<br>';
+                  $url_now = url()->current();
+                 
+                 echo  $url_sc = substr($url_now, 21); 
+                 // echo $open_url_now = $url_sc.'*';
+                 echo '<br>';
+
+                 $str = $url_now;
+                   $prefix = 'http://127.0.0.1:8000';
+                   if (substr($str, 0, strlen($prefix)) === $prefix) {
+                       $str = substr($str, strlen($prefix));
+                   }
+                   //hasil
+                   echo $str;
+                   echo '<br>';
+
+                   $a = $str;
+                   if (strpos($a, 'datamaster/employees')) {
+                     echo '&nbsp;true';
+                   }else {
+                       echo '&nbsp;false';
+                   }
+                   echo '<br>';
+                   echo '<br>';
+
+
+                  $sess_role_id = auth()->user()->role_id;
+
+                   $count_access_menus = DB::table('access_menus')
+                      ->where('access_menus.role_id', $sess_role_id)
+                      ->get();
+
+                    foreach($count_access_menus as $c_a_m):
+                      $m_acs = DB::table('methods')
+                        ->where('access_menu_id', $c_a_m->id)
+                        ->get();
+
+                        foreach($m_acs as $cs_as_ms):
+
+                          $sm_c = DB::table('sub_menus')
+                            ->where('id', $cs_as_ms->sub_menu_id)
+                            ->first();
+                            $url_sds = substr($sm_c->url, 1);
+
+                           if (strpos($a, $url_sds)) {
+                              echo '&nbsp;true';
+                              echo ' [ '.$cs_as_ms->edit.' ]';
+
+                                if($cs_as_ms->edit == 'true'){
+                                  echo '<button type="submit" class="btn btn-primary col start">
+                                  <i class="fas fa-plus"></i>
+                                  <span>Simpan</span>
+                                </button>';
+                                }else{
+                                  echo '<button>a</button>';
+                                }
+
+
+                            }else {
+                                echo '&nbsp;false';
+                            }
+                            echo '<br>';
+                           
+                        endforeach;
+                      //   
+                    
+                    endforeach;
+
+                ?>
+
+
               <div class="card card-primary">
                   <div class="card-header">
                     <h3 class="card-title">Promosi Karyawan</h3>

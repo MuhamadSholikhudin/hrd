@@ -201,7 +201,7 @@
           </ul>
         </div> --}}
       <div class="card-footer">
-      <h3 class="card-title">Total : {{$count}}</h3>
+        <h3 class="card-title">Total : {{$count}}</h3>
         <div class="pagination pagination-sm m-0 float-right">
             {{ $employees->links() }}
         </div>
