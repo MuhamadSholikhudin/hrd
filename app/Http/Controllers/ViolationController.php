@@ -439,10 +439,16 @@ class ViolationController extends Controller
 
     public function list()
     {
+        $violations = Violation::oldest();
+
+        if(request('search')){
+            $violations->where('date_end_violation', 'like', '%' . request('search') . '%')
+                      ->orWhere('date_of_violation', 'like', '%' . request('search') . '%')
+                      ->orWhere('other_information', 'like', '%' . request('search') . '%');
+        }
+
         return view('hi.violations.list', [
-            
-            
-            'violations' => DB::table('violations')->paginate(10),
+            'violations' => $violations->paginate(10),
             'count' => DB::table('violations')->count()
         ]);
     }

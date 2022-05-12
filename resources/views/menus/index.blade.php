@@ -61,9 +61,9 @@
 
               <td>{{ $menu->menu }}</td>
               <td>
-                  <a href="/menus/{{ $menu->id }}" class="btn  btn-outline-primary">
+                  <!-- <a href="/menus/{{ $menu->id }}" class="btn  btn-outline-primary">
                     Show
-                  </a>
+                  </a> -->
                       <a href="/menus/{{ $menu->id }}/edit" class="btn  btn-outline-warning">
                     Edit
                     </a>

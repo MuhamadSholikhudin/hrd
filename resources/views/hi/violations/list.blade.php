@@ -139,7 +139,7 @@
           </div>
         </div>
         <div class="card-tools">
-            <form action="/datamaster/employees" >     
+            <form action="/violations/list" >     
                 <div class="input-group input-group-sm" style="width: 150px;">
                     <input type="text" name="search" value="{{ request('search') }}" class="form-control float-right" placeholder="Search">
                     <div class="input-group-append">
@@ -169,7 +169,7 @@
           <tbody>
             @foreach($violations as $violation)
               <tr>
-                <td>{{ $loop->iteration }}</td>
+                <td>{{ $violation->id }}</td>
                 <td>
                   <?php
                     $date_violation_sp = new \DateTime($violation->date_of_violation .' 00:00:00');

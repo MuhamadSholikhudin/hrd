@@ -24,7 +24,7 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
+            'name' => ['required'],
             'password' => ['required'],
         ]);
 
@@ -37,11 +37,18 @@ class LoginController extends Controller
         //     return redirect()->intended('datamaster/employees');
         // }
  
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt(['name' => $request->name, 'password' => $request->password, 'is_active' => 1])) {
+            // Authentication was successful...
             $request->session()->regenerate();
- 
-            return redirect()->intended('datamaster/employees ');
+            return redirect()->intended('dashboards ');
+            
         }
+
+        // if (Auth::attempt($credentials)) {
+        //     $request->session()->regenerate();
+ 
+        //     return redirect()->intended('datamaster/employees ');
+        // }
 
         // dd($oke);
  

@@ -413,8 +413,8 @@
           </div>
         </div>
 
-{{-- Displaynone --}}
-<div >
+      {{-- Displaynone --}}
+    <div style="display:none;">
         <?php
         
         $date_violation = new \DateTime(date('Y-m-d') .' 4:06:37' );
@@ -578,16 +578,16 @@
 
 
         ?>
-        <!-- INISIASI AKUMULASI PELANGGARAN -->
-        <input type="text" name="last_vio" value="{{$sta_viol}}" id="last_vio">
-        <input type="text" name="last_type" value="{{$type_viol}}" id="last_type">
-        <input type="text" name="id_emp" value="{{$employee->id}}" id="id_emp">
-        <input type="text" name="last_accumulation" value="{{$last_accumulation}}"  >     
+          <!-- INISIASI AKUMULASI PELANGGARAN -->
+          <input type="text" name="last_vio" value="{{$sta_viol}}" id="last_vio">
+          <input type="text" name="last_type" value="{{$type_viol}}" id="last_type">
+          <input type="text" name="id_emp" value="{{$employee->id}}" id="id_emp">
+          <input type="text" name="last_accumulation" value="{{$last_accumulation}}"  >     
 
         
 
-</div>
-{{-- Displaynone --}}
+        </div>
+        {{-- Displaynone --}}
         <button type="button" id="btn_modal_click1" class="btn btn-default" style="display:none;" data-toggle="modal" data-target="#modal-xl1">
           Surat Peringatan asli
         </button>
@@ -639,9 +639,9 @@
                 <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label">Jenis Pelangaran</label>
                   <div class="col-sm-3">
-                      <input type="text" name="last_vio" value="{{$sta_viol}}" >
-                      <input type="text" name="last_type" value="{{$type_viol}}"  >     
-                      <input type="text" name="last_accumulation" value="{{$last_accumulation}}"  >     
+                      <input type="hidden" name="last_vio" value="{{$sta_viol}}" >
+                      <input type="hidden" name="last_type" value="{{$type_viol}}"  >     
+                      <input type="hidden" name="last_accumulation" value="{{$last_accumulation}}"  >     
 
                       <input type="text" class="form-control" id="jpn1"  placeholder="Jenis Pelanggaran" >     
                   </div>

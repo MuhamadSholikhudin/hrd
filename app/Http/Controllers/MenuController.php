@@ -72,6 +72,10 @@ class MenuController extends Controller
     public function edit($id)
     {
         //
+        $menu = DB::table('menus')->find($id);
+        return view('menus.edit',[
+            'menu' => $menu
+        ]);
     }
 
     /**
@@ -84,6 +88,13 @@ class MenuController extends Controller
     public function update(Request $request, $id)
     {
         //
+        DB::table('menus')
+            ->where('id', $id)
+            ->update([
+            'menu'=> $request->menu
+        ]); 
+        return redirect('/menus/');
+
     }
 
     /**

@@ -56,7 +56,7 @@
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#">
-              <i class="far fa-comments"></i>
+              <i class="far fa-comment"></i>
               <span class="badge badge-danger navbar-badge">{{$count_histories}}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">

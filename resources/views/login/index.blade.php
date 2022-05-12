@@ -58,14 +58,14 @@
       <form action="/login" method="post" enctype="multipart/form-data">
       @csrf
         <div class="input-group mb-3">
-          <input type="text" class="form-control @error('email') is-invalid @enderror" placeholder="email" name="email" value="{{ old('email') }}"  >
+          <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="name" name="name" value="{{ old('name') }}"  >
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
             </div>
           </div>
 
-          @error('email') {{$message}} @enderror
+          @error('name') {{$message}} @enderror
         </div>
         <div class="input-group mb-3">
           <input type="password" class="form-control" placeholder="Password" name="password" >

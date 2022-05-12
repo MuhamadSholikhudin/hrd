@@ -16,10 +16,21 @@ class SubMenuController extends Controller
     public function index()
     {
         //
+        $sub_menus = DB::table('sub_menus')->oldest();
+
+        // $employees = DB::table('employees')
+        //     ->leftJoin('jobs', 'employees.job_id', '=', 'jobs.id')
+        //     ->Join('departments', 'employees.department_id', '=', 'departments.id');
+            // ->get();
+
+
+        if(request('search')){
+            $sub_menus->where('title', 'like', '%' . request('search') . '%')
+                      ->orWhere('url', 'like', '%' . request('search') . '%');
+        }
+
         return view('sub_menus.index', [
-            
-            
-            'sub_menus' => DB::table('sub_menus')->get(),
+            'sub_menus' => $sub_menus->paginate(4),
             'count' => DB::table('sub_menus')->count()
         ]);
     }
@@ -83,6 +94,16 @@ class SubMenuController extends Controller
     public function edit($id)
     {
         //
+        $sub_menu = DB::table('sub_menus')->where('id', $id)->first();
+
+        $is_active = ["active" => 1, "Not active" => 0];
+        $menus = DB::table('menus')->get();
+
+        return view('sub_menus.edit', [
+            'sub_menu' => $sub_menu,
+            'menus' => $menus,
+            'is_active' => $is_active
+            ]);
     }
 
     /**
@@ -95,6 +116,17 @@ class SubMenuController extends Controller
     public function update(Request $request, $id)
     {
         //
+        DB::table('sub_menus')
+            ->where('id', $id)
+            ->update([
+                'menu_id' => $request->menu_id,
+                'title' => $request->title,
+                'url' => $request->url,
+                'icon' => $request->icon,
+                'is_active' => $request->is_active
+            ]);
+
+        return redirect('/sub_menus');
     }
 
     /**
@@ -106,5 +138,7 @@ class SubMenuController extends Controller
     public function destroy($id)
     {
         //
+        DB::table('sub_menus')->where('id', $requset->id)->delete();
+        return redirect('violations/list');
     }
 }

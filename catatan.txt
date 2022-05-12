@@ -73,3 +73,52 @@ php artisan make:export UsersExport --model=User
  
 The [C:\xampp\htdocs\hrd\public\storage] link has been connected to [C:\xampp\htdocs\hrd\storage\app/public].
 The links have been created.
+
+
+-Make middleware
+php artisan make:midleware Isadmin
+
+
+
+if(!auth()->check() || auth->user()->username !== 'sholikhudin'){
+    abort(403);
+}
+
+if(!auth()->check() || !auth( )->user()->is_admin){
+    abort(403);
+}
+return $next($request);
+
+lanjut
+1. Buka fil Kernel.php
+2. menuju pada protected $routeMiddleware = [] untuk menambahkan nama
+3. 'admin' => \App\Http\Middleware\IsAdmin::class,
+4. buka web berinama middleware('admin')
+
+-Gates
+1. Buka file AppServiceProvider.php 
+2. menuju function boot (){} dan tambahkan
+function boot (){
+    Paginator::useBootstrap( );
+
+    Gate::define('admin', function(User $user){
+        return $user->is_admin;
+    }
+    
+    Gate::define('admin', function(User $user){
+        return auth->user()->username !== 'sholikhudin'
+    }
+}
+
+buat view
+@can('admin')
+
+@endcan
+
+
+-menyisipkan migration 
+
+make:migration add_IsAdmin_users_tables
+
+php artisan migrate
+

@@ -98,16 +98,36 @@ class SignatureController extends Controller
     {
         //
 
-        DB::table('signatures')
-            ->where('id', $request->id)
-            ->update([
-                'employee_id'=> $request->employee_id,
-                'name'=> $request->name,
-                'department'=> $request->department, 
-                'part'=> $request->part,
-                'status_signature'=> $request->status_signature,
-                'employee_id'=> $request->employee_id
-            ]);
+        if($request->status_signature == 'active'){
+            DB::table('signatures')
+                ->where('id', $request->id)
+                ->update([
+                    'employee_id'=> $request->employee_id,
+                    'name'=> $request->name,
+                    'department'=> $request->department, 
+                    'part'=> $request->part,
+                    'status_signature'=> $request->status_signature,
+                    'employee_id'=> $request->employee_id
+                ]);
+
+            
+            DB::table('signatures')
+                ->where('id', '!=', $request->id)
+                ->update([
+                    'status_signature'=> 'notactive',
+                ]);
+        }else{
+            DB::table('signatures')
+                ->where('id', $request->id)
+                ->update([
+                    'employee_id'=> $request->employee_id,
+                    'name'=> $request->name,
+                    'department'=> $request->department, 
+                    'part'=> $request->part,
+                    'status_signature'=> $request->status_signature,
+                    'employee_id'=> $request->employee_id
+                ]);
+        }
 
             return redirect('/hi/signatures/')->with('success', 'Data signature berhasil di update');
     }
@@ -122,6 +142,17 @@ class SignatureController extends Controller
     {
         //
     }
+
+    public function get_signature_employee(){
+
+
+        $employee = DB::table('employees')->get();
+
+        $data = $employee;
+
+        return response()->json($data);
+    }
+
 
     public function get_signature(Request $request){
 

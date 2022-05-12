@@ -80,9 +80,9 @@
                     </td>
                     <td>{{ $employee->status_employee }}</td>
                     <td>
-                        <a href="/hi/violations/{{ $employee->id }}" class="btn  btn-outline-primary">
+                        <!-- <a href="/hi/violations/{{ $employee->id }}" class="btn  btn-outline-primary">
                           Lihat
-                        </a>
+                        </a> -->
                         <a href="/hi/violations/{{ $employee->id }}/edit" class="btn  btn-outline-warning">
                           Pelanggran
                         </a>

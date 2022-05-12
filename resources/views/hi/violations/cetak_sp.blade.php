@@ -65,14 +65,20 @@
                     <br>
                     <div class="col-sm-12 lead">Kepada karyawan tersebut di bawah ini :</div>
                     <br>
-                    <div class="col-sm-12 lead">
+                    <div class="col-sm-3 lead">
+
+                    </div>
+                    <div class="col-sm-9 lead">
                         <table>
                                 <?php
                                 $employee = DB::table('employees')->find($violation->employee_id);
                             ?>
 
                             <tr>
-                                <td>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </td>
+                                <td>
+                                &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 
+                                &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 
+                                </td>
                                 <td>Nama</td>
                                 <td>: {{ $employee->name}}</td>
                             </tr>
@@ -94,12 +100,12 @@
                         </table>
                     </div>
                     <br>
-                    <div class="col-sm-12 lead">Dengan ini diberikan, {{ $violation->type_of_violation}}</div>
+                    <div class="col-sm-12 lead">Dengan ini diberikan, <b><u>{{ $violation->type_of_violation}}</u></b> </div>
                     <br>
                     <div class="col-sm-12 lead" style="text-align: justify;">Sehubungan yang bersangkutan telah melakukan pelanggaran peraturan/tata tertib/disiplin kerja yang
                         berlaku di perusahaan. :</div>
                         <br>
-                    <div class="col-sm-12 lead">Pasal yang dilanggar :</div>
+                    <div class="col-sm-12 lead"> <b>Pasal yang dilanggar : </b></div>
                     
                     <?php 
                         $sel_alphabet = DB::table('alphabets')->find($violation->alphabet_id);
@@ -124,7 +130,7 @@
                     @endif
               
                     <br>
-                    <div class="col-sm-12 lead">Keterangan lain :</div>
+                    <div class="col-sm-12 lead"><b>Keterangan lain :</b></div>
                     @if($violation->alphabet_accumulation != null)
                             
                         <!-- DELIK SEKARANG -->
@@ -168,8 +174,11 @@
                                     <h4 class="text-center"> &nbsp; </h4>
                                 </div>
                                 <div>
-                                    <h6 class="text-center">&nbsp;</h6>
-                                    <h6 class="text-center">Penerima Sanksi,</h6>
+                                    <p class="text-center lead"> <br>
+                                        Penerima Sanksi
+                                    </p>
+                                    <!-- <h6 class="text-center">&nbsp;</h6>
+                                    <h6 class="text-center">Penerima Sanksi,</h6> -->
                                 </div>
                                 <div>
                                     <br>
@@ -181,12 +190,17 @@
                                     <br>
                                 </div>
                                 <div>
-                                    <h6 class="text-center">
+                                    <p class="text-center lead"> <br>
+                                        <b>
+                                            {{ $employee->name}}
+                                        </b>
+                                    </p>
+                                    <!-- <h6 class="text-center">
                                         <b>
                                             {{-- GUNTUR SUHENDRO --}}
                                             {{ $employee->name}}
                                         </b>
-                                    </h6>
+                                    </h6> -->
                                 
                                 </div>
                             </div>

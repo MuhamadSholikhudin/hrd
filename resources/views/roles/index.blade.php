@@ -29,7 +29,7 @@
   <!-- Default box -->
   <div class="card">
       <div class="card-header">
-        <h3 class="card-title">Responsive Hover Table</h3>
+        <h3 class="card-title">Data Role Access User</h3>
 
         <div class="card-tools">
         <form action="/userlist" >     
@@ -61,19 +61,13 @@
 
               <td>{{ $role->role }}</td>
               <td>
-                  <a href="/roles/{{ $role->id }}" class="btn  btn-outline-primary">
+                  <!-- <a href="/roles/{{ $role->id }}" class="btn  btn-outline-primary">
                     Show
-                  </a>
+                  </a> -->
                       <a href="/roles/{{ $role->id }}/edit" class="btn  btn-outline-warning">
                     Edit
                     </a>
-                    <form action="/roles/{{ $role->id }}" method="POST" class="d-inline ">
-                      @method('delete')
-                      @csrf
-                      <button class="btn  btn-outline-danger" onclick="return confirm(' Are you sure delete data ?')"> 
-                      Delete
-                    </button>
-                    </form>
+                   
               </td>
             </tr>
             @endforeach

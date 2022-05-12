@@ -29,7 +29,7 @@
   <!-- Default box -->
   <div class="card">
       <div class="card-header">
-        <h3 class="card-title">Responsive Hover Table</h3>
+        <h3 class="card-title">Daftar List Sub Menu</h3>
 
         <div class="card-tools">
         <form action="/userlist" >     
@@ -68,9 +68,9 @@
               <td>{{ $sub_menu->icon }}</td>
               <td>{{ $sub_menu->is_active }}</td>
               <td>
-                  <a href="/sub_menus/{{ $sub_menu->id }}" class="btn  btn-outline-primary">
+                  <!-- <a href="/sub_menus/{{ $sub_menu->id }}" class="btn  btn-outline-primary">
                     Show
-                  </a>
+                  </a> -->
                       <a href="/sub_menus/{{ $sub_menu->id }}/edit" class="btn  btn-outline-warning">
                     Edit
                     </a>
@@ -90,9 +90,9 @@
         </table>
       </div>
       <div class="card-footer">
-        {{-- <h3 class="card-title">Responsive Hover Table</h3> --}}
-        <div class="row justify-content-center mb-3">
-          <div class="col-lg-6">
+        <h3 class="card-title">Total : {{$count}}</h3>
+          <div class="pagination pagination-sm m-0 float-right">
+              {{ $sub_menus->links() }}
           </div>
         </div>
       </div>

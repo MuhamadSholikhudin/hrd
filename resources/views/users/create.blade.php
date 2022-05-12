@@ -57,7 +57,7 @@
                           </div>
                           <div class="form-group">
                             <label for="phone_number">Is Active</label>
-                            <select class="form-control" name="role_id" id="">
+                            <select class="form-control" name="is_active" id="">
                               @foreach($is_active as $x => $x_value)       
                                 <option value="{{$x_value }}">{{$x }}</option>
                               @endforeach

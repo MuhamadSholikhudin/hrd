@@ -9,8 +9,6 @@
     <div class="row mb-2">
       <div class="col-sm-6">
         <h1>Manager Penandatangi</h1> 
-        <br>
-        {{-- <a href="/hi/signatures/create" class="btn  btn-info">+ Add article</a> --}}
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -47,11 +45,11 @@
                       </div>
                       <div class="form-group">
                         <label for="">Department</label>
-                        <input type="text" class="form-control" id="" name="department" value="{{ old('department', $signature->department) }}" placeholder="BAB Pasal">
+                        <input type="text" class="form-control" id="" name="department" value="{{ old('department', $signature->department) }}" placeholder="Department">
                       </div>
                       <div class="form-group">
                         <label for="">Bagian</label>
-                        <input  class="form-control" id="" name="part" value="{{ old('part', $signature->part) }}" placeholder="Bunyi pasal"> 
+                        <input  class="form-control" id="" name="part" value="{{ old('part', $signature->part) }}" placeholder="Bagian"> 
                       </div>
                       <div class="form-group">
                         <label for="">Status</label>

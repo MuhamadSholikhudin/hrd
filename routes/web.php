@@ -13,7 +13,11 @@ use App\Models\Paragraph;
 use App\Models\Article;
 use App\Models\Alphabet;
 
+// Controller Login
 use App\Http\Controllers\LoginController;
+
+// Controller Dashboard
+use App\Http\Controllers\DashboardController;
 
 //Controller Datamaster
 use App\Http\Controllers\JobController;
@@ -78,16 +82,21 @@ Route::get('/example', function () {
 //     return view('hi.employees.index', [ 'employees' => $employees]);
 // });
 
+// DASHBOARD 
+Route::controller(dashboardController::class)->group(function(){
+    Route::get('dashboards', 'index')->middleware('auth');
+    // Route::get('autocomplete', 'autocomplete')->name('autocomplete');
+});
 
 
 //EXCEL IMPORT END EXPORT
 Route::controller(UserController::class)->group(function(){
-    Route::get('users', 'index');
+    Route::get('users/export', 'index');
     Route::get('users-export', 'export')->name('users.export');
     Route::post('users-import', 'import')->name('users.import');
 
     //CRUD USER
-    Route::get('userslist', 'list')->name('users.list')->middleware('auth');
+    Route::get('users', 'list')->name('users.list')->middleware('auth');
     Route::get('users/create', 'create')->name('users.create')->middleware('auth');
     Route::get('users/{users:id}/edit', 'edit')->name('users.edit')->middleware('auth');
 
@@ -95,7 +104,7 @@ Route::controller(UserController::class)->group(function(){
     Route::post('users/store', 'store')->name('users.store')->middleware('auth');
     Route::put('users/update', 'update')->name('users.update')->middleware('auth');
     Route::put('users/changepassword', 'changepassword')->name('users.changepassword')->middleware('auth');
-    Route::post('users-import', 'import')->name('users.import')->middleware('auth');
+    // Route::post('users-import', 'import')->name('users.import')->middleware('auth');
 });
 
 //SELECT2 
@@ -202,6 +211,7 @@ Route::controller(HiAlphabetController::class)->group(function(){
 // SIGNATURES
 Route::resource('/hi/signatures', SignatureController::class)->middleware('auth');
 Route::post('signatures/get_type_violation', [SignatureController::class, 'get_signature'])->name('get_signature');
+Route::get('get_signature_employee', [SignatureController::class, 'get_signature_employee'])->name('get_signature_employee');
 
 
 // LAYOFFS

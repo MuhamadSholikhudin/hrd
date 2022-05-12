@@ -38,7 +38,8 @@ class HiAlphabetController extends Controller
             "Surat Peringatan Pertama",
             "Surat Peringatan Kedua",
             "Surat Peringatan Ketiga",
-            "Surat Peringatan Terakhir"
+            "Surat Peringatan Terakhir",
+            "Pemutusan Hubungan Kerja"
             // ,
             // "PHK Tanpa Pesangon",
             // "PHK Pesangon"

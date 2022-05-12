@@ -29,10 +29,10 @@
   <!-- Default box -->
   <div class="card">
       <div class="card-header">
-        <h3 class="card-title">Responsive Hover Table</h3>
+        <h3 class="card-title">Data Users Akses</h3>
 
         <div class="card-tools">
-        <form action="/userlist" >     
+        <form action="/users" >     
           <div class="input-group input-group-sm" style="width: 150px;">
             <input type="text" name="search" value="{{ request('search') }}" class="form-control float-right" placeholder="Search">
 
@@ -51,7 +51,7 @@
               <th>ID</th>
               <th>Nama</th>
               <th>Email</th>
-              <th>Password</th>
+              <th>Role</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -61,7 +61,11 @@
               <td>{{ $user->id }}</td>
               <td>{{ $user->name }}</td>
               <td>{{ $user->email }}</td>
-              <td>{{ $user->password }}</td>
+              <td>
+              
+              <?php $role = DB::table('roles')->find($user->role_id); ?>
+              {{ $role->role }}
+              </td>
               <td>
                   <a href="/users/{{ $user->id }}/password" class="btn  btn-outline-primary">
                     Change Password
@@ -69,13 +73,13 @@
                       <a href="/users/{{ $user->id }}/edit" class="btn  btn-outline-warning">
                     Edit
                     </a>
-                    <form action="/users/{{ $user->id }}" method="POST" class="d-inline ">
+                    <!-- <form action="/users/{{ $user->id }}" method="POST" class="d-inline ">
                       @method('delete')
                       @csrf
                       <button class="btn  btn-outline-danger" onclick="return confirm(' Are you sure delete data ?')"> 
                       Delete
                     </button>
-                    </form>
+                    </form> -->
               </td>
             </tr>
             @endforeach

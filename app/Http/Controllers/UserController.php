@@ -32,9 +32,12 @@ class UserController extends Controller
     {
         $users = User::get();
   
+        if(request('search')){
+            $users->where('email', 'like', '%' . request('search') . '%')
+                 ->orWhere('name', 'like', '%' . request('search') . '%');
+        }
+
         return view('users.list', [
-            
-            
             'users' => $users,
             'count' => User::count()
         ]);
@@ -67,7 +70,7 @@ class UserController extends Controller
             'updated_at' => date('Y-m-d H:i:s')
             ]);
 
-        return redirect('/userslist');
+        return redirect('/users');
     }
 
 
@@ -99,7 +102,7 @@ class UserController extends Controller
             'updated_at' => date('Y-m-d H:i:s')
             ]);
 
-            return redirect('/userslist');
+            return redirect('/users');
     }
 
     public function password($id)
@@ -120,7 +123,7 @@ class UserController extends Controller
             'updated_at' => date('Y-m-d H:i:s')
             ]);
 
-            return redirect('/userslist');
+            return redirect('/users');
     }
 
         

@@ -95,10 +95,10 @@
 
 
          -->
-            proses date : <span id="proses_date" >q</span><br>
-            proses : <span id="proses_action" >q</span><br>
-            Keterangan : <span id="proses_keterangan" >q</span> <br>
-            oleh : <span id="proses_oleh" >q</span>  <span id="proses_bagian" >q</span><br>
+            proses date : <span id="proses_date" ></span><br>
+            proses : <span id="proses_action" ></span><br>
+            Keterangan : <span id="proses_keterangan" ></span> <br>
+            oleh : <span id="proses_oleh" ></span>  <span id="proses_bagian" ></span><br>
         </div>
     </div>
 

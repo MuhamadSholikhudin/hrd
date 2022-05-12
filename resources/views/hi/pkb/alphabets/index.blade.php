@@ -87,7 +87,7 @@
                         <div class="col-lg-10">
                           @foreach($alphabets_accumulation as $accumulation)
                             <div class="form-check">
-                              <input class="form-check-input chk" name="alphabet_accumulation[]" value="{{ $accumulation }}" type="checkbox">
+                              <input class=" chk" name="alphabet_accumulation[]" value="{{ $accumulation }}" type="checkbox">
                               <label class="form-check-label">{{ $accumulation }}</label>
                             </div>
                           @endforeach

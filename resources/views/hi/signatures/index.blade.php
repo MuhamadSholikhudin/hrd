@@ -8,7 +8,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>PENANDATANGANI </h1> 
+        <h1>Data Manager HRD </h1> 
         <br>
       </div>
       <div class="col-sm-6">
@@ -28,12 +28,12 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-              <h3 class="card-title">List Pasal</h3>
+              <h3 class="card-title">List Data Manager HRD</h3>
   
               <div class="card-tools">
                   <form action="/hi/pkb" >     
                       <div class="input-group input-group-sm" style="width: 200px;">
-                          <button type="button" data-toggle="modal" data-target="#add_signature"  class="btn btn-primary btn-sm float-right"><i class="fas fa-plus"></i></button>
+                          <button type="button" data-toggle="modal" data-target="#add_signature" id="modal_signature" class="btn btn-primary btn-sm float-right"><i class="fas fa-plus"></i></button>
                         &nbsp;&nbsp;&nbsp;
                           <input type="text" name="search_signature" value="{{ request('search_signature') }}" class="form-control float-right" placeholder="Search">
                           <div class="input-group-append">
@@ -49,7 +49,7 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <h4 class="modal-title">Tambah Penandatangan</h4>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <button type="button" class="close" data-dismiss="modal"  aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
@@ -59,12 +59,13 @@
                       <!-- <p>One fine body&hellip;</p> -->
 
                       <div class="form-group">
+                      <div id="pkl">
+                      
+                      </div>
                         <label for="">Cari</label>
                         <select class="form-control select2bs4" style="width: 100%;" id="signature_employee" name="employee_id">
-                            @foreach ($employees as $employee)
-                              <option value="{{ $employee->id }}" >{{ $employee->number_of_employees }} / {{ $employee->name }} </option>
-                            @endforeach
-                          </select>
+                           
+                        </select>
                       </div>
                       <div class="form-group">
                         <label for="">Nama</label>
@@ -110,7 +111,7 @@
                     <td>
                         {{ $signature->department }}
                     </td>
-                    <td>{{ $signature->part }}</td>
+                    <td>{{ $signature->status_signature }}</td>
                     <td>
                         <div class="tools">
                           <a href="/hi/signatures/{{ $signature->id }}/edit">

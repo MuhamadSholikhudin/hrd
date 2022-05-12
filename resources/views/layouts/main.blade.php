@@ -125,7 +125,7 @@
     });
 
     var signature_employee = $(this).val();
-    alert(signature_employee);
+    // alert(signature_employee);
     $.ajax({
           type: "POST",
           url: "{{route('get_signature')}}",
@@ -135,7 +135,7 @@
             signature_employee: signature_employee
           },
           success: function(data) {
-            alert(data);
+            // alert(data);
             $("#signature_name").val(data[0]);
             $("#signature_department").val(data[1]);
             $("#signature_part").val(data[2]);
@@ -143,7 +143,7 @@
             alert("error");
           }
 
-        });
+    });
   });
   
   // Proses pencarian pelanggaran
@@ -201,8 +201,8 @@
     });
 
 
-    // PHK
-    $('#pasal_phk').change(function() {
+  // PHK Mencari Pasal PHK
+  $('#pasal_phk').change(function() {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -210,11 +210,10 @@
     });
     // alert("Pasal ");
     var pasal_phk = $(this).val();
-    alert(pasal_phk);
+    // alert(pasal_phk);
     $.ajax({
           type: "POST",
           url: "{{route('get_pasal_phk')}}",
-          // async: false,  
           dataType: 'json',
           data: {
             pasal_phk: pasal_phk
@@ -241,13 +240,12 @@
             alert("error");
           }
 
-        });
+    });
   });
 
-
-    $('#karyawan_phk').on( "change", function() {
+  //Menampilkan karyawan PHK
+  $('#karyawan_phk').on( "change", function() {
     // alert("oke");
-      
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -258,7 +256,6 @@
     $.ajax({
           type: "POST",
           url: "{{route('get_karyawan_phk')}}",
-          // async: true,
           dataType: 'json',
           data: {
             karyawan_phk: karyawan_phk
@@ -276,8 +273,45 @@
           },error(){
             alert("error");
           }
+      });
+  });
 
-        });
+  //Signature Menampilkan data karyawan
+  $('#modal_signature').on('click', function() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+          type: "GET",
+          url: "{{route('get_signature_employee')}}",
+          dataType: 'json',
+          success: function(data) {
+            // alert(JSON.stringify(data));
+            // $("#isi_text").html(data[0]);
+
+            var op = JSON.stringify(data);
+            // var op = data[1];
+            const obj = JSON.parse(op);
+            var html = '';
+            var i;
+            for(i=0; i < obj.length; i++){
+                  html += '<option value="' + obj[i].id +'">'+ obj[i].number_of_employees +' ' + obj[i].name +'</option>';
+            }
+              $('#signature_employee').html(html);
+              // $('#isi_text').text(data[0]);
+
+              // $('#karyawan_phk').html('<option value="get3" id="karyawan_phk3" >Pilih3</option>');
+              // $('#karyawan_phk').append('<option value="get3" id="karyawan_phk3" >Pilih3</option>');
+
+          },
+          error(){
+            alert("error");
+          }
+
+    });
   });
 
   //ROLE ACCESS
@@ -299,16 +333,15 @@
             roleId: roleId
         },
         success: function() {
-            document.location.href = "/roles/"+roleId+"/edit" ;
+          document.location.href = "/roles/"+roleId+"/edit" ;
         },error(){
-            alert("Coba lagi");
-          }
+          alert("Coba lagi");
+        }
     });
-
   });
 
-    // Methods 
-    $('.method').on('click', function() {
+  // Methods 
+  $('.method').on('click', function() {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -327,19 +360,16 @@
             val: val
         },
         success: function() {
-
             document.location.href = "/roles/"+roleId+"/edit" ;
         },error(){
             alert("Coba lagi");
-          }
+        }
     });
-   
-
   });
 
 
-      // Histiries 
-    $('.histories').on('click', function() {
+    // Histories 
+  $('.histories').on('click', function() {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -347,10 +377,6 @@
     });
 
     const id = $(this).data('id');
-    // const methodId = $(this).data('method');
-    // const val = $(this).val();
-
-    // alert(id);
 
     $.ajax({
         url: "{{route('histories_view')}}",
@@ -359,7 +385,7 @@
           id: id,
         },
         success: function(data) {
-          // alert(id);
+
             $('#proses_date').html(data[0]);
             $('#proses_action').html(data[1]);
             $('#proses_keterangan').html(data[2]);
