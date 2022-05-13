@@ -14,7 +14,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Blank Page</li>
+              <li class="breadcrumb-item active">Kayawan Page</li>
             </ol>
           </div>
         </div>
@@ -31,9 +31,11 @@
                   <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
                       <div class="text-center">
-                        <img class="profile-user-img img-fluid img-circle" src="{{ asset('dist/img/user4-128x128.jpg')}}" alt="User profile picture">
+                        <!-- <img class="profile-user-img img-fluid img-circle" src="{{ asset('dist/img/user4-128x128.jpg')}}" alt="User profile picture"> -->
                         <!-- <img class="profile-user-img img-fluid img-circle" src="file://10.10.40.190/database%20foto%20karyawan/1604000017.jpg" alt="User profile picture"> -->
                         <!-- file://10.10.40.190/database%20foto%20karyawan/{{$employee->number_of_employees}}.jpg -->
+                        <img class="profile-user-img img-fluid img-circle" src="http://10.10.100.148/hwi/Photo/10000/{{  $employee->number_of_employees  }}.jpg" alt="User profile picture">
+
                       </div>
       
                       <h4 class="profile-username text-center">{{  $employee->number_of_employees  }}</h4>

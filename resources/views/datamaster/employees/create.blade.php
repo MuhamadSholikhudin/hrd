@@ -13,7 +13,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Blank Page</li>
+            <li class="breadcrumb-item active">Karyawan Page</li>
           </ol>
         </div>
       </div>
@@ -39,16 +39,7 @@
                   Jabatan <br>
                   Departemen
                 </p>
-                <div class="form-group">
-                      <select class="form-control" id="pil_karyawan">
-                        <option value="baru">Karyawan baru</option>
-                        <option value="karyawan_lama">Mantan karyawan</option>
-                      </select>
-                    </div>
-                <div id="t_karyawan_lama">
-
-
-                </div>
+              
                 <!-- <ul class="list-group list-group-unbordered mb-3">
                   <li class="list-group-item">
                     <b>Followers</b> <a class="float-right">1,322</a>
@@ -71,14 +62,9 @@
                 <h3 class="card-title">Informasi</h3>
               </div>
               <div class="card-body">
-
-
-
-
-              @foreach ($errors->all() as $message)
-                          {{$message}} <br>
-                            @endforeach
-              
+                @foreach ($errors->all() as $message)
+                  {{$message}} <br>
+                @endforeach
               </div>
               
             </div>

@@ -8,11 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
 
-
     use HasFactory;
     protected $guarded = ['id'];
     protected $with = ['job', 'department'];
-
 
     protected $fillable = [
         'number_of_employees',	'name',	'gender','place_of_birth', 'gender', 'date_of_birth',
@@ -57,6 +55,7 @@ class Employee extends Model
     {
         return $this->hasMany(Employee::class);
     }
+    
     
     public function department()
     {

@@ -29,8 +29,6 @@ class HiViolationController extends Controller
     {
         //
         return view('hi.violations.list', [
-            
-            
             'violations' => Violation::all()->paginate(10),
             'count' => DB::table('employees')->count()
         ]);

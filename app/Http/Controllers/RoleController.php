@@ -19,8 +19,6 @@ class RoleController extends Controller
             // $users = User::get();
       
             return view('roles.index', [
-                
-                
                 'roles' => DB::table('roles')->get(),
                 'count' => DB::table('roles')->count()
             ]);

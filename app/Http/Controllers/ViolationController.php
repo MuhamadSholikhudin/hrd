@@ -439,14 +439,30 @@ class ViolationController extends Controller
 
     public function list()
     {
-        $violations = Violation::oldest();
+        // $violations = Violation::oldest();
+        $violations = DB::table('violations')
+                ->leftJoin('employees', 'employees.id', '=', 'violations.employee_id')
+                ->select('violations.*', 'violations.id as id',
+                 'violations.date_of_violation as date_of_violation',
+                 'violations.no_violation as no_violation',
+                 'violations.violation_ROM as violation_ROM',
+                 'violations.date_end_violation as date_end_violation',
+                 'violations.type_of_violation as type_of_violation',
+                 'violations.alphabet_id as alphabet_id',
+                 'violations.other_information as other_information',
+                 'violations.violation_status as violation_status',
+                 'employees.name as name',
+                 'employees.number_of_employees as number_of_employees',
+                 )
+                ->orderByDesc('violations.id');
 
         if(request('search')){
             $violations->where('date_end_violation', 'like', '%' . request('search') . '%')
                       ->orWhere('date_of_violation', 'like', '%' . request('search') . '%')
+                      ->orWhere('name', 'like', '%' . request('search') . '%')
+                      ->orWhere('number_of_employees', 'like', '%' . request('search') . '%')
                       ->orWhere('other_information', 'like', '%' . request('search') . '%');
         }
-
         return view('hi.violations.list', [
             'violations' => $violations->paginate(10),
             'count' => DB::table('violations')->count()

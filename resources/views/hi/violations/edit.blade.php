@@ -13,7 +13,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Blank Page</li>
+            <li class="breadcrumb-item active">Pelanggaran Page</li>
           </ol>
         </div>
       </div>
@@ -391,7 +391,7 @@
                                         <!-- general form elements -->
         <div class="card card-warning">
           <div class="card-header mb-2">
-            <h3 class="card-title">PROESS</h3>
+            <h3 class="card-title">INPUT PASAL</h3>
           </div>
           <div class="card-body">                      
             <div class="form-group row"> 
@@ -406,15 +406,14 @@
                 </select>
               </div>
               <div class="col-sm-2">
-              <button class="btn btn-button btn-primary"  onclick="btn_proses()" id="btn_proses" data-id="btn_proses" data-target="btn_proses" >Proses</button>
-          
+                <button class="btn btn-button btn-primary"  onclick="btn_proses()" id="btn_proses" data-id="btn_proses" data-target="btn_proses">Proses</button>
               </div>
             </div> 
           </div>
         </div>
 
       {{-- Displaynone --}}
-    <div style="display:none;">
+    <div >
         <?php
         
         $date_violation = new \DateTime(date('Y-m-d') .' 4:06:37' );
@@ -445,22 +444,23 @@
           $tgl1 = $date_now;// pendefinisian tanggal awal
           $tgl2 = date('Y-m-d', strtotime('+180 days', strtotime($tgl1))); //operasi penjumlahan tanggal sebanyak 6 hari
           echo $tgl2; //print tanggal
-          echo '<br>';
+          echo '<br> $num_no_sp ';
 
           // Nomer SP
          echo $num_no_sp = DB::table('violations')
-                            ->where('month_of_violation', '=', $m_month)
+                            ->where('month_of_violation',  $month_n)
                             ->count();
-          echo '<br>';
+          echo '<br> ';
+// dd($num_no_sp);
           if($num_no_sp == 0){
-            $no_sp = 1;
+             $no_sp = 1;
           }elseif($num_no_sp > 0){
             $sel_no_sp = DB::table('violations')
-              ->latest();
+              ->latest()->first();
 
-              $no_sp = $sel_no_sp + 1 ;
+            $no_sp = $sel_no_sp->no_violation + 1;
           }
-
+          echo '<br> ';
           $var = 1234567;
           echo is_numeric($var) ? "Jumlah digit dari bilangan ".$var." adalah ".strlen($var) : 'Bukan Termasuk Angka';
           echo '<br>';

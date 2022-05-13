@@ -5,69 +5,73 @@
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
-  <div class="container-fluid">
-    <div class="row mb-2">
-      <div class="col-sm-6">
-        <h1>Pemutusan Hubungan Kerja</h1> 
-        <br>
-        <a href="/hi/layoffs/create" class="btn  btn-info">+ Pemutusan Hubungan Kerja</a>
-      </div>
-      <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">Pemutusan Hubungan Kerja Page</li>
-        </ol>
-      </div>
+<div class="container-fluid">
+  <div class="row mb-2">
+    <div class="col-sm-6">
+      <h1>Pemutusan Hubungan Kerja </h1>
     </div>
-  </div><!-- /.container-fluid -->
+    <div class="col-sm-6">
+      <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active">Pemutusan Hubungan Kerja Page</li>
+      </ol>
+    </div>
+  </div>
+</div>
 </section>
 
 <!-- Main content -->
 <section class="content">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Daftar Pemutusan Hubungan Kerja </h3>
+
+
+<div class="card">
+      <div class="card-header">
+         <div class="card-tools">
+            <form action="/hi/layoffs" >     
+                <div class="input-group input-group-sm" style="width: 300px;">
+                    <input type="text" name="search" value="{{ request('search') }}" class="form-control float-right" placeholder="Search">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
         </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th style="width: 10px">#</th>
-                <th>No SK</th>
-                <th>Tgl Pemutusan</th>
-                <th>Tgl Mulai</th>
-                <th>Pasal PHK</th>
-                <th>Menimbang</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
+      </div>
+      <div class="card-body table-responsive p-0">
+        <table class="table table-hover text-nowrap">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>NIK</th>
+              <th>Nama</th>
+              <th>No SK</th>
+              <th>Tgl Pemutusan</th>
+              <th>Tgl Mulai</th>
+              <th>Pasal PHK</th>
+              <th>Menimbang</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
             @foreach($layoffs as $layoff):
               <tr>
                 <td>{{$layoff->id}}</td>
-
-                <?php 
-                      $d_l = new \DateTime($layoff->layoff_date .' 00:00:00');
-                      $year = date_format($d_l, "Y"); //for Display Year
-
-                ?>
+                <td>{{ $layoff->name }}</td>
+                <td>{{ $layoff->number_of_employees }}</td>
+                  <?php 
+                        $d_l = new \DateTime($layoff->layoff_date .' 00:00:00');
+                        $year = date_format($d_l, "Y"); //for Display Year
+                  ?>
                 <td>{{ $layoff->no_layoff .'/SK-PHK/HRD-HWI/'.$layoff->rom_layoff.'/'. $year   }}</td>
                 <td>{{ $layoff->layoff_date }}</td>
                 <td>
                   {{ $layoff->layoff_date_start }}
                 </td>
                 <td>
-
                   <?php  $print_alphabet  = DB::table('alphabets')->find($layoff->alphabet_id); ?>
                   <?php  $print_paragraph  = DB::table('paragraphs')->find($print_alphabet->paragraph_id); ?>
                   <?php  $print_article  = DB::table('articles')->find($print_paragraph->article_id); ?>
-                    
-
-                  {{
-                  $pal = "Pasal ". $print_article->article. " ayat " . $print_paragraph->paragraph. " " . $print_alphabet->alphabet }}
+                  {{ $pal = "Pasal ". $print_article->article. " ayat " . $print_paragraph->paragraph. " " . $print_alphabet->alphabet }}
 
                 </td>
                 <td>{{$layoff->layoff_description}}</td>
@@ -83,29 +87,18 @@
                           Delete
                         </button>
                     </form> 
-                
-                
-
-
                 </td>
               </tr>
             @endforeach
-
-            </tbody>
-          </table>
-        </div>
-        <!-- /.card-body -->
-        <div class="card-footer clearfix">
-          
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer">
+        <h3 class="card-title">Total : {{$count}}</h3>
+        <div class="pagination pagination-sm m-0 float-right">
+            {{ $layoffs->links() }}
         </div>
       </div>
-      <!-- /.card -->
-
-
-    </div>
-
-
-  </div>
 
 
 

@@ -8,12 +8,12 @@
 <div class="container-fluid">
   <div class="row mb-2">
     <div class="col-sm-6">
-      <h1>Master SP </h1>
+      <h1>Master Pelanggaran </h1>
     </div>
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item active">Pelanggran Page</li>
+        <li class="breadcrumb-item active">Pelanggaran Page</li>
       </ol>
     </div>
   </div>
@@ -27,14 +27,14 @@
       <div class="card mb-3">
           <div class="card-body table-responsive p-0">
             @if (session()->has('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-              <strong>
-            {{ session('success') }}
-          </strong>
-          </div>
-        @else
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>
+                    {{ session('success') }}
+                </strong>
+              </div>
+            @else
 
-        @endif
+            @endif
 
           
       </div>
@@ -52,14 +52,14 @@
         </a> -->
         <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
         <a class="btn btn-outline-primary" data-toggle="modal"  data-target="#excel_pelanggaran_baru" >
-        <i class="fa fa-arrow-up"  data-toggle="tooltip" data-placement="bottom" title="Upload Excel Tambah Data Pelanggaran Baru "></i>
+        <i class="fa fa-arrow-up"  data-toggle="tooltip" data-placement="bottom" title="Upload Excel Tambah Data Pelanggaran"></i>
         </a>
         <!-- Modal -->
         <div class="modal fade" id="excel_pelanggaran_baru" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Upload excel Data Pelanggran Baru</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Upload excel Data Pelanggaran</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -140,7 +140,7 @@
         </div>
         <div class="card-tools">
             <form action="/violations/list" >     
-                <div class="input-group input-group-sm" style="width: 150px;">
+                <div class="input-group input-group-sm" style="width: 300px;">
                     <input type="text" name="search" value="{{ request('search') }}" class="form-control float-right" placeholder="Search">
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
@@ -155,6 +155,8 @@
           <thead>
             <tr>
               <th>ID</th>
+              <th>NIK</th>
+              <th>Nama</th>
               <th>NO SP</th>
               <th>Tanggal SP</th>
               <th>Tanggal Berakhir</th>
@@ -170,6 +172,9 @@
             @foreach($violations as $violation)
               <tr>
                 <td>{{ $violation->id }}</td>
+                <td>{{ $violation->name }}</td>
+                <td>{{ $violation->number_of_employees }}</td>
+                
                 <td>
                   <?php
                     $date_violation_sp = new \DateTime($violation->date_of_violation .' 00:00:00');

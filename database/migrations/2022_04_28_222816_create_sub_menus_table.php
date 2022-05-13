@@ -15,12 +15,11 @@ return new class extends Migration
     {
         Schema::create('sub_menus', function (Blueprint $table) {
             $table->id();
-            $table->integer('menu_id')->nullable();
+            $table->foreignId('menu_id');
             $table->string('title')->nullable();
             $table->string('url')->nullable();
             $table->string('icon')->nullable();
             $table->integer('is_active')->nullable();
-        
             $table->timestamps();
         });
     }

@@ -16,8 +16,6 @@ class AccessMenuController extends Controller
     {
         //
         return view('access_menus.index', [
-            
-            
             'access_menus' => DB::table('access_menus')->get(),
             'count' => DB::table('access_menus')->count()
         ]);

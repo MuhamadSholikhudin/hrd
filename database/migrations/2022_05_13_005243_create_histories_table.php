@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('access_menus', function (Blueprint $table) {
+        Schema::create('histories', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
             $table->foreignId('role_id');
-            $table->foreignId('menu_id');
+            $table->string('action')->nullable();
+            $table->string('remark')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('access_menus');
+        Schema::dropIfExists('histories');
     }
 };

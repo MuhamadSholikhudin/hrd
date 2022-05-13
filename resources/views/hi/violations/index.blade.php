@@ -8,12 +8,12 @@
 <div class="container-fluid">
   <div class="row mb-2">
     <div class="col-sm-6">
-      <h1>Karyawan </h1>
+      <h1>Input Pelanggaran </h1>
     </div>
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item active">Blank Page</li>
+        <li class="breadcrumb-item active">Pelanggaran Page</li>
       </ol>
     </div>
   </div>
@@ -46,7 +46,7 @@
       <div class="card-header">
          <div class="card-tools">
             <form action="/hi/violations" >     
-                <div class="input-group input-group-sm" style="width: 200px;">
+                <div class="input-group input-group-sm" style="width: 300px;">
                     <input type="text" name="search" value="{{ request('search') }}" class="form-control float-right" placeholder="Search">
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
@@ -110,7 +110,7 @@
           </ul>
         </div> --}}
       <div class="card-footer">
-      <h3 class="card-title">Total : {{$count}}</h3>
+        <h3 class="card-title">Total : {{$count}}</h3>
         <div class="pagination pagination-sm m-0 float-right">
             {{ $employees->links() }}
         </div>

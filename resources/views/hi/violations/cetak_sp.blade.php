@@ -65,9 +65,9 @@
                     <br>
                     <div class="col-sm-12 lead">Kepada karyawan tersebut di bawah ini :</div>
                     <br>
-                    <div class="col-sm-3 lead">
+                    <!-- <div class="col-sm-3 lead">
 
-                    </div>
+                    </div> -->
                     <div class="col-sm-9 lead">
                         <table>
                                 <?php
@@ -80,22 +80,22 @@
                                 &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 
                                 </td>
                                 <td>Nama</td>
-                                <td>: {{ $employee->name}}</td>
+                                <td>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;:&nbsp;{{ $employee->name}}</td>
                             </tr>
                             <tr>
                                 <td>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</td>
                                 <td>NIK</td>
-                                <td>:{{ $employee->number_of_employees}}</td>
+                                <td>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;:&nbsp;{{ $employee->number_of_employees}}</td>
                             </tr>
                             <tr>
                                 <td>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</td>
                                 <td>Jabatan</td>
-                                <td>: {{ $violation->job_level}}</td>
+                                <td>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;:&nbsp;{{ $violation->job_level}}</td>
                             </tr>
                             <tr>
                                 <td>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</td>
-                                <td>Bagian</td>
-                                <td>: {{ $violation->department}}</td>
+                                <td>Bagian/ Department</td>
+                                <td>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;:&nbsp;{{ $violation->department}}</td>
                             </tr>
                         </table>
                     </div>
@@ -134,12 +134,12 @@
                     @if($violation->alphabet_accumulation != null)
                             
                         <!-- DELIK SEKARANG -->
-                        <div class="col-sm-12 lead" style="text-align: justify;">- {{ $violation->other_information}}</div>
+                        <!-- <div class="col-sm-12 lead" style="text-align: justify;">- {{ $violation->other_information}}</div> -->
 
 
 
                         <!-- PASAL SEKARANG, BUNYI PASAL -->
-                        <div class="col-sm-12 lead" style="text-align: justify;">- Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal  {{$sel_article->article}} ayat {{$sel_paragraph->paragraph}} huruf "{{$sel_alphabet->alphabet}}"  {{$sel_alphabet->alphabet_sound}}</div>
+                        <!-- <div class="col-sm-12 lead" style="text-align: justify;">- Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal  {{$sel_article->article}} ayat {{$sel_paragraph->paragraph}} huruf "{{$sel_alphabet->alphabet}}"  {{$sel_alphabet->alphabet_sound}}</div> -->
                         
                         <!-- PASAL LALU, DELIK PELANGGARAN LALU -->
                         <?php 
@@ -149,18 +149,46 @@
                             $sel_paragraph_lalu = DB::table('paragraphs')->find($sel_alphabet_lalu->paragraph_id);
                             $sel_article_lalu = DB::table('articles')->find($sel_paragraph_lalu->article_id);
                         ?>
-                        <div class="col-sm-12 lead" style="text-align: justify;">- Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal  {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", {{$pelanggran_lalu->other_information}}</div>
+                        <!-- <div class="col-sm-12 lead" style="text-align: justify;">- Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal  {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", {{$pelanggran_lalu->other_information}}</div> -->
+                        
+                        <table >
+                            <tbody>
+                                <tr>
+                                    <td valign="top">&nbsp;&nbsp;&nbsp;-</td>
+                                    <td valign="top" class="lead" style="text-align: justify;">{{ $violation->other_information}}</td>
+                                </tr>
 
+                                <tr>
+                                    <td valign="top">&nbsp;&nbsp;&nbsp;-</td>
+                                    <td valign="top" class="lead" style="text-align: justify;">Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal  {{$sel_article->article}} ayat {{$sel_paragraph->paragraph}} huruf "{{$sel_alphabet->alphabet}}"  {{$sel_alphabet->alphabet_sound}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td valign="top">&nbsp;&nbsp;&nbsp;-</td>
+                                    <td valign="top" class="lead" style="text-align: justify;">Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal  {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", {{$pelanggran_lalu->other_information}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     @else
+                        <table >
+                            <tbody>
+                                <tr>
+                                    <td valign="top">&nbsp;&nbsp;&nbsp;-</td>
+                                    <td valign="top" class="lead" style="text-align: justify;">{{ $violation->other_information}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                             <!-- Remainder Tanpa Akumulasi -->
-                        <div class="col-sm-12 lead" style="text-align: justify;">- {{ $violation->other_information}}</div>
+                        <!-- <div class="col-sm-12 lead" style="text-align: justify;">- {{ $violation->other_information}}</div> -->
                     @endif
                     
+
                     <br>
-                    <br>
-                    <div class="col-sm-12 lead" style="text-align: justify;">Apabila dikemudian hari terjadi pengulangan perbuatan pelanggaran tersebut diatas dan/atau melakukan
+                    <div class="col-sm-12 lead" style="text-align: justify;">
+                        Apabila dikemudian hari terjadi pengulangan perbuatan pelanggaran tersebut diatas dan/atau melakukan
                         perbuatan pelanggaran selama masa berlaku Surat Peringatan (6 bulan sejak waktu pelanggaran )
-                        maka akan diambil tindakan lanjutan sesuai peraturan perusahaan yang berlaku.</div>
+                        maka akan diambil tindakan lanjutan sesuai peraturan perusahaan yang berlaku.
+                    </div>
                        
 
 
@@ -174,7 +202,8 @@
                                     <h4 class="text-center"> &nbsp; </h4>
                                 </div>
                                 <div>
-                                    <p class="text-center lead"> <br>
+                                    <p class="text-center lead"> 
+                                    &nbsp;<br>
                                         Penerima Sanksi
                                     </p>
                                     <!-- <h6 class="text-center">&nbsp;</h6>
@@ -186,14 +215,11 @@
                                    
                                     </div>
                                     <br>
-                                    <br>
-                                    <br>
+                               
                                 </div>
                                 <div>
                                     <p class="text-center lead"> <br>
-                                        <b>
                                             {{ $employee->name}}
-                                        </b>
                                     </p>
                                     <!-- <h6 class="text-center">
                                         <b>
@@ -244,10 +270,14 @@
                                         $month_indo_sp = 'Desember';            
                                         }
                                         ?>
-                                 
-                                    <h6 class="text-center">Jepara, {{ $date_day_sp. " ". $month_indo_sp . " ". $date_year_sp }} </h6>
-                                    {{-- <h6 class="text-center">Jepara, 5 April 2022 </h6> --}}
-                                    <h6 class="text-center">Human Resources Development</h6>
+                                        <p class="text-center lead"> 
+                                            Jepara, {{ $date_day_sp. " ". $month_indo_sp . " ". $date_year_sp }} <br>
+                                            Human Resources Development
+                                        </p>
+
+                                        {{-- <h6 class="text-center">Jepara, {{ $date_day_sp. " ". $month_indo_sp . " ". $date_year_sp }} </h6>
+                                     <h6 class="text-center">Jepara, 5 April 2022 </h6> 
+                                    <h6 class="text-center">Human Resources Development</h6> --}}
                                 </div>
                                 <div>
                                     <br>
@@ -255,15 +285,28 @@
                                     
                                     </div>
                                     <br>
-                                    <br>
-                                    <br>
+                               
+                                    
                                 </div>
                                 <div>
-                                    <h6 class="text-center">
+                                    
+                                    <p class="text-center lead"> <br>
+                                        <?php 
+                                            $num_hrd = DB::table('signatures')->where('status_signature', 'active')->count();
+                                            if($num_hrd == 1){
+                                                $hrd = DB::table('signatures')->where('status_signature', 'active')->first();
+                                            }else{
+                                                $hrd = DB::table('signatures')->oldest()->first();
+            
+                                            }
+                                        ?>
                                         <b>
-                                            GUNTUR SUHENDRO
+                                            <u>
+                                                {{ $hrd->name}}
+                                            </u>
                                         </b>
-                                    </h6>
+                                    </p>
+                                    
                                 
                                 </div>
 

@@ -24,11 +24,30 @@ class LayoffController extends Controller
     public function index()
     {
         //
+        $layoffs = DB::table('layoffs')
+            ->leftJoin('employees', 'employees.id', '=', 'layoffs.employee_id')
+            ->select('layoffs.*', 'layoffs.id as id',
+            'layoffs.layoff_date as layoff_date',
+            'layoffs.no_layoff as no_layoff',
+            'layoffs.layoff_date_start as layoff_date_start',
+            'layoffs.rom_layoff as rom_layoff',
+            'layoffs.type_of_layoff as type_of_layoff',
+            'layoffs.alphabet_id as alphabet_id',
+            'layoffs.layoff_description as layoff_description',
+            'employees.name as name',
+            'employees.number_of_employees as number_of_employees',
+            )
+            ->orderByDesc('layoffs.id');
+        if(request('search')){
+            $layoffs->where('layoff_date', 'like', '%' . request('search') . '%')
+                        ->orWhere('layoff_date_start', 'like', '%' . request('search') . '%')
+                        ->orWhere('name', 'like', '%' . request('search') . '%')
+                        ->orWhere('number_of_employees', 'like', '%' . request('search') . '%')
+                        ->orWhere('layoff_description', 'like', '%' . request('search') . '%');
+        }
         
         return view('hi.layoffs.index', [
-            
-            
-            'layoffs' => DB::table('layoffs')->paginate(10),
+            'layoffs' => $layoffs->paginate(10),
             'count' => DB::table('layoffs')->count()
         ]);
     }
@@ -77,13 +96,13 @@ class LayoffController extends Controller
         }
 
         $date = $request->layoff_date;
-        $date_violation = new \DateTime($date .' 00:00:00');
+        $date_layoff = new \DateTime($date .' 00:00:00');
 
-        $date_year = date_format($date_violation, "Y"); //for Display Year
-        $date_month =  date_format($date_violation, "m"); //for Display Month
-        $date_day = date_format($date_violation, "d");
+        $date_year = date_format($date_layoff, "Y"); //for Display Year
+        $date_month =  date_format($date_layoff, "m"); //for Display Month
+        $date_day = date_format($date_layoff, "d");
 
-    //     $day = gmdate($date_of_violation, time()+60*60*7);
+    //     $day = gmdate($date_of_layoff, time()+60*60*7);
     //     $day = date("l", gmmktime(0,0,0, $date_month,$date_day, $date_year));
 
     //   if($day == 'Monday'){
