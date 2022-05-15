@@ -10,7 +10,7 @@
       <div class="col-sm-6">
         <h1>Pemutusan Hubungan Kerja</h1> 
         <br>
-        <a href="/hi/layoffs/" class="btn  btn-secondary">Kembali</a>
+        <a href="/layoffs/" class="btn  btn-secondary">Kembali</a>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -52,7 +52,7 @@
           </p>
 
           <table>
-            <form action="/hi/layoffs/" method="POST" enctype="multipart/form-data">
+            <form action="/layoffs/" method="POST" enctype="multipart/form-data">
               @csrf
               @method('put')
               <input type="hidden" name="id" value="{{$layoff->id}}">

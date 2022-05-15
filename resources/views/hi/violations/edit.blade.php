@@ -342,7 +342,7 @@
                   <td><div>{{ $violation->other_information  }} </div></td>                
                   <td>{{ $violation->violation_status  }}</td>
                   <td>
-                      <a href="/hi/violations/{{$violation->id }}" target="_blank" class="btn  btn-outline-primary">
+                      <a href="/violations/{{$violation->id }}" target="_blank" class="btn  btn-outline-primary">
                         Cetak                    
                       </a>
                           <!-- <a href="/hi/employees//edit" class="btn  btn-outline-warning">
@@ -601,7 +601,7 @@
                 </button>
               </div>
               <div class="modal-body">
-              <form role="form" action="/hi/violations" method="POST" enctype="multipart/form-data">
+              <form role="form" action="/violations" method="POST" enctype="multipart/form-data">
                 @csrf
                 <!-- <p>One fine body&hellip;</p> -->
   

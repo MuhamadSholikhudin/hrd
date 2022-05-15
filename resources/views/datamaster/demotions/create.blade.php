@@ -87,7 +87,7 @@
                   </div>
                   <div class="card-body">
                     <!-- Date -->
-                    <form role="form" action="/datamaster/demotions" method="POST" enctype="multipart/form-data">
+                    <form role="form" action="/demotions" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" class="form-control"  name="id" value="{{  $employee->id  }}">
                     

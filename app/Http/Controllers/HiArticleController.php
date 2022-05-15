@@ -59,7 +59,7 @@ class HiArticleController extends Controller
                 'chapters'=> $request->chapters,
                 'article_sound'=> $request->article_sound
             ]);
-        return redirect('/hi/articles/')->with('success', 'Data Huruf berhasil di tambahkan');
+        return redirect('/articles/')->with('success', 'Data Huruf berhasil di tambahkan');
 
     }
 
@@ -107,7 +107,7 @@ class HiArticleController extends Controller
             'chapters'=> $request->chapters,
             'article_sound'=> $request->article_sound
         ]);
-    return redirect('/hi/articles/')->with('success', 'Data Pasal berhasil di Update');
+    return redirect('/articles/')->with('success', 'Data Pasal berhasil di Update');
 
     }
 

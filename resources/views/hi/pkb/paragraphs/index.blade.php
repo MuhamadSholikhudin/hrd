@@ -55,7 +55,7 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                    <form role="form" action="/hi/paragraphs" method="POST" enctype="multipart/form-data">
+                    <form role="form" action="/paragraphs" method="POST" enctype="multipart/form-data">
                       @csrf
                       <!-- <p>One fine body&hellip;</p> -->
                       <div class="form-group">
@@ -130,7 +130,7 @@
                     <td>{{ $paragraph->type_of_verse }}</td>
                     <td>
                         <div class="tools">
-                          <a href="/hi/paragraphs/{{ $paragraph->id }}/edit">
+                          <a href="/paragraphs/{{ $paragraph->id }}/edit">
                             <i class="fas fa-edit"></i>
                             edit
                           </a>

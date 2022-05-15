@@ -64,7 +64,7 @@ class HiParagraphController extends Controller
             'type_of_verse'=> $request->type_of_verse
             ]);
 
-        return redirect('/hi/paragraphs/')->with('success', 'Data Ayat berhasil di tambahkan');
+        return redirect('/paragraphs/')->with('success', 'Data Ayat berhasil di tambahkan');
     }
 
     /**
@@ -118,7 +118,7 @@ class HiParagraphController extends Controller
                 'type_of_verse'=> $request->type_of_verse
             ]);
 
-        return redirect('/hi/paragraphs/')->with('success', 'Data Ayat berhasil di Ubah');
+        return redirect('/paragraphs/')->with('success', 'Data Ayat berhasil di Ubah');
     }
 
     /**

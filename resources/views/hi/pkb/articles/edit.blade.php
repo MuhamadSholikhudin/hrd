@@ -10,7 +10,7 @@
       <div class="col-sm-6">
         <h1>PASAL PKB</h1> 
         <br>
-        {{-- <a href="/hi/articles/create" class="btn  btn-info">+ Add article</a> --}}
+        {{-- <a href="/articles/create" class="btn  btn-info">+ Add article</a> --}}
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -35,7 +35,7 @@
 
                     {{-- <h4 class="modal-title">Edit Pasal</h4> --}}
 
-                        <form role="form" action="/hi/articles/{{  $article->id  }}" method="POST" enctype="multipart/form-data">
+                        <form role="form" action="/articles/{{  $article->id  }}" method="POST" enctype="multipart/form-data">
                           @method('put')
                           @csrf
                       <!-- <p>One fine body&hellip;</p> -->
@@ -67,7 +67,7 @@
                         </div> -->
                     </div>
                     <div class="modal-footer justify-content-between">
-                      <a href="/hi/articles" class="btn btn-default" data-dismiss="modal">kembali</a>
+                      <a href="/articles" class="btn btn-default" data-dismiss="modal">kembali</a>
                       <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                   </form>

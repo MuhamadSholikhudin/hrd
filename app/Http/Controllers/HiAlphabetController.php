@@ -92,7 +92,7 @@ class HiAlphabetController extends Controller
             'firts_periode'=> $request->firts_periode,
             'last_periode'=> $request->last_periode
             ]);
-        return redirect('/hi/alphabets/')->with('success', 'Data Huruf berhasil di tambahkan');
+        return redirect('/alphabets/')->with('success', 'Data Huruf berhasil di tambahkan');
 
     }
 
@@ -143,7 +143,7 @@ class HiAlphabetController extends Controller
             'firts_periode'=> $request->firts_periode,
             'last_periode'=> $request->last_periode
             ]);
-        return redirect('/hi/alphabets/')->with('success', 'Data Huruf berhasil di ubah');
+        return redirect('/alphabets/')->with('success', 'Data Huruf berhasil di ubah');
     }
 
     /**

@@ -34,7 +34,7 @@
           </h3>
 
           <div class="card-tools">
-            <form action="/hi/pkb" >     
+            <form action="/pkb" >     
                 <div class="input-group input-group-sm" style="width: 200px;">
                     <button type="button" data-toggle="modal" data-target="#add_pasal"  class="btn btn-primary btn-sm float-right"><i class="fas fa-plus"></i></button>
                   &nbsp;&nbsp;&nbsp;

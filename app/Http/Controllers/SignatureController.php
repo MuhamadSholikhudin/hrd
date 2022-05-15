@@ -55,7 +55,7 @@ class SignatureController extends Controller
             'employee_id'=> $request->employee_id
             ]);
 
-        return redirect('/hi/signatures/')->with('success', 'Data Ayat berhasil di tambahkan');
+        return redirect('/signatures/')->with('success', 'Data Ayat berhasil di tambahkan');
     }
 
     /**
@@ -129,7 +129,7 @@ class SignatureController extends Controller
                 ]);
         }
 
-            return redirect('/hi/signatures/')->with('success', 'Data signature berhasil di update');
+            return redirect('/signatures/')->with('success', 'Data signature berhasil di update');
     }
 
     /**

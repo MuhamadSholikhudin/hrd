@@ -113,85 +113,6 @@
 
           <!-- NAV PILLS -->
           <div class="col-md-9">
-
-          <?php 
-                  // Cari sub menu dari 
-                  
-                  //  $num_access_menus = DB::table('access_menus')
-                  //     ->where('role_id', $sess_role_id)
-                  //     ->count();
-                  echo '<br>';
-                  $url_now = url()->current();
-                 
-                 echo  $url_sc = substr($url_now, 21); 
-                 // echo $open_url_now = $url_sc.'*';
-                 echo '<br>';
-
-                 $str = $url_now;
-                   $prefix = 'http://127.0.0.1:8000';
-                   if (substr($str, 0, strlen($prefix)) === $prefix) {
-                       $str = substr($str, strlen($prefix));
-                   }
-                   //hasil
-                   echo $str;
-                   echo '<br>';
-
-                   $a = $str;
-                   if (strpos($a, 'datamaster/employees')) {
-                     echo '&nbsp;true';
-                   }else {
-                       echo '&nbsp;false';
-                   }
-                   echo '<br>';
-                   echo '<br>';
-
-
-                  $sess_role_id = auth()->user()->role_id;
-
-                   $count_access_menus = DB::table('access_menus')
-                      ->where('access_menus.role_id', $sess_role_id)
-                      ->get();
-
-                    foreach($count_access_menus as $c_a_m):
-                      $m_acs = DB::table('methods')
-                        ->where('access_menu_id', $c_a_m->id)
-                        ->get();
-
-                        foreach($m_acs as $cs_as_ms):
-
-                          $sm_c = DB::table('sub_menus')
-                            ->where('id', $cs_as_ms->sub_menu_id)
-                            ->first();
-                            $url_sds = substr($sm_c->url, 1);
-
-                           if (strpos($a, $url_sds)) {
-                              echo '&nbsp;true';
-                              echo ' [ '.$cs_as_ms->edit.' ]';
-
-                                if($cs_as_ms->edit == 'true'){
-                                  echo '<button type="submit" class="btn btn-primary col start">
-                                  <i class="fas fa-plus"></i>
-                                  <span>Simpan</span>
-                                </button>';
-                                }else{
-                                  echo '<button>a</button>';
-                                }
-
-
-                            }else {
-                                echo '&nbsp;false';
-                            }
-                            echo '<br>';
-                           
-                        endforeach;
-                      //   
-                    
-                    endforeach;
-
-                ?>
-
-
-
             <div class="card">
               <div class="card-header p-2">
                 <ul class="nav nav-pills">
@@ -210,7 +131,7 @@
                   <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a></li> -->
                 </ul>
               </div><!-- /.card-header -->
-            <form role="form" action="/datamaster/employees" method="POST" enctype="multipart/form-data">
+            <form role="form" action="/employees" method="POST" enctype="multipart/form-data">
               <div class="card-body">
                 <div class="tab-content">
                   <div class="tab-pane active" id="input_personal">
@@ -648,6 +569,121 @@
 
       </div>
 </section>
+
+<?php 
+    $url_nowxz = url()->current();
+    
+    echo  $url_scc = substr($url_nowxz, 22); 
+    $pecah = explode("/", $url_scc);
+    $kalimat1 = $pecah[0];
+
+    echo $kalimat1 . "oke";
+    echo '<br>';
+    $num_sub = DB::table('sub_menus')->where('url', '/'.$kalimat1)->count(); 
+    echo $num_sub;
+
+    if($num_sub > 0){
+      $print_sub = DB::table('sub_menus')->where('url', '/'.$kalimat1)->first();
+
+
+      $num_meth = DB::table('methods')
+        ->leftJoin('access_menus', 'methods.access_menu_id' ,'access_menus.id')
+        ->where('methods.sub_menu_id', $print_sub->id)
+        ->where('access_menus.role_id', auth()->user()->role_id)
+        ->count();
+      
+      if($num_meth > 0){
+        $prt_meth = DB::table('methods')
+        ->leftJoin('access_menus', 'methods.access_menu_id' ,'access_menus.id')
+        ->select('methods.edit as edit', 'methods.delete as delete','methods.delete as view')
+        ->where('methods.sub_menu_id', $print_sub->id)
+        ->where('access_menus.role_id', auth()->user()->role_id)
+        ->first();
+        $edit = $prt_meth->edit;
+       if($edit == 'true'){
+        echo '<button type="submit" class="btn btn-primary col start">
+                    <i class="fas fa-plus"></i>
+                    <span>'.$print_sub->url.'</span>
+                  </button>';
+       }
+      }
+    }
+
+    echo '<br>';
+    echo '==============================';
+    echo '<br>';
+    $url_now = url()->current();
+
+    echo  $url_sc = substr($url_now, 21); 
+    // echo $open_url_now = $url_sc.'*';
+    echo '<br>';
+
+    echo $tr = strtr($url_sc, "/", " " );
+    echo '<br>';
+        // $teks = $this->input->post('nama_pendaftar');
+
+
+
+    $str = $url_now;
+    $prefix = 'http://127.0.0.1:8000';
+    if (substr($str, 0, strlen($prefix)) === $prefix) {
+        $str = substr($str, strlen($prefix));
+    }
+    //hasil
+    echo $str;
+    echo '<br>';
+
+    $a = $str;
+    if (strpos($a, 'employees')) {
+      echo '&nbsp;true';
+    }else {
+        echo '&nbsp;false';
+    }
+    echo '<br>';
+    echo '<br>';
+
+
+    $sess_role_id = auth()->user()->role_id;
+
+    $count_access_menus = DB::table('access_menus')
+        ->where('access_menus.role_id', $sess_role_id)
+        ->get();
+
+      foreach($count_access_menus as $c_a_m):
+        $m_acs = DB::table('methods')
+          ->where('access_menu_id', $c_a_m->id)
+          ->get();
+
+          foreach($m_acs as $cs_as_ms):
+
+            $sm_c = DB::table('sub_menus')
+              ->where('id', $cs_as_ms->sub_menu_id)
+              ->first();
+              $url_sds = substr($sm_c->url, 1);
+
+            if (strpos($a, $url_sds)) {
+                echo '&nbsp;true';
+                echo ' [ '.$cs_as_ms->edit.' ]';
+
+                  if($cs_as_ms->edit == 'true'){
+                    echo '<button type="submit" class="btn btn-primary col start">
+                    <i class="fas fa-plus"></i>
+                    <span>'.$sm_c->url.'</span>
+                  </button>';
+                  }else{
+                    echo '<button>'.$sm_c->url.'</button>';
+                  }
+              }else {
+                  echo '&nbsp;false'.$sm_c->url;
+              }
+              echo '<br>';
+            
+          endforeach;
+      endforeach;
+
+?>
+
+
 
 
 

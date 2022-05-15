@@ -60,7 +60,7 @@ class violationsImport implements ToCollection, WithHeadingRow
                     $reporting_date = date('Y-m-d');
             
                     // $alphabet_id = floor($x['alphabet_id']);
-                    $alphabet_id = 9;
+                    $alphabet_id = floor($x['alphabet_id']);
 
                     
 

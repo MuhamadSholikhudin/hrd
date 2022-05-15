@@ -246,7 +246,7 @@ class EmployeeController extends Controller
                 }
             endforeach;
         endforeach;
-        return redirect('/datamaster/employees');
+        return redirect('/employees');
     }
 
     public function update() {

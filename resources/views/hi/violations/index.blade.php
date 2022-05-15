@@ -45,7 +45,7 @@
   <div class="card">
       <div class="card-header">
          <div class="card-tools">
-            <form action="/hi/violations" >     
+            <form action="/violations" >     
                 <div class="input-group input-group-sm" style="width: 300px;">
                     <input type="text" name="search" value="{{ request('search') }}" class="form-control float-right" placeholder="Search">
                     <div class="input-group-append">
@@ -80,10 +80,10 @@
                     </td>
                     <td>{{ $employee->status_employee }}</td>
                     <td>
-                        <!-- <a href="/hi/violations/{{ $employee->id }}" class="btn  btn-outline-primary">
+                        <!-- <a href="/violations/{{ $employee->id }}" class="btn  btn-outline-primary">
                           Lihat
                         </a> -->
-                        <a href="/hi/violations/{{ $employee->id }}/edit" class="btn  btn-outline-warning">
+                        <a href="/violations/{{ $employee->id }}/edit" class="btn  btn-outline-warning">
                           Pelanggran
                         </a>
 

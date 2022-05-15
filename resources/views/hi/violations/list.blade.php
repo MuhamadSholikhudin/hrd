@@ -139,7 +139,7 @@
           </div>
         </div>
         <div class="card-tools">
-            <form action="/violations/list" >     
+            <form action="/hiviolations" >     
                 <div class="input-group input-group-sm" style="width: 300px;">
                     <input type="text" name="search" value="{{ request('search') }}" class="form-control float-right" placeholder="Search">
                     <div class="input-group-append">
@@ -174,7 +174,6 @@
                 <td>{{ $violation->id }}</td>
                 <td>{{ $violation->name }}</td>
                 <td>{{ $violation->number_of_employees }}</td>
-                
                 <td>
                   <?php
                     $date_violation_sp = new \DateTime($violation->date_of_violation .' 00:00:00');
@@ -345,7 +344,7 @@
                 <td><div>{{ $violation->other_information  }} </div></td>                
                 <td>{{ $violation->violation_status  }}</td>
                 <td>
-                    <a href="/hi/violations/{{$violation->id }}" target="_blank" class="btn  btn-outline-primary">
+                    <a href="/violations/{{$violation->id }}" target="_blank" class="btn  btn-outline-primary">
                       Cetak                    
                     </a>
                         <!-- <a href="/hi/employees//edit" class="btn  btn-outline-warning">

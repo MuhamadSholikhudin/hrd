@@ -55,7 +55,7 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                        <form role="form" action="/hi/articles" method="POST" enctype="multipart/form-data">
+                        <form role="form" action="/articles" method="POST" enctype="multipart/form-data">
                           @csrf
                       <!-- <p>One fine body&hellip;</p> -->
                       <div class="form-group">
@@ -105,7 +105,7 @@
                     <td>{{ $article->article_sound }}</td>
                     <td>
                         <div class="tools">
-                          <a href="/hi/articles/{{ $article->id }}/edit">
+                          <a href="/articles/{{ $article->id }}/edit">
                             <i class="fas fa-edit"></i>
                             edit
                           </a>

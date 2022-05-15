@@ -71,10 +71,11 @@ Route::get('/', function () {
 });
 
 
-
 Route::get('/example', function () {
-    return view('example');
+    $url_xtz = url()->current();
+    return view('example',['url_xtz' =>$url_xtz]);
 });
+
 //HRD IT
 
 // Route::get('/hi/employees', function () {
@@ -122,7 +123,7 @@ Route::resource('departments', DepartmentController::class)->middleware('auth');
 
 
 // DATA MASTER EMPLOYEES
-Route::resource('datamaster/employees', DatamasterEmployeeController::class)->middleware('auth');
+Route::resource('/employees', DatamasterEmployeeController::class)->middleware('auth');
 
 //EXCEL IMPORT END EXPORT EMPLOYEES
 Route::controller(EmployeeController::class)->group(function(){
@@ -133,9 +134,9 @@ Route::controller(EmployeeController::class)->group(function(){
 });
 
 // DATA MASTER PROMOTION
-Route::resource('datamaster/promotions', DatamasterPromotionController::class)->middleware('auth');
+Route::resource('/promotions', DatamasterPromotionController::class)->middleware('auth');
 
-Route::get('/datamaster/promotions/{promotions:id}/getedit', [DatamasterPromotionController::class, 'getedit'])->middleware('auth');
+Route::get('/promotions/{promotions:id}/getedit', [DatamasterPromotionController::class, 'getedit'])->middleware('auth');
 
 //EXCEL IMPORT END EXPORT EMPLOYEES
 Route::controller(ExcelPromotionController::class)->group(function(){
@@ -146,9 +147,9 @@ Route::controller(ExcelPromotionController::class)->group(function(){
 });
 
 // DATA MASTER DEMOTION
-Route::resource('datamaster/demotions', DatamasterDemotionController::class);
+Route::resource('/demotions', DatamasterDemotionController::class);
 
-Route::get('/datamaster/demotions/{demotions:id}/getedit', [DatamasterDemotionController::class, 'getedit'])->middleware('auth');
+Route::get('/demotions/{demotions:id}/getedit', [DatamasterDemotionController::class, 'getedit'])->middleware('auth');
 
 //EXCEL IMPORT END EXPORT EMPLOYEES
 Route::controller(ExcelDemotionController::class)->group(function(){
@@ -158,9 +159,9 @@ Route::controller(ExcelDemotionController::class)->group(function(){
 });
 
 // DATA MASTER MUTATION
-Route::resource('datamaster/mutations', DatamasterMutationController::class)->middleware('auth');
+Route::resource('/mutations', DatamasterMutationController::class)->middleware('auth');
 
-Route::get('/datamaster/mutations/{demotions:id}/getedit', [DatamasterMutationController::class, 'getedit'])->middleware('auth');
+Route::get('/mutations/{demotions:id}/getedit', [DatamasterMutationController::class, 'getedit'])->middleware('auth');
 
 //EXCEL IMPORT END EXPORT EMPLOYEES
 Route::controller(ExcelMutationController::class)->group(function(){
@@ -171,11 +172,11 @@ Route::controller(ExcelMutationController::class)->group(function(){
 
 
 // DATA HI Violations
-Route::resource('hi/violations', ViolationController::class)->middleware('auth');
+Route::resource('/violations', ViolationController::class)->middleware('auth');
 
-Route::get('/violations/list', [ViolationController::class, 'list'])->middleware('auth');
+Route::get('/hiviolations', [HiViolationController::class, 'index'])->middleware('auth');
 
-Route::resource('hi/hiviolations', HiViolationController::class)->middleware('auth');
+// Route::resource('hi/hiviolations', HiViolationController::class)->middleware('auth');
 
 Route::controller(HiViolationController::class)->group(function(){
     Route::get('exportviolations', 'export')->name('violations.export')->middleware('auth');
@@ -190,16 +191,16 @@ Route::post('violation/get_type_violation', [ViolationController::class, 'get_ty
 // });
 
 // PKB
-Route::resource('/hi/pkb', HiPkbController::class)->middleware('auth');
+Route::resource('/pkb', HiPkbController::class)->middleware('auth');
 
 // PKB -> articles
-Route::resource('/hi/articles', HiArticleController::class)->middleware('auth');
+Route::resource('/articles', HiArticleController::class)->middleware('auth');
 
 // PKB -> paragraphs
-Route::resource('/hi/paragraphs', HiParagraphController::class)->middleware('auth');
+Route::resource('/paragraphs', HiParagraphController::class)->middleware('auth');
 
 // PKB -> alphabets
-Route::resource('/hi/alphabets', HiAlphabetController::class)->middleware('auth');
+Route::resource('/alphabets', HiAlphabetController::class)->middleware('auth');
 
 //EXCEL IMPORT END EXPORT VIOLATIONS
 Route::controller(HiAlphabetController::class)->group(function(){
@@ -209,13 +210,13 @@ Route::controller(HiAlphabetController::class)->group(function(){
 });
 
 // SIGNATURES
-Route::resource('/hi/signatures', SignatureController::class)->middleware('auth');
+Route::resource('/signatures', SignatureController::class)->middleware('auth');
 Route::post('signatures/get_type_violation', [SignatureController::class, 'get_signature'])->name('get_signature');
 Route::get('get_signature_employee', [SignatureController::class, 'get_signature_employee'])->name('get_signature_employee');
 
 
 // LAYOFFS
-Route::resource('/hi/layoffs', LayoffController::class)->middleware('auth');
+Route::resource('/layoffs', LayoffController::class)->middleware('auth');
 
 Route::post('layoffs/get_karyawan_phk', [LayoffController::class, 'get_karyawan_phk'])->name('get_karyawan_phk')->middleware('auth');
 
@@ -231,7 +232,6 @@ Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth');
 
 // ROLES
 Route::resource('/roles', RoleController::class)->middleware('auth');
-
 
 // MENUS
 Route::resource('/menus', MenuController::class)->middleware('auth');
@@ -252,7 +252,6 @@ Route::post('violation-pdf', [PDFController::class, 'violationPDF']);
 Route::get('history-datatables', function () {
     return view('histories.default');
 });
-
 
 Route::controller(historyController::class)->group(function(){
     Route::get('histories', 'index')->name('histories');

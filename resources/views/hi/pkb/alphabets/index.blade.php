@@ -32,7 +32,7 @@
               <h3 class="card-title">List Huruf</h3>
   
               <div class="card-tools">
-                  <form action="/hi/alphabets" >     
+                  <form action="/alphabets" >     
                       <div class="input-group input-group-sm" style="width: 200px;">
                           <button type="button" data-toggle="modal" data-target="#add_alphabets"  class="btn btn-primary btn-sm float-right"><i class="fas fa-plus"></i></button>
                         &nbsp;&nbsp;&nbsp;
@@ -55,7 +55,7 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                    <form role="form" action="/hi/alphabets" method="POST" enctype="multipart/form-data">
+                    <form role="form" action="/alphabets" method="POST" enctype="multipart/form-data">
                       @csrf
                       <!-- <p>One fine body&hellip;</p> -->
                       <div class="form-group">
@@ -154,7 +154,7 @@
                     <td>{{ $alphabet->last_periode}} - {{ $alphabet->firts_periode }}</td>
                     <td>
                         <div class="tools">
-                          <a href="/hi/alphabets/{{ $alphabet->id }}/edit">
+                          <a href="/alphabets/{{ $alphabet->id }}/edit">
                             <i class="fas fa-edit"></i>
                             edit
                           </a>

@@ -83,7 +83,7 @@ class DatamasterPromotionController extends Controller
             'employee_id'=> $request->id
             ]);
 
-        return redirect('/datamaster/promotions/'. $request->id . '/edit')->with('success', 'Data Promosi Karyawan Berhasil di promosikan!');
+        return redirect('/promotions/'. $request->id . '/edit')->with('success', 'Data Promosi Karyawan Berhasil di promosikan!');
 
     }
 
@@ -208,7 +208,7 @@ class DatamasterPromotionController extends Controller
             'department_id'=> $request->department_id,
             'employee_id'=> $request->id
             ]); 
-            return redirect('/datamaster/promotions/'. $request->id . '/edit')->with('success', 'Data Promosi Karyawan Berhasil di edit!');
+            return redirect('/promotions/'. $request->id . '/edit')->with('success', 'Data Promosi Karyawan Berhasil di edit!');
     }
 
     public function getedit($id)

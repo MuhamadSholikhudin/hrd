@@ -54,7 +54,7 @@
         <!-- Kelola karyawan =>   -->
         &nbsp;
         <!-- Button trigger modal -->
-        <a href="/datamaster/employees/create" class="btn btn-outline-primary " >
+        <a href="/employees/create" class="btn btn-outline-primary " >
           <i class="fa fa-plus" data-toggle="tooltip" data-placement="bottom" title="Tambah 1 Karyawan"></i>
         </a>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -136,7 +136,7 @@
           <i class="fas fa-download"></i>
         </a>
         <div class="card-tools">
-            <form action="/datamaster/employees" >     
+            <form action="/employees" >     
                 <div class="input-group input-group-sm" style="width: 150px;">
                     <input type="text" name="search" value="{{ request('search') }}" class="form-control float-right" placeholder="Search">
                     <div class="input-group-append">
@@ -171,14 +171,14 @@
                     </td>
                     <td>{{ $employee->status_employee }}</td>
                     <td>
-                        <a href="/datamaster/employees/{{ $employee->id }}" class="btn  btn-outline-primary">
+                        <a href="/employees/{{ $employee->id }}" class="btn  btn-outline-primary">
                             Show
                         </a>
-                            <a href="/datamaster/employees/{{ $employee->id }}/edit" class="btn  btn-outline-warning">
+                            <a href="/employees/{{ $employee->id }}/edit" class="btn  btn-outline-warning">
                             Edit
                             </a>
 
-                            <!-- <form action="/datamaster/employees/{{ $employee->id }}" method="POST" class="d-inline ">
+                            <!-- <form action="/employees/{{ $employee->id }}" method="POST" class="d-inline ">
                                 @method('delete')
                                 @csrf
                                 <button class="btn  btn-outline-danger" onclick="return confirm(' Are you sure delete data ?')"> 

@@ -95,7 +95,7 @@
                   </div>
                   <div class="card-body">
                     <!-- Date -->
-                    <form role="form" action="/datamaster/mutations" method="POST" enctype="multipart/form-data">
+                    <form role="form" action="/mutations" method="POST" enctype="multipart/form-data">
                     @method('put')  
                     @csrf
                     <input type="hidden" class="form-control"  name="id" value="{{ old('id', $mutation->id) }}">

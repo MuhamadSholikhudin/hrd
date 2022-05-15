@@ -103,7 +103,7 @@ class ExcelDemotionController extends Controller
                 }
             endforeach;
         endforeach;
-        return redirect('/datamaster/demotions')->with('success', 'Data Promosi Karaywan Berhasil di tambahkan!');
+        return redirect('/demotions')->with('success', 'Data Promosi Karaywan Berhasil di tambahkan!');
     }
 
     public function update() {
@@ -157,7 +157,7 @@ class ExcelDemotionController extends Controller
             endforeach;
         endforeach;
 
-        return redirect('/datamaster/demotions')->with('success', 'Data Promosi Karaywan Berhasil di update!');
+        return redirect('/demotions')->with('success', 'Data Promosi Karaywan Berhasil di update!');
             
     }
 

@@ -137,7 +137,7 @@
                   <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a></li> -->
                 </ul>
               </div><!-- /.card-header -->
-            <form role="form" action="/datamaster/employees/{{ $employee->id }}" method="POST" enctype="multipart/form-data">
+            <form role="form" action="/employees/{{ $employee->id }}" method="POST" enctype="multipart/form-data">
               <div class="card-body">
                 <div class="tab-content">
                   <div class="tab-pane active" id="input_personal">

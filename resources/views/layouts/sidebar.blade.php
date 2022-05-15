@@ -40,6 +40,7 @@
                   // ->leftJoin('menus')
                   ->rightJoin('menus', 'access_menus.menu_id', '=', 'menus.id')
                   ->where('access_menus.role_id', $sess_role_id)
+                  ->select('access_menus.id as id', 'access_menus.menu_id as menu_id')
                   ->orderBy('menus.menu', 'asc')
                   ->get();
  
@@ -64,9 +65,12 @@
                    foreach($sub_menus as $sub_menu):
                  ?>
                    <li class="nav-item">
-                     <a href="{{$sub_menu->url}}" class="nav-link <?php $url_s = substr($sub_menu->url, 1); $open_url_s = $url_s.'*'; ?> {{ Request::is($open_url_s) ? 'active' : '' }} ">
-                       <i class="{{$sub_menu->icon}} nav-icon"></i>
-                       <p>{{$sub_menu->title}}</p>
+                     <a href="{{$sub_menu->url}}" 
+                      class="nav-link <?php $url_s = substr($sub_menu->url, 1); $open_url_s = $url_s.'*'; ?> {{ Request::is($open_url_s) ? 'active' : '' }} ">
+                       <?php $method = DB::table('methods')->where('access_menu_id', $acs->id)->where('sub_menu_id',  $sub_menu->id)->first(); ?>
+                      <i class="{{$sub_menu->icon}} nav-icon"></i>
+                      <p>{{$sub_menu->title}} </p>
+                      
                      </a>
                    </li>
                  <?php
@@ -745,6 +749,8 @@
               <p>Informational</p>
             </a>
           </li> --}}
+
+          
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

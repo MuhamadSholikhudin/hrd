@@ -87,7 +87,7 @@
                   </div>
                   <div class="card-body">
                     <!-- Date -->
-                    <form role="form" action="/datamaster/mutations" method="POST" enctype="multipart/form-data">
+                    <form role="form" action="/mutations" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" class="form-control"  name="id" value="{{  $employee->id  }}">
                     
@@ -215,7 +215,7 @@
                               </td>
                               <td>
                                   <!-- <a href="employee_show_by_id.html" class="btn  btn-outline-danger btn-sm">Lihat</a> -->
-                                  <a href="/datamaster/mutations/{{ $mutation->id }}/getedit" class="btn  btn-outline-warning btn-sm">edit</a>
+                                  <a href="/mutations/{{ $mutation->id }}/getedit" class="btn  btn-outline-warning btn-sm">edit</a>
                               </td>
                             </tr>
                           @endforeach

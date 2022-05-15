@@ -33,7 +33,7 @@
 
                     {{-- <h4 class="modal-title">Edit Pasal</h4> --}}
 
-                        <form role="form" action="/hi/signatures/{{  $signature->id  }}" method="POST" enctype="multipart/form-data">
+                        <form role="form" action="/signatures/{{  $signature->id  }}" method="POST" enctype="multipart/form-data">
                           @method('put')
                           @csrf
                       <!-- <p>One fine body&hellip;</p> -->
@@ -65,7 +65,7 @@
                       </div>
                     </div>
                     <div class="modal-footer justify-content-between">
-                      <a href="/hi/signatures" class="btn btn-default" data-dismiss="modal">kembali</a>
+                      <a href="/signatures" class="btn btn-default" data-dismiss="modal">kembali</a>
                       <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                   </form>

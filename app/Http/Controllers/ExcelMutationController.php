@@ -99,7 +99,7 @@ class ExcelMutationController extends Controller
                 }
             endforeach;
         endforeach;
-        return redirect('/datamaster/mutations')->with('success', 'Data Promosi Karaywan Berhasil di tambahkan!');
+        return redirect('/mutations')->with('success', 'Data Promosi Karaywan Berhasil di tambahkan!');
     }
 
     public function update() {
@@ -153,7 +153,7 @@ class ExcelMutationController extends Controller
             endforeach;
         endforeach;
 
-        return redirect('/datamaster/mutations')->with('success', 'Data Mutasi Karaywan Berhasil di update!');
+        return redirect('/mutations')->with('success', 'Data Mutasi Karaywan Berhasil di update!');
             
     }
 

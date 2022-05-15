@@ -140,21 +140,19 @@
                             $url_sds = substr($sm_c->url, 1);
 
                            if (strpos($a, $url_sds)) {
-                              echo '&nbsp;true';
+                              echo '&nbsp;true'.$sm_c->url;
                               echo ' [ '.$cs_as_ms->edit.' ]';
-
                                 if($cs_as_ms->edit == 'true'){
                                   echo '<button type="submit" class="btn btn-primary col start">
-                                  <i class="fas fa-plus"></i>
-                                  <span>Simpan</span>
-                                </button>';
+                                          <i class="fas fa-plus"></i>
+                                          <span>'.$sm_c->url.'</span>
+                                          </button>';
                                 }else{
-                                  echo '<button>a</button>';
+                                  echo '<button>'.$sm_c->url.'</button>';
                                 }
 
-
                             }else {
-                                echo '&nbsp;false';
+                                echo '&nbsp;false'.$sm_c->url;
                             }
                             echo '<br>';
                            
@@ -172,7 +170,7 @@
                   </div>
                   <div class="card-body">
                     <!-- Date -->
-                    <form role="form" action="/datamaster/promotions" method="POST" enctype="multipart/form-data">
+                    <form role="form" action="/promotions" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" class="form-control"  name="id" value="{{  $employee->id  }}">
                     
@@ -300,7 +298,7 @@
                               </td>
                               <td>
                                   <!-- <a href="employee_show_by_id.html" class="btn  btn-outline-danger btn-sm">Lihat</a> -->
-                                  <a href="/datamaster/promotions/{{ $promotion->id }}/getedit" class="btn  btn-outline-warning btn-sm">edit</a>
+                                  <a href="/promotions/{{ $promotion->id }}/getedit" class="btn  btn-outline-warning btn-sm">edit</a>
                               </td>
                             </tr>
                           @endforeach

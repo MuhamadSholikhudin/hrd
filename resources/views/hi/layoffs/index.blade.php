@@ -9,6 +9,7 @@
   <div class="row mb-2">
     <div class="col-sm-6">
       <h1>Pemutusan Hubungan Kerja </h1>
+      <a href="/layoffs/create" class="btn  btn-secondary">Tambah</a>
     </div>
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
@@ -27,7 +28,7 @@
 <div class="card">
       <div class="card-header">
          <div class="card-tools">
-            <form action="/hi/layoffs" >     
+            <form action="/layoffs" >     
                 <div class="input-group input-group-sm" style="width: 300px;">
                     <input type="text" name="search" value="{{ request('search') }}" class="form-control float-right" placeholder="Search">
                     <div class="input-group-append">
@@ -76,11 +77,11 @@
                 </td>
                 <td>{{$layoff->layoff_description}}</td>
                 <td>
-                  <a href="/hi/layoffs/{{$layoff->id }}" target="_blank" class="btn  btn-outline-primary">
+                  <a href="/layoffs/{{$layoff->id }}" target="_blank" class="btn  btn-outline-primary">
                     Cetak                    
                   </a>
 
-                  <form action="/hi/layoffs/{{$layoff->id }}" method="POST" class="d-inline ">
+                  <form action="/layoffs/{{$layoff->id }}" method="POST" class="d-inline ">
                         @method('delete')
                         @csrf
                         <button class="btn  btn-outline-danger" onclick="return confirm(' Are you sure delete data ?')"> 

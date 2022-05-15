@@ -163,7 +163,7 @@ class DatamasterEmployeeController extends Controller
         
         // Salary::create($validatedDataSalary);
             
-        return redirect('/datamaster/employees')->with('success', 'Data Karaywan Berhasil di tambahkan!');
+        return redirect('/employees')->with('success', 'Data Karaywan Berhasil di tambahkan!');
     }
 
     /**
@@ -297,7 +297,7 @@ class DatamasterEmployeeController extends Controller
                         'grade_salary' => $request->grade_salary,
                         'total_salary' => 0
                 ]);
-        return redirect('/datamaster/employees')->with('success', 'Data Karaywan Berhasil di update!');
+        return redirect('/employees')->with('success', 'Data Karaywan Berhasil di update!');
     }
 
     /**

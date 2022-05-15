@@ -26,6 +26,11 @@
   <br>
   <br>
   <?php 
+  echo $url_xtz;
+$date = new DateTime('2000-01-01 00:00:00.0');
+echo $result = $date->format('Y-m-d');
+
+
 // function sum($satu, $dua){
 //   if ($satu == 'Satu'){
     
@@ -54,6 +59,34 @@ $cari_pasal_akumulasi = DB::table('alphabets')
 
 
   <?php
+
+/*inisialisasi variabel kalimat */
+$kalimat = "Hallo, apa kabar";
+$kalimat1= "http://127.0.0.1:8000/datamaster/employees";
+
+/*ganti karakter " " dengan karakter "+"*/
+echo strtr( $kalimat, " ", "+" );
+echo '<br>';
+echo strtr( $kalimat1, "/", "+" );
+
+
+echo '<br>';
+$url_now = url()->current();
+
+echo  $url_sc = substr($url_now, 21); 
+// echo $open_url_now = $url_sc.'*';
+echo '<br>';
+
+$str = $url_now;
+ $prefix = 'http://127.0.0.1:8000';
+ if (substr($str, 0, strlen($prefix)) === $prefix) {
+     $str = substr($str, strlen($prefix));
+ }
+ //hasil
+ echo $str;
+ echo '<br>';
+
+
     // if (isset($_GET['user']))
     // {
     //   $user = $_GET['user'];

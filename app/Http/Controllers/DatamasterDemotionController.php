@@ -81,7 +81,7 @@ class DatamasterDemotionController extends Controller
             'employee_id'=> $request->id
             ]);
 
-        return redirect('/datamaster/demotions/'. $request->id . '/edit')->with('success', 'Data Promosi Karyawan Berhasil di demosikan!');
+        return redirect('/demotions/'. $request->id . '/edit')->with('success', 'Data Promosi Karyawan Berhasil di demosikan!');
 
     }
 
@@ -207,7 +207,7 @@ class DatamasterDemotionController extends Controller
             'department_id'=> $request->department_id,
             'employee_id'=> $request->id
             ]); 
-            return redirect('/datamaster/demotions/'. $request->id . '/edit')->with('success', 'Data Demosi Karyawan Berhasil di edit!');
+            return redirect('/demotions/'. $request->id . '/edit')->with('success', 'Data Demosi Karyawan Berhasil di edit!');
     }
 
 

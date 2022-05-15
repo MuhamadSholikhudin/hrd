@@ -136,7 +136,7 @@ class ViolationController extends Controller
             // dd($num_vio_accumulation3);
             if($num_vio_accumulation3 > 0){
                 // LOGIKA AKUMULSI KEEMPAT
-                // return redirect('hi/violations/' . $employee_id . '/edit');
+                // return redirect('/violations/' . $employee_id . '/edit');
                 require_once 'GetViolationArticle.php';
 
                 // $pelanggran_sebelumnya2 = DB::table('violations')
@@ -258,7 +258,7 @@ class ViolationController extends Controller
         ];
         // dd($data);
         DB::table('violations')->insert($data);
-        return redirect('hi/violations/' . $employee_id . '/edit');
+        return redirect('/violations/' . $employee_id . '/edit');
     }
 
     /**
@@ -341,7 +341,7 @@ class ViolationController extends Controller
     {
         //
         Violation::destroy($id);
-        return redirect('/violation/list');
+        return redirect('hiviolation');
         // ->with('success', 'Post has been deleted!');
     }
 
@@ -439,6 +439,8 @@ class ViolationController extends Controller
 
     public function list()
     {
+        $dd = 1;
+        dd($dd);
         // $violations = Violation::oldest();
         $violations = DB::table('violations')
                 ->leftJoin('employees', 'employees.id', '=', 'violations.employee_id')
@@ -452,7 +454,7 @@ class ViolationController extends Controller
                  'violations.other_information as other_information',
                  'violations.violation_status as violation_status',
                  'employees.name as name',
-                 'employees.number_of_employees as number_of_employees',
+                 'employees.number_of_employees as number_of_employees'
                  )
                 ->orderByDesc('violations.id');
 

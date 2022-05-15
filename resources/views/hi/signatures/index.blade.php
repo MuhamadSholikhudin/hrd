@@ -54,7 +54,7 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                      <form role="form" action="/hi/signatures" method="POST" enctype="multipart/form-data">
+                      <form role="form" action="/signatures" method="POST" enctype="multipart/form-data">
                           @csrf
                       <!-- <p>One fine body&hellip;</p> -->
 
@@ -114,7 +114,7 @@
                     <td>{{ $signature->status_signature }}</td>
                     <td>
                         <div class="tools">
-                          <a href="/hi/signatures/{{ $signature->id }}/edit">
+                          <a href="/signatures/{{ $signature->id }}/edit">
                             <i class="fas fa-edit"></i>
                             edit
                           </a>

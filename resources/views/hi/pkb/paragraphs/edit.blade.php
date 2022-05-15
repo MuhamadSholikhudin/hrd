@@ -35,7 +35,7 @@
 
                     {{-- <h4 class="modal-title">Edit Pasal</h4> --}}
 
-                        <form role="form" action="/hi/paragraphs/{{  $paragraph->id  }}" method="POST" enctype="multipart/form-data">
+                        <form role="form" action="/paragraphs/{{  $paragraph->id  }}" method="POST" enctype="multipart/form-data">
                           @method('put')
                           @csrf
                       <!-- <p>One fine body&hellip;</p> -->
@@ -81,7 +81,7 @@
 
                   
                     <div class="modal-footer justify-content-between">
-                      <a href="/hi/paragraphs" class="btn btn-default" data-dismiss="modal">kembali</a>
+                      <a href="/paragraphs" class="btn btn-default" data-dismiss="modal">kembali</a>
                       <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                   </form>

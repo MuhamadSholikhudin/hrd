@@ -166,7 +166,7 @@ class LayoffController extends Controller
             'layoff_date' => $request->layoff_date
         ]);
 
-        return redirect('/hi/layoffs');
+        return redirect('/layoffs');
     }
 
     /**
@@ -233,7 +233,7 @@ class LayoffController extends Controller
                 'layoff_date' => $request->layoff_date
         ]);
 
-        return redirect('/hi/layoffs');
+        return redirect('/layoffs');
     }
 
     /**
@@ -246,7 +246,7 @@ class LayoffController extends Controller
     {
         //
         Layoff::destroy($id);
-        return redirect('/hi/layoffs');
+        return redirect('/layoffs');
     }
 
     public function get_pasal_phk(Request $request){
