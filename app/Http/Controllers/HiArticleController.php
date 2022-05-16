@@ -61,6 +61,17 @@ class HiArticleController extends Controller
                 'chapters'=> $request->chapters,
                 'article_sound'=> $request->article_sound
             ]);
+            $remark = "menambahkan pasal ".$request->article;
+            $action = "add";
+    
+            DB::table('histories')->insert([
+                'user_id' => auth()->user()->id,
+                'role_id' => auth()->user()->role_id,
+                'remark' => $remark,
+                'action' => $action,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
         return redirect('/articles/')->with('success', 'Data Huruf berhasil di tambahkan');
 
     }
@@ -109,6 +120,19 @@ class HiArticleController extends Controller
             'chapters'=> $request->chapters,
             'article_sound'=> $request->article_sound
         ]);
+
+        $remark = "mengubah pasal ".$request->article;
+        $action = "update";
+
+        DB::table('histories')->insert([
+            'user_id' => auth()->user()->id,
+            'role_id' => auth()->user()->role_id,
+            'remark' => $remark,
+            'action' => $action,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+
     return redirect('/articles/')->with('success', 'Data Pasal berhasil di Update');
 
     }

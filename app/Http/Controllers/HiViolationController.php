@@ -52,6 +52,8 @@ class HiViolationController extends Controller
                       ->orWhere('number_of_employees', 'like', '%' . request('search') . '%')
                       ->orWhere('other_information', 'like', '%' . request('search') . '%');
         }
+
+        
         return view('hi.violations.list', [
             'violations' => $violations->paginate(10),
             'count' => DB::table('violations')->count()

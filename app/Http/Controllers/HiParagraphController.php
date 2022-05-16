@@ -65,6 +65,18 @@ class HiParagraphController extends Controller
             'description'=> $request->description,
             'type_of_verse'=> $request->type_of_verse
             ]);
+        
+            $remark = "menambah ayat ".$request->paragraph;
+            $action = "add";
+    
+            DB::table('histories')->insert([
+                'user_id' => auth()->user()->id,
+                'role_id' => auth()->user()->role_id,
+                'remark' => $remark,
+                'action' => $action,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
 
         return redirect('/paragraphs/')->with('success', 'Data Ayat berhasil di tambahkan');
     }
@@ -118,6 +130,18 @@ class HiParagraphController extends Controller
                 'sub_chapters'=> $request->sub_chapters,
                 'description'=> $request->description,
                 'type_of_verse'=> $request->type_of_verse
+            ]);
+        
+            $remark = "mengubah ayat ".$request->paragraph;
+            $action = "update";
+    
+            DB::table('histories')->insert([
+                'user_id' => auth()->user()->id,
+                'role_id' => auth()->user()->role_id,
+                'remark' => $remark,
+                'action' => $action,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
             ]);
 
         return redirect('/paragraphs/')->with('success', 'Data Ayat berhasil di Ubah');

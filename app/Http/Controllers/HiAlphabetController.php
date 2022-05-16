@@ -94,6 +94,20 @@ class HiAlphabetController extends Controller
             'firts_periode'=> $request->firts_periode,
             'last_periode'=> $request->last_periode
             ]);
+        
+            
+            $remark = "menambahkan huruf ".$request->alphabet;
+            $action = "add";
+    
+            DB::table('histories')->insert([
+                'user_id' => auth()->user()->id,
+                'role_id' => auth()->user()->role_id,
+                'remark' => $remark,
+                'action' => $action,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+
         return redirect('/alphabets/')->with('success', 'Data Huruf berhasil di tambahkan');
 
     }
@@ -144,6 +158,18 @@ class HiAlphabetController extends Controller
             'paragraph_id'=> $request->paragraph_id, 
             'firts_periode'=> $request->firts_periode,
             'last_periode'=> $request->last_periode
+            ]);
+
+            $remark = "mengubah huruf ".$request->alphabet;
+            $action = "update";
+    
+            DB::table('histories')->insert([
+                'user_id' => auth()->user()->id,
+                'role_id' => auth()->user()->role_id,
+                'remark' => $remark,
+                'action' => $action,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
             ]);
         return redirect('/alphabets/')->with('success', 'Data Huruf berhasil di ubah');
     }
