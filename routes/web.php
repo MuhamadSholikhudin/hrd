@@ -85,7 +85,7 @@ Route::get('/example', function () {
 
 // DASHBOARD 
 Route::controller(dashboardController::class)->group(function(){
-    Route::get('dashboards', 'index')->middleware('auth');
+    Route::get('dashboards', 'index')->middleware('isrole');
     // Route::get('autocomplete', 'autocomplete')->name('autocomplete');
 });
 
@@ -97,15 +97,15 @@ Route::controller(UserController::class)->group(function(){
     Route::post('users-import', 'import')->name('users.import');
 
     //CRUD USER
-    Route::get('users', 'list')->name('users.list')->middleware('auth');
-    Route::get('users/create', 'create')->name('users.create')->middleware('auth');
-    Route::get('users/{users:id}/edit', 'edit')->name('users.edit')->middleware('auth');
+    Route::get('users', 'list')->name('users.list')->middleware('isrole');
+    Route::get('users/create', 'create')->name('users.create')->middleware('isrole');
+    Route::get('users/{users:id}/edit', 'edit')->name('users.edit')->middleware('isrole');
 
-    Route::get('users/{users:id}/password', 'password')->name('users.password')->middleware('auth');
-    Route::post('users/store', 'store')->name('users.store')->middleware('auth');
-    Route::put('users/update', 'update')->name('users.update')->middleware('auth');
-    Route::put('users/changepassword', 'changepassword')->name('users.changepassword')->middleware('auth');
-    // Route::post('users-import', 'import')->name('users.import')->middleware('auth');
+    Route::get('users/{users:id}/password', 'password')->name('users.password')->middleware('isrole');
+    Route::post('users/store', 'store')->name('users.store')->middleware('isrole');
+    Route::put('users/update', 'update')->name('users.update')->middleware('isrole');
+    Route::put('users/changepassword', 'changepassword')->name('users.changepassword')->middleware('isrole');
+    // Route::post('users-import', 'import')->name('users.import')->middleware('isrole');
 });
 
 //SELECT2 
@@ -116,71 +116,71 @@ Route::controller(SearchController::class)->group(function(){
 
 
 // JOBS
-Route::resource('jobs', JobController::class)->middleware('auth');
+Route::resource('jobs', JobController::class)->middleware('isrole');
 
 // DEPARTMENTS
-Route::resource('departments', DepartmentController::class)->middleware('auth');
+Route::resource('departments', DepartmentController::class)->middleware('isrole');
 
 
 // DATA MASTER EMPLOYEES
-Route::resource('/employees', DatamasterEmployeeController::class)->middleware('auth');
+Route::resource('/employees', DatamasterEmployeeController::class)->middleware('isrole');
 
 //EXCEL IMPORT END EXPORT EMPLOYEES
 Route::controller(EmployeeController::class)->group(function(){
     // Route::get('users', 'index');
     Route::get('exportemployees', 'export')->name('users.export');
-    Route::post('importemployees', 'import')->name('employees.import')->middleware('auth');
-    Route::post('updateemployees', 'update')->name('employees.update')->middleware('auth');
+    Route::post('importemployees', 'import')->name('employees.import')->middleware('isrole');
+    Route::post('updateemployees', 'update')->name('employees.update')->middleware('isrole');
 });
 
 // DATA MASTER PROMOTION
-Route::resource('/promotions', DatamasterPromotionController::class)->middleware('auth');
+Route::resource('/promotions', DatamasterPromotionController::class)->middleware('isrole');
 
-Route::get('/promotions/{promotions:id}/getedit', [DatamasterPromotionController::class, 'getedit'])->middleware('auth');
+Route::get('/promotions/{promotions:id}/getedit', [DatamasterPromotionController::class, 'getedit'])->middleware('isrole');
 
 //EXCEL IMPORT END EXPORT EMPLOYEES
 Route::controller(ExcelPromotionController::class)->group(function(){
     // Route::get('users', 'index');
-    Route::get('exportpromotions', 'export')->name('promotions.export')->middleware('auth');
-    Route::post('importpromotions', 'import')->name('promotions.import')->middleware('auth');
-    Route::post('updatepromotions', 'update')->name('promotions.update')->middleware('auth');
+    Route::get('exportpromotions', 'export')->name('promotions.export')->middleware('isrole');
+    Route::post('importpromotions', 'import')->name('promotions.import')->middleware('isrole');
+    Route::post('updatepromotions', 'update')->name('promotions.update')->middleware('isrole');
 });
 
 // DATA MASTER DEMOTION
 Route::resource('/demotions', DatamasterDemotionController::class);
 
-Route::get('/demotions/{demotions:id}/getedit', [DatamasterDemotionController::class, 'getedit'])->middleware('auth');
+Route::get('/demotions/{demotions:id}/getedit', [DatamasterDemotionController::class, 'getedit'])->middleware('isrole');
 
 //EXCEL IMPORT END EXPORT EMPLOYEES
 Route::controller(ExcelDemotionController::class)->group(function(){
-    Route::get('exportdemotions', 'export')->name('demotions.export')->middleware('auth');
-    Route::post('importdemotions', 'import')->name('demotions.import')->middleware('auth');
-    Route::post('updatedemotions', 'update')->name('demotions.update')->middleware('auth');
+    Route::get('exportdemotions', 'export')->name('demotions.export')->middleware('isrole');
+    Route::post('importdemotions', 'import')->name('demotions.import')->middleware('isrole');
+    Route::post('updatedemotions', 'update')->name('demotions.update')->middleware('isrole');
 });
 
 // DATA MASTER MUTATION
-Route::resource('/mutations', DatamasterMutationController::class)->middleware('auth');
+Route::resource('/mutations', DatamasterMutationController::class)->middleware('isrole');
 
-Route::get('/mutations/{demotions:id}/getedit', [DatamasterMutationController::class, 'getedit'])->middleware('auth');
+Route::get('/mutations/{demotions:id}/getedit', [DatamasterMutationController::class, 'getedit'])->middleware('isrole');
 
 //EXCEL IMPORT END EXPORT EMPLOYEES
 Route::controller(ExcelMutationController::class)->group(function(){
-    Route::get('exportmutations', 'export')->name('mutations.export')->middleware('auth');
-    Route::post('importmutations', 'import')->name('mutations.import')->middleware('auth');
-    Route::post('updatemutations', 'update')->name('mutations.update')->middleware('auth');
+    Route::get('exportmutations', 'export')->name('mutations.export')->middleware('isrole');
+    Route::post('importmutations', 'import')->name('mutations.import')->middleware('isrole');
+    Route::post('updatemutations', 'update')->name('mutations.update')->middleware('isrole');
 });
 
 
 // DATA HI Violations
-Route::resource('/violations', ViolationController::class)->middleware('auth');
+Route::resource('/violations', ViolationController::class)->middleware('isrole');
 
-Route::get('/hiviolations', [HiViolationController::class, 'index'])->middleware('auth');
+Route::get('/hiviolations', [HiViolationController::class, 'index'])->middleware('isrole');
 
-// Route::resource('hi/hiviolations', HiViolationController::class)->middleware('auth');
+// Route::resource('hi/hiviolations', HiViolationController::class)->middleware('isrole');
 
 Route::controller(HiViolationController::class)->group(function(){
-    Route::get('exportviolations', 'export')->name('violations.export')->middleware('auth');
-    Route::post('importviolations', 'import')->name('violations.import')->middleware('auth');
+    Route::get('exportviolations', 'export')->name('violations.export');
+    Route::post('importviolations', 'import')->name('violations.import');
     Route::post('deleteviolations', 'hapus')->name('deleteviolations');
 });
 
@@ -191,38 +191,38 @@ Route::post('violation/get_type_violation', [ViolationController::class, 'get_ty
 // });
 
 // PKB
-Route::resource('/pkb', HiPkbController::class)->middleware('auth');
+Route::resource('/pkb', HiPkbController::class)->middleware('isrole');
 
 // PKB -> articles
-Route::resource('/articles', HiArticleController::class)->middleware('auth');
+Route::resource('/articles', HiArticleController::class)->middleware('isrole');
 
 // PKB -> paragraphs
-Route::resource('/paragraphs', HiParagraphController::class)->middleware('auth');
+Route::resource('/paragraphs', HiParagraphController::class)->middleware('isrole');
 
 // PKB -> alphabets
-Route::resource('/alphabets', HiAlphabetController::class)->middleware('auth');
+Route::resource('/alphabets', HiAlphabetController::class)->middleware('isrole');
 
 //EXCEL IMPORT END EXPORT VIOLATIONS
 Route::controller(HiAlphabetController::class)->group(function(){
-    Route::get('exportalphabets', 'export')->name('alphabets.export')->middleware('auth');
-    Route::post('importalphabets', 'import')->name('alphabets.import')->middleware('auth');
+    Route::get('exportalphabets', 'export')->name('alphabets.export');
+    Route::post('importalphabets', 'import')->name('alphabets.import')->middleware('isrole');
     // Route::post('updatealphabets', 'update')->name('alphabets.update');
 });
 
 // SIGNATURES
-Route::resource('/signatures', SignatureController::class)->middleware('auth');
+Route::resource('/signatures', SignatureController::class)->middleware('isrole');
 Route::post('signatures/get_type_violation', [SignatureController::class, 'get_signature'])->name('get_signature');
 Route::get('get_signature_employee', [SignatureController::class, 'get_signature_employee'])->name('get_signature_employee');
 
 
 // LAYOFFS
-Route::resource('/layoffs', LayoffController::class)->middleware('auth');
+Route::resource('/layoffs', LayoffController::class)->middleware('isrole');
 
-Route::post('layoffs/get_karyawan_phk', [LayoffController::class, 'get_karyawan_phk'])->name('get_karyawan_phk')->middleware('auth');
+Route::post('layoffs/get_karyawan_phk', [LayoffController::class, 'get_karyawan_phk'])->name('get_karyawan_phk')->middleware('isrole');
 
-Route::get('layoffs/karyawan_phk', [LayoffController::class, 'karyawan_phk'])->name('karyawan_phk')->middleware('auth');
+Route::get('layoffs/karyawan_phk', [LayoffController::class, 'karyawan_phk'])->name('karyawan_phk')->middleware('isrole');
 
-Route::post('layoffs/get_pasal_phk', [LayoffController::class, 'get_pasal_phk'])->name('get_pasal_phk')->middleware('auth');
+Route::post('layoffs/get_pasal_phk', [LayoffController::class, 'get_pasal_phk'])->name('get_pasal_phk')->middleware('isrole');
 
 // LOGIN AUTHENTICATION
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
@@ -231,17 +231,17 @@ Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth');
 
 
 // ROLES
-Route::resource('/roles', RoleController::class)->middleware('auth');
+Route::resource('/roles', RoleController::class)->middleware('isrole');
 
 // MENUS
-Route::resource('/menus', MenuController::class)->middleware('auth');
+Route::resource('/menus', MenuController::class)->middleware('isrole');
 
 // SUB MENUS
-Route::resource('/sub_menus', SubMenuController::class)->middleware('auth');
+Route::resource('/sub_menus', SubMenuController::class)->middleware('isrole');
 
 // ACCESS MENUS
-Route::resource('/access_menus', AccessMenuController::class)->middleware('auth');
-Route::post('access_menus/changeaccess', [AccessMenuController::class, 'changeaccess'])->name('changeaccess')->middleware('auth');
+Route::resource('/access_menus', AccessMenuController::class)->middleware('isrole');
+Route::post('access_menus/changeaccess', [AccessMenuController::class, 'changeaccess'])->name('changeaccess')->middleware('isrole');
 Route::post('access_menus/changeaccess_method', [AccessMenuController::class, 'changeaccess_method'])->name('changeaccess_method');
 
 //PDF

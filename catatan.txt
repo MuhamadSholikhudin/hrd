@@ -106,7 +106,7 @@ function boot (){
     }
     
     Gate::define('admin', function(User $user){
-        return auth->user()->username !== 'sholikhudin'
+        return auth->user()->username !== 'sholikhudin';
     }
 }
 

@@ -9,7 +9,7 @@
   <div class="row mb-2">
     <div class="col-sm-6">
       <h1>Pemutusan Hubungan Kerja </h1>
-      <a href="/layoffs/create" class="btn  btn-secondary">Tambah</a>
+      <!-- <a href="/layoffs/create" class="btn  btn-secondary">Tambah</a> -->
     </div>
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
@@ -25,11 +25,12 @@
 <section class="content">
 
 
-<div class="card">
+  <div class="card">
       <div class="card-header">
          <div class="card-tools">
             <form action="/layoffs" >     
                 <div class="input-group input-group-sm" style="width: 300px;">
+                <a href="/layoffs/create" class="btn btn-primary btn-sm float-right"><i class="fas fa-plus"></i></a> &nbsp;
                     <input type="text" name="search" value="{{ request('search') }}" class="form-control float-right" placeholder="Search">
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>

@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
-use Carbon\Carbon;
+use Illuminate\Support\Facades\URL;
 
-  
+use Carbon\Carbon;
 
 class HistoryController extends Controller
 {
@@ -16,18 +16,29 @@ class HistoryController extends Controller
 
     public function index()
     {
-        // echo 'oke';
 
-        // $histories = DB::table('histories')->get();
-        // $m_histories = DB::table('histories') ->limit(5)->get();
+        if(auth()->user()->role_id == 1){
+            $histories = DB::table('histories')->oldest();
+        
+        }else{
+            $histories = DB::table('histories')->where('role_id', auth()->user()->role_id)->oldest();
+        }
+
+        if(request('search')){
+            if(auth()->user()->role_id == 1){
+                $histories->where('remark', 'like', '%' . request('search') . '%')
+                //   ->orWhere('created_at', 'like', '%' . request('search') . '%')
+                  ->orWhere('created_at', 'like', '%' . request('search') . '%');
+            }else{
+                $histories->where('remark', 'like', '%' . request('search') . '%')
+                  ->orWhere('role_id', 'like', '%' . auth()->user()->role_id . '%')
+                  ->orWhere('created_at', 'like', '%' . request('search') . '%');
+            }
+        }
 
         return view('histories.index', [
-            
-            
-            'histories' => DB::table('histories')->paginate(10),
-            'count' => DB::table('histories')->count()
-            
-             
+            'histories' => $histories->paginate(10),
+            'count' => $histories->count()
         ]);
 
     }

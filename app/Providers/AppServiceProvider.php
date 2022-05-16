@@ -5,6 +5,9 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 
+use Illuminate\Support\Facades\Gate;
+use App\Policies\PostPolicy;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -31,5 +34,12 @@ class AppServiceProvider extends ServiceProvider
 
         Paginator::useBootstrapFive();
         Paginator::useBootstrapFour();
+/*
+        $this->registerPolicies();
+
+        Gate::define('isrole', function(User $user){
+            return auth->user()->username !== 'sholikhudin';
+        }
+*/
     }
 }

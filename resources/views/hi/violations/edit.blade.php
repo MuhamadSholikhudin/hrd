@@ -100,9 +100,6 @@
                     </tr>
                   </table>
     
-    
-     
-
                   <p></p>
               </div>
 
@@ -118,7 +115,6 @@
                       <td valign="top">: {{  $employee->major  }}</td>
                     </tr>
                   </table>
-                  <hr>
                   <strong><i class="fas fa-book mr-1"></i> Email & Phone</strong>
                   <table>
                     <tr>
@@ -128,6 +124,70 @@
                     <tr>
                       <td valign="top">Phone</td>
                       <td valign="top">: {{  $employee->phone  }}</td>
+                    </tr>
+                  </table>
+                  <strong><i class="fas fa-book mr-1"></i> Hire Date</strong>
+                  <table>
+
+                    <?php 
+                        function tanggal_masuk($tanggal){
+                          $date_hire = new \DateTime($tanggal .' 00:00:00');
+                          $date_year_hire = date_format($date_hire, "Y"); //for Display Year
+                          $date_month_hire =  date_format($date_hire, "m"); //for Display Month
+                          $date_day_hire = date_format($date_hire, "d"); //for Display Date
+
+                          $day_hire = gmdate("l", mktime(0,0,0, $date_day_hire,$date_month_hire,$date_year_hire));
+
+                          // Hari Indonesia
+                          if($day_hire == 'Monday'){
+                              $day_indo_hire = 'Senin';
+                          }elseif($day_hire == 'Tuesday'){
+                              $day_indo_hire = 'Selasa';            
+                          }elseif($day_hire == 'Wednesday'){
+                              $day_indo_hire = 'Rabu';            
+                          }elseif($day_hire == 'Thursday'){
+                              $day_indo_hire = 'Kamis';            
+                          }elseif($day_hire == 'Friday'){
+                              $day_indo_hire = 'Jumat';            
+                          }elseif($day_hire == 'Saturday'){
+                              $day_indo_hire = 'Sabtu';            
+                          }elseif($day_hire == 'Sunday'){
+                              $day_indo_hire = 'Minggu';            
+                          }
+
+                          //Bulan Indonesia
+                          if($date_month_hire == '01'){
+                              $month_indo_hire = 'Januari';
+                          }elseif($date_month_hire == '02'){
+                              $month_indo_hire = 'Februari';            
+                          }elseif($date_month_hire == '03'){
+                              $month_indo_hire = 'Maret';            
+                          }elseif($date_month_hire == '04'){
+                              $month_indo_hire = 'April';            
+                          }elseif($date_month_hire == '05'){
+                              $month_indo_hire = 'Mei';            
+                          }elseif($date_month_hire == '06'){
+                              $month_indo_hire = 'Juni';            
+                          }elseif($date_month_hire == '07'){
+                              $month_indo_hire = 'Juli';            
+                          }elseif($date_month_hire == '08'){
+                              $month_indo_hire = 'Agustus';            
+                          }elseif($date_month_hire == '09'){
+                              $month_indo_hire = 'September';            
+                          }elseif($date_month_hire == '10'){
+                              $month_indo_hire = 'Oktober';            
+                          }elseif($date_month_hire == '11'){
+                              $month_indo_hire = 'November';            
+                          }elseif($date_month_hire == '12'){
+                              $month_indo_hire = 'Desember';            
+                          }
+
+                          echo  $date_day_hire. " ". $month_indo_hire . " ". $date_year_hire;
+                      }
+                    ?>
+                    <tr>
+                      <td valign="top">Tanggal</td>
+                      <td valign="top">: {{ tanggal_masuk($employee->hire_date)  }}</td>
                     </tr>
                   </table>
               </div>
@@ -413,178 +473,172 @@
         </div>
 
       {{-- Displaynone --}}
-    <div >
-        <?php
-        
-        $date_violation = new \DateTime(date('Y-m-d') .' 4:06:37' );
+        <div style="display:none;" >
+          <?php
+            $date_violation = new \DateTime(date('Y-m-d') .' 4:06:37' );
 
-        echo $date_year = date_format($date_violation, "Y"); //for Display Year
-        echo $date_month =  date_format($date_violation, "m"); //for Display Month
-        echo $date_day = date_format($date_violation, "d"); //for Display Date
+            echo $date_year = date_format($date_violation, "Y"); //for Display Year
+            echo $date_month =  date_format($date_violation, "m"); //for Display Month
+            echo $date_day = date_format($date_violation, "d"); //for Display Date
 
-      // Prints: October 3, 1975 was on a Friday
-        echo "Oct 3, 1975 was on a ".date("l", gmmktime(0,0,0, 04, 20, 2022));
-        echo '<br>';
+          // Prints: October 3, 1975 was on a Friday
+            echo "Oct 3, 1975 was on a ".date("l", gmmktime(0,0,0, 04, 20, 2022));
+            echo '<br>';
 
-        // echo $date_month;
-        echo '<br>';
+            // echo $date_month;
+            echo '<br>';
 
-        $date_now = date('Y-m-d');
-        echo date("l, d F Y", strtotime($date_now));
-        echo '<br>';
-        echo $day = gmdate("l", time()+60*60*7);
-        echo '<br>';
-        echo $month_m = gmdate("m", time()+60*60*7);
-        echo '<br>';
-        echo $month_n = gmdate("n", time()+60*60*7);
+            $date_now = date('Y-m-d');
+            echo date("l, d F Y", strtotime($date_now));
+            echo '<br>';
+            echo $day = gmdate("l", time()+60*60*7);
+            echo '<br>';
+            echo $month_m = gmdate("m", time()+60*60*7);
+            echo '<br>';
+            echo $month_n = gmdate("n", time()+60*60*7);
 
-        $m_month = "'". $month_m ."'";
-        echo '<br>';
+            $m_month = "'". $month_m ."'";
+            echo '<br>';
 
-          $tgl1 = $date_now;// pendefinisian tanggal awal
-          $tgl2 = date('Y-m-d', strtotime('+180 days', strtotime($tgl1))); //operasi penjumlahan tanggal sebanyak 6 hari
-          echo $tgl2; //print tanggal
-          echo '<br> $num_no_sp ';
+            $tgl1 = $date_now;// pendefinisian tanggal awal
+            $tgl2 = date('Y-m-d', strtotime('+180 days', strtotime($tgl1))); //operasi penjumlahan tanggal sebanyak 6 hari
+            echo $tgl2; //print tanggal
+            echo '<br> $num_no_sp ';
 
-          // Nomer SP
-         echo $num_no_sp = DB::table('violations')
-                            ->where('month_of_violation',  $month_n)
-                            ->count();
-          echo '<br> ';
-// dd($num_no_sp);
-          if($num_no_sp == 0){
-             $no_sp = 1;
-          }elseif($num_no_sp > 0){
-            $sel_no_sp = DB::table('violations')
-              ->latest()->first();
+            // Nomer SP
+            echo $num_no_sp = DB::table('violations')
+                              ->where('month_of_violation',  $month_n)
+                              ->count();
+            echo '<br> ';
+            // dd($num_no_sp);
+            if($num_no_sp == 0){
+              $no_sp = 1;
+            }elseif($num_no_sp > 0){
+              $sel_no_sp = DB::table('violations')
+                ->latest()->first();
 
-            $no_sp = $sel_no_sp->no_violation + 1;
-          }
-          echo '<br> ';
-          $var = 1234567;
-          echo is_numeric($var) ? "Jumlah digit dari bilangan ".$var." adalah ".strlen($var) : 'Bukan Termasuk Angka';
-          echo '<br>';
+              $no_sp = $sel_no_sp->no_violation + 1;
+            }
+            echo '<br> ';
+            $var = 1234567;
+            echo is_numeric($var) ? "Jumlah digit dari bilangan ".$var." adalah ".strlen($var) : 'Bukan Termasuk Angka';
+            echo '<br>';
 
-          if(strlen($no_sp) == '1'){
-            $p_no_sp = '00'. $no_sp;
-          }elseif(strlen($no_sp) == '2'){
-            $p_no_sp = '0'.$no_sp;
-          }
+            if(strlen($no_sp) == '1'){
+              $p_no_sp = '00'. $no_sp;
+            }elseif(strlen($no_sp) == '2'){
+              $p_no_sp = '0'.$no_sp;
+            }
 
-          echo $p_no_sp;
-          echo '<br>';
+            echo $p_no_sp;
+            echo '<br>';
 
-          // Hari ROMAWI
-          if($day == 'Monday'){
-            $day_num = '1';
-            $day_indo = 'Senin';
-          }elseif($day == 'Tuesday'){
-            $day_num = '2';
-            $day_indo = 'Selasa';            
-          }elseif($day == 'Wednesday'){
-            $day_num = '3';
-            $day_indo = 'Rabu';            
-          }elseif($day == 'Thursday'){
-            $day_num = '4';
-            $day_indo = 'Kamis';            
-          }elseif($day == 'Friday'){
-            $day_num = '5';
-            $day_indo = 'Jumat';            
-          }elseif($day == 'Saturday'){
-            $day_num = '6';
-            $day_indo = 'Sabtu';            
-          }elseif($day == 'Sunday'){
-            $day_num = '7';
-            $day_indo = 'Minggu';            
-          }
-          echo $day_indo;
-          echo '<br>';
-          echo $day_num;
+            // Hari ROMAWI
+            if($day == 'Monday'){
+              $day_num = '1';
+              $day_indo = 'Senin';
+            }elseif($day == 'Tuesday'){
+              $day_num = '2';
+              $day_indo = 'Selasa';            
+            }elseif($day == 'Wednesday'){
+              $day_num = '3';
+              $day_indo = 'Rabu';            
+            }elseif($day == 'Thursday'){
+              $day_num = '4';
+              $day_indo = 'Kamis';            
+            }elseif($day == 'Friday'){
+              $day_num = '5';
+              $day_indo = 'Jumat';            
+            }elseif($day == 'Saturday'){
+              $day_num = '6';
+              $day_indo = 'Sabtu';            
+            }elseif($day == 'Sunday'){
+              $day_num = '7';
+              $day_indo = 'Minggu';            
+            }
+            echo $day_indo;
+            echo '<br>';
+            echo $day_num;
 
-          echo '<br>';
-          if($month_n == '1'){
-            $ROM = 'I';
-          }elseif($month_n == '2'){
-            $ROM = 'II';
-          }elseif($month_n == '3'){
-            $ROM = 'III';
-          }elseif($month_n == 4){
-            $ROM = 'IV';
-          }elseif($month_n == '5'){
-            $ROM = 'V';
-          }elseif($month_n == '6'){
-            $ROM = 'VI';
-          }elseif($month_n == '7'){
-            $ROM = 'VII';
-          }elseif($month_n == '8'){
-            $ROM = 'VIII';
-          }elseif($month_n == '9'){
-            $ROM = 'IX';
-          }elseif($month_n == '10'){
-            $ROM = 'X';
-          }elseif($month_n == '11'){
-            $ROM = 'XI';
-          }elseif($month_n == '12'){
-            $ROM = 'XII';
-          }
-          echo $ROM;
+            echo '<br>';
+            if($month_n == '1'){
+              $ROM = 'I';
+            }elseif($month_n == '2'){
+              $ROM = 'II';
+            }elseif($month_n == '3'){
+              $ROM = 'III';
+            }elseif($month_n == 4){
+              $ROM = 'IV';
+            }elseif($month_n == '5'){
+              $ROM = 'V';
+            }elseif($month_n == '6'){
+              $ROM = 'VI';
+            }elseif($month_n == '7'){
+              $ROM = 'VII';
+            }elseif($month_n == '8'){
+              $ROM = 'VIII';
+            }elseif($month_n == '9'){
+              $ROM = 'IX';
+            }elseif($month_n == '10'){
+              $ROM = 'X';
+            }elseif($month_n == '11'){
+              $ROM = 'XI';
+            }elseif($month_n == '12'){
+              $ROM = 'XII';
+            }
+            echo $ROM;
 
-          echo "<br/>";
-          $awal  = date_create('2022-04-10');
-          $akhir = date_create(); // waktu sekarang
-          $diff  = date_diff( $awal, $akhir );
+            echo "<br/>";
+            $awal  = date_create('2022-04-10');
+            $akhir = date_create(); // waktu sekarang
+            $diff  = date_diff( $awal, $akhir );
 
-          echo 'Selisih waktu: ';
-          echo $diff->y . ' tahun, ';
-          echo $diff->m . ' bulan, ';
-          echo $diff->d . ' hari, ';
-          echo $diff->h . ' jam, ';
-          echo $diff->i . ' menit, ';
-          echo $diff->s . ' detik, ';
+            echo 'Selisih waktu: ';
+            echo $diff->y . ' tahun, ';
+            echo $diff->m . ' bulan, ';
+            echo $diff->d . ' hari, ';
+            echo $diff->h . ' jam, ';
+            echo $diff->i . ' menit, ';
+            echo $diff->s . ' detik, ';
 
-          // Cari data pelanggan terakhir 
-          $sel_num_vio = DB::table('violations')->where('employee_id', $employee->id)->count();
-          if($sel_num_vio == 0){
-            $sta_viol = 'notactive';
-            $type_viol = 'notviolation';
-            $last_accumulation = 0;
-            
-          }else{
-            $sel_vio = DB::table('violations')->where('employee_id', $employee->id)->latest()->first();
-            $date_now = date_create();
-            $date_sta = date_create($sel_vio->date_end_violation);
-            $diffx  = date_diff($date_sta, $date_now);
-
-            if($diffx->d <= 0){
+            // Cari data pelanggan terakhir 
+            $sel_num_vio = DB::table('violations')->where('employee_id', $employee->id)->count();
+            if($sel_num_vio == 0){
               $sta_viol = 'notactive';
               $type_viol = 'notviolation';
               $last_accumulation = 0;
+              
             }else{
-              $sta_viol = $sel_vio->violation_status;
-              $type_viol = $sel_vio->type_of_violation;
-              $last_accumulation = $sel_vio->accumulation;
+              $sel_vio = DB::table('violations')->where('employee_id', $employee->id)->latest()->first();
+              $date_now = date_create();
+              $date_sta = date_create($sel_vio->date_end_violation);
+              $diffx  = date_diff($date_sta, $date_now);
+
+              if($diffx->d <= 0){
+                $sta_viol = 'notactive';
+                $type_viol = 'notviolation';
+                $last_accumulation = 0;
+              }else{
+                $sta_viol = $sel_vio->violation_status;
+                $type_viol = $sel_vio->type_of_violation;
+                $last_accumulation = $sel_vio->accumulation;
+              }
             }
-          }
 
-          echo '<br>';
-          //memotong jumlah karakter
-          $kalimat="tutorial php bagaimana membatasi jumlah karakter yang ingin ditampilkan";
-          $jumlahkarakter=10;
-          $cetak = substr($kalimat, 0, $jumlahkarakter);
-          echo $cetak;
+            echo '<br>';
+            //memotong jumlah karakter
+            $kalimat="tutorial php bagaimana membatasi jumlah karakter yang ingin ditampilkan";
+            $jumlahkarakter=10;
+            $cetak = substr($kalimat, 0, $jumlahkarakter);
+            echo $cetak;
 
-          echo '<br>';
-
-
-
-        ?>
+            echo '<br>';
+          ?>
           <!-- INISIASI AKUMULASI PELANGGARAN -->
           <input type="text" name="last_vio" value="{{$sta_viol}}" id="last_vio">
           <input type="text" name="last_type" value="{{$type_viol}}" id="last_type">
           <input type="text" name="id_emp" value="{{$employee->id}}" id="id_emp">
-          <input type="text" name="last_accumulation" value="{{$last_accumulation}}"  >     
-
-        
+          <input type="text" name="last_accumulation" value="{{$last_accumulation}}"  >    
 
         </div>
         {{-- Displaynone --}}
@@ -695,7 +749,35 @@
               </div> 
               <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <?php 
+                  $url_nowxz = url()->current();
+                  $url_scc = substr($url_nowxz, 22); 
+                  $pecah = explode("/", $url_scc);
+                  $kalimat1 = $pecah[0];
+                  $num_sub = DB::table('sub_menus')->where('url', '/'.$kalimat1)->count(); 
+                  if($num_sub > 0){
+                    $print_sub = DB::table('sub_menus')->where('url', '/'.$kalimat1)->first();
+                    $num_meth = DB::table('methods')
+                      ->leftJoin('access_menus', 'methods.access_menu_id' ,'access_menus.id')
+                      ->where('methods.sub_menu_id', $print_sub->id)
+                      ->where('access_menus.role_id', auth()->user()->role_id)
+                      ->count();
+                    if($num_meth > 0){
+                      $prt_meth = DB::table('methods')
+                      ->leftJoin('access_menus', 'methods.access_menu_id' ,'access_menus.id')
+                      ->select('methods.edit as edit', 'methods.delete as delete','methods.delete as view')
+                      ->where('methods.sub_menu_id', $print_sub->id)
+                      ->where('access_menus.role_id', auth()->user()->role_id)
+                      ->first();
+                      $edit = $prt_meth->edit;
+                      if($edit == 'true'){
+                        echo '<button type="submit" class="btn btn-primary">Simpan</button>';
+                      }
+                    }
+                  }
+              ?>
+                
+                <!-- <button type="submit" class="btn btn-primary">Save</button> -->
               </div>
             </form>
             </div>

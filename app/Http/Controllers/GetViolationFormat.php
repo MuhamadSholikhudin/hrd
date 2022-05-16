@@ -1,47 +1,41 @@
 <?php 
+  $date_violation = new \DateTime($reporting_date .' 00:00:00');
 
+  $date_year = date_format($date_violation, "Y"); //for Display Year
+  $date_month =  date_format($date_violation, "m"); //for Display Month
+  $date_day = date_format($date_violation, "d"); //for Display Date
+  // $tahun = YEAR($date_of_violation);
 
-        $date_violation = new \DateTime($reporting_date .' 00:00:00');
+  // Prints October 3, 1975 was on a Thursday
+  //   echo "Oct 3, 1975 was on a ".gmdate("l", mktime(0,0,0,$date_day,$date_month,$date_year)) . "<br>";
 
-        $date_year = date_format($date_violation, "Y"); //for Display Year
-        $date_month =  date_format($date_violation, "m"); //for Display Month
-        $date_day = date_format($date_violation, "d"); //for Display Date
+  $day = gmdate($date_of_violation, time()+60*60*7);
+  $day = date("l", gmmktime(0,0,0, $date_month,$date_day, $date_year));
 
-
+  if($day == 'Monday'){
+    $day_num = '1';
+    $day_indo = 'Senin';
+  }elseif($day == 'Tuesday'){
+    $day_num = '2';
+    $day_indo = 'Selasa';            
+  }elseif($day == 'Wednesday'){
+    $day_num = '3';
+    $day_indo = 'Rabu';            
+  }elseif($day == 'Thursday'){
+    $day_num = '4';
+    $day_indo = 'Kamis';            
+  }elseif($day == 'Friday'){
+    $day_num = '5';
+    $day_indo = 'Jumat';            
+  }elseif($day == 'Saturday'){
+    $day_num = '6';
+    $day_indo = 'Sabtu';            
+  }elseif($day == 'Sunday'){
+    $day_num = '7';
+    $day_indo = 'Minggu';            
+  }
         
-
-            // $tahun = YEAR($date_of_violation);
-
-            // Prints October 3, 1975 was on a Thursday
-            //   echo "Oct 3, 1975 was on a ".gmdate("l", mktime(0,0,0,$date_day,$date_month,$date_year)) . "<br>";
-
-            $day = gmdate($date_of_violation, time()+60*60*7);
-            $day = date("l", gmmktime(0,0,0, $date_month,$date_day, $date_year));
-
-          if($day == 'Monday'){
-            $day_num = '1';
-            $day_indo = 'Senin';
-          }elseif($day == 'Tuesday'){
-            $day_num = '2';
-            $day_indo = 'Selasa';            
-          }elseif($day == 'Wednesday'){
-            $day_num = '3';
-            $day_indo = 'Rabu';            
-          }elseif($day == 'Thursday'){
-            $day_num = '4';
-            $day_indo = 'Kamis';            
-          }elseif($day == 'Friday'){
-            $day_num = '5';
-            $day_indo = 'Jumat';            
-          }elseif($day == 'Saturday'){
-            $day_num = '6';
-            $day_indo = 'Sabtu';            
-          }elseif($day == 'Sunday'){
-            $day_num = '7';
-            $day_indo = 'Minggu';            
-          }
-        
-           $month_n = date("n", gmmktime(0,0,0, $date_month, $date_day, $date_year));
+  $month_n = date("n", gmmktime(0,0,0, $date_month, $date_day, $date_year));
           
           if($month_n == '1'){
             $ROM = 'I';

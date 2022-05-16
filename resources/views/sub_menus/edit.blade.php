@@ -36,7 +36,7 @@
                         @method('put') 
                         @csrf
                         <div class="card-body">
-                        <input type="text" class="form-control" name="id" value="{{ old('id', $sub_menu->id) }}" >
+                        <input type="hidden" class="form-control" name="id" value="{{ old('id', $sub_menu->id) }}" >
                         
                             <div class="form-group">
                               <label for="phone_number">Menu</label>

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
+use Illuminate\Support\Facades\URL;
+
 use App\Models\User;
 use App\Models\Violation;
 use App\Models\Employee;

@@ -25,76 +25,135 @@
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <?php 
-                    $num_employees = DB::table('employees')->count();
-                ?>
-                <h3>{{$num_employees}}</h3>
-                <p>Karyawan</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person"></i>
-              </div>
-              <a href="/datamaster/employees" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <?php 
-                    $num_violations = DB::table('violations')->count();
-                ?>
-                <h3>{{$num_violations}}</h3>
-                <p>Pelanggaran</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-document"></i>
-                <!-- <i class="fa-light fa-file-circle-info"></i> -->
-              </div>
-              <a href="/violations/list" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <?php 
-                    $num_layoffs = DB::table('layoffs')->count();
-                ?>
-                <h3>{{$num_layoffs}}</h3>
-                <p>PHK</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-ios-pulse"></i>
-              </div>
-              <a href="/hi/layoffs" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-              <?php 
-                    $num_users = DB::table('users')->count();
-                ?>
-                <h3>{{$num_users}}</h3>
+        <?php 
+          $num_sub_employees = DB::table('sub_menus')->where('url', '/employees')->count(); 
+          if($num_sub_employees > 0){
+              $print_sub_employees = DB::table('sub_menus')->where('url', '/employees')->first();
+              $num_meth_employees = DB::table('methods')
+                  ->leftJoin('access_menus', 'methods.access_menu_id' ,'access_menus.id')
+                  ->where('methods.sub_menu_id', $print_sub_employees->id)
+                  ->where('access_menus.role_id', auth()->user()->role_id)
+                  ->count();
+              if($num_meth_employees > 0){ ?>
+                <div class="col-lg-3 col-6">
+                  <!-- small box -->
+                  <div class="small-box bg-info">
+                    <div class="inner">
+                      <?php 
+                          $num_employees = DB::table('employees')->count();
+                      ?>
+                      <h3>{{$num_employees}}</h3>
+                      <p>Karyawan</p>
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-person"></i>
+                    </div>
+                    <a href="/employees" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                  </div>
+                </div>
+              <?php }else{  
+            }
+          }
+        ?>
 
-                <p>User Akses</p>
-              </div>
-              <div class="icon">
-                <i class="fa-solid fa-right-to-bracket"></i>
-              </div>
-              <a href="/users" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
+          <!-- ./col -->
+
+          <?php 
+          $num_sub_violations = DB::table('sub_menus')->where('url', '/violations')->count(); 
+          if($num_sub_violations > 0){
+              $print_sub_violations = DB::table('sub_menus')->where('url', '/violations')->first();
+              $num_meth_violations = DB::table('methods')
+                  ->leftJoin('access_menus', 'methods.access_menu_id' ,'access_menus.id')
+                  ->where('methods.sub_menu_id', $print_sub_violations->id)
+                  ->where('access_menus.role_id', auth()->user()->role_id)
+                  ->count();
+              if($num_meth_violations > 0){ ?>
+                <div class="col-lg-3 col-6">
+                  <!-- small box -->
+                  <div class="small-box bg-success">
+                    <div class="inner">
+                      <?php 
+                          $num_violations = DB::table('violations')->count();
+                      ?>
+                      <h3>{{$num_violations}}</h3>
+                      <p>Pelanggaran</p>
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-document"></i>
+                      <!-- <i class="fa-light fa-file-circle-info"></i> -->
+                    </div>
+                    <a href="/hiviolations" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                  </div>
+                </div>
+              <?php }else{  
+            }
+          }
+        ?>
+
+
+
+          <?php 
+          $num_sub_layoffs = DB::table('sub_menus')->where('url', '/layoffs')->count(); 
+          if($num_sub_layoffs > 0){
+              $print_sub_layoffs = DB::table('sub_menus')->where('url', '/layoffs')->first();
+              $num_meth_layoffs = DB::table('methods')
+                  ->leftJoin('access_menus', 'methods.access_menu_id' ,'access_menus.id')
+                  ->where('methods.sub_menu_id', $print_sub_layoffs->id)
+                  ->where('access_menus.role_id', auth()->user()->role_id)
+                  ->count();
+              if($num_meth_layoffs > 0){ ?>
+                <div class="col-lg-3 col-6">
+                  <!-- small box -->
+                  <div class="small-box bg-danger">
+                    <div class="inner">
+                      <?php 
+                          $num_layoffs = DB::table('layoffs')->count();
+                      ?>
+                      <h3>{{$num_layoffs}}</h3>
+                      <p>PHK</p>
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-ios-pulse"></i>
+                    </div>
+                    <a href="/layoffs" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                  </div>
+                </div>
+              <?php }else{  
+            }
+          }
+        ?>
+
+         <?php 
+            $num_sub_users = DB::table('sub_menus')->where('url', '/users')->count(); 
+            if($num_sub_users > 0){
+                $print_sub_users = DB::table('sub_menus')->where('url', '/users')->first();
+                $num_meth_users = DB::table('methods')
+                    ->leftJoin('access_menus', 'methods.access_menu_id' ,'access_menus.id')
+                    ->where('methods.sub_menu_id', $print_sub_users->id)
+                    ->where('access_menus.role_id', auth()->user()->role_id)
+                    ->count();
+                if($num_meth_users > 0){ ?>
+                  <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                      <div class="inner">
+                      <?php 
+                            $num_users = DB::table('users')->count();
+                        ?>
+                        <h3>{{$num_users}}</h3>
+
+                        <p>User Akses</p>
+                      </div>
+                      <div class="icon">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                      </div>
+                      <a href="/users" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+                <?php }else{  
+              }
+            }
+          ?>
 
         </div>
         <!-- /.row -->

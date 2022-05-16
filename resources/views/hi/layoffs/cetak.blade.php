@@ -36,6 +36,10 @@
             font-size: 17px;
             font-family: "Times New Roman";
         }
+
+        .tdh {
+            height: 2px;
+        }
     </style>
 </head>
 
@@ -91,7 +95,7 @@
                     <table>
                          <tr>
                             <td class="txt" valign="top">Membaca</td>
-                            <td class="txt" valign="top">:</td>
+                            <td class="txt" valign="top">&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                             <td class="txt" valign="top">
                                 <div>              
                                     <div id="isi_text" style="width:100%;">
@@ -108,41 +112,45 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <td class="txt" colspan="3">&nbsp;</td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td class="txt" class="txt" valign="top">Menimbang</td>
-                            <td class="txt" valign="top">:</td>
+                            <td class="txt" valign="top">&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                             <td class="txt" valign="top">
                                 {{ $layoff->layoff_description }}
                             </td>
                         </tr>
                     
-                        <tr>
+                        <!-- <tr>
                             <td class="txt" colspan="3">&nbsp;</td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td class="txt" valign="top">Mengingat</td>
-                            <td class="txt" valign="top">:</td>
+                            <td class="txt" valign="top">&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                             <td class="txt" valign="top">
                                 Undang-Undang No. 13 Tahun 2003 Tentang Ketenagakerjaan dan peraturan pelaksanaannya
                             </td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <td class="txt" colspan="3">&nbsp;</td>
-                        </tr>
+                        </tr> -->
 
                         <tr>
-                            <td  class="text-center txt" colspan="3"><b> <u><h4>MEMUTUSKAN</h4></u></b></td>
+                            <td  class="text-center txt" colspan="3">
+                            <br>
+                            <b> <u><h4>MEMUTUSKAN</h4></u></b>
+                            <br>
+                            </td>
                         </tr>
-                        <tr>
-                            <td class="txt" colspan="3">&nbsp;</td>
-                        </tr>
+                        <!-- <tr>
+                            <td class="tdh" colspan="3">&nbsp;</td>
+                        </tr> -->
 
                         <tr>
                             <td class="txt" valign="top">Pertama</td>
-                            <td class="txt" valign="top">:</td>
+                            <td class="txt" valign="top">&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                             <td class="txt" valign="top">
                                 <?php 
                                     $employee = DB::table('employees')
@@ -150,28 +158,33 @@
 
                                 ?>
                                 <table>
+                                    <tr>
+                                        <td class="txt" colspan="7">
+                                            Melakukan Pemutusan Hubungan Kerja (PHK) terhadap : 
+                                        </td>
+                                    </tr>
 
                                     <tr>
                                         <td class="txt">Nama</td>
-                                        <td class="txt">:</td>
+                                        <td class="txt">&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                                         <td class="txt" id="nama_phk"> {{$employee->name}} </td>
 
                                         <td class="txt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                         
-                                        <td class="txt">Bagian</td>
-                                        <td class="txt">:</td>
+                                        <td class="txt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Bagian</td>
+                                        <td class="txt">&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                                         <td class="txt" id="bagian_phk"> {{$employee->bagian}}</td>
                                     </tr>
 
                                     <tr>
                                         <td class="txt">ID No.</td>
-                                        <td class="txt">:</td>
+                                        <td class="txt">&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                                         <td class="txt" id="id_no_phk"> {{$employee->number_of_employees}} </td>
 
                                         <td class="txt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                         
-                                        <td class="txt">Departemen</td>
-                                        <td class="txt">:</td>
+                                        <td class="txt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Departemen</td>
+                                        <td class="txt">&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                                         <td class="txt" id="department_phk">
                                             <?php 
                                                 $department = DB::table('departments')->find($employee->department_id);
@@ -182,7 +195,7 @@
                                     </tr>
                                     <tr>
                                         <td class="txt">Jabatan</td>
-                                        <td class="txt">:</td>
+                                        <td class="txt">&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                                         <td class="txt" id="job_phk">
                                             <?php 
                                                 $job = DB::table('jobs')->find($employee->job_id);
@@ -192,10 +205,64 @@
 
                                         <td class="txt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                         
-                                        <td class="txt">Tanggal Masuk</td>
-                                        <td class="txt">:</td>
+                                        <td class="txt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Tanggal Masuk</td>
+                                        <td class="txt">&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                                         <td class="txt" id="hire_date_phk">  
                                         <?php
+                                            function tanggal_masuk($tanggal){
+                                                $date_hire = new \DateTime($tanggal .' 00:00:00');
+                                                $date_year_hire = date_format($date_hire, "Y"); //for Display Year
+                                                $date_month_hire =  date_format($date_hire, "m"); //for Display Month
+                                                $date_day_hire = date_format($date_hire, "d"); //for Display Date
+
+                                                $day_hire = gmdate("l", mktime(0,0,0, $date_day_hire,$date_month_hire,$date_year_hire));
+
+                                                // Hari Indonesia
+                                                if($day_hire == 'Monday'){
+                                                    $day_indo_hire = 'Senin';
+                                                }elseif($day_hire == 'Tuesday'){
+                                                    $day_indo_hire = 'Selasa';            
+                                                }elseif($day_hire == 'Wednesday'){
+                                                    $day_indo_hire = 'Rabu';            
+                                                }elseif($day_hire == 'Thursday'){
+                                                    $day_indo_hire = 'Kamis';            
+                                                }elseif($day_hire == 'Friday'){
+                                                    $day_indo_hire = 'Jumat';            
+                                                }elseif($day_hire == 'Saturday'){
+                                                    $day_indo_hire = 'Sabtu';            
+                                                }elseif($day_hire == 'Sunday'){
+                                                    $day_indo_hire = 'Minggu';            
+                                                }
+
+                                                //Bulan Indonesia
+                                                if($date_month_hire == '01'){
+                                                    $month_indo_hire = 'Januari';
+                                                }elseif($date_month_hire == '02'){
+                                                    $month_indo_hire = 'Februari';            
+                                                }elseif($date_month_hire == '03'){
+                                                    $month_indo_hire = 'Maret';            
+                                                }elseif($date_month_hire == '04'){
+                                                    $month_indo_hire = 'April';            
+                                                }elseif($date_month_hire == '05'){
+                                                    $month_indo_hire = 'Mei';            
+                                                }elseif($date_month_hire == '06'){
+                                                    $month_indo_hire = 'Juni';            
+                                                }elseif($date_month_hire == '07'){
+                                                    $month_indo_hire = 'Juli';            
+                                                }elseif($date_month_hire == '08'){
+                                                    $month_indo_hire = 'Agustus';            
+                                                }elseif($date_month_hire == '09'){
+                                                    $month_indo_hire = 'September';            
+                                                }elseif($date_month_hire == '10'){
+                                                    $month_indo_hire = 'Oktober';            
+                                                }elseif($date_month_hire == '11'){
+                                                    $month_indo_hire = 'November';            
+                                                }elseif($date_month_hire == '12'){
+                                                    $month_indo_hire = 'Desember';            
+                                                }
+
+                                                echo  $date_day_hire. " ". $month_indo_hire . " ". $date_year_hire;
+                                            }
                                             function tanggal($tanggal){
                                                 $date_hire = new \DateTime($tanggal .' 00:00:00');
                                                 $date_year_hire = date_format($date_hire, "Y"); //for Display Year
@@ -249,57 +316,54 @@
                                                 }
 
                                                 echo $day_indo_hire. ", ". $date_day_hire. " ". $month_indo_hire . " ". $date_year_hire;
-
                                             }
                                             ?>  
                                             
 
-                                        {{tanggal($employee->hire_date)}}
+                                        {{tanggal_masuk($employee->hire_date)}}
                                                                                  
                                             </td>
                                     </tr>
                                     <tr>
                                         <td class="txt" colspan="7">
-                                         
                                         Terhitung mulai, 
-                                     {{ tanggal($layoff->layoff_date_start) }}  
-                                       
+                                            {{ tanggal($layoff->layoff_date_start) }}  
                                         </td>
                                     </tr>
                                 </table>
  
                             </td>
                         </tr>
-                        <tr>
-                            <td class="txt" colspan="3">&nbsp;</td>
-                        </tr>
+                        <!-- <tr>
+                            <td class="tdh" colspan="3">&nbsp;</td>
+                        </tr> -->
                        
                         <tr>
                             <td class="txt"  valign="top">Kedua</td>
-                            <td class="txt" valign="top">:</td>
+                            <td class="txt" valign="top">&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                             <td class="txt" valign="top">
                             Sejak dikeluarkan   Surat   Keputusan  ini  antara  Sdr. <small class="txt" id="sml">{{$employee->name}} </small> dan PT. HWA SEUNG INDONESIA akan segera menyelesaikan hak dan kewajiban masing-masing.
                             </td>
                         </tr>
                        
-                        <tr>
-                            <td class="txt" colspan="3">&nbsp;</td>
-                        </tr>
+                        <!-- <tr>
+                            <td class="tdh" colspan="3">&nbsp;</td>
+                        </tr> -->
                         
                         <tr>
                             <td class="txt" valign="top">Ketiga</td>
-                            <td class="txt" valign="top">:</td>
+                            <td class="txt" valign="top">&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                             <td class="txt" valign="top">
                                 Keputusan ini berlaku sejak tanggal ditetapkan
                             </td>
                         </tr>
                     
                         
+                        <!-- <tr>
+                            <td class="tdh" colspan="3">&nbsp;</td>
+                        </tr> -->
                         <tr>
-                            <td class="txt" colspan="3">&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td class="txt" colspan="3">&nbsp;</td>
+                            <td class="tdh" colspan="3">&nbsp;</td>
                         </tr>
                         
 

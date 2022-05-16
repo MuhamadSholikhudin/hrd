@@ -20,6 +20,15 @@ class DatamasterEmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    // public function __construct()
+    // {
+
+    //     if(auth()->user()->name !== 'sandhikagalih'){
+    //         abort(403);
+    //     }
+    // }
+
     public function index()
     {
         $employees = Employee::oldest();
@@ -53,6 +62,15 @@ class DatamasterEmployeeController extends Controller
      */
     public function create()
     {
+
+        // if(auth()->guest()){
+        //     abort(403);
+        // }
+
+        // if(auth()->user()->name !== 'sandhikagalih'){
+        //     abort(403);
+        // }
+
         $agamas = ["MOSLEM", "BUDHIST", "CATHOLIC", "CHRISTIAN", "HINDU", "KEPERCAYAAN", "NONE"];
         $marital_status = ["M", "S"];
         $gender = ["M", "F"];
@@ -62,8 +80,6 @@ class DatamasterEmployeeController extends Controller
         $grade_salary = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
         //
         return view('datamaster.employees.create', [
-            
-            
             'jobs' => Job::all(),
             'departments' => Department::all(),
             'employees' => Employee::all(),
@@ -129,7 +145,7 @@ class DatamasterEmployeeController extends Controller
             'job_id'=> 'required',
             'department_id'=> 'required'
         ]);
-        dd($validatedDataEmployee);
+        // dd($validatedDataEmployee);
         
         Employee::create($validatedDataEmployee);
         
@@ -159,7 +175,6 @@ class DatamasterEmployeeController extends Controller
             'updated_at' => date('Y-m-d H:i:s'),
             'total_salary' => 0
         ]);
-
         
         // Salary::create($validatedDataSalary);
             

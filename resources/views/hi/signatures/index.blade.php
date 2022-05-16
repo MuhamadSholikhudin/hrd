@@ -31,7 +31,7 @@
               <h3 class="card-title">List Data Manager HRD</h3>
   
               <div class="card-tools">
-                  <form action="/hi/pkb" >     
+                  <form action="/pkb" >     
                       <div class="input-group input-group-sm" style="width: 200px;">
                           <button type="button" data-toggle="modal" data-target="#add_signature" id="modal_signature" class="btn btn-primary btn-sm float-right"><i class="fas fa-plus"></i></button>
                         &nbsp;&nbsp;&nbsp;
@@ -114,11 +114,43 @@
                     <td>{{ $signature->status_signature }}</td>
                     <td>
                         <div class="tools">
-                          <a href="/signatures/{{ $signature->id }}/edit">
+                        <?php 
+                          $url_nowxz = url()->current();
+                          $url_scc = substr($url_nowxz, 22); 
+                          $pecah = explode("/", $url_scc);
+                          $kalimat1 = $pecah[0];
+                          $num_sub = DB::table('sub_menus')->where('url', '/'.$kalimat1)->count(); 
+                          if($num_sub > 0){
+                            $print_sub = DB::table('sub_menus')->where('url', '/'.$kalimat1)->first();
+                            $num_meth = DB::table('methods')
+                              ->leftJoin('access_menus', 'methods.access_menu_id' ,'access_menus.id')
+                              ->where('methods.sub_menu_id', $print_sub->id)
+                              ->where('access_menus.role_id', auth()->user()->role_id)
+                              ->count();
+                            if($num_meth > 0){
+                              $prt_meth = DB::table('methods')
+                              ->leftJoin('access_menus', 'methods.access_menu_id' ,'access_menus.id')
+                              ->select('methods.edit as edit', 'methods.delete as delete','methods.delete as view')
+                              ->where('methods.sub_menu_id', $print_sub->id)
+                              ->where('access_menus.role_id', auth()->user()->role_id)
+                              ->first();
+                              $edit = $prt_meth->edit;
+                              if($edit == 'true'){
+                                echo '<a href="/signatures/'.$signature->id.'/edit">
+                                        <i class="fas fa-edit"></i>
+                                        edit
+                                      </a>';
+                              }
+                            }
+                          }
+                      ?>
+
+
+                          <!-- <a href="/signatures/{{ $signature->id }}/edit">
                             <i class="fas fa-edit"></i>
                             edit
-                          </a>
-                          </div>
+                          </a> -->
+                        </div>
                     </td>
                   </tr>
                   @endforeach

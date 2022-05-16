@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\URL;
+
 use App\Models\Employee;
 use App\Models\Job;
 use App\Models\Department;
@@ -258,6 +260,21 @@ class ViolationController extends Controller
         ];
         // dd($data);
         DB::table('violations')->insert($data);
+
+
+        $select_employee = DB::table('employees')->find($employee_id);
+        $remark = "menambahkan pelanggaran ".$select_employee->number_of_employees;
+        $action = "add";
+
+        DB::table('histories')->insert([
+            'user_id' => auth()->user()->id,
+            'role_id' => auth()->user()->role_id,
+            'remark' => $remark,
+            'action' => $action,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+
         return redirect('/violations/' . $employee_id . '/edit');
     }
 
@@ -439,8 +456,8 @@ class ViolationController extends Controller
 
     public function list()
     {
-        $dd = 1;
-        dd($dd);
+        // $dd = 1;
+        // dd($dd);
         // $violations = Violation::oldest();
         $violations = DB::table('violations')
                 ->leftJoin('employees', 'employees.id', '=', 'violations.employee_id')

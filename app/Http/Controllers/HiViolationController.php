@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\URL;
+
 use Maatwebsite\Excel\Concerns\ToArray;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -121,13 +123,44 @@ class HiViolationController extends Controller
     public function destroy(Request $requset) 
     {
             // Violation::destroy($violation->id);
+        $select_vio = DB::table('violations')->find($requset->id);
+
+        $select_employee = DB::table('employees')->find($select_vio->employee_id);
+        $remark = "menghapus pelanggaran ".$select_employee->number_of_employees;
+        $action = "delete";
+
+        DB::table('histories')->insert([
+            'user_id' => auth()->user()->id,
+            'role_id' => auth()->user()->role_id,
+            'remark' => $remark,
+            'action' => $action,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+
         DB::table('violations')->where('id', $requset->id)->delete();
         return redirect('hiviolations');
     }
+    
     public function hapus(Request $requset) 
     {
-            // Violation::destroy($violation->id);
+        $select_vio = DB::table('violations')->find($requset->id);
+
+        $select_employee = DB::table('employees')->find($select_vio->employee_id);
+        $remark = "menghapus pelanggaran ".$select_employee->number_of_employees;
+        $action = "delete";
+
+        DB::table('histories')->insert([
+            'user_id' => auth()->user()->id,
+            'role_id' => auth()->user()->role_id,
+            'remark' => $remark,
+            'action' => $action,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+
         DB::table('violations')->where('id', $requset->id)->delete();
+        
         return redirect('hiviolations');
     }
 
@@ -136,6 +169,7 @@ class HiViolationController extends Controller
         $rows =  Excel::toArray(new ViolationsImport, request()->file('file'));
 
         foreach($rows as $row):
+            $jumlahTotal = 0;
             foreach($row as $x):
                 //Memastikan tidak ada nilai null NIK
                           //
@@ -520,12 +554,26 @@ class HiViolationController extends Controller
                     ];
                     // dd($data);
                     DB::table('violations')->insert($data);
+
+                    $jumlahTotal += 1;
                 }
-
-
             }
             endforeach;
+
+            $remark = "upload pelanggaran SP jumlah ".$jumlahTotal;
+            $action = "upload";
+    
+            DB::table('histories')->insert([
+                'user_id' => auth()->user()->id,
+                'role_id' => auth()->user()->role_id,
+                'remark' => $remark,
+                'action' => $action,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+
         endforeach;
+
         return redirect('/hiviolations');
 
     }

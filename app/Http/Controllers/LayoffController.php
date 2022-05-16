@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\URL;
+
 use App\Models\Employee;
 use App\Models\Job;
 use App\Models\Department;
@@ -84,7 +86,10 @@ class LayoffController extends Controller
     public function store(Request $request)
     {
         //
-        $num_lf = DB::table('layoffs')->count();
+        $month_m = date('m');
+        $num_lf = DB::table('layoffs')
+            ->whereMonth('layoff_date',  $month_m)
+            ->count();
 
         if($num_lf < 1){
             $no_lf = 1;
@@ -163,7 +168,22 @@ class LayoffController extends Controller
             'no_layoff' => $no_lf,
             'rom_layoff' => $ROM,
             'layoff_date_start' => $request->layoff_date_start,
-            'layoff_date' => $request->layoff_date
+            'layoff_date' => $request->layoff_date,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+
+        $select_employee = DB::table('employees')->find($request->employee_id);
+        $remark = "menambahkan PHK ".$select_employee->number_of_employees;
+        $action = "add";
+
+        DB::table('histories')->insert([
+            'user_id' => auth()->user()->id,
+            'role_id' => auth()->user()->role_id,
+            'remark' => $remark,
+            'action' => $action,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
         ]);
 
         return redirect('/layoffs');
@@ -245,6 +265,22 @@ class LayoffController extends Controller
     public function destroy($id)
     {
         //
+        $select_layoffs = DB::table('layoffs')->find($id);
+
+        $select_employee = DB::table('employees')->find($select_layoffs->employee_id);
+
+        $remark = "menghapus phk ".$select_employee->number_of_employees;
+        $action = "delete";
+
+        DB::table('histories')->insert([
+            'user_id' => auth()->user()->id,
+            'role_id' => auth()->user()->role_id,
+            'remark' => $remark,
+            'action' => $action,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+
         Layoff::destroy($id);
         return redirect('/layoffs');
     }

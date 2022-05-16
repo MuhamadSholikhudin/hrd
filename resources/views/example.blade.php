@@ -26,6 +26,56 @@
   <br>
   <br>
   <?php 
+
+
+echo '<br>';
+$pembelian = [
+  [
+      'pembelian_id' =>  4,
+      'barang_id'    => 2,
+      'jumlah'    => 10,
+      'harga_satuan' => 5000
+  ],
+  [
+      'pembelian_id' =>  4,
+      'barang_id'    => 2,
+      'jumlah'    => 1,
+      'harga_satuan' => 5900
+  ],
+  [
+      'pembelian_id' =>  4,
+      'barang_id'    => 2,
+      'jumlah'    => 1,
+      'harga_satuan' => 5900
+  ],
+  [
+      'pembelian_id' =>  4,
+      'barang_id'    => 2,
+      'jumlah'    => 1,
+      'harga_satuan' => 5900
+  ],
+  [
+      'pembelian_id' =>  4,
+      'barang_id'    => 2,
+      'jumlah'    => 1,
+      'harga_satuan' => 5900
+  ],
+  [
+      'pembelian_id' =>  4,
+      'barang_id'    => 2,
+      'jumlah'    => 1,
+      'harga_satuan' => 5900
+  ]
+];
+
+$jumlahTotal = 0;
+foreach ($pembelian as $data) {
+  //  $jumlahTotal += $data['jumlah'];
+   $jumlahTotal += 1;
+};
+echo 'total '. $jumlahTotal;
+echo '<br>';
+
   echo $url_xtz;
 $date = new DateTime('2000-01-01 00:00:00.0');
 echo $result = $date->format('Y-m-d');

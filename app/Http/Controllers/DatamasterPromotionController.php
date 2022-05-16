@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\URL;
+
 use Maatwebsite\Excel\Concerns\ToArray;
 use App\Exports\EmployeesExport;
 use App\Imports\EmployeesImport;

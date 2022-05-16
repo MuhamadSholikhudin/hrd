@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\URL;
+
 use App\Models\Department;
 
 class DepartmentController extends Controller

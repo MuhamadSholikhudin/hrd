@@ -23,12 +23,16 @@
         /* padding-right: 40px; */
         }
 
-        body{
-            padding: 0;
+        @page { 
+            margin-top: 0px;
+            /* padding-left: 10px; */
         }
 
         h4 {
             margin: 0 0 10px 0;
+        }
+        h1 {
+            text-align: center;
         }
     </style>
 </head>
@@ -44,7 +48,7 @@
         </table> -->
         <table width="100%">
             <tr>
-                <td width="12" ><img src="{{ public_path('storage/') . '/img/HWASEUNG.png' }}" width="100%"></td>
+                <td width="12" ><img src="{{ public_path('storage/') . '/img/HWASEUNG.png' }}" width="100%" height="80px"></td>
                 <td width="88" align="center" >
                     
                     <p class="text-center" id="kop">
@@ -77,7 +81,7 @@
 
                 <div class="body">
      
-                    <h3 class="text-center ">
+                    <h3 class="text-center" style="text-align: center;">
                         <u> SURAT PERINGATAN </u>
                     </h3>
                         <?php 
@@ -180,17 +184,10 @@
                     @endif
                     
                     <br>
-                    <br>
                     <div class="col-sm-12 lead" style="text-align: justify;">Apabila dikemudian hari terjadi pengulangan perbuatan pelanggaran tersebut diatas dan/atau melakukan
                         perbuatan pelanggaran selama masa berlaku Surat Peringatan (6 bulan sejak waktu pelanggaran )
                         maka akan diambil tindakan lanjutan sesuai peraturan perusahaan yang berlaku.</div>
                        
-
-
-                        <br>
-                        <br>
-                        <br>
-                        <br>
                         <div class="row">
                             <div class="col-sm-4">
                                 <div>

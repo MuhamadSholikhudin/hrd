@@ -30,27 +30,29 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <?php 
-      $count_histories = DB::table('histories')->count();
+      
 
       $sess_role_id = auth()->user()->role_id;
-/*
-      if($sess_role_id = 1){
+
+      if($sess_role_id == 1){
+        $count_histories = DB::table('histories')->count();
         $m_histories = DB::table('histories')
-        ->latest()
-        ->limit(5)
-        ->get();
+          ->latest()
+          ->limit(5)
+          ->get();
       }else{
+        $count_histories = DB::table('histories')->where('role_id', $sess_role_id)->count();
         $m_histories = DB::table('histories')
-        ->latest()
-        ->where('role_id', $sess_role_id)
-        ->limit(5)
-        ->get();
+          ->latest()
+          ->where('role_id', $sess_role_id)
+          ->limit(5)
+          ->get();
       }
-*/
-      $m_histories = DB::table('histories')
-        ->latest()
-        ->limit(5)
-        ->get();
+
+      // $m_histories = DB::table('histories')
+      //   ->latest()
+      //   ->limit(5)
+      //   ->get();
       ?>
 
       <!-- Notifications Dropdown Menu -->
