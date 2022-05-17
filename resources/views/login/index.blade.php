@@ -53,7 +53,7 @@
 
       </div>
 
-      <p class="login-box-msg">Masuk Untuk Mulai Bekerja</p>
+      <p class="login-box-msg">Masuk Untuk Mulai Bekerja  <?php echo $ad = SUM_URL_WEB; ?></p>
 
       <form action="/login" method="post" enctype="multipart/form-data">
       @csrf

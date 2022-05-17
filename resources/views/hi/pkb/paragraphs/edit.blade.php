@@ -81,7 +81,8 @@
                 <a href="/alphabets" class="btn btn-default" data-dismiss="modal">kembali</a>
                 <?php 
                   $url_nowxz = url()->current();
-                  $url_scc = substr($url_nowxz, 22); 
+                  $sum_url =SUM_URL_WEB;
+            $url_scc = substr($url_nowxz, $sum_url); 
                   $pecah = explode("/", $url_scc);
                   $kalimat1 = $pecah[0];
                   $num_sub = DB::table('sub_menus')->where('url', '/'.$kalimat1)->count(); 
