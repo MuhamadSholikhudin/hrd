@@ -68,7 +68,7 @@
                       <a href="/signatures" class="btn btn-default" data-dismiss="modal">kembali</a>
                       <?php 
                         $url_nowxz = url()->current();
-                        $url_scc = substr($url_nowxz, 22); 
+                        $url_scc = substr($url_nowxz, 23); 
                         $pecah = explode("/", $url_scc);
                         $kalimat1 = $pecah[0];
                         $num_sub = DB::table('sub_menus')->where('url', '/'.$kalimat1)->count(); 

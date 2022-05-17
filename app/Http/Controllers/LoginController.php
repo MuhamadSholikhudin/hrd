@@ -15,7 +15,10 @@ class LoginController extends Controller
     //
 
     public function index(){
+
+        Auth::logout();
         return view('login.index'
+        
         // , [
             // 'title' => "Login",
             // 'active' => "login"

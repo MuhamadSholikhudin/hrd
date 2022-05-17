@@ -64,8 +64,8 @@
                   <!-- <a href="/menus/{{ $menu->id }}" class="btn  btn-outline-primary">
                     Show
                   </a> -->
-                      <a href="/menus/{{ $menu->id }}/edit" class="btn  btn-outline-warning">
-                    Edit
+                    <a href="/menus/{{ $menu->id }}/edit" class="btn  btn-outline-warning">
+                      Edit
                     </a>
                     <form action="/menus/{{ $menu->id }}" method="POST" class="d-inline ">
                       @method('delete')
