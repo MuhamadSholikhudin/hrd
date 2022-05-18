@@ -43,7 +43,6 @@
     }
 
 
-
     //Surat Peringatan Kedua
     elseif($last_type == 'Peringatan Lisan' AND $last_accumulation >= 0.5 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
         $status_type_violation = 'Surat Peringatan Kedua';
@@ -60,22 +59,16 @@
         $status_type_violation = 'Pemutusan Hubungan Kerja';
         $accumulation = 5;                                                                                                                
     }
-
     elseif($last_type == 'Surat Peringatan Kedua' AND $last_accumulation >= 2 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Pertama'){
         $status_type_violation = 'Surat Peringatan Ketiga';
         $accumulation = 3;                                                                                                                
     }
-
     elseif($last_type == 'Surat Peringatan Kedua' AND $last_accumulation >= 2 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
         $status_type_violation = 'Surat Peringatan Terakhir';
         $accumulation = 4;                                                                                                                
     }
 
     // Surat Peringatan Ketiga
-    // elseif($last_type == 'Surat Peringatan Ketiga' AND $last_accumulation >= 3 AND $sel_paragraph->type_of_verse == 'Peringatan Lisan'){
-    //     $status_type_violation = 'Surat Peringatan Terakhir';
-    // }
-
     elseif($last_type == 'Surat Peringatan Pertama' AND $last_accumulation >= 1 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Ketiga'){
         $status_type_violation = 'Surat Peringatan Terakhir';
         $accumulation = 4;                                                                                                                                            
@@ -114,12 +107,12 @@
     }
 
     // Cari pasal akumulasi
-
     $num_pasal_akumulasi = DB::table('alphabets')
         ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
         ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
         ->where('paragraphs.type_of_verse', $sel_paragraph->type_of_verse)
-        ->where('alphabets.alphabet_accumulation', $status_type_violation)
+        ->where('alphabet_accumulation', 'like', '%' . $sel_paragraph->type_of_verse . '%')
+        // ->where('alphabets.alphabet_accumulation', $status_type_violation)
         ->select('alphabets.id as id')
         ->count();
 
@@ -131,7 +124,6 @@
             ->where('alphabets.alphabet_accumulation', $status_type_violation)
             ->select('alphabets.id as id')
             ->first();
-            // dd($cari_pasal_akumulasi);
             
     }else{
         $cari_pasal_akumulasi = DB::table('alphabets')

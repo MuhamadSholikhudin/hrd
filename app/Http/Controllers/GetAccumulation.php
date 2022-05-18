@@ -1,6 +1,5 @@
 <?php 
 
-
     // GET LOGIKA AKUMULASI PERTAMA PERINGATAN LISAN
     if($last_type == 'Peringatan Lisan' AND $last_accumulation = 0.5 AND $sel_paragraph_type_of_verse == 'Peringatan Lisan'){
         $status_type_violation = 'Surat Peringatan Pertama';
@@ -44,7 +43,6 @@
     }
 
 
-
     //Surat Peringatan Kedua
     elseif($last_type == 'Peringatan Lisan' AND $last_accumulation >= 0.5 AND $sel_paragraph_type_of_verse == 'Surat Peringatan Kedua'){
         $status_type_violation = 'Surat Peringatan Kedua';
@@ -61,22 +59,16 @@
         $status_type_violation = 'Pemutusan Hubungan Kerja';
         $accumulation = 5;                                                                                                                
     }
-
     elseif($last_type == 'Surat Peringatan Kedua' AND $last_accumulation >= 2 AND $sel_paragraph_type_of_verse == 'Surat Peringatan Pertama'){
         $status_type_violation = 'Surat Peringatan Ketiga';
         $accumulation = 3;                                                                                                                
     }
-
     elseif($last_type == 'Surat Peringatan Kedua' AND $last_accumulation >= 2 AND $sel_paragraph_type_of_verse == 'Surat Peringatan Ketiga'){
         $status_type_violation = 'Surat Peringatan Terakhir';
         $accumulation = 4;                                                                                                                
     }
 
     // Surat Peringatan Ketiga
-    // elseif($last_type == 'Surat Peringatan Ketiga' AND $last_accumulation >= 3 AND $sel_paragraph_type_of_verse == 'Peringatan Lisan'){
-    //     $status_type_violation = 'Surat Peringatan Terakhir';
-    // }
-
     elseif($last_type == 'Surat Peringatan Pertama' AND $last_accumulation >= 1 AND $sel_paragraph_type_of_verse == 'Surat Peringatan Ketiga'){
         $status_type_violation = 'Surat Peringatan Terakhir';
         $accumulation = 4;                                                                                                                                            
@@ -115,7 +107,6 @@
         }
     }
 
-    
     // Cari pasal akumulasi
     $num_pasal_akumulasi = DB::table('alphabets')
         ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')

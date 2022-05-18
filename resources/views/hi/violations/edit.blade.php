@@ -191,21 +191,10 @@
                     </tr>
                   </table>
               </div>
-
-
             </div>
-
-
-
-
-
-
           </div>
         </div>            
       </div>
-
-
-
 
       <div class="col-md-12">
         <div class="card card-secondary">
@@ -218,6 +207,7 @@
                 <tr>
                   <th>ID</th>
                   <th>NO SP</th>
+                  <th>Tanggal Laporan</th>
                   <th>Tanggal SP</th>
                   <th>Tanggal Berakhir</th>
                   <th>Selang </th>
@@ -248,9 +238,9 @@
                     ?>
                       {{$p_no_s}}/SP-HRD/{{$violation->violation_ROM}}/{{$date_year_sp}}
                     </td>
+                    <td> {{ tanggal_pelanggaran($violation->reporting_date); }} </td>
                   <td>
                   <?php
-                    
 
                     $day_sp = gmdate("l", mktime(0,0,0,$date_day_sp,$date_month_sp,$date_year_sp));
 
@@ -473,7 +463,7 @@
         </div>
 
       {{-- Displaynone --}}
-        <div style="display:none;" >
+        <div >
           <?php
             $date_violation = new \DateTime(date('Y-m-d') .' 4:06:37' );
 

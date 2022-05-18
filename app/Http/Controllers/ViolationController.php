@@ -101,7 +101,7 @@ class ViolationController extends Controller
 
         
         //JIKA TIDAK ADA PELANGGARAN AKTIF
-        if($last_vio == 'notactive' AND $last_type == 'notviolation')
+        if($last_vio == 'notactive' OR $last_type == 'notviolation')
         {
             $status_type_violation = $sel_paragraph->type_of_verse;
 
@@ -135,31 +135,29 @@ class ViolationController extends Controller
                 ->latest()                       
                 ->count();
 
-            // dd($num_vio_accumulation3);
             if($num_vio_accumulation3 > 0){
-                // LOGIKA AKUMULSI KEEMPAT
-                // return redirect('/violations/' . $employee_id . '/edit');
+                // GET LOGIKA AKUMULASI KEEMPAT
+                // GET LOGIKA AKUMULASI PERINGATAN LISAN
                 require_once 'GetViolationArticle.php';
 
-                // $pelanggran_sebelumnya2 = DB::table('violations')
-                //     ->where('employee_id',  $employee_id) 
-                //     ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
-                //     ->latest()                       
-                //     ->first();
+                $pelanggran_sebelumnya2 = DB::table('violations')
+                    ->where('employee_id',  $employee_id) 
+                    ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
+                    ->latest()                       
+                    ->first();
 
-                // $pelanggran_sebelumnya3 = DB::table('violations')
-                //     ->where('employee_id',  $employee_id) 
-                //     ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
-                //     ->latest()                       
-                //     ->first(); 
+                $pelanggran_sebelumnya3 = DB::table('violations')
+                    ->where('employee_id',  $employee_id) 
+                    ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
+                    ->latest()                       
+                    ->first();
 
-                // $alphabet_accumulation = $cari_pasal_akumulasi->id;    
-                // $violation_accumulation = $pelanggran_sebelumnya->id;    
-                // $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
-                // $violation_accumulation3 = $pelanggran_sebelumnya3->id;  
+                $alphabet_accumulation = $cari_pasal_akumulasi->id;    
+                $violation_accumulation = $pelanggran_sebelumnya->id;    
+                $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
+                $violation_accumulation3 = $pelanggran_sebelumnya3->id;  
 
             }else{
-
                 // CARI PELANGGARAN AKUMULASI 3               
                 $num_vio_accumulation2 = DB::table('violations')
                     ->where('employee_id',  $employee_id) 
@@ -184,7 +182,8 @@ class ViolationController extends Controller
                         ->where('employee_id',  $employee_id) 
                         ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
                         ->latest()                       
-                        ->first();              
+                        ->first();   
+
                     $alphabet_accumulation = $cari_pasal_akumulasi->id;    
                     $violation_accumulation = $pelanggran_sebelumnya->id;    
                     $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
@@ -200,8 +199,7 @@ class ViolationController extends Controller
                         ->latest()                       
                         ->count();
 
-                    if($num_vio_accumulation > 0)
-                    {
+                    if($num_vio_accumulation > 0){
                         //LOGIKA AKUMULASI KEDUA
                         require_once 'GetViolationArticle.php';
 
@@ -258,9 +256,8 @@ class ViolationController extends Controller
             'signature_id' => $signature_id,    
             'employee_id' => $employee_id
         ];
-        // dd($data);
-        DB::table('violations')->insert($data);
 
+        DB::table('violations')->insert($data);
 
         $select_employee = DB::table('employees')->find($employee_id);
         $remark = "menambahkan pelanggaran ".$select_employee->number_of_employees;
@@ -382,16 +379,14 @@ class ViolationController extends Controller
         //LOGIKA MENAMPILKAN DATA PASAL DAN PASAL DELIK
         
         //GET JIKA TIDAK ADA PELANGGARAN AKTIF
-        if($status_violant_last == 'notactive' AND $last_type == 'notviolation'){
+        if($status_violant_last == 'notactive' OR $last_type == 'notviolation'){
 
             $status_type_violation = $sel_paragraph->type_of_verse;
             $pasal_yang_dilanggar = 'Perjanjian Kerja Bersama Pasal '. $sel_article->article.' ayat ('.$sel_paragraph->paragraph .') huruf "'. $sel_alphabet->alphabet.'" ' .  $sel_alphabet->alphabet_sound;
             
             $remainder1 = '-';
             $remainder2 = '';
-                // $data = [3,3,3];
-            
-            // $data = [$status_type_violation,  $pasal_yang_dilanggar,  $remainder];
+                       
             $data = [ $status_type_violation, $pasal_yang_dilanggar, $remainder1, $remainder2];
             
         }else{
@@ -456,8 +451,6 @@ class ViolationController extends Controller
 
     public function list()
     {
-        // $dd = 1;
-        // dd($dd);
         // $violations = Violation::oldest();
         $violations = DB::table('violations')
                 ->leftJoin('employees', 'employees.id', '=', 'violations.employee_id')

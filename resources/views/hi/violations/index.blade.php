@@ -60,7 +60,7 @@
         <table class="table table-hover text-nowrap">
           <thead>
             <tr>
-              <th>NIK ID</th>
+              <th>NIK</th>
               <th>Nama</th>
               <th>Nomer KTP</th>
               <th>JOb Level / Departemen</th>
@@ -75,7 +75,6 @@
                     <td>{{ $employee->name }}</td>
                     <td>{{ $employee->national_id }}</td>
                     <td>
-
                       {{ $employee->job->job_level }} / {{ $employee->department->department  }}
                     </td>
                     <td>{{ $employee->status_employee }}</td>

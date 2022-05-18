@@ -85,6 +85,58 @@
                     <a href="/hiviolations" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                   </div>
                 </div>
+                <div class="col-lg-3 col-6">
+                  <!-- small box -->
+                  <div class="small-box bg-success">
+                    <div class="inner">
+                      <?php 
+                          $bul = date('m');
+                          $num_violations = DB::table('violations')->whereMonth('date_of_violation', $bul)->count();
+                      ?>
+                      <h3>{{$num_violations}}</h3>
+                      <p>Pelanggaran Bulan ini</p>
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-document"></i>
+                      <!-- <i class="fa-light fa-file-circle-info"></i> -->
+                    </div>
+                    <a href="/hiviolations" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                  <!-- small box -->
+                  <div class="small-box bg-success">
+                    <div class="inner">
+                      <?php 
+                          $num_violations = DB::table('violations')->where('violation_status', 'active')->count();
+                      ?>
+                      <h3>{{$num_violations}}</h3>
+                      <p>Pelanggaran Aktif</p>
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-document"></i>
+                      <!-- <i class="fa-light fa-file-circle-info"></i> -->
+                    </div>
+                    <a href="/hiviolations" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                  <!-- small box -->
+                  <div class="small-box bg-success">
+                    <div class="inner">
+                      <?php 
+                          $num_violations = DB::table('violations')->where('violation_status', 'notactive')->count();
+                      ?>
+                      <h3>{{$num_violations}}</h3>
+                      <p>Pelanggaran Tidak Aktif</p>
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-document"></i>
+                      <!-- <i class="fa-light fa-file-circle-info"></i> -->
+                    </div>
+                    <a href="/hiviolations" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                  </div>
+                </div>
               <?php }else{  
             }
           }

@@ -12,6 +12,8 @@ use Maatwebsite\Excel\Facades\Excel;
 
 use App\Imports\ViolationsImport;
 
+use App\Exports\ViolationsExport;
+
 use App\Models\Employee;
 use App\Models\Job;
 use App\Models\Department;
@@ -578,5 +580,9 @@ class HiViolationController extends Controller
 
         return redirect('/hiviolations');
 
+    }
+
+    public function export(){
+        return Excel::download(new ViolationsExport, 'Master_Pelanggaran.xlsx');        
     }
 }

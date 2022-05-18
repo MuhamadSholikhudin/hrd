@@ -35,7 +35,7 @@
                   <form action="/hi/pkb" >     
                       <div class="input-group input-group-sm" style="width: 200px;">
                           <button type="button" data-toggle="modal" data-target="#add_paragraph"  class="btn btn-primary btn-sm float-right"><i class="fas fa-plus"></i></button>
-                        &nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;
                           <input type="text" name="search_paragraph" value="{{ request('search_paragraph') }}" class="form-control float-right" placeholder="Search">
                           <div class="input-group-append">
                               <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
@@ -101,7 +101,7 @@
                       <?php 
                         $url_nowxz = url()->current();
                         $sum_url =SUM_URL_WEB;
-            $url_scc = substr($url_nowxz, $sum_url);  
+                        $url_scc = substr($url_nowxz, $sum_url);  
                         $pecah = explode("/", $url_scc);
                         $kalimat1 = $pecah[0];
                         $num_sub = DB::table('sub_menus')->where('url', '/'.$kalimat1)->count(); 
@@ -134,6 +134,7 @@
                   <!-- /.modal-content -->
                 </div>
                 <!-- /.modal-dialog -->
+              </div>
               </div>
     
           <!-- /.card-header -->

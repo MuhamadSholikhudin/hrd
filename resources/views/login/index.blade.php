@@ -53,10 +53,10 @@
 
       </div>
 
-      <p class="login-box-msg">Masuk Untuk Mulai Bekerja  <?php echo $ad = SUM_URL_WEB; ?></p>
+      <p class="login-box-msg">Masuk Untuk Mulai Bekerja </p>
 
       <form action="/login" method="post" enctype="multipart/form-data">
-      @csrf
+        @csrf
         <div class="input-group mb-3">
           <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="name" name="name" value="{{ old('name') }}"  >
           <div class="input-group-append">
