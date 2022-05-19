@@ -67,9 +67,14 @@ use App\Http\Controllers\PDFController;
 */
 
 Route::get('/', function () {
-    return redirect('/login');
+    Auth::logout();
+    return view('login.index');
 });
 
+Route::get('/home', function () {
+    Auth::logout();
+    return view('login.index');
+});
 
 Route::get('/example', function () {
     $url_xtz = url()->current();

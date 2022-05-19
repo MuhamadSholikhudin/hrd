@@ -132,10 +132,12 @@ class HiAlphabetController extends Controller
     public function edit(Alphabet $alphabet)
     {
         //
+
+        $alphabet_status = ["active" => 1, "Not active" => 0];
+
         return view('hi.pkb.alphabets.edit', [
-            
-            
             'alphabet' => $alphabet,
+            'alphabet_status' => $alphabet_status,
             'paragraphs' => Paragraph::all()
     ]);
     }
@@ -153,11 +155,12 @@ class HiAlphabetController extends Controller
         DB::table('alphabets')
             ->where('id', $request->id)
             ->update([
-            'alphabet'=> $request->alphabet,
-            'description'=> $request->description,
-            'paragraph_id'=> $request->paragraph_id, 
-            'firts_periode'=> $request->firts_periode,
-            'last_periode'=> $request->last_periode
+                'alphabet'=> $request->alphabet,
+                'alphabet_sound'=> $request->alphabet_sound,
+                'paragraph_id'=> $request->paragraph_id, 
+                'firts_periode'=> $request->firts_periode,
+                'last_periode'=> $request->last_periode,
+                'alphabet_status'=> $request->alphabet_status
             ]);
 
             $remark = "mengubah huruf ".$request->alphabet;

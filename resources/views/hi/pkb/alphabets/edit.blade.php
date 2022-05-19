@@ -28,7 +28,7 @@
     <div class="col-lg-9">
       <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Form Edit HUruf PKB</h3>
+            <h3 class="card-title">Form Edit Huruf PKB</h3>
           </div>
         <div class="card-body">
 
@@ -37,30 +37,39 @@
             <form role="form" action="/alphabets/{{  $alphabet->id  }}" method="POST" enctype="multipart/form-data">
               @method('put')
               @csrf
-              <div class="form-group">
-                <label for="article_id">Ayat</label>
-                <input type="hidden" class="form-control" id="" name="id" value="{{ old('id', $alphabet->id) }}" placeholder="Nomor Pasal example : 27">                
-                <select class="form-control select2bs4"  name="paragraph_id" id="paragraph_id">      
-                  @foreach ($paragraphs as $paragraph)
-                  <?php  $print_article  = DB::table('articles')->find($paragraph->article_id); ?>                                
-                    @if(old('paragraph_id', $alphabet->paragraph_id) == $paragraph->id)
-                    <option value="{{$paragraph->id}}" selected>PASAL {{$print_article->article}} AYAT {{$paragraph->paragraph}} / {{$paragraph->sub_chapters}}</option>
+              <div class="form-group row">
+                <label for="article_id" class="col-sm-3 col-form-label">Ayat</label>
+                <div class="col-sm-9">
+                  <input type="hidden" class="form-control" id="" name="id" value="{{ old('id', $alphabet->id) }}" placeholder="Nomor Pasal example : 27">                
+                  <select class="form-control select2bs4"  name="paragraph_id" id="paragraph_id">      
+                    @foreach ($paragraphs as $paragraph)
+                    <?php  $print_article  = DB::table('articles')->find($paragraph->article_id); ?>                                
+                      @if(old('paragraph_id', $alphabet->paragraph_id) == $paragraph->id)
+                      <option value="{{$paragraph->id}}" selected>PASAL {{$print_article->article}} AYAT {{$paragraph->paragraph}} / {{$paragraph->sub_chapters}}</option>
 
-                    @else
-                    <option value="{{$paragraph->id}}" >PASAL {{$print_article->article}} AYAT {{$paragraph->paragraph}} / {{$paragraph->sub_chapters}}</option>
-                    @endif
-                  @endforeach
-                </select>
+                      @else
+                      <option value="{{$paragraph->id}}" >PASAL {{$print_article->article}} AYAT {{$paragraph->paragraph}} / {{$paragraph->sub_chapters}}</option>
+                      @endif
+                    @endforeach
+                  </select>                  
+                </div>
+
+
                 <!-- <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nomor Pasal example : 27"> -->
               </div>
-              <div class="form-group">
-                <label for="alphabet">Huruf</label>
-                <input type="text" class="form-control" id="alphabet" name="alphabet" value="{{ old('alphabet', $alphabet->alphabet) }}" placeholder=" Huruf">
+              <div class="form-group row">
+                <label for="alphabet" class="col-sm-3 col-form-label">Huruf</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="alphabet" name="alphabet" value="{{ old('alphabet', $alphabet->alphabet) }}" placeholder=" Huruf">
+                </div>
               </div>
 
-              <div class="form-group">
-                <label for="alphabet_sound">Keterangan</label>
-                <textarea  class="form-control" id="" name="alphabet_sound" placeholder="Bunyi huruf">{{ old('alphabet_sound', $alphabet->alphabet_sound) }}</textarea>
+              <div class="form-group row">
+                <label for="alphabet_sound" class="col-sm-3 col-form-label">Keterangan</label>
+
+              <div class="col-sm-9">
+                <textarea  class="form-control" id="" name="alphabet_sound" placeholder="Bunyi huruf">{{ old('alphabet_sound', $alphabet->alphabet_sound) }}</textarea>                       
+                </div>
               </div>
               <div class="form-group row">
                 <label for="bank_branch" class="col-sm-3 col-form-label">Periode</label>
@@ -75,6 +84,22 @@
                     <input type="year" class="form-control" id="bank_branch" name="last_periode" value="{{ old('last_periode', $alphabet->last_periode) }}" >
                   </div>
               </div>
+
+              <div class="form-group row">
+                <label for="bank_branch" class="col-sm-3 col-form-label">Status</label>
+                  <div class="col-sm-9">
+                    <select class="form-control"  name="alphabet_status" id="alphabet_status">      
+                      @foreach ($alphabet_status as $x => $x_value)
+                        @if(old('alphabet_status', $alphabet->alphabet_status) == $x_value)
+                          <option value="{{ $x_value }}" selected>{{ $x}} </option>
+                        @else
+                          <option value="{{ $x_value }}" >{{ $x }} </option>
+                        @endif
+                      @endforeach
+                    </select>
+                  </div>
+            
+              </div>
             
               <!-- <p>One fine body&hellip;</p> -->
       
@@ -83,7 +108,7 @@
                 <?php 
                   $url_nowxz = url()->current();
                   $sum_url =SUM_URL_WEB;
-            $url_scc = substr($url_nowxz, $sum_url); 
+                  $url_scc = substr($url_nowxz, $sum_url); 
                   $pecah = explode("/", $url_scc);
                   $kalimat1 = $pecah[0];
                   $num_sub = DB::table('sub_menus')->where('url', '/'.$kalimat1)->count(); 

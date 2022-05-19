@@ -213,7 +213,7 @@
                   <th>Selang </th>
                   <th>Pelangaran</th>
                   <th>Pasal</th>
-                  <th>Keterangan</th>
+                  <th>Pasal Akumulasi</th>
                   <th>Status </th>
                   <th>Aksi</th>
                 </tr>
@@ -241,7 +241,6 @@
                     <td> {{ tanggal_pelanggaran($violation->reporting_date); }} </td>
                   <td>
                   <?php
-
                     $day_sp = gmdate("l", mktime(0,0,0,$date_day_sp,$date_month_sp,$date_year_sp));
 
                     // Hari Indonesia
@@ -389,7 +388,16 @@
                     ?>
                     {{ $article->article . ' ayat '. $paragraph->paragraph .' huruf '. $alphabet->alphabet}}
                   </td>
-                  <td><div>{{ $violation->other_information  }} </div></td>                
+
+                      <td>
+                          <?php 
+                              if($violation->alphabet_accumulation !== NULL){
+                              echo pasal($violation->alphabet_accumulation);
+                              }else{
+
+                              }
+                          ?>
+                      </td>
                   <td>{{ $violation->violation_status  }}</td>
                   <td>
                       <a href="/violations/{{$violation->id }}" target="_blank" class="btn  btn-outline-primary">
@@ -662,7 +670,7 @@
                 <div class="form-group row">
                   <label for="name" class="col-sm-2 col-form-label">Nama </label>
                   <div class="col-sm-4">
-                      <input type="hidden" class="form-control" id="employee_id" name="employee_id" value="{{  $employee->id  }}" placeholder="Nomer Induk Karyawan" >
+                      <input type="text" class="form-control" id="employee_id" name="employee_id" value="{{  $employee->id  }}" placeholder="Nomer Induk Karyawan" >
                       <input type="text" class="form-control" value="{{  $employee->name  }}" placeholder="Nomer Induk Karyawan" >
                   </div>
                   <label for="number_of_employees" class="col-sm-2 col-form-label">NIK</label>
@@ -683,9 +691,9 @@
                 <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label">Jenis Pelangaran</label>
                   <div class="col-sm-3">
-                      <input type="hidden" name="last_vio" value="{{$sta_viol}}" >
-                      <input type="hidden" name="last_type" value="{{$type_viol}}"  >     
-                      <input type="hidden" name="last_accumulation" value="{{$last_accumulation}}"  >     
+                      <input type="text" name="last_vio" value="{{$sta_viol}}" >
+                      <input type="text" name="last_type" value="{{$type_viol}}"  >     
+                      <input type="text" name="last_accumulation" value="{{$last_accumulation}}"  >     
 
                       <input type="text" class="form-control" id="jpn1"  placeholder="Jenis Pelanggaran" >     
                   </div>

@@ -128,7 +128,7 @@
             ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
             ->where('alphabets.id', $violation_now)
             ->first();
-        }
+    }
         $pelanggran_sebelumnya = DB::table('violations')
             ->where('employee_id',  $emp_id) 
             ->latest()                       
@@ -143,6 +143,6 @@
         $pasal_yang_dilanggar = 'Perjanjian Kerja Bersama Pasal '. $cari_pasal_akumulasi->article.' ayat   ('.$cari_pasal_akumulasi->paragraph .') huruf "'. $cari_pasal_akumulasi->alphabet.'" '. $cari_pasal_akumulasi->alphabet_sound;
 
         $remainder1 = 'Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal '. $sel_article->article.' ayat ('.$sel_paragraph->paragraph .') huruf "'. $sel_alphabet->alphabet.'" ' .  $sel_alphabet->alphabet_sound ;
-        $remainder2 = 'Dalam masa ' . $last_type . ' Perjanjian Kerja Bersama Pasal '. $cari_pasal_sebelumnya->article . ' ayat ('. $cari_pasal_sebelumnya->paragraph. ') huruf "'.$cari_pasal_sebelumnya->alphabet.'", ' .$pelanggran_sebelumnya->other_information;
+        $remainder2 = 'Dalam masa ' . $last_type . ' Perjanjian Kerja Bersama Pasal '. $cari_pasal_sebelumnya->article . ' ayat ('. $cari_pasal_sebelumnya->paragraph. ') huruf "'.$cari_pasal_sebelumnya->alphabet_sound.'", ' .$pelanggran_sebelumnya->other_information;
 
         $data = [ $status_type_violation, $pasal_yang_dilanggar, $remainder1, $remainder2];

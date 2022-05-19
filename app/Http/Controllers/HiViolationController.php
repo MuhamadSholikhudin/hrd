@@ -54,7 +54,6 @@ class HiViolationController extends Controller
                       ->orWhere('number_of_employees', 'like', '%' . request('search') . '%')
                       ->orWhere('other_information', 'like', '%' . request('search') . '%');
         }
-
         
         return view('hi.violations.list', [
             'violations' => $violations->paginate(10),
@@ -176,7 +175,7 @@ class HiViolationController extends Controller
             $jumlahTotal = 0;
             foreach($row as $x):
                 //Memastikan tidak ada nilai null NIK
-                          //
+                          // 27 ayat (3) huruf "a"
             if($x['number_of_employees'] == NULL){
 
             }else{ 

@@ -110,8 +110,9 @@
     $num_pasal_akumulasi = DB::table('alphabets')
         ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
         ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
-        ->where('paragraphs.type_of_verse', $sel_paragraph->type_of_verse)
-        ->where('alphabet_accumulation', 'like', '%' . $sel_paragraph->type_of_verse . '%')
+        ->where('paragraphs.type_of_verse', $status_type_violation)
+        ->where('alphabets.alphabet_accumulation', 'like', '%' . $sel_paragraph->type_of_verse . '%')
+        // ->where('paragraphs.type_of_verse', $sel_paragraph->type_of_verse)
         // ->where('alphabets.alphabet_accumulation', $status_type_violation)
         ->select('alphabets.id as id')
         ->count();
@@ -120,8 +121,9 @@
         $cari_pasal_akumulasi = DB::table('alphabets')
             ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
             ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
-            ->where('paragraphs.type_of_verse', $sel_paragraph->type_of_verse)
-            ->where('alphabets.alphabet_accumulation', $status_type_violation)
+            ->where('paragraphs.type_of_verse', $status_type_violation)
+            ->where('alphabet_accumulation', 'like', '%' . $sel_paragraph->type_of_verse . '%')
+            // ->where('alphabets.alphabet_accumulation', $status_type_violation)
             ->select('alphabets.id as id')
             ->first();
             

@@ -114,33 +114,33 @@
                     <div class="modal-footer justify-content-between">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                       <?php 
-                  $url_nowxz = url()->current();
-                  $sum_url =SUM_URL_WEB;
-            $url_scc = substr($url_nowxz, $sum_url);  
-                  $pecah = explode("/", $url_scc);
-                  $kalimat1 = $pecah[0];
-                  $num_sub = DB::table('sub_menus')->where('url', '/'.$kalimat1)->count(); 
-                  if($num_sub > 0){
-                    $print_sub = DB::table('sub_menus')->where('url', '/'.$kalimat1)->first();
-                    $num_meth = DB::table('methods')
-                      ->leftJoin('access_menus', 'methods.access_menu_id' ,'access_menus.id')
-                      ->where('methods.sub_menu_id', $print_sub->id)
-                      ->where('access_menus.role_id', auth()->user()->role_id)
-                      ->count();
-                    if($num_meth > 0){
-                      $prt_meth = DB::table('methods')
-                      ->leftJoin('access_menus', 'methods.access_menu_id' ,'access_menus.id')
-                      ->select('methods.edit as edit', 'methods.delete as delete','methods.delete as view')
-                      ->where('methods.sub_menu_id', $print_sub->id)
-                      ->where('access_menus.role_id', auth()->user()->role_id)
-                      ->first();
-                      $edit = $prt_meth->edit;
-                      if($edit == 'true'){
-                        echo '<button type="submit" class="btn btn-primary">Simpan</button>';
-                      }
-                    }
-                  }
-              ?>
+                          $url_nowxz = url()->current();
+                          $sum_url =SUM_URL_WEB;
+                          $url_scc = substr($url_nowxz, $sum_url);  
+                          $pecah = explode("/", $url_scc);
+                          $kalimat1 = $pecah[0];
+                          $num_sub = DB::table('sub_menus')->where('url', '/'.$kalimat1)->count(); 
+                          if($num_sub > 0){
+                            $print_sub = DB::table('sub_menus')->where('url', '/'.$kalimat1)->first();
+                            $num_meth = DB::table('methods')
+                              ->leftJoin('access_menus', 'methods.access_menu_id' ,'access_menus.id')
+                              ->where('methods.sub_menu_id', $print_sub->id)
+                              ->where('access_menus.role_id', auth()->user()->role_id)
+                              ->count();
+                            if($num_meth > 0){
+                              $prt_meth = DB::table('methods')
+                              ->leftJoin('access_menus', 'methods.access_menu_id' ,'access_menus.id')
+                              ->select('methods.edit as edit', 'methods.delete as delete','methods.delete as view')
+                              ->where('methods.sub_menu_id', $print_sub->id)
+                              ->where('access_menus.role_id', auth()->user()->role_id)
+                              ->first();
+                              $edit = $prt_meth->edit;
+                              if($edit == 'true'){
+                                echo '<button type="submit" class="btn btn-primary">Simpan</button>';
+                              }
+                            }
+                          }
+                      ?>
                       
                       
                       <!-- <button type="submit" class="btn btn-primary">Save</button> -->
@@ -163,6 +163,7 @@
                     <th>Bunyi Ayat</th>
                     <th>Jenis Ayat</th>
                     <th>Periode</th>
+                    <th>Status</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
@@ -182,6 +183,7 @@
                     <td>{{ $alphabet->alphabet_sound }}</td>
                     <td> {{ $print2_paragraph->type_of_verse }}</td>
                     <td>{{ $alphabet->last_periode}} - {{ $alphabet->firts_periode }}</td>
+                    <td> <?php if($alphabet->alphabet_status == 1){ echo "Active"; }else{ echo "Not Active";} ?></td>
                     <td>
                         <div class="tools">
                           <a href="/alphabets/{{ $alphabet->id }}/edit">

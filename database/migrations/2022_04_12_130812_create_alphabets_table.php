@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('last_periode')->nullable(); 
             $table->string('alphabet_type');
             $table->string('alphabet_accumulation');
+            $table->boolean('alphabet_status');
             $table->foreignId('paragraph_id');      
             $table->timestamps(); 
         });
