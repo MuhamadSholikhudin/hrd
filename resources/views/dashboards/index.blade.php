@@ -75,8 +75,8 @@
                       <?php 
                           $num_violations = DB::table('violations')->count();
                       ?>
-                      <h3>{{$num_violations}}</h3>
-                      <p>Pelanggaran</p>
+                      <h3 class="text-white">{{$num_violations}}</h3>
+                      <p class="text-white">Pelanggaran</p>
                     </div>
                     <div class="icon">
                       <i class="ion ion-document"></i>
@@ -87,14 +87,14 @@
                 </div>
                 <div class="col-lg-3 col-6">
                   <!-- small box -->
-                  <div class="small-box bg-success">
+                  <div class="small-box " style="background-color:#28a760;">
                     <div class="inner">
                       <?php 
                           $bul = date('m');
                           $num_violations = DB::table('violations')->whereMonth('date_of_violation', $bul)->count();
                       ?>
-                      <h3>{{$num_violations}}</h3>
-                      <p>Pelanggaran Bulan ini</p>
+                      <h3 class="text-white">{{$num_violations}}</h3>
+                      <p class="text-white">Pelanggaran Bulan ini</p>
                     </div>
                     <div class="icon">
                       <i class="ion ion-document"></i>
@@ -105,13 +105,13 @@
                 </div>
                 <div class="col-lg-3 col-6">
                   <!-- small box -->
-                  <div class="small-box bg-success">
+                  <div class="small-box  " style="background-color:#28a765;">
                     <div class="inner">
                       <?php 
                           $num_violations = DB::table('violations')->where('violation_status', 'active')->count();
                       ?>
-                      <h3>{{$num_violations}}</h3>
-                      <p>Pelanggaran Aktif</p>
+                      <h3 class="text-white">{{$num_violations}}</h3>
+                      <p  class="text-white">Pelanggaran Aktif</p>
                     </div>
                     <div class="icon">
                       <i class="ion ion-document"></i>
@@ -122,13 +122,13 @@
                 </div>
                 <div class="col-lg-3 col-6">
                   <!-- small box -->
-                  <div class="small-box bg-success">
+                  <div class="small-box " style="background-color:#28a770;">
                     <div class="inner">
                       <?php 
                           $num_violations = DB::table('violations')->where('violation_status', 'notactive')->count();
                       ?>
-                      <h3>{{$num_violations}}</h3>
-                      <p>Pelanggaran Tidak Aktif</p>
+                      <h3 class="text-white">{{$num_violations}}</h3>
+                      <p class="text-white">Pelanggaran Tidak Aktif</p>
                     </div>
                     <div class="icon">
                       <i class="ion ion-document"></i>

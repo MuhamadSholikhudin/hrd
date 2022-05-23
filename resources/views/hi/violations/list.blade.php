@@ -145,7 +145,7 @@
               <div class="modal-body">
                 <div class="row">
                   <div class="col-5">
-                    <input type="number" name="awal" class="form-control" >
+                    <input type="number" name="awal" class="form-control" required>
                   </div>
                   <div class="col-2">
                     <p class="text-center">
@@ -154,7 +154,7 @@
                     </p>
                   </div>
                   <div class="col-5">
-                    <input type="number" name="akhir" class="form-control">
+                    <input type="number" name="akhir" class="form-control" required>
                   </div>
                 </div>
               

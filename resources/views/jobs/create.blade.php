@@ -68,7 +68,7 @@
                     ->first();
                   $edit = $prt_meth->edit;
                   if($edit == 'true'){
-                    echo '<button type="submit" class="btn btn-primary float-right">Submit</button>';
+                    echo '<button type="submit" class="btn btn-primary float-right">Simpan</button>';
                   }
                 }
               }

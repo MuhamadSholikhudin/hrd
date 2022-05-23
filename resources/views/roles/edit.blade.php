@@ -108,15 +108,15 @@
                                           foreach ($sel_sb_mn as $sel_mtd) : ?>
                                               
                                           <input type="checkbox" class="method" value="edit" data-method="{{ $sel_mtd->id}}" data-role="{{ $role->id }}" <?php if($sel_mtd->edit == 'true'){  echo  'checked="checked"'; }else{ } ?>   name="edit" id=""> edit |
-                                          <input type="checkbox" class="method"  value="delete" data-method="{{ $sel_mtd->id}}" data-role="{{ $role->id }}" <?php if($sel_mtd->delete == 'true'){  echo  'checked="checked"'; }else{ } ?> id=""> delete |
-                                          <input type="checkbox" class="method" value="view" data-method="{{ $sel_mtd->id}}" data-role="{{ $role->id }}" <?php if($sel_mtd->view == 'true'){  echo  'checked="checked"'; }else{ } ?> id=""> view  |
+                                          <input type="checkbox" class="method"  value="delete" data-method="{{ $sel_mtd->id}}" data-role="{{ $role->id }}" <?php if($sel_mtd->delete == 'true'){  echo  'checked="checked"'; }else{ } ?> id=""> delete | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                          [ <input type="checkbox" class="method" value="view" data-method="{{ $sel_mtd->id}}" data-role="{{ $role->id }}" <?php if($sel_mtd->view == 'true'){  echo  'checked="checked"'; }else{ } ?> id=""> view  ]
                                           
                                           <?php    endforeach;              
 
                                         }else{ ?>
                                           <input type="checkbox" name="" id="" disabled> edit |
-                                          <input type="checkbox" name="" id="" disabled> delete |
-                                          <input type="checkbox" name="" id="" disabled> view  |
+                                          <input type="checkbox" name="" id="" disabled> delete | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                           [ <input type="checkbox" name="" id="" disabled> view  ]
                 
                                       <?php
                                         }

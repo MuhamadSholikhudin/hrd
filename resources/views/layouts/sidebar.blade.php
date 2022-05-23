@@ -64,15 +64,22 @@
                  <?php
                    foreach($sub_menus as $sub_menu):
                  ?>
-                   <li class="nav-item">
-                     <a href="{{$sub_menu->url}}" 
-                      class="nav-link <?php $url_s = substr($sub_menu->url, 1); $open_url_s = $url_s.'*'; ?> {{ Request::is($open_url_s) ? 'active' : '' }} ">
-                       <?php $method = DB::table('methods')->where('access_menu_id', $acs->id)->where('sub_menu_id',  $sub_menu->id)->first(); ?>
-                      <i class="{{$sub_menu->icon}} nav-icon"></i>
-                      <p>{{$sub_menu->title}} </p>
-                      
-                     </a>
-                   </li>
+                  <?php $method = DB::table('methods')->where('access_menu_id', $acs->id)->where('sub_menu_id',  $sub_menu->id)->where('view',  'true')->count(); ?>
+                    <?php if($method == 1){ ?>
+                      <li class="nav-item">
+                        <a href="{{$sub_menu->url}}" 
+                          class="nav-link <?php $url_s = substr($sub_menu->url, 1); $open_url_s = $url_s.'*'; ?> {{ Request::is($open_url_s) ? 'active' : '' }} ">
+                          
+                          <i class="{{$sub_menu->icon}} nav-icon"></i>
+                          <p>{{$sub_menu->title}}   </p>
+                          
+                        </a>
+                      </li>
+                    <?php }else{ ?>
+
+                    <?php } ?>
+
+
                  <?php
                    endforeach;
                  ?>

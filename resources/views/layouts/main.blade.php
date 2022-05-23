@@ -9,6 +9,9 @@
 
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
+
+  <link rel="icon" href="{{ asset('img/favicon.ico') }}">
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Ionicons -->
@@ -103,6 +106,7 @@
     }
   });
 
+///ALPHABET
   $('#alphabet_type').change(function() {
     var pil_type = $(this).val();
     if( pil_type == 'accumulation'){
@@ -114,6 +118,22 @@
       $(".chk").prop('checked', false);
     }
   });
+
+  $('#alphabet_type_edit').change(function() {
+    var pil_type = $(this).val();
+    if( pil_type == 'accumulation'){
+      // alert("karyawan lama");
+      $('#check_acummulation2').hide();
+      $('#check_acummulation1').show();
+    }else{
+      $( "#check_acummulation1" ).hide();
+      $( "#check_acummulation2" ).show();
+      // $( ".chk" ).hide();
+      $(".chkdsb").prop('disabled', true);
+    }
+  });
+
+  
 
   // Signature
 

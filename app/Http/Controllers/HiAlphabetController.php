@@ -30,13 +30,14 @@ class HiAlphabetController extends Controller
         $alphabets = Alphabet::oldest();
         if(request('search_alphabets')){
             $alphabets->where('alphabet', 'like', '%' . request('search_alphabets') . '%')
-                      ->orWhere('description', 'like', '%' . request('search_alphabets') . '%')
+                      ->orWhere('alphabet_sound', 'like', '%' . request('search_alphabets') . '%')
                       ->orWhere('last_periode', 'like', '%' . request('search_alphabets') . '%')
                       ->orWhere('firts_periode', 'like', '%' . request('search_alphabets') . '%');
                     //   ->orWhere('article_sound', 'like', '%' . request('search') . '%');
         }
 
         $alphabets_accumulation = [
+            "Peringatan Lisan",
             "Surat Peringatan Pertama",
             "Surat Peringatan Kedua",
             "Surat Peringatan Ketiga",
@@ -78,6 +79,7 @@ class HiAlphabetController extends Controller
     {
         //
         // dd($request->alphabet_accumulation);
+        
         if($request->alphabet_accumulation == null){
             $implode = '';
         }else{
@@ -135,9 +137,20 @@ class HiAlphabetController extends Controller
 
         $alphabet_status = ["active" => 1, "Not active" => 0];
 
+        
+        $alphabets_accumulation = [
+            "Peringatan Lisan",
+            "Surat Peringatan Pertama",
+            "Surat Peringatan Kedua",
+            "Surat Peringatan Ketiga",
+            "Surat Peringatan Terakhir",
+            "Pemutusan Hubungan Kerja"
+        ];
+
         return view('hi.pkb.alphabets.edit', [
             'alphabet' => $alphabet,
             'alphabet_status' => $alphabet_status,
+            'alphabets_accumulation' => $alphabets_accumulation,
             'paragraphs' => Paragraph::all()
     ]);
     }
@@ -151,6 +164,23 @@ class HiAlphabetController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if($request->alphabet_type == null){
+            $alphabet_accumulation = '';
+            $alphabet_type = '';
+            
+        }elseif($request->alphabet_type == 'accumulation'){
+            if($request->alphabet_accumulation == null){
+                $alphabet_accumulation = '';
+                $alphabet_type = '';                
+            }else{
+                $alphabet_accumulation = implode(",", $request->alphabet_accumulation);
+                $alphabet_type = 'yes';
+            }
+        }elseif($request->alphabet_type == 'no'){
+            $alphabet_accumulation = '';
+            $alphabet_type = '';
+        }
+
         //
         DB::table('alphabets')
             ->where('id', $request->id)
@@ -160,6 +190,8 @@ class HiAlphabetController extends Controller
                 'paragraph_id'=> $request->paragraph_id, 
                 'firts_periode'=> $request->firts_periode,
                 'last_periode'=> $request->last_periode,
+                'alphabet_type'=> $alphabet_type,
+                'alphabet_accumulation'=> $alphabet_accumulation,
                 'alphabet_status'=> $request->alphabet_status
             ]);
 

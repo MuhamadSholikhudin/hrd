@@ -16,7 +16,7 @@
 
   <style>
     .login-page {
-      background-image: url("{{ asset('img/View 1.jpg') }}");
+      /* background-image: url("{{ asset('img/View.jpg') }}"); */
       /* background-color: #cccccc; */
       /* width: 500px; */
       /* background-size: auto; */
@@ -49,7 +49,7 @@
 
       <div class="login-box-msg">
 
-        <img src="{{ asset('img/HR System.png') }}" alt="" srcset="" width="150px"> 
+        <img src="{{ asset('img/HR System.png') }}" onclick="myFunction()" alt="" srcset="" width="150px"> 
 
       </div>
 
@@ -110,7 +110,6 @@
         <a href="register.html" class="text-center">Register a new membership</a>
       </p> -->
 
-
     </div>
     <!-- /.login-card-body -->
   </div>
@@ -123,5 +122,24 @@
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+
+<script>
+
+  var gmbr = 'gmbr';
+  if(gmbr == gmbr){
+    document.body.style.backgroundImage = "url('{{ asset('img/View.jpg') }}')";
+  }else{
+
+  }
+function myFunction() {
+  // document.body.style.backgroundColor = "#f3f3f3";
+  document.body.style.backgroundImage = "url('{{ asset('img/View.jpg') }}')";
+}
+// function makeAlert(){ 
+//     alert("Popup window!");
+// };
+
+// setInterval(makeAlert, 500);
+</script>
 </body>
 </html>

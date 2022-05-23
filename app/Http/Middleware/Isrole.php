@@ -49,11 +49,11 @@ WHERE access_menus.role_id = 1 AND methods.sub_menu_id = 18;
            if($num_meth < 1){
             abort(403);
            }
-
         }else{
             abort(403);
         }
 
+        
 
 /*
 if(){

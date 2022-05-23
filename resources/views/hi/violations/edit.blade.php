@@ -471,7 +471,7 @@
         </div>
 
       {{-- Displaynone --}}
-        <div >
+        <div style="display:none;" >
           <?php
             $date_violation = new \DateTime(date('Y-m-d') .' 4:06:37' );
 
@@ -670,7 +670,7 @@
                 <div class="form-group row">
                   <label for="name" class="col-sm-2 col-form-label">Nama </label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" id="employee_id" name="employee_id" value="{{  $employee->id  }}" placeholder="Nomer Induk Karyawan" >
+                      <input type="hidden" class="form-control" id="employee_id" name="employee_id" value="{{  $employee->id  }}" placeholder="Nomer Induk Karyawan" >
                       <input type="text" class="form-control" value="{{  $employee->name  }}" placeholder="Nomer Induk Karyawan" >
                   </div>
                   <label for="number_of_employees" class="col-sm-2 col-form-label">NIK</label>
@@ -691,9 +691,9 @@
                 <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label">Jenis Pelangaran</label>
                   <div class="col-sm-3">
-                      <input type="text" name="last_vio" value="{{$sta_viol}}" >
-                      <input type="text" name="last_type" value="{{$type_viol}}"  >     
-                      <input type="text" name="last_accumulation" value="{{$last_accumulation}}"  >     
+                      <input type="hidden" name="last_vio" value="{{$sta_viol}}" >
+                      <input type="hidden" name="last_type" value="{{$type_viol}}"  >     
+                      <input type="hidden" name="last_accumulation" value="{{$last_accumulation}}"  >     
 
                       <input type="text" class="form-control" id="jpn1"  placeholder="Jenis Pelanggaran" >     
                   </div>

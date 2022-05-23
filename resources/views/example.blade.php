@@ -26,7 +26,19 @@
   <br>
   <br>
   <?php 
+$date_check = "2012-09-17 00:00:08";
 
+// if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $date_check))
+
+// Date "2012-09-17 00:00:08"
+if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/", $date_check))
+    {
+        // return true;
+      echo 'true';
+    }else{
+      echo 'false';
+        // return false;
+    }
 
 echo '<br>';
 $pembelian = [
@@ -100,7 +112,7 @@ $cari_pasal_akumulasi = DB::table('alphabets')
     ->where('paragraphs.type_of_verse', 'Pemutusan Hubungan Kerja')
     ->get();
 
-    echo $cari_pasal_akumulasi;
+    // echo $cari_pasal_akumulasi;
 
 
 

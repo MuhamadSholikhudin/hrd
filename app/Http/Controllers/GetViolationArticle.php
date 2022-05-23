@@ -132,6 +132,7 @@
         ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
         ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
         ->where('alphabets.id', $alphabet_id)
+        ->select('alphabets.id as id')        
         ->first();
     }
 

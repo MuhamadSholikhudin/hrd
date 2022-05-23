@@ -82,7 +82,7 @@
         </table>
       </div>
       <div class="card-footer">
-        {{-- <h3 class="card-title">Responsive Hover Table</h3> --}}
+        {{-- <h3 class="card-title">Data</h3> --}}
       
         <div class="pagination pagination-sm m-0 float-right">
           {{ $jobs->links() }}

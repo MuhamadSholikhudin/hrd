@@ -1,9 +1,4 @@
-<?php 
-$sheet->setColumnFormat(array(
-    'Y' => 'yyyy-mm-dd',
-));
 
-?>
 
 <table border="1">
     <thead>

@@ -76,8 +76,8 @@
             <td>{{ $employee->end_of_contract	}}</td>
             <td>{{ $employee->date_out	}}</td>
             <td>{{ $employee->exit_statement	}}</td>
-            <td>{{ $employee->job_id}}</td>
-            <td>{{ $employee->department_id}</td>
+            <td>{{ jabatan($employee->id)}} </td>
+            <td>{{ department($employee->id)}} </td>
             <td>{{ $employee->cell	}}</td>
             <td>{{ $employee->bagian	}}</td>
             <td>{{ $employee->kode_ptkp	}}</td>

@@ -71,6 +71,81 @@
                 <textarea  class="form-control" id="" name="alphabet_sound" placeholder="Bunyi huruf">{{ old('alphabet_sound', $alphabet->alphabet_sound) }}</textarea>                       
                 </div>
               </div>
+
+              
+              <div class="form-group row">
+                <label for="alphabet_type" class="col-sm-3 col-form-label">Pasal Akumulasi</label>
+                <div class="col-sm-9">
+                  <select class="form-control" name="alphabet_type" id="alphabet_type_edit">
+                    @if($alphabet->alphabet_type == 'yes')
+                        <option value="accumulation" selected>Ya</option>
+                        <option value="no" >Tidak</option>
+                    @else
+                        <option value="no" selected>Tidak</option>
+                        <option value="accumulation" >Ya</option>
+                    @endif
+                  </select>
+                </div>
+              </div>
+              <?php 
+                  if($alphabet->alphabet_type == 'yes'){ 
+              ?>
+                <div class="form-group row" id="check_acummulation1" >
+                  <label for="alphabet_acummulation" class="col-lg-3"></label>
+                  <div class="col-lg-9">
+                    @foreach($alphabets_accumulation as $accumulation)
+                      <div class="form-check">
+                        <input class=" chk" name="alphabet_accumulation[]" {{ alphabet_edit_accumulation($alphabet->id, $accumulation); }}    value="{{ $accumulation }}" type="checkbox" > 
+                        <label class="form-check-label">{{ $accumulation }} </label>
+                      </div>
+                    @endforeach
+                  </div>
+                </div>
+              
+                <div class="form-group row" id="check_acummulation2" style="display:none;">
+                  <label for="alphabet_acummulation" class="col-lg-3"></label>
+                  <div class="col-lg-9">
+                    @foreach($alphabets_accumulation as $accumulation)
+                      <div class="form-check">
+                        <input class=" chkdsb" name="alphabet_accumulation[]"  value="{{ $accumulation }}" type="checkbox" > 
+                        <label class="form-check-label">{{ $accumulation }} </label>
+                      </div>
+                    @endforeach
+                  </div>
+                </div>
+              <?php
+                  }else{
+                  ?>
+                <div class="form-group row" id="check_acummulation1" style="display:none;">
+                  <label for="alphabet_acummulation" class="col-lg-3"></label>
+                  <div class="col-lg-9">
+                    @foreach($alphabets_accumulation as $accumulation)
+                      <div class="form-check">
+                        <input class=" chk" name="alphabet_accumulation[]" <?php echo alphabet_edit_accumulation($alphabet->id, $accumulation); ?>    value="{{ $accumulation }}" type="checkbox"> 
+                        <label class="form-check-label">{{ $accumulation }} </label>
+                      </div>
+                    @endforeach
+                  </div>
+                </div>
+              
+                <div class="form-group row" id="check_acummulation2">
+                  <label for="alphabet_acummulation" class="col-lg-3"></label>
+                  <div class="col-lg-9">
+                    @foreach($alphabets_accumulation as $accumulation)
+                      <div class="form-check">
+                        <input class=" chkdsb" name="alphabet_accumulation[]"  value="{{ $accumulation }}" type="checkbox" disabled> 
+                        <label class="form-check-label">{{ $accumulation }} </label>
+                      </div>
+                    @endforeach
+                  </div>
+                </div>
+
+                  <?php
+                  }
+              ?>
+ 
+
+
               <div class="form-group row">
                 <label for="bank_branch" class="col-sm-3 col-form-label">Periode</label>
                 <div class="col-sm-3">
