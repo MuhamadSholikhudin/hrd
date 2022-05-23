@@ -179,8 +179,9 @@
         var id_emp = document.getElementById("id_emp").value;
         var violation_now = document.getElementById("select_violation_last").value;
         var last_type = document.getElementById("last_type").value;
+        var last_accumulation = document.getElementById("last_accumulation").value;
         // var keyword = $(this).val();
-        // alert(status_violant_last + id_emp + violation_now + last_type);
+        alert(status_violant_last + id_emp + violation_now + last_type + last_accumulation);
 
         $.ajax({
           type: "POST",
@@ -191,7 +192,8 @@
             violation_now: violation_now,
             id_emp : id_emp,
             status_violant_last : status_violant_last,
-            last_type: last_type
+            last_type: last_type,
+            last_accumulation: last_accumulation
           },
           success: function(data) {
             // alert(data);

@@ -26,6 +26,17 @@
   <br>
   <br>
   <?php 
+
+$nilai = 0.5;
+
+$xnilai = 10 * $nilai;
+if ($nilai == 0.9) {
+  echo " $xnilai Selamat, siswa !";
+}else{
+  echo "$xnilai gagal";
+}
+echo '<br>';
+
 $date_check = "2012-09-17 00:00:08";
 
 // if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $date_check))
