@@ -22,8 +22,54 @@
         <span class="sr-only">Loading...</span>
     </div>
   </div>
+<br>
+
+
+<?php
+$a = 32;
+echo "a is " . is_numeric($a) . "<br>";
+
+$b = 0;
+echo "b is " . is_numeric($b) . "<br>";
+
+$c = 32.5;
+echo "c is " . is_numeric($c) . "<br>";
+
+$d = "32s";
+echo "d is " . is_numeric($d) . "<br>";
+
+$e = true;
+echo "e is " . is_numeric($e) . "<br>";
+
+$f = null;
+echo "f is " . is_numeric($f) . "<br>";
+
+$g = 34242;
+echo "g is " . is_numeric($g) . "<br>";
+?>
+
 
   <br>
+  <?php
+$string = "apple123";
+ 
+$isThereNumber = false;
+for ($i = 0; $i < strlen($string); $i++) {
+    if ( ctype_digit($string[$i]) ) {
+        $isThereNumber = true;
+        break;
+    }
+}
+ 
+if ( $isThereNumber ) {
+    echo "\"{$string}\" has number(s).";
+} else {
+    echo "\"{$string}\" does not have number(s).";
+}
+ 
+?>
+
+
   <br>
   <?php 
 

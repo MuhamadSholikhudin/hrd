@@ -50,7 +50,7 @@
                 <?php 
                     if(strlen($violation->no_violation) == '1'){
                         $p_no_s = '00'. $violation->no_violation;
-                    }elseif(strlen($no_violation) == '2'){
+                    }elseif(strlen($violation->no_violation) == '2'){
                         $p_no_s = '0'.$violation->no_violation;
                     }   else{
                         $p_no_s = $violation->no_violation;

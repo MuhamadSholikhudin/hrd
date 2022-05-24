@@ -23,24 +23,46 @@
 <!-- Main content -->
 <section class="content">
     <div class="col-md-12">
-        
-      <div class="card mb-3">
-          <div class="card-body table-responsive p-0">
+
             @if (session()->has('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-              <strong>
-            {{ session('success') }}
-          </strong>
-          </div>
-        @else
+            <div class="card card-success">
+              <div class="card-header">
+                <h3 class="card-title">Success</h3>
 
-        @endif
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                  </button>
+                </div>
+                <!-- /.card-tools -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+              {{ session('success') }}
+              </div>
+              <!-- /.card-body -->
+            </div>
 
+            @elseif(session()->has('danger'))
+            <div class="card card-danger">
+              <div class="card-header">
+                <h3 class="card-title">Peingatan !</h3>
 
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                  </button>
+                </div>
+                <!-- /.card-tools -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+              {{ session('danger') }}
+              </div>
+              <!-- /.card-body -->
+            </div>
+            @else
 
-          
-      </div>
-    </div>
+            @endif
+
 
 
   <!-- Default box -->
@@ -192,7 +214,7 @@
         </a>
         <div class="card-tools">
             <form action="/employees" >     
-                <div class="input-group input-group-sm" style="width: 150px;">
+                <div class="input-group input-group-sm" style="width: 300px;">
                     <input type="text" name="search" value="{{ request('search') }}" class="form-control float-right" placeholder="Search">
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>

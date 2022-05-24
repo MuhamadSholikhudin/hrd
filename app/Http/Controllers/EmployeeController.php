@@ -52,11 +52,13 @@ class EmployeeController extends Controller
         // dd($rows);
         foreach($rows as $row):
             foreach($row as $x):
+                
                 if($x['number_of_employees'] == NULL){
 
                 }else{ 
 
                 //CEK number_of_employee sudah ada pada database belum       
+                    // $search_employee = DB::table('employees')->where('number_of_employees', '=', floor($x['number_of_employees']))->count();
                     $search_employee = DB::table('employees')->where('number_of_employees', '=', floor($x['number_of_employees']))->count();
                           
                     if($search_employee > 0){
@@ -72,6 +74,7 @@ class EmployeeController extends Controller
                         // $date = intval($row['date_of_birth']);
 
                         // $date = $x['date_of_birth'];
+                        // dd($date_of_birth_i = $x['date_of_birth']);
                         $date_of_birth_i = $x['date_of_birth'];
                         if($date_of_birth_i == null){
                             // $date = 'true';
@@ -81,14 +84,43 @@ class EmployeeController extends Controller
                             $date_of_birth = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['date_of_birth']);
                         }
 
+                        if($date_of_birth == 'false'){
+                            // dd($date_of_birth);
+                            return redirect('/employees')->with('danger', 'Data Karyawan Mulai dari baris '. floor($x['number_of_employees']) . ' Format Tanggal Lahir salah. Pastikan kolom date dengan performatan date yang benar !');
+                        }
+
+                        // $date_check = "2012-09-17 00:00:08";
+                        // $date_of_birth = $date_of_birth->format('Y-m-d');
+                        // $date_check = $date_of_birth;
+
+
                         $hire_date_i = $x['hire_date'];
                         if($hire_date_i == null){
                             // $date = 'true';
-                            // $hire_date = '0000-00-00';
                              $hire_date = NULL;
                         }else{
                             $hire_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['hire_date']);
                         }
+
+                        if($hire_date == 'false'){
+                            return redirect('/employees')->with('danger', 'Data Karyawan Mulai dari baris '. floor($x['number_of_employees']) . ' Format Tanggal Masuk salah. Pastikan kolom date dengan performatan date yang benar !');
+                        }
+                        // dd($x['hire_date']);
+                        // $hire_date = $hire_date->format('Y-m-d');
+                        // dd($hire_date);
+
+                       // if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $date_check))
+
+                        // Date "2012-09-17 00:00:08"
+                        // if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/", $date_check))
+                        // {
+                        //     // return true;
+                        //     $tanggal = 'true';
+                        // }else{
+                        //     $tanggal = 'false';
+                        //     // return false;
+                        // }
+                        // dd($tanggal);
 
                         $end_of_contract_i = $x['end_of_contract'];
                         if($end_of_contract_i == null){
@@ -97,6 +129,10 @@ class EmployeeController extends Controller
                             $end_of_contract = NULL;
                         }else{
                             $end_of_contract = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['end_of_contract']);
+                        }
+
+                        if($end_of_contract == 'false'){
+                            return redirect('/employees')->with('danger', 'Data Karyawan Mulai dari baris '. floor($x['number_of_employees']) . ' Format Tanggal Selesai Kontrak salah. Pastikan kolom date dengan performatan date yang benar !');
                         }
 
                         $date_out_i = $x['date_out'];
@@ -110,7 +146,12 @@ class EmployeeController extends Controller
                         }else{
                             $date_out = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['date_out']);
                         }
-// dd($date_out);
+
+                        if($date_out == 'false'){
+                            return redirect('/employees')->with('danger', 'Data Karyawan Mulai dari baris '. floor($x['number_of_employees']) . ' Format Tanggal date_out salah. Pastikan kolom date dengan performatan date yang benar !');
+                        }
+                        
+                        // dd($date_out);
                         $status_employee_i = $x['exit_statement'];
                         if($status_employee_i == null OR $x['date_out'] == null){
                             // $date = 'true';
@@ -121,17 +162,8 @@ class EmployeeController extends Controller
                             $status_employee = 'notactive';
                         }
 
-// $date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['date_of_birth']);
-// dd($date_of_birth);
-
-                        // if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",$date)) {
-                        // if (DateTime::createFromFormat('Y-m-d G:i:s', $date) !== FALSE) {
-                        //     $ty = 'true';
-                        // } else {
-                        //     $ty = 'false';
-                        // }
-                        // dd($ty);
-
+                        // $date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['date_of_birth']);
+                        // dd($date_of_birth);
 
                         // CEK hire_date
                         // $hire_date_t = strtotime($x['hire_date']);             
@@ -168,10 +200,10 @@ class EmployeeController extends Controller
                             $job_id = 21;
                         }
 
-                // if($department_get == )
-                // $job_get = DB::table('jobs')->where('jobs', '=', $x['job'])->first();
+                        // if($department_get == )
+                        // $job_get = DB::table('jobs')->where('jobs', '=', $x['job'])->first();
                 
-                
+                /*
                         DB::table('employees')->insert([
                             'number_of_employees' => floor($x['number_of_employees']),
                             'name'=> $x['name'],
@@ -243,12 +275,14 @@ class EmployeeController extends Controller
                             'job_id'=> $job_id,
                             'department_id'=> $department_id,
                             'employee_id'=> $employee_get->id
-                            ]);
+                        ]);
+                    */
+
                     }
                 }
             endforeach;
         endforeach;
-        return redirect('/employees');
+        return redirect('/employees')->with('success', 'Data Karyawan Berhasil di import Semua');
     }
 
     public function update() {

@@ -197,14 +197,21 @@ class HiViolationController extends Controller
                     $signature = DB::table('signatures')->where('status_signature', 'active')->first();
                     
                     $signature_id = $signature->id;
-            
                     
                     $other_information = $x['other_information'];
                     // $date_of_violation = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['date_of_violation']);
                     // $reporting_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['reporting_date']);
+
                     $date_of_violation = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['date_of_violation']);
+                    if($date_of_violation == 'false'){
+                        return redirect('/hiviolations')->with('danger', 'Data Karyawan Mulai dari baris '. floor($x['number_of_employees']) . ' Format Tanggal date_of_violation salah. Pastikan kolom date dengan performatan date yang benar !');
+                    }
+
                     $reporting_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['reporting_date']);
-                    
+                    if($date_of_violation == 'false'){
+                        return redirect('/hiviolations')->with('danger', 'Data Karyawan Mulai dari baris '. floor($x['number_of_employees']) . ' Format Tanggal reporting_date salah. Pastikan kolom date dengan performatan date yang benar !');
+                    }
+
                     $datev = new $date_of_violation;
                     $dater = new $reporting_date;
                     $resultv = $datev->format('Y-m-d');
@@ -524,7 +531,7 @@ class HiViolationController extends Controller
                         }   
                     }
                     
-
+                /*
                     // Violation::create([
                     $data = [
                         'date_of_violation' => $date_of_violation,     
@@ -557,10 +564,11 @@ class HiViolationController extends Controller
                     ];
                     // dd($data);
                     DB::table('violations')->insert($data);
-
+                */
                     $jumlahTotal += 1;
                 }
             }
+        
             endforeach;
 
             $remark = "upload pelanggaran SP jumlah ".$jumlahTotal;
@@ -575,8 +583,8 @@ class HiViolationController extends Controller
                 'updated_at' => date('Y-m-d H:i:s')
             ]);
 
+        
         endforeach;
-
         return redirect('/hiviolations');
 
     }

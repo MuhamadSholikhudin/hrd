@@ -28,6 +28,7 @@ class EmployeesImport implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         ini_set('max_execution_time', 7200);
+    /*
         foreach ($rows as $row) 
         {
 
@@ -188,5 +189,7 @@ class EmployeesImport implements ToCollection, WithHeadingRow
             // ]);
         }
   
+    */
+
     }
 }

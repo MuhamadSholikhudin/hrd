@@ -56,10 +56,10 @@
 
 
     //Surat Peringatan Kedua
-    elseif($last_type == 'Peringatan Lisan' AND $last_accumulation >= 0.5 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
+    elseif($last_type == 'Peringatan Lisan' AND $last_accumulation == 0.5 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
         $status_type_violation = 'Surat Peringatan Kedua';
         $accumulation = 4;            
-        $select_status_type_violation = 'Surat Peringatan Pertama';                                                                                                                                     
+        $select_status_type_violation = 'Peringatan Lisan';                                                                                                                                     
     }
     elseif($last_type == 'Surat Peringatan Pertama' AND $last_accumulation >= 1 AND $sel_paragraph->type_of_verse == 'Surat Peringatan Kedua'){
         $status_type_violation = 'Surat Peringatan Ketiga';
@@ -118,14 +118,19 @@
         
         if($sel_paragraph->type_of_verse == "Peringatan Lisan"){
             $accumulation = 0.5;                                                                                                                
+            $select_status_type_violation = $sel_paragraph->type_of_verse;                                                                                                                        
         }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Pertama"){
             $accumulation = 1;                                                                                                                                                
+            $select_status_type_violation = $sel_paragraph->type_of_verse;                                                                                                                        
         }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Kedua"){
             $accumulation = 2;                                                                                                                                                
+            $select_status_type_violation = $sel_paragraph->type_of_verse;                                                                                                                        
         }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Ketiga"){
-            $accumulation = 3;                                                                                                                                                
+            $accumulation = 3;                
+            $select_status_type_violation = $sel_paragraph->type_of_verse;                                                                                                                                                                                                                                                        
         }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Terakhir"){
-            $accumulation = 4;                                                                                                                                                
+            $accumulation = 4;     
+            $select_status_type_violation = $sel_paragraph->type_of_verse;                                                                                                                                                                                                                                                                   
         }
     }
 

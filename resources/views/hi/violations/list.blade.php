@@ -24,20 +24,44 @@
 <section class="content">
     <div class="col-md-12">
         
-      <div class="card mb-3">
-          <div class="card-body table-responsive p-0">
-            @if (session()->has('success'))
-              <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>
-                    {{ session('success') }}
-                </strong>
-              </div>
-            @else
+      @if (session()->has('success'))
+      <div class="card card-success">
+        <div class="card-header">
+          <h3 class="card-title">Success</h3>
 
-            @endif
-
-          
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+            </button>
+          </div>
+          <!-- /.card-tools -->
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+        {{ session('success') }}
+        </div>
+        <!-- /.card-body -->
       </div>
+
+      @elseif(session()->has('danger'))
+      <div class="card card-danger">
+        <div class="card-header">
+          <h3 class="card-title">Peingatan !</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+            </button>
+          </div>
+          <!-- /.card-tools -->
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+        {{ session('danger') }}
+        </div>
+        <!-- /.card-body -->
+      </div>
+      @else
+
+      @endif
     </div>
 
 
