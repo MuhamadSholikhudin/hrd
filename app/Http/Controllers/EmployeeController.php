@@ -41,15 +41,16 @@ class EmployeeController extends Controller
     */
     public function import() 
     {
-        // Excel::import(new EmployeesImport, request()->file('file'));
+        Excel::import(new EmployeesImport, request()->file('file'));
+        
         // $path = $request->file('file_name')->getRealPath();
         // $data = Excel::load($path, function($reader) {})->get();
             // ini_set('max_execution_time', 7200);
         // $data = Excel::import(new EmployeesImport, request()->file('file'));
 
-
+/*
         $rows =  Excel::toArray(new EmployeesImport, request()->file('file'));
-        // dd($rows);
+        
         foreach($rows as $row):
             foreach($row as $x):
                 
@@ -277,11 +278,14 @@ class EmployeeController extends Controller
                             'employee_id'=> $employee_get->id
                         ]);
                     */
+                    /*
 
                     }
                 }
             endforeach;
         endforeach;
+
+*/
         return redirect('/employees')->with('success', 'Data Karyawan Berhasil di import Semua');
     }
 

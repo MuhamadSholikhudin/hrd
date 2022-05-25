@@ -424,17 +424,13 @@ function an_hrd($signature_id){
 }
 
 
-
-
 //ROLE ACCESS
-
 function role(){
   
 }
 
 
 // ALPHABETS EDIT AKUMLASI
-
 function alphabet_edit_accumulation($alphabet_id, $type){
 
   $sel_type_accumulation  = DB::table('alphabets')

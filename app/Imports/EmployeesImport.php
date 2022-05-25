@@ -12,19 +12,71 @@ use App\Models\Employee;
 use App\Models\Salary;
 use App\Models\Startwork;
 
+use Maatwebsite\Excel\Concerns\WithChunkReading;
+
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Hash;
 
-// class EmployeesImport implements ToModel, WithHeadingRow
-class EmployeesImport implements ToCollection, WithHeadingRow
+/*
+class EmployeesImport implements ToModel, WithHeadingRow
 {
-    /**
+        /*
     * @param array $row
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-    // public function model(array $row)
+    /*
+    public function model(array $row)
+    {
+        ini_set('max_execution_time', 7200);
+        // return new User([
+        //     'name'  => $row['name'],
+        //     'email' => $row['email'],
+        //     'at'    => $row['at_field'],
+        // ]);
+        /*
+    }
+}
+
+*/
+
+
+class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading
+{
+    /**
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function collection(Collection $rows)
+    {
+        foreach ($rows as $index => $row) {
+            // Siswa::create([
+            //     'nama' => $row['nama'],
+            //     'no_hp' => $row['no_hp'],
+            //     'email' => $row['email'],
+            //     'alamat' => $row['alamat'],
+            // ]);
+        }
+    }
+    public function chunkSize(): int
+    {
+        return 3;
+    }
+}
+
+
+
+
+
+
+
+
+/*
+
+class EmployeesImport implements ToCollection, WithHeadingRow
+{
     public function collection(Collection $rows)
     {
         ini_set('max_execution_time', 7200);
@@ -191,5 +243,8 @@ class EmployeesImport implements ToCollection, WithHeadingRow
   
     */
 
+/*
     }
 }
+
+*/

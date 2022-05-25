@@ -142,10 +142,13 @@ class UserController extends Controller
     */
     public function import() 
     {
-        // Excel::import(UsersImport, request()->file('file'));
-        $rows =  Excel::toArray(new UsersImport, request()->file('file'));
+        Excel::import(UsersImport, request()->file('file'));
+
+        /*
+        // $rows =  Excel::toArray(new UsersImport, request()->file('file'));
         
         // dd($rows);
+        
         foreach($rows as $row):
             foreach($row as $x):
                 DB::table('users')->insert([
@@ -170,7 +173,9 @@ class UserController extends Controller
             endforeach;
         endforeach;
 
+        */
         return back();
         redirect('/users');
+
     }
 }

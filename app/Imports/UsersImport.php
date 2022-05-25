@@ -22,9 +22,10 @@ class UsersImport implements ToModel, WithHeadingRow
     //         //
     //     ]);
     // }
+
     public function model(array $row)
     {
-        
+
         return new User([
             'name'     => $row['name'],
             'email'    => $row['email'], 
