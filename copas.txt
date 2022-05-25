@@ -218,3 +218,209 @@
 
         return redirect('/violations/' . $employee_id . '/edit');
     }
+
+
+	
+Edit Edit
+Copy Copy
+Delete Delete
+13
+36
+7
+true
+false
+true
+2022-05-15 13:51:07
+2022-05-15 13:51:07
+	
+Edit Edit
+Copy Copy
+Delete Delete
+14
+36
+8
+true
+false
+true
+2022-05-15 13:51:07
+2022-05-15 13:51:07
+	
+Edit Edit
+Copy Copy
+Delete Delete
+15
+36
+9
+true
+false
+true
+2022-05-15 13:51:07
+2022-05-15 13:51:07
+	
+Edit Edit
+Copy Copy
+Delete Delete
+16
+36
+10
+true
+false
+true
+2022-05-15 13:51:07
+2022-05-15 13:51:07
+	
+Edit Edit
+Copy Copy
+Delete Delete
+17
+37
+11
+true
+false
+true
+2022-05-15 14:37:35
+2022-05-15 14:37:35
+	
+Edit Edit
+Copy Copy
+Delete Delete
+18
+37
+12
+true
+false
+true
+2022-05-15 14:37:35
+2022-05-15 14:37:35
+	
+Edit Edit
+Copy Copy
+Delete Delete
+19
+37
+13
+true
+false
+true
+2022-05-15 14:37:35
+2022-05-15 14:37:35
+	
+Edit Edit
+Copy Copy
+Delete Delete
+20
+37
+14
+true
+false
+true
+2022-05-15 14:37:35
+2022-05-15 14:37:35
+	
+Edit Edit
+Copy Copy
+Delete Delete
+21
+37
+15
+true
+false
+true
+2022-05-15 14:37:35
+2022-05-15 14:37:35
+	
+Edit Edit
+Copy Copy
+Delete Delete
+22
+37
+16
+true
+false
+true
+2022-05-15 14:37:35
+2022-05-15 14:37:35
+	
+Edit Edit
+Copy Copy
+Delete Delete
+23
+37
+17
+true
+false
+true
+2022-05-15 14:37:35
+2022-05-15 14:37:35
+	
+Edit Edit
+Copy Copy
+Delete Delete
+24
+38
+1
+true
+false
+true
+2022-05-15 22:41:04
+2022-05-15 22:42:43
+	
+Edit Edit
+Copy Copy
+Delete Delete
+25
+38
+2
+true
+false
+true
+2022-05-15 22:41:04
+2022-05-15 22:41:04
+	
+Edit Edit
+Copy Copy
+Delete Delete
+26
+38
+3
+true
+false
+true
+2022-05-15 22:41:04
+2022-05-15 22:41:04
+	
+Edit Edit
+Copy Copy
+Delete Delete
+27
+38
+4
+true
+false
+true
+2022-05-15 22:41:04
+2022-05-15 22:41:04
+	
+Edit Edit
+Copy Copy
+Delete Delete
+28
+38
+5
+true
+false
+true
+2022-05-15 22:41:04
+2022-05-15 22:41:04
+	
+Edit Edit
+Copy Copy
+Delete Delete
+29
+38
+6
+true
+false
+true
+2022-05-15 22:41:04
+2022-05-15 22:41:04

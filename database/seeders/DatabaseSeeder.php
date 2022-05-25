@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             "password" => bcrypt("admin"),
             "role_id" => 1,
             "is_active" => 1,
-            ]);
+        ]);
 
 /*
         Department::create([ "department" => "ACCOUNTING"]);
@@ -175,6 +175,55 @@ class DatabaseSeeder extends Seeder
         Job::create(["code_job_level" => "OP", "job_level" => "OPERATOR", "level" => "12"]);
         Job::create(["code_job_level" => "HLP", "job_level" => "HELPER", "level" => "12"]);
         Job::create(["code_job_level" => "NO", "job_level" => "NONE", "level" => "13"]);
+
+        Menu::create(["menu" => "Dashboard"]);
+        Menu::create(["menu" => "Datamaster"]);
+        Menu::create(["menu" => "HI"]);
+        Menu::create(["menu" => "Management Akses"]);
+      
+        Sub_Menu::create(["menu_id" => 1, title => "Dashboard", url => "/dashboard", "icon" => "fas fa-circle", "is_active" => 1]);
+
+        Sub_Menu::create(["menu_id" => 2, title => "Karyawan", url => "/employees", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_Menu::create(["menu_id" => 2, title => "Promosi", url => "/promotions", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_Menu::create(["menu_id" => 2, title => "Demosi", url => "/demotions", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_Menu::create(["menu_id" => 2, title => "Mutasi", url => "/mutations", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_Menu::create(["menu_id" => 2, title => "Mutasi", url => "/mutations", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_Menu::create(["menu_id" => 2, title => "Job Level", url => "/jobs", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_Menu::create(["menu_id" => 2, title => "Departement", url => "/departments", "icon" => "fas fa-circle", "is_active" => 1]);
+
+        Sub_Menu::create(["menu_id" => 1, title => "Departement", url => "/departments", "icon" => "fas fa-circle", "is_active" => 1]);
+
+        Sub_Menu::create(["menu_id" => 4, title => "Users", url => "/users", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_Menu::create(["menu_id" => 4, title => "Roles", url => "/roles", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_Menu::create(["menu_id" => 4, title => "Menu", url => "/menus", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_Menu::create(["menu_id" => 4, title => "Sub Menu", url => "/sub_menus", "icon" => "fas fa-circle", "is_active" => 1]);
+
+        Sub_Menu::create(["menu_id" => 3, title => "Master Pelanggaran", url => "/hiviolations", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_Menu::create(["menu_id" => 3, title => "Pelanggaran Karyawan", url => "/violations", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_Menu::create(["menu_id" => 3, title => "PHK", url => "/layoffs", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_Menu::create(["menu_id" => 3, title => "Manager HRD", url => "/signatures", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_Menu::create(["menu_id" => 3, title => "Pasal PKB", url => "/articles", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_Menu::create(["menu_id" => 3, title => "Ayat PKB", url => "/paragraphs", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_Menu::create(["menu_id" => 3, title => "Huruf PKB", url => "/alphabets", "icon" => "fas fa-circle", "is_active" => 1]);
+ 
+        Role::create(["role" => "Super Admin"]);
+        Role::create(["role" => "Admin"]);
+        Role::create(["role" => "HI"]);
+        Role::create(["role" => "Payroll"]);
+        Role::create(["role" => "Recruitment"]);
+        Role::create(["role" => "Training"]);
+
+        Access_Menu::create(["role_id" => 1, "menu_id" => 1]);
+        Access_Menu::create(["role_id" => 1, "menu_id" => 2]);
+        Access_Menu::create(["role_id" => 1, "menu_id" => 3]);
+        Access_Menu::create(["role_id" => 1, "menu_id" => 4]);
+
+
+
+        Method::create(["access_menu_id" => 1, "sub_menu_id" => 4, "edit" => "true", "delete" => "true", "view" => "true"]);
+
+           
+
 */
 
     }
