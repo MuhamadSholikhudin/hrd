@@ -1128,8 +1128,9 @@ if (file_exists(IMAGE_FOLDER . '/img1.png')) {
             ->where('exit_statement', null)
             ->where('hire_date', '>=', $countdown_date2)
             ->where('hire_date', '<=', $countdown_date1)
+            ->where('employee_type', 'Probation')
             ->update([
-                'employee_type' => '1-Permanent'
+                'employee_type' => 'Permanent'
             ]);
 
 

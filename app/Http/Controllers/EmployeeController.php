@@ -47,8 +47,8 @@ class EmployeeController extends Controller
         // $data = Excel::load($path, function($reader) {})->get();
             // ini_set('max_execution_time', 7200);
         // $data = Excel::import(new EmployeesImport, request()->file('file'));
-
 /*
+
         $rows =  Excel::toArray(new EmployeesImport, request()->file('file'));
         
         foreach($rows as $row):
@@ -204,7 +204,7 @@ class EmployeeController extends Controller
                         // if($department_get == )
                         // $job_get = DB::table('jobs')->where('jobs', '=', $x['job'])->first();
                 
-                /*
+                
                         DB::table('employees')->insert([
                             'number_of_employees' => floor($x['number_of_employees']),
                             'name'=> $x['name'],
@@ -257,11 +257,11 @@ class EmployeeController extends Controller
                             
                         DB::table('salaries')->insert([
                             'employee_id' => $employee_get->id,
-                            'basic_salary' => $x['basic_salary'],
-                            'positional_allowance' => $x['positional_allowance'],
-                            'transportation_allowance' => $x['transportation_allowance'],
-                            'attendance_allowance' => $x['attendance_allowance'],
-                            'grade_salary' => $x['grade_salary'],
+                            'basic_salary' => 0,
+                            'positional_allowance' => 0,
+                            'transportation_allowance' => 0,
+                            'attendance_allowance' => 0,
+                            'grade_salary' => 0,
                             'created_at' => date('Y-m-d H:i:s'),
                             'updated_at' => date('Y-m-d H:i:s'),
                             'total_salary' => 0
@@ -277,8 +277,7 @@ class EmployeeController extends Controller
                             'department_id'=> $department_id,
                             'employee_id'=> $employee_get->id
                         ]);
-                    */
-                    /*
+                    
 
                     }
                 }
@@ -286,6 +285,7 @@ class EmployeeController extends Controller
         endforeach;
 
 */
+
         return redirect('/employees')->with('success', 'Data Karyawan Berhasil di import Semua');
     }
 
@@ -373,10 +373,6 @@ class EmployeeController extends Controller
         endforeach;
 
         return redirect('/datamaster/promotions');
-            
-    }
 
-
-        
-
+    }       
 }

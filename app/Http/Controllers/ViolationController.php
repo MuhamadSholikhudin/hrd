@@ -303,19 +303,6 @@ class ViolationController extends Controller
         $employee = DB::table('employees')->where('id', $id)
                     ->first();
 
-        $date_now = date('Y-m-d');
-        $cari_status_violation = DB::table('violations')
-            ->where('date_end_violation', '<', $date_now)
-            ->get(); 
-
-        foreach($cari_status_violation as $sta_vio):
-            DB::table('violations')
-                ->where('id',  $sta_vio->id)
-                ->update([
-                    'violation_status' => 'notactive'
-                 ]);
-        endforeach;
-
         $alphabet =DB::table('alphabets')
             // ->where('employee_id', $id)
             ->get();

@@ -13,10 +13,10 @@ class Method extends Model
 
     public function sub_menus()
     {
-        return $this->belongsTo(Sub_Menu::class);
+        return $this->belongsTo(Sub_menu::class);
     }
     public function access_menus()
     {
-        return $this->belongsTo(Access_Menu::class);
+        return $this->belongsTo(Access_menu::class);
     }
 }

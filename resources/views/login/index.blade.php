@@ -48,8 +48,11 @@
     @endif
 
       <div class="login-box-msg">
-
+      <a href="/login">
         <img src="{{ asset('img/HR System.png') }}" onclick="myFunction()" alt="" srcset="" width="150px"> 
+      
+      </a>
+
 
       </div>
 

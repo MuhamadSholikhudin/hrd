@@ -75,7 +75,7 @@ class DatamasterEmployeeController extends Controller
         $marital_status = ["M", "S"];
         $gender = ["M", "F"];
         $educations = ["SD","SMP", "SMA", "S1","S2"];
-        $employee_type = ["1-Permanent","5-Probation"];
+        $employee_type = ["Permanent","Probation", "Contract"];
         $kode_ptkp = ["TK","K/0", "K/1", "K/2"];
         $grade_salary = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
         //
@@ -216,7 +216,7 @@ class DatamasterEmployeeController extends Controller
         $marital_status = ["M", "S"];
         $gender = ["M", "F"];
         $educations = ["SD","SMP", "SMA", "S1","S2"];
-        $employee_type = ["1-Permanent","5-Probation"];
+        $employee_type = ["Permanent","Probation", "Contract"];
         $kode_ptkp = ["TK","K/0", "K/1", "K/2"];
         $grade_salary = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
         $status_employee = ['active', 'not active'];

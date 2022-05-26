@@ -22,10 +22,20 @@
         <span class="sr-only">Loading...</span>
     </div>
   </div>
+
+
+
+
 <br>
 
 
 <?php
+
+
+
+
+  echo  "<br>";
+
 $a = 32;
 echo "a is " . is_numeric($a) . "<br>";
 

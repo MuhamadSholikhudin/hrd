@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Sub_Menu extends Model
+class Sub_menu extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
@@ -18,7 +18,7 @@ class Sub_Menu extends Model
 
     public function methods()
     {
-        return $this->hasMany(Sub_Menu::class);
+        return $this->hasMany(Sub_menu::class);
     }
 
 }

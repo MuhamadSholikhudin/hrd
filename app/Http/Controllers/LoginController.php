@@ -15,7 +15,6 @@ class LoginController extends Controller
     //
 
     public function index(){
-
         Auth::logout();
         return view('login.index'
         
@@ -44,8 +43,38 @@ class LoginController extends Controller
  
         if (Auth::attempt(['name' => $request->name, 'password' => $request->password, 'is_active' => 1])) {
             // Authentication was successful...
+
+            $tanggal_hari_ini = date('Y-m-d');// pendefinisian tanggal awal
+
+            $countdown_date1 = date('Y-m-d', strtotime('-93 days', strtotime($tanggal_hari_ini))); //operasi penjumlahan tanggal sebanyak 6 hari
+          
+            $countdown_date2 = date('Y-m-d', strtotime('-120 days', strtotime($tanggal_hari_ini))); //operasi penjumlahan tanggal sebanyak 6 hari
+   
+            $cari_status_violation = DB::table('violations')
+            ->where('date_end_violation', '<', $tanggal_hari_ini)
+            ->get(); 
+
+            foreach($cari_status_violation as $sta_vio):
+                DB::table('violations')
+                    ->where('id',  $sta_vio->id)
+                    ->update([
+                        'violation_status' => 'notactive'
+                    ]);
+            endforeach;
+
+           //tampilkan data hire_date
+           DB::table('employees')
+               ->where('date_out', null)
+               ->where('exit_statement', null)
+               ->where('hire_date', '>=', $countdown_date2)
+               ->where('hire_date', '<=', $countdown_date1)
+               ->where('employee_type', 'Probation')
+               ->update([
+                   'employee_type' => 'Permanent'
+           ]);
+
             $request->session()->regenerate();
-            return redirect()->intended('dashboards ');
+            return redirect()->intended('dashboards');
             
         }
 

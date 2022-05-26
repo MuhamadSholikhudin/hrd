@@ -9,6 +9,11 @@ use App\Models\Department;
 use App\Models\Job;
 use App\Models\User;
 use App\Models\Investigation;
+use App\Models\Menu;
+use App\Models\Sub_menu;
+use App\Models\Role;
+use App\Models\Access_menu;
+use App\Models\Method;
 
 class DatabaseSeeder extends Seeder
 {
@@ -32,7 +37,7 @@ class DatabaseSeeder extends Seeder
             "is_active" => 1,
         ]);
 
-/*
+
         Department::create([ "department" => "ACCOUNTING"]);
         Department::create([ "department" => "ASSEMBLY"]);
         Department::create([ "department" => "ASSEMBLY-A"]);
@@ -181,30 +186,27 @@ class DatabaseSeeder extends Seeder
         Menu::create(["menu" => "HI"]);
         Menu::create(["menu" => "Management Akses"]);
       
-        Sub_Menu::create(["menu_id" => 1, title => "Dashboard", url => "/dashboard", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_menu::create(["menu_id" => 1, "title" => "Dashboard", "url" => "/dashboards", "icon" => "fas fa-circle", "is_active" => 1]);
 
-        Sub_Menu::create(["menu_id" => 2, title => "Karyawan", url => "/employees", "icon" => "fas fa-circle", "is_active" => 1]);
-        Sub_Menu::create(["menu_id" => 2, title => "Promosi", url => "/promotions", "icon" => "fas fa-circle", "is_active" => 1]);
-        Sub_Menu::create(["menu_id" => 2, title => "Demosi", url => "/demotions", "icon" => "fas fa-circle", "is_active" => 1]);
-        Sub_Menu::create(["menu_id" => 2, title => "Mutasi", url => "/mutations", "icon" => "fas fa-circle", "is_active" => 1]);
-        Sub_Menu::create(["menu_id" => 2, title => "Mutasi", url => "/mutations", "icon" => "fas fa-circle", "is_active" => 1]);
-        Sub_Menu::create(["menu_id" => 2, title => "Job Level", url => "/jobs", "icon" => "fas fa-circle", "is_active" => 1]);
-        Sub_Menu::create(["menu_id" => 2, title => "Departement", url => "/departments", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_menu::create(["menu_id" => 2, "title" => "Karyawan", "url" => "/employees", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_menu::create(["menu_id" => 2, "title" => "Promosi", "url" => "/promotions", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_menu::create(["menu_id" => 2, "title" => "Demosi", "url" => "/demotions", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_menu::create(["menu_id" => 2, "title" => "Mutasi", "url" => "/mutations", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_menu::create(["menu_id" => 2, "title" => "Job Level", "url" => "/jobs", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_menu::create(["menu_id" => 2, "title" => "Departement", "url" => "/departments", "icon" => "fas fa-circle", "is_active" => 1]);
 
-        Sub_Menu::create(["menu_id" => 1, title => "Departement", url => "/departments", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_menu::create(["menu_id" => 4, "title" => "Users", "url" => "/users", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_menu::create(["menu_id" => 4, "title" => "Roles", "url" => "/roles", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_menu::create(["menu_id" => 4, "title" => "Menu", "url" => "/menus", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_menu::create(["menu_id" => 4, "title" => "Sub Menu", "url" => "/sub_menus", "icon" => "fas fa-circle", "is_active" => 1]);
 
-        Sub_Menu::create(["menu_id" => 4, title => "Users", url => "/users", "icon" => "fas fa-circle", "is_active" => 1]);
-        Sub_Menu::create(["menu_id" => 4, title => "Roles", url => "/roles", "icon" => "fas fa-circle", "is_active" => 1]);
-        Sub_Menu::create(["menu_id" => 4, title => "Menu", url => "/menus", "icon" => "fas fa-circle", "is_active" => 1]);
-        Sub_Menu::create(["menu_id" => 4, title => "Sub Menu", url => "/sub_menus", "icon" => "fas fa-circle", "is_active" => 1]);
-
-        Sub_Menu::create(["menu_id" => 3, title => "Master Pelanggaran", url => "/hiviolations", "icon" => "fas fa-circle", "is_active" => 1]);
-        Sub_Menu::create(["menu_id" => 3, title => "Pelanggaran Karyawan", url => "/violations", "icon" => "fas fa-circle", "is_active" => 1]);
-        Sub_Menu::create(["menu_id" => 3, title => "PHK", url => "/layoffs", "icon" => "fas fa-circle", "is_active" => 1]);
-        Sub_Menu::create(["menu_id" => 3, title => "Manager HRD", url => "/signatures", "icon" => "fas fa-circle", "is_active" => 1]);
-        Sub_Menu::create(["menu_id" => 3, title => "Pasal PKB", url => "/articles", "icon" => "fas fa-circle", "is_active" => 1]);
-        Sub_Menu::create(["menu_id" => 3, title => "Ayat PKB", url => "/paragraphs", "icon" => "fas fa-circle", "is_active" => 1]);
-        Sub_Menu::create(["menu_id" => 3, title => "Huruf PKB", url => "/alphabets", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_menu::create(["menu_id" => 3, "title" => "Master Pelanggaran", "url" => "/hiviolations", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_menu::create(["menu_id" => 3, "title" => "Pelanggaran Karyawan", "url" => "/violations", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_menu::create(["menu_id" => 3, "title" => "PHK", "url" => "/layoffs", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_menu::create(["menu_id" => 3, "title" => "Manager HRD", "url" => "/signatures", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_menu::create(["menu_id" => 3, "title" => "Pasal PKB", "url" => "/articles", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_menu::create(["menu_id" => 3, "title" => "Ayat PKB", "url" => "/paragraphs", "icon" => "fas fa-circle", "is_active" => 1]);
+        Sub_menu::create(["menu_id" => 3, "title" => "Huruf PKB", "url" => "/alphabets", "icon" => "fas fa-circle", "is_active" => 1]);
  
         Role::create(["role" => "Super Admin"]);
         Role::create(["role" => "Admin"]);
@@ -213,18 +215,22 @@ class DatabaseSeeder extends Seeder
         Role::create(["role" => "Recruitment"]);
         Role::create(["role" => "Training"]);
 
-        Access_Menu::create(["role_id" => 1, "menu_id" => 1]);
-        Access_Menu::create(["role_id" => 1, "menu_id" => 2]);
-        Access_Menu::create(["role_id" => 1, "menu_id" => 3]);
-        Access_Menu::create(["role_id" => 1, "menu_id" => 4]);
+        Access_menu::create(["role_id" => 1, "menu_id" => 1]);
+        // Access_menu::create(["role_id" => 1, "menu_id" => 2]);
+        // Access_menu::create(["role_id" => 1, "menu_id" => 3]);
+        Access_menu::create(["role_id" => 1, "menu_id" => 4]);
 
 
-
-        Method::create(["access_menu_id" => 1, "sub_menu_id" => 4, "edit" => "true", "delete" => "true", "view" => "true"]);
+        Method::create(["access_menu_id" => 1, "sub_menu_id" => 1, "edit" => "true", "delete" => "true", "view" => "true"]);
+        
+        Method::create(["access_menu_id" => 2, "sub_menu_id" => 8, "edit" => "true", "delete" => "true", "view" => "true"]);
+        Method::create(["access_menu_id" => 2, "sub_menu_id" => 9, "edit" => "true", "delete" => "true", "view" => "true"]);
+        Method::create(["access_menu_id" => 2, "sub_menu_id" => 10, "edit" => "true", "delete" => "true", "view" => "true"]);
+        Method::create(["access_menu_id" => 2, "sub_menu_id" => 11, "edit" => "true", "delete" => "true", "view" => "true"]);
 
            
 
-*/
+
 
     }
 }
