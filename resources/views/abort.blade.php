@@ -13,27 +13,20 @@
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
 
   <style>
-  #tengah {
-    padding-top: 20%;
-    list-style-type: none;
-    font-size: 20px;
-    margin: 0 auto;
-}
-
-return view('abort');
-  
+    #tengah {
+        padding-top: 20%;
+        list-style-type: none;
+        font-size: 20px;
+        margin: 0 auto;
+    }
   </style>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="container">
 
-
-
   <!-- Content Wrapper. Contains page content -->
   <div class="container">
     <!-- Content Header (Page header) -->
-
-
 
     <!-- Main content -->
     <section class="content" id="tengah">

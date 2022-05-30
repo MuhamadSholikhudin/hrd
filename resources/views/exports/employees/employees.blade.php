@@ -49,7 +49,7 @@
             <td>{{ $employee->number_of_employees}}</td>
             <td>{{ $employee->name}}</td>
             <td>{{ $employee->gender}}</td>
-            <td>{{ $employee->place_of_birth	}}</td>
+            <td>{{ $employee->place_of_birth }}</td>
             <td>{{ $employee->date_of_birth	}}</td>
             <td>{{ $employee->marital_status	}}</td>
             <td>{{ $employee->religion	}}</td>
