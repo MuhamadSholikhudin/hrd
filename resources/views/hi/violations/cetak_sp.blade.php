@@ -131,6 +131,8 @@
               
                     <br>
                     <div class="col-sm-12 lead"><b>Keterangan lain :</b></div>
+
+
                     @if($violation->alphabet_accumulation != null)
                             
                         <!-- DELIK SEKARANG -->
@@ -168,25 +170,29 @@
                                     <td valign="top" class="lead" style="text-align: justify;">Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal 
                                     
                                         <?php 
-                                            /* 
-                                                pasal($alphabet_id)
-
+                                        
                                                 // Jika pelanggaran sebelumnya akumulasi => pasal_akumulasi, 
                                                 if($violation->violation_accumulation3 !== NULL){
+                                                    $pelanggran_lalu2 = DB::table('violations')->find($violation->violation_accumulation2);
+                                                    ?> 
+                                                     {{ pasal($violation->alphabet_accumulation);}} Perjanjian Kerja Bersama Pasal 
+                                                    {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", {{$pelanggran_lalu->other_information}} {{$pelanggran_lalu2->other_information}} </td>                                                    
+                                                <?php 
+                                                }elseif($violation->violation_accumulation2 !== NULL){
 
-                                                }
-                                                elseif($violation->violation_accumulation2 !== NULL){
-
-                                                }
-                                                elseif($violation->violation_accumulation1 !== NULL){
-
+                                                    $pelanggran_lalu2 = DB::table('violations')->find($violation->violation_accumulation2);
+                                                    ?> 
+                                                     {{ pasal($violation->alphabet_accumulation);}} Perjanjian Kerja Bersama Pasal 
+                                                    {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", {{$pelanggran_lalu->other_information}} {{$pelanggran_lalu2->other_information}} </td>                                                    
+                                                <?php 
+                                                }elseif($violation->violation_accumulation !== NULL){  ?>
+                                                    {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", {{$pelanggran_lalu->other_information}}</td>                                                    
+                                                <?php 
                                                 }else{
-
+                                                    
                                                 }
 
-                                            */
                                         ?>
-                                     {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", {{$pelanggran_lalu->other_information}}</td>
                                 </tr>
                             </tbody>
                         </table>

@@ -158,7 +158,7 @@
             ->first();
     }
         $pelanggran_sebelumnya = DB::table('violations')
-            ->where('employee_id',  $emp_id) 
+            ->where('employee_id',  $employee_id) 
             ->latest()                       
             ->first();
 

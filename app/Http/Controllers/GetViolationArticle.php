@@ -174,4 +174,5 @@
         ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
         ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
         ->first();
-        
+
+

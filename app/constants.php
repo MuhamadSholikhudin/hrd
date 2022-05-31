@@ -196,6 +196,23 @@ function selang($date_end_violation){
   return $selang;
 }
 
+function format_date($format_date){
+  $date = date_create($format_date);
+  echo date_format($date,"d/m/Y");
+}
+
+function pasal_violation($alphabet_id){
+  // Pasal 
+  $alphabet  = DB::table('alphabets')->find($alphabet_id); 
+  $paragraph  = DB::table('paragraphs')->find($alphabet->paragraph_id); 
+  $article  = DB::table('articles')->find($paragraph->article_id); 
+
+  echo $article->article . ' ayat '. $paragraph->paragraph .' huruf '. $alphabet->alphabet;
+}
+
+function familyName($fname) {
+  echo "Refsnes.<br>";
+}
 
 function pasal($alphabet_id){
   // Pasal 

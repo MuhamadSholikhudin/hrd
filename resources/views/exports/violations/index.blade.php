@@ -44,7 +44,7 @@
             <td>{{ $violation->employee->name }}</td>
             <td>{{ $violation->job_level }}</td>
             <td>{{ $violation->department }}</td>
-            <td>{{ $violation->employee->hire_date }}</td>
+            <td>{{ format_date($violation->employee->hire_date) }}</td>
             <td>NO</td>
             <td>
                 <?php 
@@ -55,7 +55,7 @@
                     }   else{
                         $p_no_s = $violation->no_violation;
                     } 
-                ?>
+                ?> 
                     {{$p_no_s}}
             </td>
 
@@ -64,7 +64,7 @@
             <td>{{$violation->violation_ROM}}</td>
             <td>{{ hari_angka($violation->reporting_date); }}</td>
             <td>{{ hari_string($violation->reporting_date); }}</td>
-            <td>{{ $violation->reporting_date }}</td>
+            <td>{{ format_date($violation->reporting_date) }}</td>
             <td>{{ tahun($violation->reporting_date); }}</td>
             <td>Sehubungan yang bersangkutan telah melakukan pelanggaran peraturan/tata tertib/disiplin kerja yang berlaku di perusahaan, yaitu </td>
             <td>{{pasal_yang_dilanggar($violation->id); }} </td>
@@ -76,12 +76,8 @@
             <td>{{KETERANGAN_LAIN_1($violation->id); }} </td>
             <td>{{PELANGGARAN_SEBELUMNYA($violation->id); }} </td>
             <td>{{PELANGGARAN_SEBELUMNYA($violation->id);}}</td>
-            <td>
-            <?php 
-                $date_of_violation = new DateTime($violation->date_of_violation.' 00:00:00.0');
-                 $result_date_of_violation = $date_of_violation->format('d/m/Y');
-            ?>
-            {{$result_date_of_violation}}
+            <td> {{format_date($violation->date_of_violation);}}
+          
             </td>
             <td>{{$violation->type_of_violation}}</td>
           <td>- </td>

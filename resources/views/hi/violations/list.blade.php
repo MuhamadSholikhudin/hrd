@@ -288,6 +288,5 @@
 
 </section>
 <!-- /.content -->
-</div>
 
 @endsection
