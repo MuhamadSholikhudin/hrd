@@ -1,426 +1,125 @@
-    public function store(Request $request)
-    {
-        //MENANGKAP DATA REQUEST HTML
-        $employee_id = $request->employee_id;
+CREATE TABLE `violationmirations` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `date_of_violation` date NOT NULL,
+  `date_end_violation` date NOT NULL,
+  `no_violation` int(11) NOT NULL,
+  `format` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `month_of_violation` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `violation_ROM` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reporting_day` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reporting_date` date DEFAULT NULL,
+  `job_level` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `department` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `other_information` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `violation_status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type_of_violation` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `accumulation` float NOT NULL,
+  `violation_accumulation` char(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `alphabet_accumulation` char(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `violation_accumulation2` char(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `violation_accumulation3` char(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `alphabet_id` bigint(20) UNSIGNED NOT NULL,
+  `signature_id` bigint(20) UNSIGNED NOT NULL,
+  `employee_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-        $job_level = $request->job_level;
-        $department = $request->department;
-        $signature_id = $request->signature_id;
 
-        $other_information = $request->other_information;
-        $date_of_violation = $request->date_of_violation;
-        $reporting_date = $request->reporting_date;
+/// Dimulai dari bulan juni
 
-        $last_vio = $request->last_vio;
-        $alphabet_id = $request->alphabet_id;
-        $status_violant_last = $request->last_vio;
-        $last_type = $request->last_type;
-        
+Tampilkan data dari table violationmigrations dan violations
 
-
-        //MEMBUAT INPUTAN OTOMATIS SURAT
-        // NO SP 001/SP-HRD/IV/2022
-
-        $month_m = date('m');
-
-        $num_no_sp = DB::table('violations')
-          ->whereMonth('date_of_violation',  $month_m)
-          ->count();
-       
-        if($num_no_sp < 1){
-            $no_sp = 1;
-        }elseif($num_no_sp > 0){
-            $sel_no_sp = DB::table('violations')
-              ->latest()->first();
-          $no_sp = $sel_no_sp->no_violation + 1 ;
-        }
-
-        require_once 'GetViolationFormat.php';
-
-        //LOGIKAN PENENTUAN MENDAPATKAN PELANGGARAN
-        $sel_alphabet = DB::table('alphabets')->find($alphabet_id);
-        $sel_paragraph = DB::table('paragraphs')->find($sel_alphabet->paragraph_id);
-        $sel_article = DB::table('articles')->find($sel_paragraph->article_id);
-
-        // $sel_paragraph_type_of_verse == $sel_paragraph->type_of_verse;
-
-        //JIKA TIDAK ADA PELANGGARAN AKTIF
-        if($last_vio == 'notactive' OR $last_type == 'notviolation')
-        {
-            $status_type_violation = $sel_paragraph->type_of_verse;
-
-            if($sel_paragraph->type_of_verse == "Peringatan Lisan"){
-                $accumulation = 0.5;                                                                                                                
-            }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Pertama"){
-                $accumulation = 1;                                                                                                                                                
-            }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Kedua"){
-                $accumulation = 2;                                                                                                                                                
-            }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Ketiga"){
-                $accumulation = 3;                                                                                                                                                
-            }elseif($sel_paragraph->type_of_verse == "Surat Peringatan Terakhir"){
-                $accumulation = 4;                                                                                                                                                
-            }
-
-            $violation_accumulation = null;    
-            $alphabet_accumulation = null;    
-            $violation_accumulation2 = null;    
-            $violation_accumulation3 = null;  
-
-        }else{
-
-            // CARI PELANGGARAN AKUMULASI 4               
-            $num_vio_accumulation3 = DB::table('violations')
-                ->where('employee_id',  $employee_id) 
-                ->where('violation_accumulation', '!=',  null) 
-                ->where('violation_accumulation2', '!=',  null) 
-                ->where('violation_accumulation3', '!=',  null) 
-                ->where('alphabet_accumulation', '!=',  null) 
-                ->where('violation_status', 'active') 
-                ->latest()                       
+            $num_print_violationmigrations = DB::table('violationmigrations')
+                ->where('employee_id',  $employee_id)              
                 ->count();
 
-            if($num_vio_accumulation3 > 0){
-                // GET LOGIKA AKUMULASI KEEMPAT
-                // GET LOGIKA AKUMULASI PERINGATAN LISAN
-                require_once 'GetViolationArticle.php';
+            $num_print_violations = DB::table('violations')
+                ->where('employee_id',  $employee_id)              
+                ->count();
+       
+       if($num_print_violationmigrations > 0 AND $num_print_violations > 0){
 
-                $pelanggran_sebelumnya2 = DB::table('violations')
-                    ->where('employee_id',  $employee_id) 
-                    ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
-                    ->latest()                       
-                    ->first();
+            $print_violationmigrations = DB::table('violationmigrations')
+                ->where('employee_id',  $employee_id)              
+                ->get();
 
-                $pelanggran_sebelumnya3 = DB::table('violations')
-                    ->where('employee_id',  $employee_id) 
-                    ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
-                    ->latest()                       
-                    ->first();
+            $print_violations = DB::table('violations')
+                ->where('employee_id',  $employee_id)              
+                ->get();
 
-                $alphabet_accumulation = $cari_pasal_akumulasi->id;    
-                $violation_accumulation = $pelanggran_sebelumnya->id;    
-                $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
-                $violation_accumulation3 = $pelanggran_sebelumnya3->id;  
+            $gabung = array_merge($print_violationmigrations, $print_violations);
 
-            }else{
-                // CARI PELANGGARAN AKUMULASI 3               
-                $num_vio_accumulation2 = DB::table('violations')
-                    ->where('employee_id',  $employee_id) 
-                    ->where('violation_accumulation', '!=',  null) 
-                    ->where('violation_accumulation2', '!=',  null) 
-                    ->where('alphabet_accumulation', '!=',  null) 
-                    ->where('violation_status', 'active') 
-                    ->latest()                       
-                    ->count();
+            function date_compare($a, $b)
+            {
+                $t1 = strtotime($a['reporting_date']);
+                $t2 = strtotime($b['reporting_date']);
+                return $t1 - $t2;
+            }
 
-                if($num_vio_accumulation2 > 0){
-                    // LOGIKA AKUMULSI KETIGA
-                    require_once 'GetViolationArticle.php';
+            usort($gabung, 'date_compare');
 
-                    $pelanggran_sebelumnya2 = DB::table('violations')
-                        ->where('employee_id',  $employee_id) 
-                        ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
-                        ->latest()                       
-                        ->first();
-
-                    $pelanggran_sebelumnya3 = DB::table('violations')
-                        ->where('employee_id',  $employee_id) 
-                        ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
-                        ->latest()                       
-                        ->first();   
-
-                    $alphabet_accumulation = $cari_pasal_akumulasi->id;    
-                    $violation_accumulation = $pelanggran_sebelumnya->id;    
-                    $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
-                    $violation_accumulation3 = $pelanggran_sebelumnya3->id;  
+            $violation = $gabung;
                 
-                }else{
-                    // CARI PELANGGARAN AKUMULASI 1
-                    $num_vio_accumulation = DB::table('violations')
-                        ->where('employee_id',  $employee_id) 
-                        ->where('violation_accumulation', '!=',  null) 
-                        ->where('alphabet_accumulation', '!=',  null) 
-                        ->where('violation_status', 'active') 
-                        ->latest()                       
-                        ->count();
 
-                    if($num_vio_accumulation > 0){
-                        //LOGIKA AKUMULASI KEDUA
-                        require_once 'GetViolationArticle.php';
+       }elseif($num_print_violations == 0 AND $num_print_violationmigrations > 0){
 
-                        $pelanggran_sebelumnya2 = DB::table('violations')
-                            ->where('employee_id',  $employee_id) 
-                            ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
-                            ->latest()                       
-                            ->first();
-                                    
-                        $alphabet_accumulation = $cari_pasal_akumulasi->id;    
-                        $violation_accumulation = $pelanggran_sebelumnya->id;    
-                        $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
-                        $violation_accumulation3 = null;  
-                        
-                    }else{
-                        //LOGIKA AKUMULSAI PERTAMA
-                        require_once 'GetViolationArticle.php';
-                            
-                        $alphabet_accumulation = $cari_pasal_akumulasi->id;    
-                        $violation_accumulation = $pelanggran_sebelumnya->id;    
-                        $violation_accumulation2 = null;    
-                        $violation_accumulation3 = null;  
-                    }
-                }
-            }   
-        } 
-          
-        $data = [
-            'date_of_violation' => $date_of_violation,     
-            'date_end_violation' => $date_end_violation,     
-            'no_violation' => $no_sp,   
-            'format' => 'SP-HRD',    
-            'month_of_violation' => $month_n,     
-            'violation_ROM' => $ROM,   
-            'reporting_day' => null,     
-            'reporting_date' => $reporting_date,   
-            'job_level' => $job_level,   
-            'department' => $department,   
-            'other_information' => $other_information,   
-                    
-            'violation_status' => 'active',     
-            'type_of_violation' => $status_type_violation,   
-        
-            'accumulation' => $accumulation,    
-            'alphabet_accumulation' => $alphabet_accumulation,    
-            'violation_accumulation' => $violation_accumulation,    
-            'violation_accumulation2' => $violation_accumulation2,     
-            'violation_accumulation3' => $violation_accumulation3,   
+            $print_violationmigrations = DB::table('violationmigrations')
+                ->where('employee_id',  $employee_id)              
+                ->get();
 
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
-            
-            'alphabet_id' => $alphabet_id,           
-            'signature_id' => $signature_id,    
-            'employee_id' => $employee_id
-        ];
+            $violation = $print_violationmigrations;
 
-        DB::table('violations')->insert($data);
+       }elseif($num_print_violationmigrations == 0 AND $num_print_violations > 0){
 
-        $select_employee = DB::table('employees')->find($employee_id);
-        $remark = "menambahkan pelanggaran ".$select_employee->number_of_employees;
-        $action = "add";
+            $print_violations = DB::table('violations')
+                ->where('employee_id',  $employee_id)              
+                ->get();
 
-        DB::table('histories')->insert([
-            'user_id' => auth()->user()->id,
-            'role_id' => auth()->user()->role_id,
-            'remark' => $remark,
-            'action' => $action,
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
-        ]);
+            $violation = $print_violations;
 
-        return redirect('/violations/' . $employee_id . '/edit');
-    }
+       }elseif($num_print_violationmigrations == 0 AND $num_print_violations == 0){
+
+       }else{
+
+       }
 
 
-	
-Edit Edit
-Copy Copy
-Delete Delete
-13
-36
-7
-true
-false
-true
-2022-05-15 13:51:07
-2022-05-15 13:51:07
-	
-Edit Edit
-Copy Copy
-Delete Delete
-14
-36
-8
-true
-false
-true
-2022-05-15 13:51:07
-2022-05-15 13:51:07
-	
-Edit Edit
-Copy Copy
-Delete Delete
-15
-36
-9
-true
-false
-true
-2022-05-15 13:51:07
-2022-05-15 13:51:07
-	
-Edit Edit
-Copy Copy
-Delete Delete
-16
-36
-10
-true
-false
-true
-2022-05-15 13:51:07
-2022-05-15 13:51:07
-	
-Edit Edit
-Copy Copy
-Delete Delete
-17
-37
-11
-true
-false
-true
-2022-05-15 14:37:35
-2022-05-15 14:37:35
-	
-Edit Edit
-Copy Copy
-Delete Delete
-18
-37
-12
-true
-false
-true
-2022-05-15 14:37:35
-2022-05-15 14:37:35
-	
-Edit Edit
-Copy Copy
-Delete Delete
-19
-37
-13
-true
-false
-true
-2022-05-15 14:37:35
-2022-05-15 14:37:35
-	
-Edit Edit
-Copy Copy
-Delete Delete
-20
-37
-14
-true
-false
-true
-2022-05-15 14:37:35
-2022-05-15 14:37:35
-	
-Edit Edit
-Copy Copy
-Delete Delete
-21
-37
-15
-true
-false
-true
-2022-05-15 14:37:35
-2022-05-15 14:37:35
-	
-Edit Edit
-Copy Copy
-Delete Delete
-22
-37
-16
-true
-false
-true
-2022-05-15 14:37:35
-2022-05-15 14:37:35
-	
-Edit Edit
-Copy Copy
-Delete Delete
-23
-37
-17
-true
-false
-true
-2022-05-15 14:37:35
-2022-05-15 14:37:35
-	
-Edit Edit
-Copy Copy
-Delete Delete
-24
-38
-1
-true
-false
-true
-2022-05-15 22:41:04
-2022-05-15 22:42:43
-	
-Edit Edit
-Copy Copy
-Delete Delete
-25
-38
-2
-true
-false
-true
-2022-05-15 22:41:04
-2022-05-15 22:41:04
-	
-Edit Edit
-Copy Copy
-Delete Delete
-26
-38
-3
-true
-false
-true
-2022-05-15 22:41:04
-2022-05-15 22:41:04
-	
-Edit Edit
-Copy Copy
-Delete Delete
-27
-38
-4
-true
-false
-true
-2022-05-15 22:41:04
-2022-05-15 22:41:04
-	
-Edit Edit
-Copy Copy
-Delete Delete
-28
-38
-5
-true
-false
-true
-2022-05-15 22:41:04
-2022-05-15 22:41:04
-	
-Edit Edit
-Copy Copy
-Delete Delete
-29
-38
-6
-true
-false
-true
-2022-05-15 22:41:04
-2022-05-15 22:41:04
+            $arr1 = $this->db->query("SELECT tanggal, no_transaksi FROM jurnal_penerimaan_kas WHERE id_piutang_dagang = 1 GROUP BY no_transaksi ")->result_array();
+            $arr2 = $this->db->query("SELECT tanggal, no_transaksi FROM jurnal_penjualan WHERE id_piutang_dagang = 1 GROUP BY no_transaksi ")->result_array();
+            $arr3 = $this->db->query("SELECT tanggal, no_transaksi FROM jurnal_umum WHERE id_piutang_dagang = 1 GROUP BY no_transaksi ")->result_array();
+
+$gabung = array_merge($arr1, $arr2, $arr3);
+// print_r($gabung);
+
+function date_compare($a, $b)
+{
+    $t1 = strtotime($a['tanggal']);
+    $t2 = strtotime($b['tanggal']);
+    return $t1 - $t2;
+}
+usort($gabung, 'date_compare');
+
+
+foreach ($gabung as $dt) :
+    $tgl = $dt['tanggal'];
+    $nts = $dt['no_transaksi'];
+    echo "ini tanggal " . $dt['tanggal'] . " no_transaksi "  . $dt['no_transaksi'] . "<br>";
+    $a_jkm = $this->db->query("SELECT debet, kredit FROM jurnal_penerimaan_kas WHERE tanggal = '$tgl' AND no_transaksi = '$nts' ")->num_rows();
+    echo $a_jkm;
+endforeach;
+
+
+// Jika Tanggal Laporan < tanggal 01/06/2022
+maka data table menggunakan violationmigrations
+
+jika tanggal laporan tanggal >= 01/06/2022
+maka data table menggunakan violations
+
+
+
+
+
+
+
+

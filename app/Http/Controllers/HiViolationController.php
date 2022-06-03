@@ -220,6 +220,9 @@ class HiViolationController extends Controller
                     $alphabet_id = floor($x['alphabet_id']);
 
                     
+                    
+
+
                     $sel_num_vio = DB::table('violations')->where('employee_id', $employee->id)->count();
                     if($sel_num_vio == 0){
                       $sta_viol = 'notactive';

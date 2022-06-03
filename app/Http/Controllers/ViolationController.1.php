@@ -66,7 +66,7 @@ class ViolationController extends Controller
         $other_information = $request->other_information;
         $date_of_violation = $request->date_of_violation;
         $reporting_date = $request->reporting_date;
-        $last_accumulation = $request->last_accumulation;
+        $S = $request->last_accumulation;
 
         $last_vio = $request->last_vio;
         $alphabet_id = $request->alphabet_id;
@@ -121,6 +121,15 @@ class ViolationController extends Controller
             $violation_accumulation3 = null;  
 
         }else{
+
+            /*
+
+            if($sel_paragraph->type_of_verse){
+                 
+
+            }
+
+            */
 
             // CARI PELANGGARAN AKUMULASI 4               
             $num_vio_accumulation3 = DB::table('violations')

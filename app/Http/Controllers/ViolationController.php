@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\URL;
 
+use Illuminate\Support\Collection;
+
+use Illuminate\Support\Arr;
+
 use App\Models\Employee;
 use App\Models\Job;
 use App\Models\Department;
@@ -610,10 +614,65 @@ class ViolationController extends Controller
             // ->where('employee_id', $id)
             ->get();
 
+
+        $num_print_violationmigrations = DB::table('violationmigrations')
+            ->where('employee_id',  $id)              
+            ->count();
+
+        $num_print_violations = DB::table('violations')
+            ->where('employee_id',  $id)              
+            ->count();
+        
+        if($num_print_violationmigrations > 0 AND $num_print_violations > 0){
+
+            $print_violationmigrations = DB::table('violationmigrations')->where('employee_id', $id)->get();
+                
+            $print_violations = DB::table('violations')->where('employee_id', $id)->get();
+
+            $array = Arr::collapse([$print_violationmigrations, $print_violations]); 
+            
+            function date_compare($a, $b)
+            {
+                $t1 = strtotime($a['reporting_date']);
+                $t2 = strtotime($b['reporting_date']);
+                return $t1 - $t2;
+            }
+
+            // usort($array, 'date_compare');
+
+            $violation = $array;
+
+        }elseif($num_print_violations == 0 AND $num_print_violationmigrations > 0){
+
+            $print_violationmigrations = DB::table('violationmigrations')
+                ->where('employee_id',  $id)              
+                ->get();
+
+            $violation = $print_violationmigrations;
+
+        }elseif($num_print_violationmigrations == 0 AND $num_print_violations > 0){
+
+            $print_violations = DB::table('violations')
+                ->where('employee_id',  $id)              
+                ->get();
+
+            $violation = $print_violations;
+
+        }elseif($num_print_violationmigrations == 0 AND $num_print_violations == 0){
+            $violation = DB::table('violations')
+                ->where('employee_id',  $id)              
+                ->get();
+        }else{
+            $violation = DB::table('violations')
+            ->where('employee_id',  $id)              
+            ->get();
+        }
+      
         return view('hi.violations.edit', [
             
             'employee' => $employee,
-            'violations' => DB::table('violations')->where('employee_id', $id)->get(),
+            // 'violations' => DB::table('violations')->where('employee_id', $id)->get(),
+            'violations' => $violation,
             'alphabets' => $alphabet,
             'jobs' => Job::all(),
             'departments' => Department::all()

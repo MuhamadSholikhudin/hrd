@@ -51,16 +51,24 @@ class LoginController extends Controller
             $countdown_date2 = date('Y-m-d', strtotime('-120 days', strtotime($tanggal_hari_ini))); //operasi penjumlahan tanggal sebanyak 6 hari
    
             $cari_status_violation = DB::table('violations')
-            ->where('date_end_violation', '<', $tanggal_hari_ini)
-            ->get(); 
+                ->where('date_end_violation', '<', $tanggal_hari_ini)
+                ->get(); 
 
-            foreach($cari_status_violation as $sta_vio):
-                DB::table('violations')
-                    ->where('id',  $sta_vio->id)
-                    ->update([
-                        'violation_status' => 'notactive'
-                    ]);
-            endforeach;
+                       //tampilkan data hire_date
+           DB::table('violations')
+                ->where('date_end_violation', '<', $tanggal_hari_ini)
+                ->update([
+                    'violation_status' => 'notactive'
+                ]);
+
+            // foreach($cari_status_violation as $sta_vio):
+            //     DB::table('violations')
+            //         ->where('id',  $sta_vio->id)
+            //         ->update([
+            //             'violation_status' => 'notactive'
+            //         ]);
+            // endforeach;          
+
 
            //tampilkan data hire_date
            DB::table('employees')

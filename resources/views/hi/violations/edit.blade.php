@@ -601,7 +601,82 @@
             echo $diff->s . ' detik, ';
 
             // Cari data pelanggan terakhir 
+            
+            
+
             $sel_num_vio = DB::table('violations')->where('employee_id', $employee->id)->count();
+
+            if($sel_num_vio > 0){
+
+              $sel_vio = DB::table('violations')->where('employee_id', $employee->id)->latest()->first();
+              $date_now = date_create();
+              $date_sta = date_create($sel_vio->date_end_violation);
+              $diffx  = date_diff($date_sta, $date_now);
+
+              if($diffx->d <= 0){
+                $sta_viol = 'notactive';
+                $type_viol = 'notviolation';
+                $last_accumulation = 0;
+              }else{
+                $sta_viol = $sel_vio->violation_status;
+                $type_viol = $sel_vio->type_of_violation;
+                $last_accumulation = $sel_vio->accumulation;
+              }
+
+            }elseif($sel_num_vio < 1){
+
+              $sel_num_vio_migrat = DB::table('violationmigrations')->where('employee_id', $employee->id)->count();
+              if($sel_num_vio_migrat > 0){
+                $vio_migrat = DB::table('violationmigrations')
+                  ->where('employee_id', $employee->id)
+                  ->orderBy('id', 'desc')
+                  ->first();
+
+                  if($vio_migrat->violation_status == 'active'){
+
+                    if($vio_migrat->type_of_violation == 'Peringatan Lisan'){
+                      $l_accuml = 0.5;
+                    }elseif($vio_migrat->type_of_violation == 'Surat Peringatan Pertama'){
+                      $l_accuml = 1;
+                    }elseif($vio_migrat->type_of_violation == 'Surat Peringatan Kedua'){
+                      $l_accuml = 2;
+                    }elseif($vio_migrat->type_of_violation == 'Surat Peringatan Ketiga'){
+                      $l_accuml = 3;
+                    }elseif($vio_migrat->type_of_violation == 'Surat Peringatan Terakhir'){
+                      $l_accuml = 4;
+                    }elseif($vio_migrat->type_of_violation == 'Pemutusan Hubungan Kerja'){
+                      $l_accuml = 5;
+                    }else{
+                      $l_accuml = 0;
+                    }
+
+                    $sta_viol = $vio_migrat->violation_status;
+                    $type_viol = $vio_migrat->type_of_violation;
+                    $last_accumulation = $l_accuml;
+
+                  }else{
+                    $sta_viol = 'notactive';
+                    $type_viol = 'notviolation';
+                    $last_accumulation = 0;
+                  }
+
+              }elseif($sel_num_vio_migrat < 1){
+                $sta_viol = 'notactive';
+                $type_viol = 'notviolation';
+                $last_accumulation = 0;
+
+              }
+
+            }
+
+
+
+            
+            /*
+            
+
+            $sel_num_vio = DB::table('violations')->where('employee_id', $employee->id)->count();
+
             if($sel_num_vio == 0){
               $sta_viol = 'notactive';
               $type_viol = 'notviolation';
@@ -623,6 +698,8 @@
                 $last_accumulation = $sel_vio->accumulation;
               }
             }
+            */
+            
 
             echo '<br>';
             //memotong jumlah karakter
@@ -632,6 +709,7 @@
             echo $cetak;
 
             echo '<br>';
+
           ?>
           <!-- INISIASI AKUMULASI PELANGGARAN -->
           <input type="text" name="last_vio" value="{{$sta_viol}}" id="last_vio">

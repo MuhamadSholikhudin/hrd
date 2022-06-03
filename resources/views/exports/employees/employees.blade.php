@@ -45,7 +45,7 @@
 <tbody>
     @foreach($employees as $employee)
         <tr>
-            <td>{{  $loop->iteration }}</td>
+            <td>{{  $employee->id }}</td>
             <td>{{ $employee->number_of_employees}}</td>
             <td>{{ $employee->name}}</td>
             <td>{{ $employee->gender}}</td>
