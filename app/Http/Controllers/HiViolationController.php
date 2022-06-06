@@ -11,6 +11,7 @@ use Maatwebsite\Excel\Concerns\ToArray;
 use Maatwebsite\Excel\Facades\Excel;
 
 use App\Imports\ViolationsImport;
+use App\Imports\ViolationmigrationImport;
 
 use App\Exports\ViolationsExport;
 
@@ -21,6 +22,7 @@ use App\Models\Alphabet;
 use App\Models\Article;
 use App\Models\Paragraph;
 use App\Models\Violation;
+use App\Models\Violationmigration;
 
 class HiViolationController extends Controller
 {
@@ -590,6 +592,81 @@ class HiViolationController extends Controller
         endforeach;
         return redirect('/hiviolations');
 
+    }
+
+    public function violationmigrations(){
+
+        // Excel::import(new ViolationmigrationsImport, request()->file('file'));
+
+        $rows =  Excel::toArray(new ViolationmigrationImport, request()->file('file'));
+
+        foreach($rows as $row):
+            foreach($row as $x):
+
+                if($x['employee_id'] == NULL){
+
+                }else{
+
+                
+
+                    $date_of_violation_i = $x['date_of_violation'];
+                    if($date_of_violation_i == null){
+                        $date_of_violation = NULL;
+                    }else{
+                        $date_of_violation = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['date_of_violation']);
+                    }
+                    if($date_of_violation == 'false'){
+                        return redirect('/hiviolations')->with('danger', 'Data Pelanggran Mulai dari baris '. $x['employee_id'] . ' Format Tanggal salah. Pastikan kolom date dengan performatan date yang benar !');
+                    }
+
+                    $date_end_violation_i = $x['date_end_violation'];
+                    if($date_end_violation_i == null){
+                        $date_end_violation = NULL;
+                    }else{
+                        $date_end_violation = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['date_end_violation']);
+                    }
+                    if($date_end_violation == 'false'){
+                        return redirect('/hiviolations')->with('danger', 'Data Pelanggran Mulai dari baris '. $x['employee_id'] . ' Format Tanggal salah. Pastikan kolom date dengan performatan date yang benar !');
+                    }
+                    
+                    $reporting_date_i = $x['reporting_date'];
+                    if($reporting_date_i == null){
+                        $reporting_date = NULL;
+                    }else{
+                        $reporting_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['reporting_date']);
+                    }
+                    if($reporting_date == 'false'){
+                        return redirect('/hiviolations')->with('danger', 'Data Pelanggran Mulai dari baris '. $x['employee_id'] . ' Format Tanggal salah. Pastikan kolom date dengan performatan date yang benar !');
+                    }
+
+                    DB::table('violationmigrations')->insert([
+                        "employee_id" => floor($x['employee_id']),	
+                        "date_of_violation" => $date_of_violation,
+                        "date_end_violation" => $date_end_violation,
+                        "reporting_date"  =>  $reporting_date,
+                        "no_violation" => floor($x['no_violation']),
+                        "format" => $x['format'],
+                        "month_of_violation" => floor($x['month_of_violation']),
+                        "reporting_day" => $x['reporting_day'],
+                        "job_level"  => $x['job_level'],
+                        "department"   => $x['department'],
+                        "other_information"  => $x['other_information'],
+                        "violation_status"  => $x['violation_status'],
+                        "type_of_violation"  => $x['type_of_violation'],
+                        "alphabet_id"  => $x['alphabet_id'],
+                        "violation_accumulation"  => $x['violation_accumulation'],
+                        "violation_accumulation2"  => $x['violation_accumulation2'],
+                        "violation_ROM" => $x['violation_rom'],
+                        "signature_id"  => floor($x['signature_id'])
+                    ]);
+
+            }
+
+            endforeach;
+        endforeach;
+
+
+        return redirect('/hiviolations');
     }
 
     public function export(){
