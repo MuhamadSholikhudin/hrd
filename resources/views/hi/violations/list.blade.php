@@ -124,7 +124,7 @@
                     <a href="{{asset('excel/FORMAT_UPLOAD_PELANGGARAN.xlsx')}}">Format Upload Pelangaran</a>
                     <br>
                   </p>
-              <form action="{{ route('violationmigrations.import') }}" method="POST" enctype="multipart/form-data">
+              <form action="{{ route('importmigration.import') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="input-group">
                     <div class="custom-file">

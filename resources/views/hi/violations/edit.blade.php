@@ -233,7 +233,9 @@
                         $p_no_s = '00'. $violation->no_violation;
                       }elseif(strlen($violation->no_violation) == '2'){
                         $p_no_s = '0'.$violation->no_violation;
-                      }
+                      }else{
+                        $p_no_s = $violation->no_violation;
+                    }
 
                     ?>
                       {{$p_no_s}}/SP-HRD/{{$violation->violation_ROM}}/{{$date_year_sp}}

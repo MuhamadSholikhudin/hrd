@@ -188,6 +188,8 @@ Route::controller(HiViolationController::class)->group(function(){
     Route::post('importviolations', 'import')->name('violations.import');
     Route::post('violationmigrations', 'violationmigrations')->name('violationmigrations.import');
     Route::post('deleteviolations', 'hapus')->name('deleteviolations');
+    Route::post('importmigration', 'importmigration')->name('importmigration.import');
+    
 });
 
 Route::post('violation/get_type_violation', [ViolationController::class, 'get_type_violation'])->name('get_type_violation');

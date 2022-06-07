@@ -25,7 +25,7 @@ class DepartmentController extends Controller
 
         return view('departments.index', [
             
-            'departments' => $departments->paginate(15)
+            'departments' => $departments->paginate(15)->withQuerystring()
              
         ]);
     }

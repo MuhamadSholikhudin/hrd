@@ -28,6 +28,20 @@
 
 <br>
 
+<?php
+
+// $arr_a = [1, 2, 3, ....., 5000];
+
+
+DB::table('employees')->orderBy('id')->chunk(100, function ($employees) {
+  foreach ($employees as $employee) {
+      //
+      echo $employee->id;
+  }
+});
+
+?>
+
 
 <?php
 

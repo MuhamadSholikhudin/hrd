@@ -37,7 +37,7 @@ class HistoryController extends Controller
         }
 
         return view('histories.index', [
-            'histories' => $histories->paginate(10),
+            'histories' => $histories->paginate(10)->withQuerystring(),
             'count' => $histories->count()
         ]);
 

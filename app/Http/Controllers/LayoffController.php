@@ -49,7 +49,7 @@ class LayoffController extends Controller
         }
         
         return view('hi.layoffs.index', [
-            'layoffs' => $layoffs->paginate(10),
+            'layoffs' => $layoffs->paginate(10)->withQuerystring(),
             'count' => DB::table('layoffs')->count()
         ]);
     }

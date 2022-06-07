@@ -51,7 +51,7 @@ class HiAlphabetController extends Controller
         return view('hi.pkb.alphabets.index', [
             
             
-            'alphabets' => $alphabets->paginate(10),
+            'alphabets' => $alphabets->paginate(10)->withQuerystring(),
             'paragraphs' => Paragraph::all(),
             'alphabets_accumulation' => $alphabets_accumulation,
             'count' => DB::table('alphabets')->count()

@@ -36,7 +36,7 @@ class DatamasterDemotionController extends Controller
         return view('datamaster.demotions.index', [
             
             
-            'employees' => $employees->paginate(15),
+            'employees' => $employees->paginate(15)->withQuerystring(),
             'count' => DB::table('employees')->count()
              
         ]);
