@@ -10,14 +10,14 @@ function oke()
     return  'oke';
 }
 
-define("URL_WEB", "http://10.10.42.6:8080");
-define("SUM_URL_WEB", 23);
+// define("URL_WEB", "http://10.10.42.6:8080");
+// define("SUM_URL_WEB", 23);
 
 // define("URL_WEB", "10.10.40.190:8080");
 // define("SUM_URL_WEB", 25);
 
-// define("URL_WEB", "http://127.0.0.1:8080");
-// define("SUM_URL_WEB", 22);
+define("URL_WEB", "http://127.0.0.1:8080");
+define("SUM_URL_WEB", 22);
 
 function jabatan($employee_id){
   $sel_employee = DB::table('employees')->find($employee_id);
@@ -167,6 +167,24 @@ function tahun($tahun){
 
 function nomer_sp($no_violation, $violation_id){
   $violation = DB::table('violations')->find( $violation_id);
+
+  $date_violation_sp = new \DateTime($violation->date_of_violation.' 00:00:00');
+  $date_year_sp = date_format($date_violation_sp, "Y"); //for Display Year
+  $date_month_sp =  date_format($date_violation_sp, "m"); //for Display Month
+  $date_day_sp = date_format($date_violation_sp, "d"); //for Display Date
+
+  if(strlen($no_violation) == '1'){
+      $p_no_s = '00'. $no_violation;
+  }elseif(strlen($no_violation) == '2'){
+      $p_no_s = '0'.$no_violation;
+  }   else{
+    $p_no_s = $no_violation;
+  } 
+  return $p_no_s."/SP-HRD/".$violation->violation_ROM."/".$date_year_sp;
+}
+
+function nomer_sp_migrasi($no_violation, $violation_id){
+  $violation = DB::table('violationmigrations')->find( $violation_id);
 
   $date_violation_sp = new \DateTime($violation->date_of_violation.' 00:00:00');
   $date_year_sp = date_format($date_violation_sp, "Y"); //for Display Year

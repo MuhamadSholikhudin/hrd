@@ -52,12 +52,14 @@
                         <u> SURAT PERINGATAN </u>
                     </h3>
                         <?php 
-                            $date_violation_sp = new \DateTime($violation->date_of_violation .' 00:00:00');
+                            $date_violation_sp = new \DateTime($violation->date_of_violation.' 00:00:00');
                             
                             if(strlen($violation->no_violation) == '1'){
                                 $p_no_s = '00'. $violation->no_violation;
                             }elseif(strlen($violation->no_violation) == '2'){
                                 $p_no_s = '0'.$violation->no_violation;
+                            }else{
+                                $p_no_s = $violation->no_violation;
                             }
                         ?>
                     <h5 class="text-center "> NO:{{ $p_no_s}} /SP-HRD/{{ $violation->violation_ROM}}/{{date_format($date_violation_sp, "Y")}}      
@@ -106,48 +108,13 @@
                         berlaku di perusahaan. :</div>
                         <br>
                     <div class="col-sm-12 lead"> <b>Pasal yang dilanggar : </b></div>
-                    
-                    <?php 
-                        $sel_alphabet = DB::table('alphabets')->find($violation->alphabet_id);
-                        $sel_paragraph = DB::table('paragraphs')->find($sel_alphabet->paragraph_id);
-                        $sel_article = DB::table('articles')->find($sel_paragraph->article_id);
-                    ?>
-                    @if($violation->alphabet_accumulation != null)
-                        <!-- violation accumulation here -->
-                        <?php
-                            $sel_alphabet_accumulation = DB::table('alphabets')->find($violation->alphabet_accumulation);
-                            $sel_paragraph_accumulation = DB::table('paragraphs')->find($sel_alphabet_accumulation->paragraph_id);
-                            $sel_article_accumulation = DB::table('articles')->find($sel_paragraph_accumulation->article_id);
-                        ?>
-
-                            <!-- PASAL AKUMULASI -->
-                        <div class="col-sm-12 lead" style="text-align: justify;">Perjanjian Kerja Bersama Pasal  {{$sel_article_accumulation->article}} ayat   {{$sel_paragraph_accumulation->paragraph}}  huruf {{$sel_alphabet_accumulation->alphabet}}  {{$sel_alphabet_accumulation->alphabet_sound}}</div>
-                    
-                    @else
-                              <!-- Pasal Tanpa Akumulasi -->
-                        <div class="col-sm-12 lead" style="text-align: justify;">Perjanjian Kerja Bersama Pasal {{$sel_article->article}} ayat ({{$sel_paragraph->paragraph}}) huruf "{{$sel_alphabet->alphabet}}" {{$sel_alphabet->alphabet_sound}}.</div>
-                    
-                    @endif
+                    <div class="col-sm-12 lead" style="text-align: justify;"> {{$violation->alphabet_id}}</div>
+                 
+                 
               
                     <br>
                     <div class="col-sm-12 lead"><b>Keterangan lain :</b></div>
-                    @if($violation->alphabet_accumulation != null)
-                            
-                        <!-- DELIK SEKARANG -->
-                        <!-- <div class="col-sm-12 lead" style="text-align: justify;">- {{ $violation->other_information}}</div> -->
-                        <!-- PASAL SEKARANG, BUNYI PASAL -->
-                        <!-- <div class="col-sm-12 lead" style="text-align: justify;">- Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal  {{$sel_article->article}} ayat {{$sel_paragraph->paragraph}} huruf "{{$sel_alphabet->alphabet}}"  {{$sel_alphabet->alphabet_sound}}</div> -->
-                        
-                        <!-- PASAL LALU, DELIK PELANGGARAN LALU -->
-                        <?php 
-                            $pelanggran_lalu = DB::table('violations')->find($violation->violation_accumulation);
 
-                            $sel_alphabet_lalu = DB::table('alphabets')->find($pelanggran_lalu->alphabet_id);
-                            $sel_paragraph_lalu = DB::table('paragraphs')->find($sel_alphabet_lalu->paragraph_id);
-                            $sel_article_lalu = DB::table('articles')->find($sel_paragraph_lalu->article_id);
-                        ?>
-                        <!-- <div class="col-sm-12 lead" style="text-align: justify;">- Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal  {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", {{$pelanggran_lalu->other_information}}</div> -->
-                        
                         <table >
                             <tbody>
                                 <tr>
@@ -157,52 +124,16 @@
 
                                 <tr>
                                     <td valign="top">&nbsp;&nbsp;&nbsp;-</td>
-                                    <td valign="top" class="lead" style="text-align: justify;">Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal  {{$sel_article->article}} ayat {{$sel_paragraph->paragraph}} huruf "{{$sel_alphabet->alphabet}}"  {{$sel_alphabet->alphabet_sound}}</td>
+                                    <td valign="top" class="lead" style="text-align: justify;">{{ $violation->violation_accumulation}}</td>
                                 </tr>
 
                                 <tr>
                                     <td valign="top">&nbsp;&nbsp;&nbsp;-</td>
-                                    <td valign="top" class="lead" style="text-align: justify;">Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal 
-                                    
-                                        <?php 
-                                            /* 
-                                                pasal($alphabet_id)
-
-                                                // Jika pelanggaran sebelumnya akumulasi => pasal_akumulasi, 
-                                                if($violation->violation_accumulation3 !== NULL){
-
-                                                }
-                                                 */
-                                                if($violation->violation_accumulation2 !== NULL){
-                                                    $pelanggran_lalu2 = DB::table('violations')->find($violation->violation_accumulation2);
-                                                    ?>
-
-                                                {{ pasal($pelanggran_lalu->alphabet_id); }} {{$pelanggran_lalu->other_information}} ,
-                                                {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", {{$pelanggran_lalu->other_information}}, {{$pelanggran_lalu2->other_information}}</td>
-
-                                                <?php
-                                                }
-                                                elseif($violation->violation_accumulation !== NULL){ ?>
-                                                     {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", {{$pelanggran_lalu->other_information}}</td>
-                                                <?php }else{
-
-                                                }
-                                        ?>
-                                </tr>
+                                    <td valign="top" class="lead" style="text-align: justify;"> {{ $violation->violation_accumulation2}}  </td> 
+                                </tr>           
                             </tbody>
                         </table>
-                    @else
-                        <table >
-                            <tbody>
-                                <tr>
-                                    <td valign="top">&nbsp;&nbsp;&nbsp;-</td>
-                                    <td valign="top" class="lead" style="text-align: justify;">{{ $violation->other_information}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                            <!-- Remainder Tanpa Akumulasi -->
-                        <!-- <div class="col-sm-12 lead" style="text-align: justify;">- {{ $violation->other_information}}</div> -->
-                    @endif
+                   
                     
 
                     <br>

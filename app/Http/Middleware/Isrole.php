@@ -31,7 +31,8 @@ WHERE access_menus.role_id = 1 AND methods.sub_menu_id = 18;
 */
 
         if(!auth()->check()){
-            abort(403);
+            // abort(403);
+            redirect('/login');
         }
 
         $url_nowxz = url()->current();

@@ -150,7 +150,7 @@ class ViolationController extends Controller
                     ->latest()                       
                     ->first();
 
-                $alphabet_accumulation = $cari_pasal_akumulasi->id;    
+                $alphabet_accumulation = $pasal_alphabet_accumulation;    
                 $violation_accumulation = $pelanggran_sebelumnya->id;    
                 $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
                 $violation_accumulation3 = $pelanggran_sebelumnya3->id;  
@@ -182,7 +182,7 @@ class ViolationController extends Controller
                         ->latest()                       
                         ->first();   
 
-                    $alphabet_accumulation = $cari_pasal_akumulasi->id;    
+                    $alphabet_accumulation = $pasal_alphabet_accumulation;    
                     $violation_accumulation = $pelanggran_sebelumnya->id;    
                     $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
                     $violation_accumulation3 = $pelanggran_sebelumnya3->id;  
@@ -207,7 +207,7 @@ class ViolationController extends Controller
                             ->latest()                       
                             ->first();
                                     
-                        $alphabet_accumulation = $cari_pasal_akumulasi->id;    
+                        $alphabet_accumulation = $pasal_alphabet_accumulation;    
                         $violation_accumulation = $pelanggran_sebelumnya->id;    
                         $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
                         $violation_accumulation3 = null;  
@@ -216,7 +216,7 @@ class ViolationController extends Controller
                         //LOGIKA AKUMULSAI PERTAMA
                         require_once 'GetViolationArticle.php';
                             
-                        $alphabet_accumulation = $cari_pasal_akumulasi->id;    
+                        $alphabet_accumulation = $pasal_alphabet_accumulation;    
                         $violation_accumulation = $pelanggran_sebelumnya->id;    
                         $violation_accumulation2 = null;    
                         $violation_accumulation3 = null;  

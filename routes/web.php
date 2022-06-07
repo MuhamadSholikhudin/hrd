@@ -35,6 +35,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchController;
 
 // Controller HI
+use App\Http\Controllers\ViolationmigrationController;
 use App\Http\Controllers\ViolationController;
 use App\Http\Controllers\HiViolationController;
 use App\Http\Controllers\LayoffController;
@@ -190,6 +191,15 @@ Route::controller(HiViolationController::class)->group(function(){
 });
 
 Route::post('violation/get_type_violation', [ViolationController::class, 'get_type_violation'])->name('get_type_violation');
+
+
+///Migrasi Violation
+Route::controller(ViolationmigrationController::class)->group(function(){
+    Route::get('violationmigrations', 'index')->name('violationmigrations.index');
+    Route::get('violationmigrations/{violationmigrations:id}', 'show');
+    // Route::post('importviolations', 'import')->name('violations.import');
+    // Route::post('deleteviolations', 'hapus')->name('deleteviolations');
+});
 
 // Route::get('/hi', function () {
 //     return view('hi.employees');

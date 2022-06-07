@@ -154,7 +154,8 @@
             // ->where('alphabets.alphabet_accumulation', $status_type_violation)
             ->select('alphabets.id as id')
             ->first();
-            
+
+        $pasal_alphabet_accumulation = $cari_pasal_akumulasi->id;                        
     }else{
         $cari_pasal_akumulasi = DB::table('alphabets')
         ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
@@ -162,6 +163,8 @@
         ->where('alphabets.id', $alphabet_id)
         ->select('alphabets.id as id')        
         ->first();
+
+        $pasal_alphabet_accumulation = NULL;
     }
 
     $pelanggran_sebelumnya = DB::table('violations')
@@ -174,4 +177,6 @@
         ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
         ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
         ->first();
+
+    
         
