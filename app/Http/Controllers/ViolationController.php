@@ -70,10 +70,10 @@ class ViolationController extends Controller
         $other_information = $request->other_information;
         $date_of_violation = $request->date_of_violation;
         $reporting_date = $request->reporting_date;
-        $last_accumulation = $request->last_accumulation;
 
-        $last_vio = $request->last_vio;
         $alphabet_id = $request->alphabet_id;
+        $last_vio = $request->last_vio;
+        $last_accumulation = $request->last_accumulation;
         // $status_violant_last = $request->last_vio;
         $last_type = $request->last_type;
 
@@ -525,9 +525,7 @@ class ViolationController extends Controller
                             $violation_accumulation2 = null;    
                             $violation_accumulation3 = null;  
                         }
-                    
                     }
-
             }
         } 
           
@@ -671,8 +669,8 @@ class ViolationController extends Controller
         return view('hi.violations.edit', [
             
             'employee' => $employee,
-            // 'violations' => DB::table('violations')->where('employee_id', $id)->get(),
-            'violations' => $violation,
+            'violations' => DB::table('violations')->where('employee_id', $id)->get(),
+            // 'violations' => $violation,
             'alphabets' => $alphabet,
             'jobs' => Job::all(),
             'departments' => Department::all()
@@ -701,7 +699,7 @@ class ViolationController extends Controller
     {
         //
         Violation::destroy($id);
-        return redirect('hiviolation');
+        return redirect('hiviolation')->with('success', 'Data Pelanggaran Berhasil di hapus!');
         // ->with('success', 'Post has been deleted!');
     }
 

@@ -124,7 +124,7 @@
                     <a href="{{asset('excel/FORMAT_UPLOAD_PELANGGARAN.xlsx')}}">Format Upload Pelangaran</a>
                     <br>
                   </p>
-              <form action="{{ route('importmigration.import') }}" method="POST" enctype="multipart/form-data">
+              <form action="{{ route('violations.import') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="input-group">
                     <div class="custom-file">
@@ -209,7 +209,7 @@
         <table class="table table-hover text-nowrap">
           <thead>
             <tr>
-              <th>NO</th>
+              <!-- <th>NO</th> -->
               <th>NIK</th>
               <th>Nama</th>
               <th>NO SP</th>
@@ -228,7 +228,7 @@
           <tbody>
             @foreach($violations as $violation)
               <tr>
-                <td>{{ $violation->id }}</td>
+                <!-- <td>{{ $violation->id }}</td> -->
                 <td><a href="/violations/{{ $violation->employee_id }}/edit" class="text-dark" >{{ $violation->number_of_employees }}</a></td>
                 <td><a href="/violations/{{ $violation->employee_id }}/edit" class="text-dark">{{ $violation->name }}</a></td>
                 <td>{{nomer_sp($violation->no_violation, $violation->id);}}           </td>

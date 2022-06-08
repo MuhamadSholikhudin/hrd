@@ -644,7 +644,7 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
 
 
 
-/*
+
     public function collection(Collection $rows)
     {
         foreach ($rows as $index => $row) {
@@ -1256,16 +1256,16 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
 
     }
 
-*/
+
 
     public function batchSize(): int
     {
-        return 10;
+        return 50;
     }
     
     public function chunkSize(): int
     {
-        return 10;
+        return 50;
     }
 
 }

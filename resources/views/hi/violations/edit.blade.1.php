@@ -386,14 +386,17 @@
                       // $alphabet  = DB::table('alphabets')->find($violation->alphabet_id); 
                       // $paragraph  = DB::table('paragraphs')->find($alphabet->paragraph_id); 
                       // $article  = DB::table('articles')->find($paragraph->article_id); 
-                      
-                       echo pasal($violation->alphabet_id);
-                    
+
+                      if($violation->alphabet_id !== NULL){
+                        echo pasal($violation->alphabet_id);
+                        }else{
+
+                        }
                     ?>
                   </td>
 
                       <td>
-                      <?php 
+                          <?php 
                               if($violation->alphabet_accumulation !== NULL){
                               echo pasal($violation->alphabet_accumulation);
                               }else{
@@ -474,8 +477,8 @@
         </div>
 
       {{-- Displaynone --}}
-        <!-- <div > -->
-       <div style="display:none;" > 
+        <div >
+        {{-- <div style="display:none;" > --}}
           <?php
             $date_violation = new \DateTime(date('Y-m-d') .' 4:06:37' );
 
@@ -605,7 +608,7 @@
 
             // Cari data pelanggan terakhir 
             
-            /*
+            
 
             $sel_num_vio = DB::table('violations')->where('employee_id', $employee->id)->count();
 
@@ -674,7 +677,8 @@
 
 
 
-            */
+            
+            /*
             
 
             $sel_num_vio = DB::table('violations')->where('employee_id', $employee->id)->count();
@@ -700,7 +704,7 @@
                 $last_accumulation = $sel_vio->accumulation;
               }
             }
-            
+            */
             
 
             echo '<br>';

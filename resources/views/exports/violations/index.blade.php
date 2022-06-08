@@ -39,6 +39,8 @@
     </thead>
 <tbody>
     @foreach($violations as $violation)
+
+        
         <tr>
             <td>{{ $violation->employee->number_of_employees }}</td>
             <td>{{ $violation->employee->name }}</td>
