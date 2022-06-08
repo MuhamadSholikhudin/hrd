@@ -33,12 +33,12 @@
 // $arr_a = [1, 2, 3, ....., 5000];
 
 
-DB::table('employees')->orderBy('id')->chunk(100, function ($employees) {
-  foreach ($employees as $employee) {
-      //
-      echo $employee->id;
-  }
-});
+// DB::table('employees')->orderBy('id')->chunk(100, function ($employees) {
+//   foreach ($employees as $employee) {
+//       //
+//       echo $employee->id;
+//   }
+// });
 
 ?>
 
@@ -60,7 +60,7 @@ $c = 32.5;
 echo "c is " . is_numeric($c) . "<br>";
 
 $d = "32s";
-echo "d is " . is_numeric($d) . "<br>";
+echo "d is " . is_string($d) . "<br>";
 
 $e = true;
 echo "e is " . is_numeric($e) . "<br>";

@@ -70,10 +70,10 @@ class ViolationController extends Controller
         $other_information = $request->other_information;
         $date_of_violation = $request->date_of_violation;
         $reporting_date = $request->reporting_date;
-        $last_accumulation = $request->last_accumulation;
 
-        $last_vio = $request->last_vio;
         $alphabet_id = $request->alphabet_id;
+        $last_vio = $request->last_vio;
+        $last_accumulation = $request->last_accumulation;
         // $status_violant_last = $request->last_vio;
         $last_type = $request->last_type;
 
@@ -91,7 +91,8 @@ class ViolationController extends Controller
             $no_sp = 1;
         }elseif($num_no_sp > 0){
             $sel_no_sp = DB::table('violations')
-              ->latest()->first();
+                ->orderByDesc('no_violation')
+                ->first();
           $no_sp = $sel_no_sp->no_violation + 1 ;
         }
 
@@ -159,22 +160,41 @@ class ViolationController extends Controller
                     // GET LOGIKA AKUMULASI PERINGATAN LISAN
                     require_once 'GetViolationArticle.php';
 
-                    $pelanggran_sebelumnya2 = DB::table('violations')
+                    $cek_pelanggran_sebelumnya2 = DB::table('violations')
                         ->where('employee_id',  $employee_id) 
-                        ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
+                        ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
                         ->latest()                       
-                        ->first();
-
-                    $pelanggran_sebelumnya3 = DB::table('violations')
-                        ->where('employee_id',  $employee_id) 
-                        ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
-                        ->latest()                       
-                        ->first();
-
+                        ->count();
+                    if($cek_pelanggran_sebelumnya2 > 0){
+                        $pelanggran_sebelumnya2 = DB::table('violations')
+                            ->where('employee_id',  $employee_id) 
+                            ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
+                            ->latest()                       
+                            ->first();
+                        $cek_pelanggran_sebelumnya3 = DB::table('violations')
+                            ->where('employee_id',  $employee_id) 
+                            ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
+                            ->latest()                       
+                            ->count(); 
+                        if($cek_pelanggran_sebelumnya3 > 0){
+                            $pelanggran_sebelumnya3 = DB::table('violations')
+                                ->where('employee_id',  $employee_id) 
+                                ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
+                                ->latest()                       
+                                ->first();   
+                                $pelanggran_sebelumnya3_id = $pelanggran_sebelumnya3->id;
+                        }else{
+                            $pelanggran_sebelumnya3_id = null;
+                        }
+                        $pelanggran_sebelumnya2_id = $pelanggran_sebelumnya2->id;
+                    }else{
+                        $pelanggran_sebelumnya2_id = null;
+                        $pelanggran_sebelumnya3_id = null;
+                    }                               
                     $alphabet_accumulation = $pasal_alphabet_accumulation;    
                     $violation_accumulation = $pelanggran_sebelumnya->id;    
-                    $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
-                    $violation_accumulation3 = $pelanggran_sebelumnya3->id;  
+                    $violation_accumulation2 = $pelanggran_sebelumnya2_id;    
+                    $violation_accumulation3 = $pelanggran_sebelumnya3_id;   
                 
                 }else{
                     // BATAS AKUMULASI
@@ -209,22 +229,41 @@ class ViolationController extends Controller
                             if($get_num_vio_accumulation2 > 0){
                                 require_once 'GetViolationArticle.php';
 
-                                $pelanggran_sebelumnya2 = DB::table('violations')
+                                $cek_pelanggran_sebelumnya2 = DB::table('violations')
                                     ->where('employee_id',  $employee_id) 
-                                    ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
+                                    ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
                                     ->latest()                       
-                                    ->first();
-
-                                $pelanggran_sebelumnya3 = DB::table('violations')
-                                    ->where('employee_id',  $employee_id) 
-                                    ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
-                                    ->latest()                       
-                                    ->first();   
-                
+                                    ->count();
+                                if($cek_pelanggran_sebelumnya2 > 0){
+                                    $pelanggran_sebelumnya2 = DB::table('violations')
+                                        ->where('employee_id',  $employee_id) 
+                                        ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
+                                        ->latest()                       
+                                        ->first();
+                                    $cek_pelanggran_sebelumnya3 = DB::table('violations')
+                                        ->where('employee_id',  $employee_id) 
+                                        ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
+                                        ->latest()                       
+                                        ->count(); 
+                                    if($cek_pelanggran_sebelumnya3 > 0){
+                                        $pelanggran_sebelumnya3 = DB::table('violations')
+                                            ->where('employee_id',  $employee_id) 
+                                            ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
+                                            ->latest()                       
+                                            ->first();   
+                                            $pelanggran_sebelumnya3_id = $pelanggran_sebelumnya3->id;
+                                    }else{
+                                        $pelanggran_sebelumnya3_id = null;
+                                    }
+                                    $pelanggran_sebelumnya2_id = $pelanggran_sebelumnya2->id;
+                                }else{
+                                    $pelanggran_sebelumnya2_id = null;
+                                    $pelanggran_sebelumnya3_id = null;
+                                }                               
                                 $alphabet_accumulation = $pasal_alphabet_accumulation;    
                                 $violation_accumulation = $pelanggran_sebelumnya->id;    
-                                $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
-                                $violation_accumulation3 = $pelanggran_sebelumnya3->id;  
+                                $violation_accumulation2 = $pelanggran_sebelumnya2_id;    
+                                $violation_accumulation3 = $pelanggran_sebelumnya3_id;  
                 
                             }else{
 
@@ -257,15 +296,27 @@ class ViolationController extends Controller
                                         if($get_num_vio_accumulation > 0){
                     
                                             require_once 'GetViolationArticle.php';
-                                            $pelanggran_sebelumnya2 = DB::table('violations')
+                                            $cek_pelanggran_sebelumnya2 = DB::table('violations')
+                                                ->where('employee_id',  $employee_id) 
+                                                ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
+                                                ->latest()                       
+                                                ->count();
+        
+                                            if($cek_pelanggran_sebelumnya2 > 0){
+                                                $pelanggran_sebelumnya2 = DB::table('violations')
                                                 ->where('employee_id',  $employee_id) 
                                                 ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
                                                 ->latest()                       
                                                 ->first();
+                                                $pelanggran_sebelumnya2_id = $pelanggran_sebelumnya2->id;
+                                            }else{
+                                                $pelanggran_sebelumnya2_id = null;
+                                            }
                                             
                                             $alphabet_accumulation = $pasal_alphabet_accumulation;    
                                             $violation_accumulation = $pelanggran_sebelumnya->id;    
-                                            $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
+                                            $violation_accumulation2 = $pelanggran_sebelumnya2_id;    
+                                            $violation_accumulation3 = null;    
                                             $violation_accumulation3 = null;  
                     
                                         }else{
@@ -318,15 +369,27 @@ class ViolationController extends Controller
                                     if($get_num_vio_accumulation > 0){
                 
                                         require_once 'GetViolationArticle.php';
-                                        $pelanggran_sebelumnya2 = DB::table('violations')
+                                        $cek_pelanggran_sebelumnya2 = DB::table('violations')
+                                            ->where('employee_id',  $employee_id) 
+                                            ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
+                                            ->latest()                       
+                                            ->count();
+
+                                        if($cek_pelanggran_sebelumnya2 > 0){
+                                            $pelanggran_sebelumnya2 = DB::table('violations')
                                             ->where('employee_id',  $employee_id) 
                                             ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
                                             ->latest()                       
                                             ->first();
+                                            $pelanggran_sebelumnya2_id = $pelanggran_sebelumnya2->id;
+                                        }else{
+                                            $pelanggran_sebelumnya2_id = null;
+                                        }
                                         
                                         $alphabet_accumulation = $pasal_alphabet_accumulation;    
                                         $violation_accumulation = $pelanggran_sebelumnya->id;    
-                                        $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
+                                        $violation_accumulation2 = $pelanggran_sebelumnya2_id;    
+                                        $violation_accumulation3 = null;      
                                         $violation_accumulation3 = null;  
                 
                                     }else{
@@ -386,22 +449,41 @@ class ViolationController extends Controller
                         if($get_num_vio_accumulation2 > 0){
                             require_once 'GetViolationArticle.php';
     
-                            $pelanggran_sebelumnya2 = DB::table('violations')
+                            $cek_pelanggran_sebelumnya2 = DB::table('violations')
                                 ->where('employee_id',  $employee_id) 
-                                ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
+                                ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
                                 ->latest()                       
-                                ->first();
-    
-                            $pelanggran_sebelumnya3 = DB::table('violations')
-                                ->where('employee_id',  $employee_id) 
-                                ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
-                                ->latest()                       
-                                ->first();   
-            
+                                ->count();
+                            if($cek_pelanggran_sebelumnya2 > 0){
+                                $pelanggran_sebelumnya2 = DB::table('violations')
+                                    ->where('employee_id',  $employee_id) 
+                                    ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
+                                    ->latest()                       
+                                    ->first();
+                                $cek_pelanggran_sebelumnya3 = DB::table('violations')
+                                    ->where('employee_id',  $employee_id) 
+                                    ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
+                                    ->latest()                       
+                                    ->count(); 
+                                if($cek_pelanggran_sebelumnya3 > 0){
+                                    $pelanggran_sebelumnya3 = DB::table('violations')
+                                        ->where('employee_id',  $employee_id) 
+                                        ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
+                                        ->latest()                       
+                                        ->first();   
+                                        $pelanggran_sebelumnya3_id = $pelanggran_sebelumnya3->id;
+                                }else{
+                                    $pelanggran_sebelumnya3_id = null;
+                                }
+                                $pelanggran_sebelumnya2_id = $pelanggran_sebelumnya2->id;
+                            }else{
+                                $pelanggran_sebelumnya2_id = null;
+                                $pelanggran_sebelumnya3_id = null;
+                            }                               
                             $alphabet_accumulation = $pasal_alphabet_accumulation;    
                             $violation_accumulation = $pelanggran_sebelumnya->id;    
-                            $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
-                            $violation_accumulation3 = $pelanggran_sebelumnya3->id;  
+                            $violation_accumulation2 = $pelanggran_sebelumnya2_id;    
+                            $violation_accumulation3 = $pelanggran_sebelumnya3_id;    
             
                         }else{
 
@@ -434,15 +516,26 @@ class ViolationController extends Controller
                                     if($get_num_vio_accumulation > 0){
                 
                                         require_once 'GetViolationArticle.php';
-                                        $pelanggran_sebelumnya2 = DB::table('violations')
+                                        $cek_pelanggran_sebelumnya2 = DB::table('violations')
+                                            ->where('employee_id',  $employee_id) 
+                                            ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
+                                            ->latest()                       
+                                            ->count();
+
+                                        if($cek_pelanggran_sebelumnya2 > 0){
+                                            $pelanggran_sebelumnya2 = DB::table('violations')
                                             ->where('employee_id',  $employee_id) 
                                             ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
                                             ->latest()                       
                                             ->first();
+                                            $pelanggran_sebelumnya2_id = $pelanggran_sebelumnya2->id;
+                                        }else{
+                                            $pelanggran_sebelumnya2_id = null;
+                                        }
                                         
                                         $alphabet_accumulation = $pasal_alphabet_accumulation;    
                                         $violation_accumulation = $pelanggran_sebelumnya->id;    
-                                        $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
+                                        $violation_accumulation2 = $pelanggran_sebelumnya2_id;    
                                         $violation_accumulation3 = null;  
                 
                                     }else{
@@ -495,15 +588,26 @@ class ViolationController extends Controller
                                 if($get_num_vio_accumulation > 0){
             
                                     require_once 'GetViolationArticle.php';
-                                    $pelanggran_sebelumnya2 = DB::table('violations')
+                                    $cek_pelanggran_sebelumnya2 = DB::table('violations')
+                                        ->where('employee_id',  $employee_id) 
+                                        ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
+                                        ->latest()                       
+                                        ->count();
+
+                                    if($cek_pelanggran_sebelumnya2 > 0){
+                                        $pelanggran_sebelumnya2 = DB::table('violations')
                                         ->where('employee_id',  $employee_id) 
                                         ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
                                         ->latest()                       
                                         ->first();
+                                        $pelanggran_sebelumnya2_id = $pelanggran_sebelumnya2->id;
+                                    }else{
+                                        $pelanggran_sebelumnya2_id = null;
+                                    }
                                     
                                     $alphabet_accumulation = $pasal_alphabet_accumulation;    
                                     $violation_accumulation = $pelanggran_sebelumnya->id;    
-                                    $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
+                                    $violation_accumulation2 = $pelanggran_sebelumnya2_id;    
                                     $violation_accumulation3 = null;  
             
                                 }else{
@@ -525,9 +629,7 @@ class ViolationController extends Controller
                             $violation_accumulation2 = null;    
                             $violation_accumulation3 = null;  
                         }
-                    
                     }
-
             }
         } 
           
@@ -539,7 +641,7 @@ class ViolationController extends Controller
             'format' => 'SP-HRD',    
             'month_of_violation' => $month_n,     
             'violation_ROM' => $ROM,   
-            'reporting_day' => null,     
+            'reporting_day' =>  $day_indo,     
             'reporting_date' => $reporting_date,   
             'job_level' => $job_level,   
             'department' => $department,   
@@ -671,8 +773,8 @@ class ViolationController extends Controller
         return view('hi.violations.edit', [
             
             'employee' => $employee,
-            // 'violations' => DB::table('violations')->where('employee_id', $id)->get(),
-            'violations' => $violation,
+            'violations' => DB::table('violations')->where('employee_id', $id)->get(),
+            // 'violations' => $violation,
             'alphabets' => $alphabet,
             'jobs' => Job::all(),
             'departments' => Department::all()
@@ -701,7 +803,7 @@ class ViolationController extends Controller
     {
         //
         Violation::destroy($id);
-        return redirect('hiviolation');
+        return redirect('hiviolation')->with('success', 'Data Pelanggaran Berhasil di hapus!');
         // ->with('success', 'Post has been deleted!');
     }
 

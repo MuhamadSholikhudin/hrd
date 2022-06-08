@@ -368,30 +368,40 @@ function KETENGAN_LAIN_2($violation_id){
   $violation  = DB::table('violations')->find($violation_id); 
 
   if($violation->alphabet_accumulation !== NULL){
-    $cari_pasal_akumulasi = DB::table('alphabets')
-          ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-          ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
-          ->where('alphabets.id', $violation->alphabet_accumulation)
-          ->first();
 
-          $pelanggran_sebelumnya = DB::table('violations')
-          ->where('employee_id',  $violation->employee_id) 
-          ->where('id',  $violation->violation_accumulation) 
-          ->latest()                       
-          ->first();
+    if($violation->violation_accumulation !== NULL){
+      $cari_pasal_akumulasi = DB::table('alphabets')
+        ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+        ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+        ->where('alphabets.id', $violation->alphabet_accumulation)
+        ->first();
+
+      $pelanggran_sebelumnya = DB::table('violations')
+        ->where('employee_id',  $violation->employee_id) 
+        ->where('id',  $violation->violation_accumulation) 
+        ->latest()                       
+        ->first();
 
       $cari_pasal_sebelumnya = DB::table('alphabets')
-          ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-          ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
-          ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
-          ->first();
+        ->leftJoin('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+        ->leftJoin('articles', 'paragraphs.article_id', '=', 'articles.id')
+        ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
+        ->first();
 
-          $last_type = $cari_pasal_sebelumnya->type_of_verse;
+      $last_type = $cari_pasal_sebelumnya->type_of_verse;
 
-          $BUNYI_PASAL1 = 'Dalam masa ' . $last_type . ' Perjanjian Kerja Bersama Pasal '. $cari_pasal_sebelumnya->article . ' ayat ('. $cari_pasal_sebelumnya->paragraph. ') huruf "'.$cari_pasal_sebelumnya->alphabet.'", ';   
+      $BUNYI_PASAL1 = 'Dalam masa ' . $last_type . ' Perjanjian Kerja Bersama Pasal '. $cari_pasal_sebelumnya->article . ' ayat ('. $cari_pasal_sebelumnya->paragraph. ') huruf "'.$cari_pasal_sebelumnya->alphabet.'", ';   
+
+
+    }else{ 
+
+      $BUNYI_PASAL1 = "-";
+    }
+
   }else{
      $BUNYI_PASAL1 = "-";
   }
+
   return $BUNYI_PASAL1;
 }
 
@@ -399,7 +409,9 @@ function KETERANGAN_LAIN_1($violation_id){
   $violation  = DB::table('violations')->find($violation_id); 
 
   if($violation->alphabet_accumulation !== NULL){
-    $cari_pasal_akumulasi = DB::table('alphabets')
+
+    if($violation->violation_accumulation !== NULL){
+      $cari_pasal_akumulasi = DB::table('alphabets')
           ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
           ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
           ->where('alphabets.id', $violation->alphabet_accumulation)
@@ -418,6 +430,9 @@ function KETERANGAN_LAIN_1($violation_id){
           ->first();
 
           $KETERANGAN_LAIN_1 = $cari_pasal_sebelumnya->alphabet_sound;   
+    }else{
+          $KETERANGAN_LAIN_1 = "-";
+    }
   }else{
      $KETERANGAN_LAIN_1 = "-";
   }
@@ -428,7 +443,8 @@ function PELANGGARAN_SEBELUMNYA($violation_id){
   $violation  = DB::table('violations')->find($violation_id); 
 
   if($violation->alphabet_accumulation !== NULL){
-    $cari_pasal_akumulasi = DB::table('alphabets')
+    if($violation->violation_accumulation !== NULL){
+      $cari_pasal_akumulasi = DB::table('alphabets')
           ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
           ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
           ->where('alphabets.id', $violation->alphabet_accumulation)
@@ -447,6 +463,10 @@ function PELANGGARAN_SEBELUMNYA($violation_id){
           ->first();
 
           $PELANGGARAN_SEBELUMNYA = $pelanggran_sebelumnya->other_information;   
+    }else{
+     $PELANGGARAN_SEBELUMNYA = "-";
+      
+    }
   }else{
      $PELANGGARAN_SEBELUMNYA = "-";
   }
