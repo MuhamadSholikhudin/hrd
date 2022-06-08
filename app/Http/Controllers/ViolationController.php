@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\URL;
 
+use Illuminate\Support\Collection;
+
+use Illuminate\Support\Arr;
+
 use App\Models\Employee;
 use App\Models\Job;
 use App\Models\Department;
@@ -34,7 +38,7 @@ class ViolationController extends Controller
         }
         
         return view('hi.violations.index', [
-            'employees' => $employees->paginate(10),
+            'employees' => $employees->paginate(10)->withQuerystring(),
             'count' => DB::table('employees')->count()
         ]);
     }
@@ -122,7 +126,6 @@ class ViolationController extends Controller
 
         }else{
 
-            // CARI PELANGGARAN AKUMULASI 4               
             $num_vio_accumulation3 = DB::table('violations')
                 ->where('employee_id',  $employee_id) 
                 ->where('violation_accumulation', '!=',  null) 
@@ -134,40 +137,26 @@ class ViolationController extends Controller
                 ->count();
 
             if($num_vio_accumulation3 > 0){
-                // GET LOGIKA AKUMULASI KEEMPAT
-                // GET LOGIKA AKUMULASI PERINGATAN LISAN
-                require_once 'GetViolationArticle.php';
 
-                $pelanggran_sebelumnya2 = DB::table('violations')
-                    ->where('employee_id',  $employee_id) 
-                    ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
-                    ->latest()                       
-                    ->first();
-
-                $pelanggran_sebelumnya3 = DB::table('violations')
-                    ->where('employee_id',  $employee_id) 
-                    ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
-                    ->latest()                       
-                    ->first();
-
-                $alphabet_accumulation = $pasal_alphabet_accumulation;    
-                $violation_accumulation = $pelanggran_sebelumnya->id;    
-                $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
-                $violation_accumulation3 = $pelanggran_sebelumnya3->id;  
-
-            }else{
-                // CARI PELANGGARAN AKUMULASI 3               
-                $num_vio_accumulation2 = DB::table('violations')
+                            // GET LOGIKA AKUMULASI KEEMPAT
+                $get_first_vio_accumulation3 = DB::table('violations')
                     ->where('employee_id',  $employee_id) 
                     ->where('violation_accumulation', '!=',  null) 
                     ->where('violation_accumulation2', '!=',  null) 
+                    ->where('violation_accumulation3', '!=',  null) 
                     ->where('alphabet_accumulation', '!=',  null) 
                     ->where('violation_status', 'active') 
                     ->latest()                       
+                    ->first();
+
+                $get_num_vio_accumulation3 = DB::table('violations')
+                    ->where('employee_id',  $employee_id) 
+                    ->where('violation_accumulation', $get_first_vio_accumulation3->id) 
+                    ->where('violation_status', 'active')       
                     ->count();
 
-                if($num_vio_accumulation2 > 0){
-                    // LOGIKA AKUMULSI KETIGA
+                if($get_num_vio_accumulation3 > 0){
+                    // GET LOGIKA AKUMULASI PERINGATAN LISAN
                     require_once 'GetViolationArticle.php';
 
                     $pelanggran_sebelumnya2 = DB::table('violations')
@@ -180,7 +169,7 @@ class ViolationController extends Controller
                         ->where('employee_id',  $employee_id) 
                         ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
                         ->latest()                       
-                        ->first();   
+                        ->first();
 
                     $alphabet_accumulation = $pasal_alphabet_accumulation;    
                     $violation_accumulation = $pelanggran_sebelumnya->id;    
@@ -188,43 +177,361 @@ class ViolationController extends Controller
                     $violation_accumulation3 = $pelanggran_sebelumnya3->id;  
                 
                 }else{
-                    // CARI PELANGGARAN AKUMULASI 1
-                    $num_vio_accumulation = DB::table('violations')
+                    // BATAS AKUMULASI
+
+                    // CARI PELANGGARAN AKUMULASI 3               
+                    $num_vio_accumulation2 = DB::table('violations')
                         ->where('employee_id',  $employee_id) 
                         ->where('violation_accumulation', '!=',  null) 
+                        ->where('violation_accumulation2', '!=',  null) 
                         ->where('alphabet_accumulation', '!=',  null) 
                         ->where('violation_status', 'active') 
                         ->latest()                       
                         ->count();
 
-                    if($num_vio_accumulation > 0){
-                        //LOGIKA AKUMULASI KEDUA
-                        require_once 'GetViolationArticle.php';
-
-                        $pelanggran_sebelumnya2 = DB::table('violations')
-                            ->where('employee_id',  $employee_id) 
-                            ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
+                    if($num_vio_accumulation2 > 0){
+                                        
+                        // LOGIKA AKUMULSI KETIGA
+                        $get_first_vio_accumulation2 = DB::table('violations')
+                            ->where('violation_accumulation', '!=',  null) 
+                            ->where('violation_accumulation2', '!=',  null) 
+                            ->where('alphabet_accumulation', '!=',  null) 
+                            ->where('violation_status', 'active') 
                             ->latest()                       
                             ->first();
+            
+                        $get_num_vio_accumulation2 = DB::table('violations')
+                            ->where('employee_id',  $employee_id) 
+                            ->where('violation_accumulation', $get_first_vio_accumulation2->id) 
+                            ->where('violation_status', 'active')       
+                            ->count();
+
+                            if($get_num_vio_accumulation2 > 0){
+                                require_once 'GetViolationArticle.php';
+
+                                $pelanggran_sebelumnya2 = DB::table('violations')
+                                    ->where('employee_id',  $employee_id) 
+                                    ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
+                                    ->latest()                       
+                                    ->first();
+
+                                $pelanggran_sebelumnya3 = DB::table('violations')
+                                    ->where('employee_id',  $employee_id) 
+                                    ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
+                                    ->latest()                       
+                                    ->first();   
+                
+                                $alphabet_accumulation = $pasal_alphabet_accumulation;    
+                                $violation_accumulation = $pelanggran_sebelumnya->id;    
+                                $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
+                                $violation_accumulation3 = $pelanggran_sebelumnya3->id;  
+                
+                            }else{
+
+                            // BATAS AKUMULASI 
+
+                                $num_vio_accumulation = DB::table('violations')
+                                    ->where('employee_id',  $employee_id) 
+                                    ->where('violation_accumulation', '!=',  null) 
+                                    ->where('alphabet_accumulation', '!=',  null) 
+                                    ->where('violation_status', 'active') 
+                                    ->latest()                       
+                                    ->count();
+                    
+                                if($num_vio_accumulation > 0){
+                    
+                                    $get_first_vio_accumulation = DB::table('violations')
+                                        ->where('employee_id',  $employee_id) 
+                                        ->where('violation_accumulation', '!=',  null) 
+                                        ->where('alphabet_accumulation', '!=',  null) 
+                                        ->where('violation_status', 'active') 
+                                        ->latest()                       
+                                        ->first();
+                    
+                                    $get_num_vio_accumulation = DB::table('violations')
+                                        ->where('employee_id',  $employee_id) 
+                                        ->where('id', $get_first_vio_accumulation->id) 
+                                        ->where('violation_status', 'active')       
+                                        ->count();
+                    
+                                        if($get_num_vio_accumulation > 0){
+                    
+                                            require_once 'GetViolationArticle.php';
+                                            $pelanggran_sebelumnya2 = DB::table('violations')
+                                                ->where('employee_id',  $employee_id) 
+                                                ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
+                                                ->latest()                       
+                                                ->first();
+                                            
+                                            $alphabet_accumulation = $pasal_alphabet_accumulation;    
+                                            $violation_accumulation = $pelanggran_sebelumnya->id;    
+                                            $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
+                                            $violation_accumulation3 = null;  
+                    
+                                        }else{
+                                            //LOGIKA AKUMULSAI PERTAMA
+                                            require_once 'GetViolationArticle.php';
+                                            
+                                            $alphabet_accumulation = $pasal_alphabet_accumulation;    
+                                            $violation_accumulation = $pelanggran_sebelumnya->id;    
+                                            $violation_accumulation2 = null;    
+                                            $violation_accumulation3 = null;  
+                                        }
+                    
+                                }else{
+                                    //LOGIKA AKUMULSAI PERTAMA
+                                    require_once 'GetViolationArticle.php';
                                     
-                        $alphabet_accumulation = $pasal_alphabet_accumulation;    
-                        $violation_accumulation = $pelanggran_sebelumnya->id;    
-                        $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
-                        $violation_accumulation3 = null;  
+                                    $alphabet_accumulation = $pasal_alphabet_accumulation;    
+                                    $violation_accumulation = $pelanggran_sebelumnya->id;    
+                                    $violation_accumulation2 = null;    
+                                    $violation_accumulation3 = null;  
+                                }
+                            }
+                    
+                        }else{
+
+                            $num_vio_accumulation = DB::table('violations')
+                                ->where('employee_id',  $employee_id) 
+                                ->where('violation_accumulation', '!=',  null) 
+                                ->where('alphabet_accumulation', '!=',  null) 
+                                ->where('violation_status', 'active') 
+                                ->latest()                       
+                                ->count();
+            
+                            if($num_vio_accumulation > 0){
+                
+                                $get_first_vio_accumulation = DB::table('violations')
+                                    ->where('employee_id',  $employee_id) 
+                                    ->where('violation_accumulation', '!=',  null) 
+                                    ->where('alphabet_accumulation', '!=',  null) 
+                                    ->where('violation_status', 'active') 
+                                    ->latest()                       
+                                    ->first();
+                
+                                $get_num_vio_accumulation = DB::table('violations')
+                                    ->where('employee_id',  $employee_id) 
+                                    ->where('id', $get_first_vio_accumulation->id) 
+                                    ->where('violation_status', 'active')       
+                                    ->count();
+                
+                                    if($get_num_vio_accumulation > 0){
+                
+                                        require_once 'GetViolationArticle.php';
+                                        $pelanggran_sebelumnya2 = DB::table('violations')
+                                            ->where('employee_id',  $employee_id) 
+                                            ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
+                                            ->latest()                       
+                                            ->first();
+                                        
+                                        $alphabet_accumulation = $pasal_alphabet_accumulation;    
+                                        $violation_accumulation = $pelanggran_sebelumnya->id;    
+                                        $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
+                                        $violation_accumulation3 = null;  
+                
+                                    }else{
+                                        //LOGIKA AKUMULSAI PERTAMA
+                                        require_once 'GetViolationArticle.php';
+                                        
+                                        $alphabet_accumulation = $pasal_alphabet_accumulation;    
+                                        $violation_accumulation = $pelanggran_sebelumnya->id;    
+                                        $violation_accumulation2 = null;    
+                                        $violation_accumulation3 = null;  
+                                    }
+                
+                            }else{
+                                //LOGIKA AKUMULSAI PERTAMA
+                                require_once 'GetViolationArticle.php';
+                                
+                                $alphabet_accumulation = $pasal_alphabet_accumulation;    
+                                $violation_accumulation = $pelanggran_sebelumnya->id;    
+                                $violation_accumulation2 = null;    
+                                $violation_accumulation3 = null;  
+                            }
                         
-                    }else{
-                        //LOGIKA AKUMULSAI PERTAMA
-                        require_once 'GetViolationArticle.php';
-                            
-                        $alphabet_accumulation = $pasal_alphabet_accumulation;    
-                        $violation_accumulation = $pelanggran_sebelumnya->id;    
-                        $violation_accumulation2 = null;    
-                        $violation_accumulation3 = null;  
-                    }
+                        }
+
+
                 }
-            }   
+            
+            }else{
+                // BATAS AKUMULASI
+                // CARI PELANGGARAN AKUMULASI 3               
+                $num_vio_accumulation2 = DB::table('violations')
+                    ->where('employee_id',  $employee_id) 
+                    ->where('violation_accumulation', '!=',  null) 
+                    ->where('violation_accumulation2', '!=',  null) 
+                    ->where('alphabet_accumulation', '!=',  null) 
+                    ->where('violation_status', 'active') 
+                    ->latest()                       
+                    ->count();
+
+                if($num_vio_accumulation2 > 0){
+                                       
+                    // LOGIKA AKUMULSI KETIGA
+                    $get_first_vio_accumulation2 = DB::table('violations')
+                        ->where('violation_accumulation', '!=',  null) 
+                        ->where('violation_accumulation2', '!=',  null) 
+                        ->where('alphabet_accumulation', '!=',  null) 
+                        ->where('violation_status', 'active') 
+                        ->latest()                       
+                        ->first();
+        
+                    $get_num_vio_accumulation2 = DB::table('violations')
+                        ->where('employee_id',  $employee_id) 
+                        ->where('violation_accumulation', $get_first_vio_accumulation2->id) 
+                        ->where('violation_status', 'active')       
+                        ->count();
+
+                        if($get_num_vio_accumulation2 > 0){
+                            require_once 'GetViolationArticle.php';
+    
+                            $pelanggran_sebelumnya2 = DB::table('violations')
+                                ->where('employee_id',  $employee_id) 
+                                ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
+                                ->latest()                       
+                                ->first();
+    
+                            $pelanggran_sebelumnya3 = DB::table('violations')
+                                ->where('employee_id',  $employee_id) 
+                                ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
+                                ->latest()                       
+                                ->first();   
+            
+                            $alphabet_accumulation = $pasal_alphabet_accumulation;    
+                            $violation_accumulation = $pelanggran_sebelumnya->id;    
+                            $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
+                            $violation_accumulation3 = $pelanggran_sebelumnya3->id;  
+            
+                        }else{
+
+                        // BATAS AKUMULASI 
+
+                            $num_vio_accumulation = DB::table('violations')
+                                ->where('employee_id',  $employee_id) 
+                                ->where('violation_accumulation', '!=',  null) 
+                                ->where('alphabet_accumulation', '!=',  null) 
+                                ->where('violation_status', 'active') 
+                                ->latest()                       
+                                ->count();
+                
+                            if($num_vio_accumulation > 0){
+                
+                                $get_first_vio_accumulation = DB::table('violations')
+                                    ->where('employee_id',  $employee_id) 
+                                    ->where('violation_accumulation', '!=',  null) 
+                                    ->where('alphabet_accumulation', '!=',  null) 
+                                    ->where('violation_status', 'active') 
+                                    ->latest()                       
+                                    ->first();
+                
+                                $get_num_vio_accumulation = DB::table('violations')
+                                    ->where('employee_id',  $employee_id) 
+                                    ->where('id', $get_first_vio_accumulation->id) 
+                                    ->where('violation_status', 'active')       
+                                    ->count();
+                
+                                    if($get_num_vio_accumulation > 0){
+                
+                                        require_once 'GetViolationArticle.php';
+                                        $pelanggran_sebelumnya2 = DB::table('violations')
+                                            ->where('employee_id',  $employee_id) 
+                                            ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
+                                            ->latest()                       
+                                            ->first();
+                                        
+                                        $alphabet_accumulation = $pasal_alphabet_accumulation;    
+                                        $violation_accumulation = $pelanggran_sebelumnya->id;    
+                                        $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
+                                        $violation_accumulation3 = null;  
+                
+                                    }else{
+                                        //LOGIKA AKUMULSAI PERTAMA
+                                        require_once 'GetViolationArticle.php';
+                                        
+                                        $alphabet_accumulation = $pasal_alphabet_accumulation;    
+                                        $violation_accumulation = $pelanggran_sebelumnya->id;    
+                                        $violation_accumulation2 = null;    
+                                        $violation_accumulation3 = null;  
+                                    }
+                
+                            }else{
+                                //LOGIKA AKUMULSAI PERTAMA
+                                require_once 'GetViolationArticle.php';
+                                
+                                $alphabet_accumulation = $pasal_alphabet_accumulation;    
+                                $violation_accumulation = $pelanggran_sebelumnya->id;    
+                                $violation_accumulation2 = null;    
+                                $violation_accumulation3 = null;  
+                            }
+                        }
+                
+                    }else{
+
+                        $num_vio_accumulation = DB::table('violations')
+                            ->where('employee_id',  $employee_id) 
+                            ->where('violation_accumulation', '!=',  null) 
+                            ->where('alphabet_accumulation', '!=',  null) 
+                            ->where('violation_status', 'active') 
+                            ->latest()                       
+                            ->count();
+        
+                        if($num_vio_accumulation > 0){
+            
+                            $get_first_vio_accumulation = DB::table('violations')
+                                ->where('employee_id',  $employee_id) 
+                                ->where('violation_accumulation', '!=',  null) 
+                                ->where('alphabet_accumulation', '!=',  null) 
+                                ->where('violation_status', 'active') 
+                                ->latest()                       
+                                ->first();
+            
+                            $get_num_vio_accumulation = DB::table('violations')
+                                ->where('employee_id',  $employee_id) 
+                                ->where('id', $get_first_vio_accumulation->id) 
+                                ->where('violation_status', 'active')       
+                                ->count();
+            
+                                if($get_num_vio_accumulation > 0){
+            
+                                    require_once 'GetViolationArticle.php';
+                                    $pelanggran_sebelumnya2 = DB::table('violations')
+                                        ->where('employee_id',  $employee_id) 
+                                        ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
+                                        ->latest()                       
+                                        ->first();
+                                    
+                                    $alphabet_accumulation = $pasal_alphabet_accumulation;    
+                                    $violation_accumulation = $pelanggran_sebelumnya->id;    
+                                    $violation_accumulation2 = $pelanggran_sebelumnya2->id;    
+                                    $violation_accumulation3 = null;  
+            
+                                }else{
+                                    //LOGIKA AKUMULSAI PERTAMA
+                                    require_once 'GetViolationArticle.php';
+                                    
+                                    $alphabet_accumulation = $pasal_alphabet_accumulation;    
+                                    $violation_accumulation = $pelanggran_sebelumnya->id;    
+                                    $violation_accumulation2 = null;    
+                                    $violation_accumulation3 = null;  
+                                }
+            
+                        }else{
+                            //LOGIKA AKUMULSAI PERTAMA
+                            require_once 'GetViolationArticle.php';
+                            
+                            $alphabet_accumulation = $pasal_alphabet_accumulation;    
+                            $violation_accumulation = $pelanggran_sebelumnya->id;    
+                            $violation_accumulation2 = null;    
+                            $violation_accumulation3 = null;  
+                        }
+                    
+                    }
+
+            }
         } 
           
+      
         $data = [
             'date_of_violation' => $date_of_violation,     
             'date_end_violation' => $date_end_violation,     
@@ -307,10 +614,65 @@ class ViolationController extends Controller
             // ->where('employee_id', $id)
             ->get();
 
+
+        $num_print_violationmigrations = DB::table('violationmigrations')
+            ->where('employee_id',  $id)              
+            ->count();
+
+        $num_print_violations = DB::table('violations')
+            ->where('employee_id',  $id)              
+            ->count();
+        
+        if($num_print_violationmigrations > 0 AND $num_print_violations > 0){
+
+            $print_violationmigrations = DB::table('violationmigrations')->where('employee_id', $id)->get();
+                
+            $print_violations = DB::table('violations')->where('employee_id', $id)->get();
+
+            $array = Arr::collapse([$print_violationmigrations, $print_violations]); 
+            
+            function date_compare($a, $b)
+            {
+                $t1 = strtotime($a['reporting_date']);
+                $t2 = strtotime($b['reporting_date']);
+                return $t1 - $t2;
+            }
+
+            // usort($array, 'date_compare');
+
+            $violation = $array;
+
+        }elseif($num_print_violations == 0 AND $num_print_violationmigrations > 0){
+
+            $print_violationmigrations = DB::table('violationmigrations')
+                ->where('employee_id',  $id)              
+                ->get();
+
+            $violation = $print_violationmigrations;
+
+        }elseif($num_print_violationmigrations == 0 AND $num_print_violations > 0){
+
+            $print_violations = DB::table('violations')
+                ->where('employee_id',  $id)              
+                ->get();
+
+            $violation = $print_violations;
+
+        }elseif($num_print_violationmigrations == 0 AND $num_print_violations == 0){
+            $violation = DB::table('violations')
+                ->where('employee_id',  $id)              
+                ->get();
+        }else{
+            $violation = DB::table('violations')
+            ->where('employee_id',  $id)              
+            ->get();
+        }
+      
         return view('hi.violations.edit', [
             
             'employee' => $employee,
-            'violations' => DB::table('violations')->where('employee_id', $id)->get(),
+            // 'violations' => DB::table('violations')->where('employee_id', $id)->get(),
+            'violations' => $violation,
             'alphabets' => $alphabet,
             'jobs' => Job::all(),
             'departments' => Department::all()
@@ -346,8 +708,9 @@ class ViolationController extends Controller
 
     public function get_type_violation(Request $request)
     {
+
         //ambil data employee_id, status_violant_last, violation_now, violation_id
-        $emp_id = $request->id_emp;
+        $employee_id = $request->id_emp;
         $status_violant_last = $request->status_violant_last;
         $violation_now = $request->violation_now;
         $last_type = $request->last_type;
@@ -375,9 +738,8 @@ class ViolationController extends Controller
             
         }else{
 
-            // CARI PELANGGARAN AKUMULASI 4
             $num_vio_accumulation3 = DB::table('violations')
-                ->where('employee_id',  $emp_id) 
+                ->where('employee_id',  $employee_id) 
                 ->where('violation_accumulation', '!=',  null) 
                 ->where('violation_accumulation2', '!=',  null) 
                 ->where('violation_accumulation3', '!=',  null) 
@@ -387,48 +749,344 @@ class ViolationController extends Controller
                 ->count();
 
             if($num_vio_accumulation3 > 0){
-
+                                
                 // GET LOGIKA AKUMULASI KEEMPAT
-                // GET LOGIKA AKUMULASI PERINGATAN LISAN
-                require 'GetAccumulation.php';
+                $get_first_vio_accumulation3 = DB::table('violations')
+                    ->where('employee_id',  $employee_id) 
+                    ->where('violation_accumulation', '!=',  null) 
+                    ->where('violation_accumulation2', '!=',  null) 
+                    ->where('violation_accumulation3', '!=',  null) 
+                    ->where('alphabet_accumulation', '!=',  null) 
+                    ->where('violation_status', 'active') 
+                    ->latest()                       
+                    ->first();
 
-            }else{
-                // CARI PELANGGARAN AKUMULASI 3
-                $num_vio_accumulation2 = DB::table('violations')
-                        ->where('employee_id',  $emp_id) 
+                $get_num_vio_accumulation3 = DB::table('violations')
+                    ->where('employee_id',  $employee_id) 
+                    ->where('violation_accumulation', $get_first_vio_accumulation3->id) 
+                    ->where('violation_status', 'active')       
+                    ->count();
+
+                if($get_num_vio_accumulation3 > 0){
+                
+                    // GET LOGIKA AKUMULASI PERINGATAN LISAN
+                    require_once 'GetViolationArticle.php';
+
+                    $pelanggran_sebelumnya2 = DB::table('violations')
+                        ->where('employee_id',  $employee_id) 
+                        ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
+                        ->latest()                       
+                        ->first();
+
+                    $pelanggran_sebelumnya3 = DB::table('violations')
+                        ->where('employee_id',  $employee_id) 
+                        ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
+                        ->latest()                       
+                        ->first();
+
+                    require_once 'Violationjsondatas.php';
+                }else{
+                    // BATAS AKUMULASI
+                                    // CARI PELANGGARAN AKUMULASI 3               
+                    $num_vio_accumulation2 = DB::table('violations')
+                        ->where('employee_id',  $employee_id) 
                         ->where('violation_accumulation', '!=',  null) 
                         ->where('violation_accumulation2', '!=',  null) 
                         ->where('alphabet_accumulation', '!=',  null) 
                         ->where('violation_status', 'active') 
                         ->latest()                       
                         ->count();
+                    if($num_vio_accumulation2 > 0){
 
+                        // LOGIKA AKUMULSI KETIGA
+                        $get_first_vio_accumulation2 = DB::table('violations')
+                            ->where('violation_accumulation', '!=',  null) 
+                            ->where('violation_accumulation2', '!=',  null) 
+                            ->where('alphabet_accumulation', '!=',  null) 
+                            ->where('violation_status', 'active') 
+                            ->latest()                       
+                            ->first();
+
+                        $get_num_vio_accumulation2 = DB::table('violations')
+                            ->where('employee_id',  $employee_id) 
+                            ->where('violation_accumulation', $get_first_vio_accumulation2->id) 
+                            ->where('violation_status', 'active')       
+                            ->count(); 
+                        
+                        if($get_num_vio_accumulation2  > 0){
+
+                            require_once 'GetAccumulation.php';
+
+                            $pelanggran_sebelumnya2 = DB::table('violations')
+                                ->where('employee_id',  $employee_id) 
+                                ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
+                                ->latest()                       
+                                ->first();
+
+                            $pelanggran_sebelumnya3 = DB::table('violations')
+                                ->where('employee_id',  $employee_id) 
+                                ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
+                                ->latest()                       
+                                ->first();   
+                                require_once 'Violationjsondatas.php';
+                        }else{
+
+                            $num_vio_accumulation = DB::table('violations')
+                                ->where('employee_id',  $employee_id) 
+                                ->where('violation_accumulation', '!=',  NULL) 
+                                ->where('alphabet_accumulation', '!=',  NULL) 
+                                ->where('violation_status', 'active') 
+                                ->latest()                       
+                                ->count();
+
+                            if($num_vio_accumulation > 0){
+                                //LOGIKA AKUMULASI KEDUA
+
+                                $get_first_vio_accumulation = DB::table('violations')
+                                    ->where('employee_id',  $employee_id) 
+                                    ->where('violation_accumulation', '!=',  null) 
+                                    ->where('alphabet_accumulation', '!=',  null) 
+                                    ->where('violation_status', 'active') 
+                                    ->latest()                       
+                                    ->first();
+
+                                $get_num_vio_accumulation = DB::table('violations')
+                                    ->where('employee_id',  $employee_id) 
+                                    ->where('id', $get_first_vio_accumulation->id) 
+                                    ->where('violation_status', 'active')       
+                                    ->count();
+
+                                if($get_num_vio_accumulation > 0){
+
+                                    require_once 'GetAccumulation.php';
+
+                                    $pelanggran_sebelumnya2 = DB::table('violations')
+                                        ->where('employee_id',  $employee_id) 
+                                        ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
+                                        ->latest()                       
+                                        ->first();
+
+                                        require_once 'Violationjsondatas.php';
+                                    
+                                }else{
+                                    //LOGIKA AKUMULSAI PERTAMA
+                                    require_once 'GetAccumulation.php';                                          
+
+                                    require_once 'Violationjsondata.php';   
+                                }
+                            }else{
+                                //LOGIKA AKUMULSAI PERTAMA
+                                require_once 'GetAccumulation.php';                                          
+
+                                require_once 'Violationjsondata.php';    
+                            }
+                        }
+
+                    }else{
+                        $num_vio_accumulation = DB::table('violations')
+                            ->where('employee_id',  $employee_id) 
+                            ->where('violation_accumulation', '!=',  NULL) 
+                            ->where('alphabet_accumulation', '!=',  NULL) 
+                            ->where('violation_status', 'active') 
+                            ->latest()                       
+                            ->count();
+
+                        if($num_vio_accumulation > 0){
+                            //LOGIKA AKUMULASI KEDUA
+
+                            $get_first_vio_accumulation = DB::table('violations')
+                                ->where('employee_id',  $employee_id) 
+                                ->where('violation_accumulation', '!=',  null) 
+                                ->where('alphabet_accumulation', '!=',  null) 
+                                ->where('violation_status', 'active') 
+                                ->latest()                       
+                                ->first();
+
+                            $get_num_vio_accumulation = DB::table('violations')
+                                ->where('employee_id',  $employee_id) 
+                                ->where('id', $get_first_vio_accumulation->id) 
+                                ->where('violation_status', 'active')       
+                                ->count();
+
+                                if($get_num_vio_accumulation > 0){
+
+                                    require_once 'GetAccumulation.php';
+
+                                    $pelanggran_sebelumnya2 = DB::table('violations')
+                                        ->where('employee_id',  $employee_id) 
+                                        ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
+                                        ->latest()                       
+                                        ->first();
+                                                
+                                        require_once 'Violationjsondatas.php';   
+                                }else{
+                                    //LOGIKA AKUMULSAI PERTAMA
+                                    require_once 'GetAccumulation.php';                                          
+
+                                    require_once 'Violationjsondata.php';   
+                                }
+                        }else{
+                            //LOGIKA AKUMULSAI PERTAMA
+                            require_once 'GetAccumulation.php'; 
+
+                            require_once 'Violationjsondata.php';                                         
+                        }
+                    }
+                }
+            }else{
+                // BATAS AKUMULASI
+                // CARI PELANGGARAN AKUMULASI 3               
+                $num_vio_accumulation2 = DB::table('violations')
+                    ->where('employee_id',  $employee_id) 
+                    ->where('violation_accumulation', '!=',  null) 
+                    ->where('violation_accumulation2', '!=',  null) 
+                    ->where('alphabet_accumulation', '!=',  null) 
+                    ->where('violation_status', 'active') 
+                    ->latest()                       
+                    ->count();
                 if($num_vio_accumulation2 > 0){
-                    
-                    // GET LOGIKA AKUMULASI KETIGA
-                    require 'GetAccumulation.php';
-       
-                }else{
-                    //Cari Pelanggaran akumulasi 2
-                    $num_vio_accumulation = DB::table('violations')
-                        ->where('employee_id',  $emp_id) 
+
+                    // LOGIKA AKUMULSI KETIGA
+                    $get_first_vio_accumulation2 = DB::table('violations')
                         ->where('violation_accumulation', '!=',  null) 
+                        ->where('violation_accumulation2', '!=',  null) 
                         ->where('alphabet_accumulation', '!=',  null) 
+                        ->where('violation_status', 'active') 
+                        ->latest()                       
+                        ->first();
+
+                    $get_num_vio_accumulation2 = DB::table('violations')
+                        ->where('employee_id',  $employee_id) 
+                        ->where('violation_accumulation', $get_first_vio_accumulation2->id) 
+                        ->where('violation_status', 'active')       
+                        ->count(); 
+                    
+                    if($get_num_vio_accumulation2  > 0){
+
+                        require_once 'GetAccumulation.php';
+
+                        $pelanggran_sebelumnya2 = DB::table('violations')
+                            ->where('employee_id',  $employee_id) 
+                            ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
+                            ->latest()                       
+                            ->first();
+
+                        $pelanggran_sebelumnya3 = DB::table('violations')
+                            ->where('employee_id',  $employee_id) 
+                            ->where('id',  $pelanggran_sebelumnya2->violation_accumulation) 
+                            ->latest()                       
+                            ->first();   
+                            require_once 'Violationjsondatas.php';
+                    }else{
+
+                        $num_vio_accumulation = DB::table('violations')
+                            ->where('employee_id',  $employee_id) 
+                            ->where('violation_accumulation', '!=',  NULL) 
+                            ->where('alphabet_accumulation', '!=',  NULL) 
+                            ->where('violation_status', 'active') 
+                            ->latest()                       
+                            ->count();
+
+                        if($num_vio_accumulation > 0){
+                            //LOGIKA AKUMULASI KEDUA
+
+                            $get_first_vio_accumulation = DB::table('violations')
+                                ->where('employee_id',  $employee_id) 
+                                ->where('violation_accumulation', '!=',  null) 
+                                ->where('alphabet_accumulation', '!=',  null) 
+                                ->where('violation_status', 'active') 
+                                ->latest()                       
+                                ->first();
+
+                            $get_num_vio_accumulation = DB::table('violations')
+                                ->where('employee_id',  $employee_id) 
+                                ->where('id', $get_first_vio_accumulation->id) 
+                                ->where('violation_status', 'active')       
+                                ->count();
+
+                            if($get_num_vio_accumulation > 0){
+
+                                require_once 'GetAccumulation.php';
+
+                                $pelanggran_sebelumnya2 = DB::table('violations')
+                                    ->where('employee_id',  $employee_id) 
+                                    ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
+                                    ->latest()                       
+                                    ->first();
+
+                                    require_once 'Violationjsondatas.php';
+                                
+                            }else{
+                                //LOGIKA AKUMULSAI PERTAMA
+                                require_once 'GetAccumulation.php';                                          
+
+                                require_once 'Violationjsondata.php';   
+                            }
+                        }else{
+                            //LOGIKA AKUMULSAI PERTAMA
+                            require_once 'GetAccumulation.php';                                          
+
+                            require_once 'Violationjsondata.php';    
+                        }
+                    }
+
+                }else{
+                    $num_vio_accumulation = DB::table('violations')
+                        ->where('employee_id',  $employee_id) 
+                        ->where('violation_accumulation', '!=',  NULL) 
+                        ->where('alphabet_accumulation', '!=',  NULL) 
                         ->where('violation_status', 'active') 
                         ->latest()                       
                         ->count();
 
                     if($num_vio_accumulation > 0){
-                        // GET LOGIKA AKUMULASI KEDUA
-                        require 'GetAccumulation.php';  
+                        //LOGIKA AKUMULASI KEDUA
+
+                        $get_first_vio_accumulation = DB::table('violations')
+                            ->where('employee_id',  $employee_id) 
+                            ->where('violation_accumulation', '!=',  null) 
+                            ->where('alphabet_accumulation', '!=',  null) 
+                            ->where('violation_status', 'active') 
+                            ->latest()                       
+                            ->first();
+
+                        $get_num_vio_accumulation = DB::table('violations')
+                            ->where('employee_id',  $employee_id) 
+                            ->where('id', $get_first_vio_accumulation->id) 
+                            ->where('violation_status', 'active')       
+                            ->count();
+
+                            if($get_num_vio_accumulation > 0){
+
+                                require_once 'GetAccumulation.php';
+
+                                $pelanggran_sebelumnya2 = DB::table('violations')
+                                    ->where('employee_id',  $employee_id) 
+                                    ->where('id', $pelanggran_sebelumnya->violation_accumulation) 
+                                    ->latest()                       
+                                    ->first();
+                                            
+                                    require_once 'Violationjsondatas.php';   
+                                
+                            }else{
+                                //LOGIKA AKUMULSAI PERTAMA
+                                require_once 'GetAccumulation.php';                                          
+
+                                require_once 'Violationjsondata.php';   
+                            }
                     }else{
-                        // GET LOGIKA AKUMULASI PERTAMA 
-                        require 'GetAccumulation.php';
+                        //LOGIKA AKUMULSAI PERTAMA
+                        require_once 'GetAccumulation.php'; 
+
+                        require_once 'Violationjsondata.php';                                         
 
                     }
-                }                
-            }    
+
+                }
+                
+            }
         }
+
         return response()->json($data);
     }
 

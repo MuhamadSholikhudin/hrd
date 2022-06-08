@@ -43,13 +43,15 @@
         </tr>
     </thead>
 <tbody>
-    @foreach($employees as $employee)
+<?php
+DB::table('employees')->orderBy('id')->chunk(100, function ($employees) {
+    foreach ($employees as $employee) { ?>
         <tr>
-            <td>{{  $loop->iteration }}</td>
+            <td>{{  $employee->id }}</td>
             <td>{{ $employee->number_of_employees}}</td>
             <td>{{ $employee->name}}</td>
             <td>{{ $employee->gender}}</td>
-            <td>{{ $employee->place_of_birth	}}</td>
+            <td>{{ $employee->place_of_birth }}</td>
             <td>{{ $employee->date_of_birth	}}</td>
             <td>{{ $employee->marital_status	}}</td>
             <td>{{ $employee->religion	}}</td>
@@ -85,6 +87,10 @@
             <td>{{ $employee->educate	}}</td>
             <td>{{ $employee->major}}</td>
         </tr>
-    @endforeach
+    
+    <?php }
+});
+?>
+       
     </tbody>
 </table>

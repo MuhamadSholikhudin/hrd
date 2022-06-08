@@ -187,7 +187,10 @@ Route::get('/hiviolations', [HiViolationController::class, 'index'])->middleware
 Route::controller(HiViolationController::class)->group(function(){
     Route::get('exportviolations', 'export')->name('violations.export');
     Route::post('importviolations', 'import')->name('violations.import');
+    Route::post('violationmigrations', 'violationmigrations')->name('violationmigrations.import');
     Route::post('deleteviolations', 'hapus')->name('deleteviolations');
+    Route::post('importmigration', 'importmigration')->name('importmigration.import');
+    
 });
 
 Route::post('violation/get_type_violation', [ViolationController::class, 'get_type_violation'])->name('get_type_violation');

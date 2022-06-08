@@ -30,7 +30,7 @@ class HiParagraphController extends Controller
         }
         
         return view('hi.pkb.paragraphs.index', [
-            'paragraphs' => $paragraphs->paginate(10),
+            'paragraphs' => $paragraphs->paginate(10)->withQuerystring(),
             'articles' => Article::all(),
             // 'articles' => DB::table('articles')->get(),
             'count' => DB::table('paragraphs')->count()

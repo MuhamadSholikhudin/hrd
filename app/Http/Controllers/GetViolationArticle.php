@@ -157,12 +157,68 @@
 
         $pasal_alphabet_accumulation = $cari_pasal_akumulasi->id;                        
     }else{
+
+
+        if($last_accumulation == 1.5 AND $sel_paragraph->type_of_verse == "Peringatan Lisan"){
+
+            $cari_pasal_akumulasi = DB::table('alphabets')
+                ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                ->where('paragraphs.type_of_verse', "Surat Peringatan Kedua")
+                ->where('alphabet_accumulation', 'like', '%Surat Peringatan Pertama%')
+                ->select('alphabets.id as id')
+                ->first();
+                $pasal_alphabet_accumulation = $cari_pasal_akumulasi->id;
+
+        }elseif($last_accumulation == 2.5 AND $sel_paragraph->type_of_verse == "Peringatan Lisan"){
+            $cari_pasal_akumulasi = DB::table('alphabets')
+                ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                ->where('paragraphs.type_of_verse', "Surat Peringatan Ketiga")
+                ->where('alphabet_accumulation', 'like', '%Surat Peringatan Pertama%')
+                ->select('alphabets.id as id')
+                ->first();
+                $pasal_alphabet_accumulation = $cari_pasal_akumulasi->id;
+
+        }elseif($last_accumulation == 3.5 AND $sel_paragraph->type_of_verse == "Peringatan Lisan"){
+            $cari_pasal_akumulasi = DB::table('alphabets')
+                ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                ->where('paragraphs.type_of_verse', "Surat Peringatan Terakhir")
+                ->where('alphabet_accumulation', 'like', '%Surat Peringatan Pertama%')
+                ->select('alphabets.id as id')
+                ->first();
+
+            $pasal_alphabet_accumulation = $cari_pasal_akumulasi->id;
+                
+        }elseif($last_accumulation == 4.5 AND $sel_paragraph->type_of_verse == "Peringatan Lisan"){
+            $cari_pasal_akumulasi = DB::table('alphabets')
+                ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                ->where('paragraphs.type_of_verse', "Pemutusan Hubungan Kerja")
+                ->where('alphabet_accumulation', 'like', '%Surat Peringatan Pertama%')
+                ->select('alphabets.id as id')
+                ->first();
+            $pasal_alphabet_accumulation = $cari_pasal_akumulasi->id;
+                
+        }else{
+
+            $cari_pasal_akumulasi = DB::table('alphabets')
+                ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                ->where('alphabets.id', $alphabet_id)
+                ->select('alphabets.id as id')        
+                ->first();
+    
+            $pasal_alphabet_accumulation = NULL;
+        }
+
         $cari_pasal_akumulasi = DB::table('alphabets')
-        ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-        ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
-        ->where('alphabets.id', $alphabet_id)
-        ->select('alphabets.id as id')        
-        ->first();
+            ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+            ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+            ->where('alphabets.id', $alphabet_id)
+            ->select('alphabets.id as id')        
+            ->first();
 
         $pasal_alphabet_accumulation = NULL;
     }
@@ -178,5 +234,3 @@
         ->where('alphabets.id',  $pelanggran_sebelumnya->alphabet_id)              
         ->first();
 
-    
-        

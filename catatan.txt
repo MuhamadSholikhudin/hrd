@@ -67,6 +67,11 @@ php artisan make:import UsersImport --model=User
 
 php artisan make:export UsersExport --model=User
 
+Management Memory
+Changed memory_limit=512M to memory_limit=-1
+
+ ini_set('memory_limit', '1024M'); // or you could use 1G
+
 
 -storage public
  php artisan storage:link
@@ -122,3 +127,60 @@ make:migration add_IsAdmin_users_tables
 
 php artisan migrate
 
+
+laravel livewire datatable with bootstrap 4 & bootstrap 5 Example
+
+-Install laravel ui package form below command.
+composer require laravel/ui
+
+-Step up Bootstrap 4
+php artisan ui bootstrap
+
+-Step up Bootstrap 4 with Auth
+php artisan ui bootstrap --auth
+
+-Step 4: Set up laravel livewire
+ composer require livewire/livewire
+
+-Step 5: Set up Datatable with laravel livewire & Bootstrap 4, 5
+poser require rappasoft/laravel-livewire-tables
+
+-publish the config file
+php artisan vendor:publish --provider="Rappasoft\LaravelLivewireTables\LaravelLivewireTablesServiceProvider" --tag=livewire-tables-config
+
+
+php artisan vendor:publish --provider="Rappasoft\LaravelLivewireTables\LaravelLivewireTablesServiceProvider" --tag=livewire-tables-views
+
+
+php artisan vendor:publish --provider="Rappasoft\LaravelLivewireTables\LaravelLivewireTablesServiceProvider" --tag=livewire-tables-translations
+
+-Configure for datatables
+
+-app/config/livewire-tables.php
+
+-For Bootstrap 4
+<?php
+
+return [
+    /**
+     * Options: tailwind | bootstrap-4 | bootstrap-5.
+     */
+    'theme' => 'bootstrap-4',
+];
+
+
+
+Materi Development System :
+(00:00:00) - Pendahuluan
+(00:00:55) - Business Requirement Document
+(00:04:58) - UI / UX
+(00:07:35) - Technical Design
+
+(00:12:28) - Architecture Review
+(00:17:35) - API Specification
+(00:25:01) - Development
+(00:27:56) - Non Prod Deployment
+(00:30:53) - Testing
+(00:33:50) - Prod Development
+(00:37:03) - Maintenance dan Improvement
+(00:40:55) - Outro

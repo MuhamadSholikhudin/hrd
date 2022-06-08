@@ -31,8 +31,8 @@ WHERE access_menus.role_id = 1 AND methods.sub_menu_id = 18;
 */
 
         if(!auth()->check()){
-            // abort(403);
-            redirect('/login');
+            abort(403);
+            // return view('abort');    
         }
 
         $url_nowxz = url()->current();
@@ -50,9 +50,11 @@ WHERE access_menus.role_id = 1 AND methods.sub_menu_id = 18;
                 ->count();
            if($num_meth < 1){
             abort(403);
+            // return view('abort');            
            }
         }else{
             abort(403);
+            // return view('abort');            
         }
 
         

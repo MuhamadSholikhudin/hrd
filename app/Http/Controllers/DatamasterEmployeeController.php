@@ -48,8 +48,9 @@ class DatamasterEmployeeController extends Controller
         
         return view('datamaster.employees.index', [
             
-            
-            'employees' => $employees->paginate(10),
+            // "posts" => Post::latest()->filter(request(['search', 'category', 'author']))->paginate(3)->withQuerystring()
+            // "employees" => $employees->filter(request(['search']))->paginate(10)->withQuerystring(),
+            'employees' => $employees->paginate(10)->withQuerystring(),
             'count' => DB::table('employees')->count()
              
         ]);

@@ -30,7 +30,7 @@ class HiArticleController extends Controller
                 return view('hi.pkb.articles.index', [
                     
                     
-                    'articles' => $articles->paginate(10),
+                    'articles' => $articles->paginate(10)->withQuerystring(),
                     // 'articles' => DB::table('articles')->get(),
                     'count' => DB::table('articles')->count()
                      

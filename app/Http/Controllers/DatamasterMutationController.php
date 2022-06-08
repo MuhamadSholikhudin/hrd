@@ -31,7 +31,7 @@ class DatamasterMutationController extends Controller
         }
 
         return view('datamaster.mutations.index', [
-            'employees' => $employees->paginate(15),
+            'employees' => $employees->paginate(15)->withQuerystring(),
             'count' => DB::table('employees')->count() 
         ]);
     }

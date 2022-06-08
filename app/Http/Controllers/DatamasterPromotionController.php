@@ -42,7 +42,7 @@ class DatamasterPromotionController extends Controller
         return view('datamaster.promotions.index', [
             
             
-            'employees' => $employees->paginate(15),
+            'employees' => $employees->paginate(15)->withQuerystring(),
             'count' => DB::table('employees')->count()             
         ]);
     }

@@ -90,14 +90,13 @@
               </div>
               <div class="modal-body">
                   <p class="text-justify-right">
-                      <a href="{{asset('excel/FORMAT_MASTER_DATA.xlsx')}}">Format Master Data</a>
+                      <a href="{{asset('excel/FORMAT_UPLOAD_MASTER_DATA_KARYAWAN.xlsx')}}">Format Master Data</a>
                       <br>
                     </p>
               <form action="{{ route('employees.import') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="input-group">
                     <div class="custom-file">
-
                         <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                     </div>

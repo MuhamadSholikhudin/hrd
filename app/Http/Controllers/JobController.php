@@ -26,7 +26,7 @@ class JobController extends Controller
         return view('jobs.index', [
             
             
-            'jobs' => $jobs->paginate(15)
+            'jobs' => $jobs->paginate(15)->withQuerystring()
              
         ]);
     }
