@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | 404 Page not found</title>
+  <title>HRD HWI | 404 Page not found</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -38,7 +38,7 @@
 
           <p>
             We could not find the page you were looking for.
-            Meanwhile, you may <a href="<?= url()->previous(); ?>">return to previous</a> or try using <a href="/login">LOGIN</a> .
+            Meanwhile, you may <a href="/dashboards">return to previous</a> or try using <a href="/login">LOGIN</a> .
           </p>
 
           <!-- <form class="search-form">

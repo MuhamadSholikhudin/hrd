@@ -95,12 +95,13 @@
                     </p>
               <form action="{{ route('employees.import') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="input-group">
+                <input type="file"  name="file" id="exampleInputFile">
+                <!-- <div class="input-group">
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                     </div>
-                </div>
+                </div> -->
               </div>
               <div class="modal-footer">
 

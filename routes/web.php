@@ -81,6 +81,10 @@ Route::get('/example', function () {
     $url_xtz = url()->current();
     return view('example',['url_xtz' =>$url_xtz]);
 });
+Route::get('/abort', function () {
+    $url_xtz = url()->current();
+    return view('abort',['url_xtz' =>$url_xtz]);
+});
 
 //HRD IT
 

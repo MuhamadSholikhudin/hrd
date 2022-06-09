@@ -25,6 +25,7 @@
 
 
 
+  <input type="file" >
 
 <br>
 
@@ -53,7 +54,7 @@
 $a = 32;
 echo "a is " . is_numeric($a) . "<br>";
 
-$b = 0;
+$b = "";
 echo "b is " . is_numeric($b) . "<br>";
 
 $c = 32.5;

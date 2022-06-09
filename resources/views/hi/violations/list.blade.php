@@ -123,16 +123,21 @@
                 <p class="text-justify-right">
                     <a href="{{asset('excel/FORMAT_UPLOAD_PELANGGARAN.xlsx')}}">Format Upload Pelangaran</a>
                     <br>
+             
+
                   </p>
               <form action="{{ route('violations.import') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="input-group">
+
+                <input type="file" name="file" id="exampleInputFile">
+                
+                <!-- <div class="input-group">
                     <div class="custom-file">
 
                         <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                     </div>
-                </div>
+                </div> -->
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
