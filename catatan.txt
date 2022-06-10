@@ -61,6 +61,10 @@ Route::resource('photos', PhotoController::class);
 Import Export Excel and CSV File Tutorial
 enable extensi .gl pada php.ini 
 
+
+
+git@github.com:MuhamadSholikhudin/hrd.git
+
 composer require maatwebsite/excel
 
 php artisan make:import UsersImport --model=User
@@ -150,7 +154,6 @@ php artisan vendor:publish --provider="Rappasoft\LaravelLivewireTables\LaravelLi
 
 
 php artisan vendor:publish --provider="Rappasoft\LaravelLivewireTables\LaravelLivewireTablesServiceProvider" --tag=livewire-tables-views
-
 
 php artisan vendor:publish --provider="Rappasoft\LaravelLivewireTables\LaravelLivewireTablesServiceProvider" --tag=livewire-tables-translations
 

@@ -749,28 +749,28 @@
                     </div>
                   <label for="number_of_employees" class="col-sm-2 col-form-label">Nomer SP </label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" value="{{$p_no_sp}}/SP-HRD/{{$ROM}}/{{date('Y')}}" placeholder="Nomer Induk Karyawan" >
+                      <input type="text" class="form-control" value="{{$p_no_sp}}/SP-HRD/{{$ROM}}/{{date('Y')}}" placeholder="Nomer SP" disabled>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="name" class="col-sm-2 col-form-label">Nama </label>
                   <div class="col-sm-4">
                       <input type="hidden" class="form-control" id="employee_id" name="employee_id" value="{{  $employee->id  }}" placeholder="Nomer Induk Karyawan" >
-                      <input type="text" class="form-control" value="{{  $employee->name  }}" placeholder="Nomer Induk Karyawan" >
+                      <input type="text" class="form-control" value="{{  $employee->name  }}" placeholder="Nama Karyawan" disabled>
                   </div>
                   <label for="number_of_employees" class="col-sm-2 col-form-label">NIK</label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" value="{{  $employee->number_of_employees  }}" placeholder="" >
+                      <input type="text" class="form-control" value="{{  $employee->number_of_employees  }}" placeholder="Nomer Induk Karyawan" disabled>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="job_level" class="col-sm-2 col-form-label">Jabatan </label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" id="job_level" name="job_level" value="{{  $job->job_level  }}" placeholder="Nomer Induk Karyawan" >
+                      <input type="text" class="form-control" id="job_level" name="job_level" value="{{  $job->job_level  }}" placeholder="Jabatan" disabled>
                   </div>
                   <label for="department" class="col-sm-2 col-form-label">Bagian / Department</label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" id="department" name="department" value="{{  $department->department  }}" placeholder="Finger ID" >
+                      <input type="text" class="form-control" id="department" name="department" value="{{  $department->department  }}" placeholder="Bagian" disabled>
                   </div>
                 </div>
                 <div class="form-group row">

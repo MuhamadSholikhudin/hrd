@@ -181,7 +181,7 @@
         var last_type = document.getElementById("last_type").value;
         var last_accumulation = document.getElementById("last_accumulation").value;
         // var keyword = $(this).val();
-        alert(status_violant_last + id_emp + violation_now + last_type + last_accumulation);
+        // alert(status_violant_last + id_emp + violation_now + last_type + last_accumulation);
 
         $.ajax({
           type: "POST",

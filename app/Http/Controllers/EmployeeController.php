@@ -52,6 +52,7 @@ class EmployeeController extends Controller
                 if($row['number_of_employees'] == NULL){
 
                 }else{ 
+                    
                     //CEK number_of_employee sudah ada pada database belum       
                     // $cek_number = is_numeric($row['number_of_employees']);
                     // if($cek_number !== 1){
@@ -284,7 +285,7 @@ class EmployeeController extends Controller
                             $status_employee = $p_employee->status_employee;                            
                         }else{
                             $exit_statement = $row['exit_statement'];
-                            $status_employee = "notactive";
+                            $status_employee = "not active";
                         }
 
 
