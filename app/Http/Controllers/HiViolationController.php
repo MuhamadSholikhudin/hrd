@@ -33,6 +33,15 @@ class HiViolationController extends Controller
      */
     public function index()
     {
+        $tanggal_hari_ini = date('Y-m-d');// pendefinisian tanggal awal
+        
+        DB::table('violations')
+        ->where('date_end_violation', '<', $tanggal_hari_ini)
+        ->update([
+            'violation_status' => 'notactive'
+        ]);
+
+
         //
     $violations = DB::table('violations')
                 ->leftJoin('employees', 'employees.id', '=', 'violations.employee_id')
@@ -245,7 +254,6 @@ class HiViolationController extends Controller
                             $alphabet_accumulation = NULL;
                             $violation_accumulation = NULL;
                             $violation_accumulation2 = NULL;
-
                         }else{
                             $alphabet_accumulation = $x['alphabet_accumulation']; 
 
@@ -253,6 +261,7 @@ class HiViolationController extends Controller
                             if($sel_num_vio == 0){
                                 $violation_accumulation = NULL;
                                 $violation_accumulation2 = NULL;
+                                $violation_accumulation3 = NULL;
                                 
                             }else{
                                 $sel_vio = DB::table('violations')->where('employee_id', $employee->id)->latest()->first();
@@ -260,24 +269,35 @@ class HiViolationController extends Controller
                                 $car_date_end = $sel_vio->date_end_violation;
 
                                 if($car_date_end > $resulte){ 
-
                                     $violation_accumulation = $sel_vio->id;
+                                    $vi_accumulation = $sel_vio->violation_accumulation2;
 
-                                    if($sel_vio->violation_accumulation !== NULL){
-                                        $violation_accumulation2 = $sel_vio->violation_accumulation;
+                                    if($vi_accumulation == NULL){
+                                        if($sel_vio->violation_accumulation !== NULL){
+                                            $violation_accumulation2 = $sel_vio->violation_accumulation;
+                                            $violation_accumulation3 = NULL;
+                                        }else{
+                                            $violation_accumulation2 = NULL;
+                                            $violation_accumulation3 = NULL;
+                                        }
+
                                     }else{
-                                        $violation_accumulation2 = NULL;
+                                            $violation_accumulation2 = $sel_vio->violation_accumulation;
+                                            $violation_accumulation3 = $sel_vio->violation_accumulation2;
                                     }
-                                    
+      
                                 }elseif($car_date_end < $resulte){
                                     $violation_accumulation = NULL;
                                     $violation_accumulation2 = NULL;
+                                    $violation_accumulation3 = NULL;
                                 }else{
                                     $violation_accumulation = NULL;
                                     $violation_accumulation2 = NULL;
+                                    $violation_accumulation3 = NULL;
                                 }
-                                     $violation_accumulation = NULL;
+                                    $violation_accumulation = NULL;
                                     $violation_accumulation2 = NULL; 
+                                    $violation_accumulation3 = NULL; 
                             }                                     
                         }
                         
@@ -1679,8 +1699,7 @@ class HiViolationController extends Controller
                 if($x['employee_id'] == NULL){
 
                 }else{
-
-                
+               
 
                     $date_of_violation_i = $x['date_of_violation'];
                     if($date_of_violation_i == null){

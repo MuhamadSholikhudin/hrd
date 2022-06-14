@@ -16,7 +16,7 @@
 
   <style>
     .login-page {
-      /* background-image: url("{{ asset('img/View.jpg') }}"); */
+      background-image: url("{{ asset('img/View.jpg') }}");
       /* background-color: #cccccc; */
       /* width: 500px; */
       /* background-size: auto; */
@@ -128,16 +128,16 @@
 
 <script>
 
-  var gmbr = 'gmbr';
-  if(gmbr == gmbr){
-    document.body.style.backgroundImage = "url('{{ asset('img/View.jpg') }}')";
-  }else{
+//   var gmbr = 'gmbr';
+//   if(gmbr == gmbr){
+//     document.body.style.backgroundImage = "url('{{ asset('img/View.jpg') }}')";
+//   }else{
 
-  }
-function myFunction() {
-  // document.body.style.backgroundColor = "#f3f3f3";
-  document.body.style.backgroundImage = "url('{{ asset('img/View.jpg') }}')";
-}
+//   }
+// function myFunction() {
+//   // document.body.style.backgroundColor = "#f3f3f3";
+//   document.body.style.backgroundImage = "url('{{ asset('img/View.jpg') }}')";
+// }
 // function makeAlert(){ 
 //     alert("Popup window!");
 // };

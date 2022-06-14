@@ -55,11 +55,6 @@ class LoginController extends Controller
                 ->get(); 
 
                        //tampilkan data hire_date
-           DB::table('violations')
-                ->where('date_end_violation', '<', $tanggal_hari_ini)
-                ->update([
-                    'violation_status' => 'notactive'
-                ]);
 
             // foreach($cari_status_violation as $sta_vio):
             //     DB::table('violations')

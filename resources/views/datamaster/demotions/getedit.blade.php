@@ -132,7 +132,7 @@
                     </div>
                         
                         <div class="form-group row">
-                            <label for="inputName2" class="col-sm-2 col-form-label">Tanggal Promosi</label>
+                            <label for="inputName2" class="col-sm-2 col-form-label">Tanggal Demosi</label>
                             <div class="col-sm-4">
                                 <input type="date" class="form-control" id="inputName2" name="demotion_date" value="<?php echo date("Y-m-d") ?>">
                             </div>
