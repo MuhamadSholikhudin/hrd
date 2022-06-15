@@ -54,7 +54,15 @@
                <li class="nav-item  @foreach($sub_menus as $sub_menu):  <?php $url_menu = $sub_menu->url; $url_1 = substr($url_menu, 1); $open_url = $url_1.'*'; ?> {{Request::is($open_url) ?  'menu-open' : ''}} @endforeach">
                  <a href="#" class="nav-link ">
                    <!-- <i class="nav-icon fas fa-table"></i> -->
-                   <i class="fa-regular fa-folder-open"></i>
+                   <!-- <i class="fa-regular fa-folder-open"></i> -->
+                   
+                   <!-- <i class="fa-regular fa-envelope-open"></i> -->
+                   <?php 
+                      if($menu->menu == "Dashboard"){ echo '<i class="nav-icon fas fa-gauge"></i>'; }
+                      elseif($menu->menu == "Datamaster") { echo '<i class="nav-icon fas fa-database"></i>'; }
+                      elseif($menu->menu == "HI") { echo '<i class="nav-icon fas fa-house-chimney"></i>'; }
+                      elseif($menu->menu == "Management Akses") { echo '<i class="nav-icon fas fa-list"></i>'; }
+                   ?>
                    <p>
                      {{ $menu->menu }}
                      <i class="right fas fa-angle-left"></i>

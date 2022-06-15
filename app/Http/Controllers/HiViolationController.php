@@ -56,7 +56,9 @@ class HiViolationController extends Controller
                  'violations.violation_status as violation_status',
                  'employees.name as name',
                  'employees.number_of_employees as number_of_employees'
-                 )->orderByDesc('violations.id');
+                 )->orderByDesc('violations.id')
+                //  ->orderByDesc('violations.no_violation')
+                 ;
 
         if(request('search')){
             $violations->where('date_end_violation', 'like', '%' . request('search') . '%')
@@ -192,7 +194,15 @@ class HiViolationController extends Controller
     
                 }else{ 
                     //Mencari Karywan
-                    $search_employee = DB::table('employees')->where('number_of_employees', '=', floor($x['number_of_employees']))->count();
+                    if($x['number_of_employees'] == ""){
+                        $search_employee = DB::table('employees')->where('number_of_employees', '=', $x['number_of_employees'])->count();
+                    }elseif($x['number_of_employees'] == "-"){
+                        $search_employee = DB::table('employees')->where('number_of_employees', '=', $x['number_of_employees'])->count();
+
+                    }else{
+                        $search_employee = DB::table('employees')->where('number_of_employees', '=', floor($x['number_of_employees']))->count();
+                    }
+
                     if($search_employee < 1){
     
                     }else{
@@ -222,13 +232,10 @@ class HiViolationController extends Controller
                         $dater = $reporting_date;
                         $datee = $date_end_violation;
 
-
                         $resultv = $datev->format('Y-m-d');
                         $resultr = $dater->format('Y-m-d');
                         $resulte = $datee->format('Y-m-d');
-
-                        
-                        
+                       
                         // $alphabet_id = floor($x['alphabet_id']);
 
                         $no_violation = $x['no_violation'];

@@ -365,17 +365,20 @@
                     <?php
                       if($violation->type_of_violation == 'Peringatan Lisan'){
                         $p = "SP Lisan";
+                      }elseif($violation->type_of_violation == 'Surat Peringatan Lisan'){
+                        $p = "SP Lisan";
                       }elseif($violation->type_of_violation == 'Surat Peringatan Pertama'){
                         $p = "SP I";
                       }elseif($violation->type_of_violation == 'Surat Peringatan Kedua'){
                         $p = "SP II";
-                      
                       }elseif($violation->type_of_violation == 'Surat Peringatan Ketiga'){
                         $p = "SP III";
                       }elseif($violation->type_of_violation == 'Surat Peringatan Terakhir'){
                         $p = "SP Terakhir";
                       }elseif($violation->type_of_violation == 'Pemutusan Hubungan Kerja'){
                         $p = "PHK";
+                      }else{
+                        $p = "Tidak Ditemukan";
                       }
                     ?>
                     {{ $p }}

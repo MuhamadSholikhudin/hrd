@@ -162,7 +162,7 @@ function tahun($tahun){
   $date_violation_sp = new \DateTime($tahun.' 00:00:00');
   $date_year_sp = date_format($date_violation_sp, "Y"); //for Display Year
   
-  return $tahun;
+  return $date_year_sp;
 }
 
 function nomer_sp($no_violation, $violation_id){
@@ -216,7 +216,7 @@ function selang($date_end_violation){
 
 function format_date($format_date){
   $date = date_create($format_date);
-  echo date_format($date,"d/m/Y");
+  echo date_format($date,"m/d/Y");
 }
 
 function pasal_violation($alphabet_id){
