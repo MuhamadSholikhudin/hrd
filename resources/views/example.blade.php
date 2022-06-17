@@ -14,31 +14,76 @@
 
   <?php
 
-        /*
-            $cari_vio_alpha_not_null = DB::table('violations')->where('alphabet_accumulation' , '!=' , NULL)->get();
 
-            DB::table('violations')->where('alphabet_accumulation' , '!=' , NULL)->chunk(100, function ($users) {
+            // $cari_vio_alpha_not_null = DB::table('violations')->where('alphabet_accumulation' , '!=' , NULL)->get();
+
+            // DB::table('violations')->where('alphabet_accumulation' , '!=' , NULL)->orderBy('id')->chunk(100, function ($violations) {
+            //     foreach ($violations as $violation) {
+            //         //
+
+            //         $c_violations = DB::table('violations')
+            //             ->where('employee_id',  $violation->employee_id)
+            //             ->where('id', '<', $violation->id)
+            //             ->count();
+
+            //         if($c_violations > 0){
+            //           $get_violations = DB::table('violations')
+            //               ->where('employee_id',  $violation->employee_id)
+            //               ->where('id', '<', $violation->id)
+            //               ->latest()
+            //               ->first();
+
+            //             DB::table('violations')
+            //               ->where('id', $violation->id)
+            //               ->update([
+            //                   'violation_accumulation'=> $get_violations->id
+            //               ]);
+
+            //         }else{
+                      
+
+            //         }
+            //     }
+            // });
+
+
+        
+
+            DB::table('violations')->where('violation_accumulation' , '!=' , NULL)->orderBy('id')->chunk(100, function ($violations) {
                 foreach ($violations as $violation) {
                     //
 
                     $c_violations = DB::table('violations')
-                      ->where('employee_id', '<', $violation->employee_id)
-                      ->where('id', '<', $violation->id)
-                      ->count();
-
-                    if($c_violations > 1){
-                      $c_violations = DB::table('violations')
-                        ->where('employee_id', '<', $violation->employee_id)
+                        ->where('employee_id',  $violation->employee_id)
                         ->where('id', '<', $violation->id)
                         ->count();
+
+                    if($c_violations > 0){
+                      $get_violations = DB::table('violations')
+                          ->where('employee_id',  $violation->employee_id)
+                          ->where('id', '<', $violation->id)
+                          ->orderBy('id', 'desc')
+                          ->first();
+
+
+                          if($get_violations->date_end_violation > $violation->reporting_date){
+
+                            // DB::table('violations')
+                            //   ->where('id', $violation->id)
+                            //   ->update([
+                            //       'violation_accumulation2'=> $get_violations->id
+                            //   ]);
+
+                          }else{
+
+                          }                       
+
                     }else{
                       
 
                     }
                 }
             });
-
-        */
 
 
 ?>

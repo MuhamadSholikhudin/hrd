@@ -151,7 +151,7 @@
                             ?>
                             <!-- <div class="col-sm-12 lead" style="text-align: justify;">- Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal  {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", {{$pelanggran_lalu->other_information}}</div> -->
                             
-                            <table >
+                            <table>
                                 <tbody>
                                     <tr>
                                         <td valign="top">&nbsp;&nbsp;&nbsp;-</td>
@@ -165,7 +165,7 @@
 
                                     <tr>
                                         <td valign="top">&nbsp;&nbsp;&nbsp;-</td>
-                                        <td valign="top" class="lead" style="text-align: justify;">Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal 
+                                        <td valign="top" class="lead" style="text-align: justify;">
                                         
                                             <?php 
                                             
@@ -173,17 +173,27 @@
                                                     if($violation->violation_accumulation3 !== NULL){
                                                         $pelanggran_lalu2 = DB::table('violations')->find($violation->violation_accumulation2);
                                                         ?> 
+                                                        Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal 
                                                         {{ pasal($violation->alphabet_accumulation);}} Perjanjian Kerja Bersama Pasal 
                                                         {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", {{$pelanggran_lalu->other_information}} {{$pelanggran_lalu2->other_information}} </td>                                                    
                                                     <?php 
                                                     }elseif($violation->violation_accumulation2 !== NULL){
 
                                                         $pelanggran_lalu2 = DB::table('violations')->find($violation->violation_accumulation2);
+                                                        
                                                         ?> 
+                                                        2Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal 
+
                                                         {{ pasal($violation->alphabet_accumulation);}} Perjanjian Kerja Bersama Pasal 
                                                         {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", {{$pelanggran_lalu->other_information}} {{$pelanggran_lalu2->other_information}} </td>                                                    
                                                     <?php 
                                                     }elseif($violation->violation_accumulation !== NULL){  ?>
+                                                        1Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal
+                                                        <?php
+                                                            if($pelanggran_lalu->alphabet_accumulation !== NULL){
+                                                                pasal($violation->alphabet_accumulation); echo 'Perjanjian Kerja Bersama Pasal';
+                                                            }
+                                                        ?>
                                                         {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", {{$pelanggran_lalu->other_information}}</td>                                                    
                                                     <?php 
                                                     }else{

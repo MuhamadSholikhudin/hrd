@@ -94,7 +94,7 @@ class ViolationController extends Controller
             $sel_no_sp = DB::table('violations')
                 ->whereMonth('date_of_violation',  $month_m)
                 ->whereYear('date_of_violation',  $yaer_y_bul)  
-            ->orderByDesc('no_violation')
+                ->orderByDesc('no_violation')
                 ->first();
           $no_sp = $sel_no_sp->no_violation + 1 ;
         }
@@ -416,8 +416,6 @@ class ViolationController extends Controller
                             }
                         
                         }
-
-
                 }
             
             }else{
