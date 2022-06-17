@@ -47,8 +47,14 @@ class EmployeeController extends Controller
     public function import() 
     {
         $rows =  Excel::toArray(new EmployeesImport, request()->file('file'));
-        foreach($rows as $x):         
-            foreach($x as $row):
+        foreach($rows as $x):        
+            
+            $result = array_chunk($x, 50);
+            foreach($result as $res):
+            
+            foreach($res as $row):
+
+
                 if($row['number_of_employees'] == NULL){
 
                 }else{ 
@@ -449,7 +455,7 @@ class EmployeeController extends Controller
                         // $hire_date = $hire_date->format('Y-m-d');
                         // dd($hire_date);
 
-                    // if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $date_check))
+                        // if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $date_check))
 
                         // Date "2012-09-17 00:00:08"
                         // if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/", $date_check))
@@ -648,6 +654,7 @@ class EmployeeController extends Controller
                         ]);
                     }
                 }
+            endforeach;
             endforeach;
         endforeach;
         

@@ -82,16 +82,19 @@ class ViolationController extends Controller
         // NO SP 001/SP-HRD/IV/2022
 
         $month_m = date('m');
-
+        $yaer_y_bul = date('Y');
         $num_no_sp = DB::table('violations')
           ->whereMonth('date_of_violation',  $month_m)
+          ->whereYear('date_of_violation',  $yaer_y_bul)  
           ->count();
        
         if($num_no_sp < 1){
             $no_sp = 1;
         }elseif($num_no_sp > 0){
             $sel_no_sp = DB::table('violations')
-                ->orderByDesc('no_violation')
+                ->whereMonth('date_of_violation',  $month_m)
+                ->whereYear('date_of_violation',  $yaer_y_bul)  
+            ->orderByDesc('no_violation')
                 ->first();
           $no_sp = $sel_no_sp->no_violation + 1 ;
         }

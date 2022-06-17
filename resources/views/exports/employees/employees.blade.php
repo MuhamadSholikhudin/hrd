@@ -52,7 +52,7 @@ DB::table('employees')->orderBy('id')->chunk(100, function ($employees) {
             <td>{{ $employee->name}}</td>
             <td>{{ $employee->gender}}</td>
             <td>{{ $employee->place_of_birth }}</td>
-            <td>{{ $employee->date_of_birth	}}</td>
+            <td>{{ format_date($employee->date_of_birth)	}}</td>
             <td>{{ $employee->marital_status	}}</td>
             <td>{{ $employee->religion	}}</td>
             <td>{{ $employee->biological_mothers_name	}}</td>

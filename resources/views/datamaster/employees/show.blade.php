@@ -56,7 +56,7 @@
                         </li>
                       </ul>
       
-                      <a href="#" class="btn btn-primary btn-block"><b>{{ $employee->status_employee }}</b></a>
+                      <a href="#" class="btn  @if($employee->status_employee == "active") btn-primary @else btn-danger @endif btn-block"><b>{{ $employee->status_employee }}</b></a>
                       
                     </div>
                     <!-- /.card-body -->

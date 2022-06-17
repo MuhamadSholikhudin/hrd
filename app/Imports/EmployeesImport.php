@@ -28,10 +28,6 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
         ini_set('max_execution_time', 7200);
 
     }
-
-
-
-
     public function batchSize(): int
     {
         return 50;
@@ -41,8 +37,8 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
     {
         return 50;
     }
+}
 
-    
 /*
 class EmployeesImport implements ToModel, WithHeadingRow
 {
@@ -661,7 +657,7 @@ class EmployeesImport implements ToModel, WithHeadingRow
 }
 
 */
-}
+
 
 
 

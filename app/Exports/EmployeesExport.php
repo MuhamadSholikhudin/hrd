@@ -25,8 +25,6 @@ class EmployeesExport implements FromView
         return view('exports.employees.employees', [
             'employees' => Employee::all()
         ]);
-    }
-
-    
+    }    
 
 }

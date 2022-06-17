@@ -114,25 +114,22 @@
                         $sel_paragraph = DB::table('paragraphs')->find($sel_alphabet->paragraph_id);
                         $sel_article = DB::table('articles')->find($sel_paragraph->article_id);
                     ?>
-                    @if($violation->alphabet_accumulation != null)
+                    @if($violation->alphabet_accumulation != NULL)
                         <!-- violation accumulation here -->
-                        @if($violation->violation_accumulation != null)
+                        
                             <?php
                                 $sel_alphabet_accumulation = DB::table('alphabets')->find($violation->alphabet_accumulation);
                                 $sel_paragraph_accumulation = DB::table('paragraphs')->find($sel_alphabet_accumulation->paragraph_id);
                                 $sel_article_accumulation = DB::table('articles')->find($sel_paragraph_accumulation->article_id);
                             ?>
-
+                        
                                 <!-- PASAL AKUMULASI -->
-                            <div class="col-sm-12 lead" style="text-align: justify;">Perjanjian Kerja Bersama Pasal  {{$sel_article_accumulation->article}} ayat   {{$sel_paragraph_accumulation->paragraph}}  huruf {{$sel_alphabet_accumulation->alphabet}}  {{$sel_alphabet_accumulation->alphabet_sound}}</div>
-                        @else
-                        <div class="col-sm-12 lead" style="text-align: justify;">Perjanjian Kerja Bersama Pasal  {{$sel_article->article}} ayat   {{$sel_paragraph->paragraph}}  huruf {{$sel_alphabet->alphabet}}  {{$sel_alphabet->alphabet_sound}}</div>
-
-                        @endif
+                            <div class="col-sm-12 lead" style="text-align: justify;">Perjanjian Kerja Bersama Pasal  {{$sel_article_accumulation->article}} ayat {{$sel_paragraph_accumulation->paragraph}}  huruf {{$sel_alphabet_accumulation->alphabet}}  {{$sel_alphabet_accumulation->alphabet_sound}}</div>
+                        
                     @else
+                    
                               <!-- Pasal Tanpa Akumulasi -->
                         <div class="col-sm-12 lead" style="text-align: justify;">Perjanjian Kerja Bersama Pasal {{$sel_article->article}} ayat ({{$sel_paragraph->paragraph}}) huruf "{{$sel_alphabet->alphabet}}" {{$sel_alphabet->alphabet_sound}}.</div>
-                    
                     @endif
               
                     <br>
@@ -198,7 +195,7 @@
                                 </tbody>
                             </table>
                         @else
-<!-- PASAL SEKARANG, BUNYI PASAL -->
+                        <!-- PASAL SEKARANG, BUNYI PASAL -->
                         <!-- <div class="col-sm-12 lead" style="text-align: justify;">- Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal  {{$sel_article->article}} ayat {{$sel_paragraph->paragraph}} huruf "{{$sel_alphabet->alphabet}}"  {{$sel_alphabet->alphabet_sound}}</div> -->
                         
                         <!-- PASAL LALU, DELIK PELANGGARAN LALU -->

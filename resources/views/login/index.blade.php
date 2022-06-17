@@ -16,11 +16,11 @@
 
   <style>
     .login-page {
-      background-image: url("{{ asset('img/View.jpg') }}");
+      /* background-image: url("{{ asset('img/View.jpg') }}"); */
       /* background-color: #cccccc; */
       /* width: 500px; */
       /* background-size: auto; */
-      background-size: 100%;
+      /* background-size: 100%; */
     }
   
   </style>
@@ -47,7 +47,7 @@
       </div>
     @endif
 
-      <div class="login-box-msg">
+      <div class="login-box-msg" >
       <a href="/login">
         <img src="{{ asset('img/HR System.png') }}" onclick="myFunction()" alt="" srcset="" width="150px"> 
       
@@ -61,7 +61,7 @@
       <form action="/login" method="post" enctype="multipart/form-data">
         @csrf
         <div class="input-group mb-3">
-          <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="name" name="name" value="{{ old('name') }}"  >
+          <input type="text" class="form-control @error('name') is-invalid @enderror" onclick="myFunction()" placeholder="name" name="name" value="{{ old('name') }}"  >
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -119,6 +119,7 @@
 </div>
 <!-- /.login-box -->
 
+
 <!-- jQuery -->
 <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->
@@ -128,16 +129,17 @@
 
 <script>
 
-//   var gmbr = 'gmbr';
-//   if(gmbr == gmbr){
-//     document.body.style.backgroundImage = "url('{{ asset('img/View.jpg') }}')";
-//   }else{
+  // var gmbr = 'gmbr';
+  // if(gmbr == gmbr){
+  //   document.body.style.backgroundImage = "url('{{ asset('img/View.jpg') }}')";
+  // }else{
 
-//   }
-// function myFunction() {
-//   // document.body.style.backgroundColor = "#f3f3f3";
-//   document.body.style.backgroundImage = "url('{{ asset('img/View.jpg') }}')";
-// }
+  // }
+function myFunction() {
+  document.body.style.backgroundColor = "#f3f3f3";
+  document.body.style.backgroundImage = "url('{{ asset('img/View.jpg') }}')";
+  document.body.style.backgroundSize = "100%"; 
+}
 // function makeAlert(){ 
 //     alert("Popup window!");
 // };

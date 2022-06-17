@@ -11,6 +11,37 @@
     <title>Example</title>
   </head>
   <body>
+
+  <?php
+
+        /*
+            $cari_vio_alpha_not_null = DB::table('violations')->where('alphabet_accumulation' , '!=' , NULL)->get();
+
+            DB::table('violations')->where('alphabet_accumulation' , '!=' , NULL)->chunk(100, function ($users) {
+                foreach ($violations as $violation) {
+                    //
+
+                    $c_violations = DB::table('violations')
+                      ->where('employee_id', '<', $violation->employee_id)
+                      ->where('id', '<', $violation->id)
+                      ->count();
+
+                    if($c_violations > 1){
+                      $c_violations = DB::table('violations')
+                        ->where('employee_id', '<', $violation->employee_id)
+                        ->where('id', '<', $violation->id)
+                        ->count();
+                    }else{
+                      
+
+                    }
+                }
+            });
+
+        */
+
+
+?>
     <h1>Hello, world!</h1>
     <div class="container">
 

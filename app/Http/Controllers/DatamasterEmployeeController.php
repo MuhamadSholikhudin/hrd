@@ -33,16 +33,18 @@ class DatamasterEmployeeController extends Controller
     {
         $employees = Employee::oldest();
 
-        // $employees = DB::table('employees')
-        //     ->leftJoin('jobs', 'employees.job_id', '=', 'jobs.id')
-        //     ->Join('departments', 'employees.department_id', '=', 'departments.id');
+        // $employees = DB::table('employees')->orderBy('number_of_employees', 'asc');
+            // ->leftJoin('jobs', 'employees.job_id', '=', 'jobs.id')
+            // ->Join('departments', 'employees.department_id', '=', 'departments.id');
             // ->get();
 
 
         if(request('search')){
             $employees->where('number_of_employees', 'like', '%' . request('search') . '%')
                       ->orWhere('name', 'like', '%' . request('search') . '%')
-                      ->orWhere('national_id', 'like', '%' . request('search') . '%');
+                      ->orWhere('status_employee', 'like', '%' . request('search') . '%')
+                      ->orWhere('national_id', 'like', '%' . request('search') . '%')
+                      ;
         }
 
         
@@ -50,7 +52,7 @@ class DatamasterEmployeeController extends Controller
             
             // "posts" => Post::latest()->filter(request(['search', 'category', 'author']))->paginate(3)->withQuerystring()
             // "employees" => $employees->filter(request(['search']))->paginate(10)->withQuerystring(),
-            'employees' => $employees->paginate(10)->withQuerystring(),
+            'employees' => $employees->orderBy('number_of_employees', 'asc')->paginate(10)->withQuerystring(),
             'count' => DB::table('employees')->count()
              
         ]);

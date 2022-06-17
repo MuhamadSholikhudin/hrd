@@ -41,6 +41,10 @@ class HiViolationController extends Controller
             'violation_status' => 'notactive'
         ]);
 
+        /*
+            $cari_vio_alpha_not_null = DB::table('violations')
+
+        */
 
         //
     $violations = DB::table('violations')
@@ -312,7 +316,7 @@ class HiViolationController extends Controller
                         
                         $signature_id = $signature->id;
     
-// percobaan
+                    // percobaan
                         // if($alphabet_accumulation !== NULL){
                         //     $sel_num_vio = DB::table('violations')->where('employee_id', $employee->id)->count();
                         //     if($sel_num_vio == 0){
@@ -352,9 +356,9 @@ class HiViolationController extends Controller
                         //     $violation_accumulation = NULL;
                         //     $violation_accumulation2 = NULL;
                         // }
-// percobaan
+                    // percobaan
 
-/*
+                    /*
                         $sel_num_vio = DB::table('violations')->where('employee_id', $employee->id)->count();
 
                         if($sel_num_vio == 0){
@@ -980,8 +984,10 @@ class HiViolationController extends Controller
                         $last_type = $type_viol;
                         
                         $bul = date('m');
+                        $yaer_y_bul = date('Y');
                         $num_sp = DB::table('violations')
                             ->whereMonth('date_of_violation', $bul)
+                            ->whereYear('date_of_violation',  $yaer_y_bul)  
                             ->count();
             
                         if($num_sp < 1){
@@ -990,6 +996,7 @@ class HiViolationController extends Controller
                         }elseif($num_sp > 0){
                             $last_sp = DB::table('violations')
                                 ->whereMonth('date_of_violation', $bul)
+                                ->whereYear('date_of_violation',  $yaer_y_bul)  
                                 ->orderByDesc('no_violation')
                                 ->first();
                                 // $no_sp = $last_sp->no_violation + floor($x['no']);

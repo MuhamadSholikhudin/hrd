@@ -477,8 +477,8 @@
         </div>
 
       {{-- Displaynone --}}
-        <!-- <div > -->
-       <div style="display:none;" > 
+        <div >
+       <!-- <div style="display:none;" >  -->
           <?php
             $date_violation = new \DateTime(date('Y-m-d') .' 4:06:37' );
 
@@ -512,8 +512,10 @@
 
             // Nomer SP
             $month_m_bul = date('m');
+            $yaer_y_bul = date('Y');
             echo $num_no_sp = DB::table('violations')
                               ->whereMonth('date_of_violation',  $month_m_bul)
+                              ->whereYear('date_of_violation',  $yaer_y_bul)  
                               ->count();
             echo '<br> ';
             // dd($num_no_sp);
@@ -522,11 +524,15 @@
             }elseif($num_no_sp > 0){
               $sel_no_sp = DB::table('violations')
                 ->whereMonth('date_of_violation',  $month_m_bul)  
+                ->whereYear('date_of_violation',  $yaer_y_bul)  
                 ->orderByDesc('no_violation')
+                ->latest()
                 ->first();
               $no_sp = $sel_no_sp->no_violation + 1;
             }
-            echo '<br> ';
+            echo $no_sp;
+            echo '<br>';
+            
             $var = 1234567;
             echo is_numeric($var) ? "Jumlah digit dari bilangan ".$var." adalah ".strlen($var) : 'Bukan Termasuk Angka';
             echo '<br>';

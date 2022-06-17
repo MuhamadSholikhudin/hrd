@@ -123,8 +123,6 @@
                 <p class="text-justify-right">
                     <a href="{{asset('excel/FORMAT_UPLOAD_PELANGGARAN.xlsx')}}">Format Upload Pelangaran</a>
                     <br>
-             
-
                   </p>
               <form action="{{ route('violations.import') }}" method="POST" enctype="multipart/form-data">
                 @csrf
