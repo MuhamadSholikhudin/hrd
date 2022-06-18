@@ -160,7 +160,10 @@
 
                                     <tr>
                                         <td valign="top">&nbsp;&nbsp;&nbsp;-</td>
-                                        <td valign="top" class="lead" style="text-align: justify;">Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal  {{$sel_article->article}} ayat {{$sel_paragraph->paragraph}} huruf "{{$sel_alphabet->alphabet}}"  {{$sel_alphabet->alphabet_sound}}</td>
+                                        <td valign="top" class="lead" style="text-align: justify;">Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal  
+                                            <!-- {{$sel_article->article}} ayat {{$sel_paragraph->paragraph}} huruf "{{$sel_alphabet->alphabet}}"   -->
+                                            {{ pasal($violation->alphabet_id);}}
+                                            {{$sel_alphabet->alphabet_sound}}</td>
                                     </tr>
 
                                     <tr>
@@ -182,19 +185,26 @@
                                                         $pelanggran_lalu2 = DB::table('violations')->find($violation->violation_accumulation2);
                                                         
                                                         ?> 
-                                                        2Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal 
+                                                        2 Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal 
+                                                       
+                                                        {{ pasal($pelanggran_lalu->alphabet_accumulation);}} Perjanjian Kerja Bersama Pasal 
 
-                                                        {{ pasal($violation->alphabet_accumulation);}} Perjanjian Kerja Bersama Pasal 
-                                                        {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", {{$pelanggran_lalu->other_information}} {{$pelanggran_lalu2->other_information}} </td>                                                    
+                                                        <!-- {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", -->
+                                                        
+                                                        {{ pasal($pelanggran_lalu->alphabet_id);}} ,
+                                                        {{$pelanggran_lalu->other_information}} {{$pelanggran_lalu2->other_information}} </td>                                                    
                                                     <?php 
                                                     }elseif($violation->violation_accumulation !== NULL){  ?>
-                                                        1Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal
+                                                        1 Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal
                                                         <?php
-                                                            if($pelanggran_lalu->alphabet_accumulation !== NULL){
-                                                                pasal($violation->alphabet_accumulation); echo 'Perjanjian Kerja Bersama Pasal';
-                                                            }
-                                                        ?>
-                                                        {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", {{$pelanggran_lalu->other_information}}</td>                                                    
+                                                            if($pelanggran_lalu->alphabet_accumulation != NULL){ ?>
+                                                                {{ pasal($pelanggran_lalu->alphabet_accumulation); }}  Perjanjian Kerja Bersama Pasal
+                                                        <?php } ?>
+                                                        
+                                                        <!-- {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}",  -->
+                                                        
+                                                        {{ pasal($pelanggran_lalu->alphabet_id);}} 
+                                                        {{$pelanggran_lalu->other_information}}</td>                                                    
                                                     <?php 
                                                     }else{
                                                         
@@ -220,7 +230,11 @@
 
                                 <tr>
                                     <td valign="top">&nbsp;&nbsp;&nbsp;-</td>
-                                    <td valign="top" class="lead" style="text-align: justify;">Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal  {{$sel_article->article}} ayat {{$sel_paragraph->paragraph}} huruf "{{$sel_alphabet->alphabet}}"  {{$sel_alphabet->alphabet_sound}}</td>
+                                    <td valign="top" class="lead" style="text-align: justify;">Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal  
+                                        <!-- {{$sel_article->article}} ayat {{$sel_paragraph->paragraph}} huruf "{{$sel_alphabet->alphabet}}"  -->
+                                        {{ pasal($violation->alphabet_id);}} 
+                                        
+                                        {{$sel_alphabet->alphabet_sound}}</td>
                                 </tr>
 
                                 <tr>

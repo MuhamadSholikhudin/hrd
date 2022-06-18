@@ -244,6 +244,7 @@
                 <td>
                 
                  <!-- {{ pasal($violation->alphabet_id); }} -->
+                 
                  <?php 
                     if($violation->alphabet_accumulation !== NULL){
                     echo pasal($violation->alphabet_accumulation);

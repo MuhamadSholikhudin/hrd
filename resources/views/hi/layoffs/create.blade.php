@@ -55,7 +55,7 @@
               // echo $num_latest;
               ?>
 
-              NO. {{$no_lf}}/SK-PHK/HRD-HWI/IV/{{ date('Y') }} <br>
+              NO.    <input type="number" name="" id="" value="{{$no_lf}} ">        /SK-PHK/HRD-HWI/IV/{{ date('Y') }} <br>
               TENTANG<br>
               PEMUTUSAN HUBUNGAN KERJA
             
@@ -109,11 +109,19 @@
               <td valign="top">
                 <table>
                   <tr>
-                    <td colspan="7">
+                    <td colspan="5">
                       Melakukan Pemutusan Hubungan Kerja (PHK) terhadap :
-                      <select class="form-control select2bs4 select2-hidden-accessible" name="employee_id" id="karyawan_phk" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
-                          
-                      </select>
+                      <!-- <select class="form-control select2bs4 select2-hidden-accessible" name="employee_id" id="karyawan_phk" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
+                      </select> -->
+                      <input class="form-control" type="text" name="" id="cari_karyawan_phk">
+                    </td>
+                    <td>
+                      <br>
+                      <span onClick="car_kar()" class="btn btn-primary">Cari</span>
+                    </td>
+                    <td>
+                      &nbsp; &nbsp; <span id="output_cari_karyawan">Berhasil</span> 
+
                     </td>
                   </tr>
                   <tr>

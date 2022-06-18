@@ -310,12 +310,25 @@ class LayoffController extends Controller
 
         $signature_employee = $request->karyawan_phk;
 
-        $employee = DB::table('employees')->find($signature_employee);
+        
+        $c_employee = DB::table('employees')
+            ->where('number_of_employees', $signature_employee)
+            ->count();
 
-        $department = DB::table('departments')->find($employee->department_id);
-        $job = DB::table('jobs')->find($employee->job_id);
+        if($c_employee > 0){
+            
+            $employee = DB::table('employees')->find($signature_employee);
 
-        $data = [$employee->name, $employee->bagian, $employee->number_of_employees,  $department->department,  $job->job_level, $employee->hire_date];
+            $department = DB::table('departments')->find($employee->department_id);
+            $job = DB::table('jobs')->find($employee->job_id);
+    
+            $data = [$employee->name, $employee->bagian, $employee->number_of_employees,  $department->department,  $job->job_level, $employee->hire_date];   
+
+            // $data = [1, "NULL", "NULL",  "NULL",  "NULL", "NULL"];   
+        }else{
+            $data = ["NULL", "NULL", "NULL",  "NULL",  "NULL", "NULL"];   
+            
+        }
 
         return response()->json($data);
     }

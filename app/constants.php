@@ -38,7 +38,7 @@ function tanggal_pelanggaran($tanggal_pelanggaran){
     $date_month_sp =  date_format($date_violation_sp, "m"); //for Display Month
     $date_day_sp = date_format($date_violation_sp, "d"); //for Display Date
 
-    $day_sp = gmdate("l", mktime(0,0,0,$date_day_sp,$date_month_sp,$date_year_sp));
+    $day_sp = gmdate("l", mktime(0,0,0, $date_month_sp, $date_day_sp, $date_year_sp));
 
     // Hari Indonesia
     if($day_sp == 'Monday'){
@@ -84,7 +84,7 @@ function tanggal_pelanggaran($tanggal_pelanggaran){
       $month_indo_sp = 'Desember';            
     }
 
-    return $day_indo_sp. ", ". $date_day_sp. " ". $month_indo_sp . " ". $date_year_sp;
+    return $day_indo_sp. ", ". $date_day_sp. " ". $month_indo_sp ." ". $date_year_sp;
 }
 
 function hari_angka($hari_angka){
@@ -94,7 +94,7 @@ function hari_angka($hari_angka){
   $date_month_sp =  date_format($date_violation_sp, "m"); //for Display Month
   $date_day_sp = date_format($date_violation_sp, "d"); //for Display Date
 
-  $day_sp = gmdate("l", mktime(0,0,0,$date_day_sp,$date_month_sp,$date_year_sp));
+  $day_sp = gmdate("l", mktime(0,0,0, $date_month_sp, $date_day_sp,  $date_year_sp));
 
   // Hari Indonesia
   if($day_sp == 'Monday'){
@@ -225,7 +225,7 @@ function pasal_violation($alphabet_id){
   $paragraph  = DB::table('paragraphs')->find($alphabet->paragraph_id); 
   $article  = DB::table('articles')->find($paragraph->article_id); 
 
-  echo $article->article . ' ayat '. $paragraph->paragraph .' huruf '. $alphabet->alphabet;
+  echo $article->article . ' ayat ('. $paragraph->paragraph .') huruf "'. $alphabet->alphabet. '"';
 }
 
 function familyName($fname) {
@@ -238,7 +238,7 @@ function pasal($alphabet_id){
   $paragraph  = DB::table('paragraphs')->find($alphabet->paragraph_id); 
   $article  = DB::table('articles')->find($paragraph->article_id); 
 
-  return $article->article . ' ayat '. $paragraph->paragraph .' huruf '. $alphabet->alphabet;
+  return $article->article . ' ayat ('. $paragraph->paragraph .') huruf "'. $alphabet->alphabet. '"';
 }
 
 function pasal_yang_dilanggar($violation_id){
