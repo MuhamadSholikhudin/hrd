@@ -43,7 +43,70 @@
                           $num_employees = DB::table('employees')->count();
                       ?>
                       <h3>{{$num_employees}}</h3>
-                      <p>Karyawan</p>
+                      <p>Total Karyawan</p>
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-person"></i>
+                    </div>
+                    <a href="/employees" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                  </div>
+                </div>
+              <?php }else{  
+            }
+          }
+        ?>
+
+        <?php 
+          $num_sub_employees = DB::table('sub_menus')->where('url', '/employees')->count(); 
+          if($num_sub_employees > 0){
+              $print_sub_employees = DB::table('sub_menus')->where('url', '/employees')->first();
+              $num_meth_employees = DB::table('methods')
+                  ->leftJoin('access_menus', 'methods.access_menu_id' ,'access_menus.id')
+                  ->where('methods.sub_menu_id', $print_sub_employees->id)
+                  ->where('access_menus.role_id', auth()->user()->role_id)
+                  ->count();
+              if($num_meth_employees > 0){ ?>
+                <div class="col-lg-3 col-6">
+                  <!-- small box -->
+                  <div class="small-box bg-info2" style="background-color: #4baebd" >
+                    <div class="inner">
+                      <?php 
+                          $active_employees = DB::table('employees')->where('status_employee', 'active')->count();
+                      ?>
+                      <h3  class="text-white">{{$active_employees}}</h3>
+                      <p  class="text-white">Karyawan Aktif</p>
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-person"></i>
+                    </div>
+                    <a href="/employees" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                  </div>
+                </div>
+              <?php }else{  
+            }
+          }
+        ?>
+
+
+        <?php 
+          $num_sub_employees = DB::table('sub_menus')->where('url', '/employees')->count(); 
+          if($num_sub_employees > 0){
+              $print_sub_employees = DB::table('sub_menus')->where('url', '/employees')->first();
+              $num_meth_employees = DB::table('methods')
+                  ->leftJoin('access_menus', 'methods.access_menu_id' ,'access_menus.id')
+                  ->where('methods.sub_menu_id', $print_sub_employees->id)
+                  ->where('access_menus.role_id', auth()->user()->role_id)
+                  ->count();
+              if($num_meth_employees > 0){ ?>
+                <div class="col-lg-3 col-6">
+                  <!-- small box -->
+                  <div class="small-box bg-info3" style="background-color: #53858d">
+                    <div class="inner">
+                      <?php 
+                          $active_employees = DB::table('employees')->where('status_employee', 'notactive')->count();
+                      ?>
+                      <h3  class="text-white">{{$active_employees}}</h3>
+                      <p  class="text-white">Karyawan Tidak Aktif</p>
                     </div>
                     <div class="icon">
                       <i class="ion ion-person"></i>
@@ -76,7 +139,7 @@
                           $num_violations = DB::table('violations')->count();
                       ?>
                       <h3 class="text-white">{{$num_violations}}</h3>
-                      <p class="text-white">Pelanggaran</p>
+                      <p class="text-white">Total Pelanggaran</p>
                     </div>
                     <div class="icon">
                       <i class="ion ion-document"></i>

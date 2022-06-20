@@ -156,6 +156,18 @@ echo tanggal_pelanggaran(date('Y-m-d'));
 // });
 
 
+// // MEMBUAT KARYAWAN TIDAK AKTIF
+// DB::table('employees')->where('date_out' , '!=' , NULL)->orderBy('id')->chunk(1000, function ($employees) {
+//   foreach ($employees as $employee) {
+//     DB::table('employees')
+//       ->where('id', $employee->id)
+//       ->update([
+//           'status_employee'=> 'notactive'
+//       ]);                
+//     }
+// });
+
+
 ?>
     <h1>Hello, world!</h1>
     <div class="container">

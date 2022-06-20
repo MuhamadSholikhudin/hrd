@@ -187,3 +187,15 @@ Materi Development System :
 (00:33:50) - Prod Development
 (00:37:03) - Maintenance dan Improvement
 (00:40:55) - Outro
+
+
+Cara git clone laravel
+
+git clone alamat git
+
+copas .env.example jadi .env
+
+composer Install
+
+php artisan key:generate
+
