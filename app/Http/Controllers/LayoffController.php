@@ -161,19 +161,21 @@ class LayoffController extends Controller
           $ROM = 'XII';
         }
 
+        $employee = DB::table('employees')->where('number_of_employees', $request->phk_employee)->first();
+
         DB::table('layoffs')->insert([
             'alphabet_id' => $request->alphabet_id,
-            'employee_id' => $request->employee_id,
+            'employee_id' => $employee->id,
             'layoff_description' => $request->layoff_description,
-            'no_layoff' => $no_lf,
-            'rom_layoff' => $ROM,
+            'no_layoff' => $request->no_layoff,
+            'rom_layoff' => $request->rom_layoff,
             'layoff_date_start' => $request->layoff_date_start,
             'layoff_date' => $request->layoff_date,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ]);
 
-        $select_employee = DB::table('employees')->find($request->employee_id);
+        $select_employee = DB::table('employees')->find($employee->id);
         $remark = "menambahkan PHK ".$select_employee->number_of_employees;
         $action = "add";
 
@@ -317,7 +319,7 @@ class LayoffController extends Controller
 
         if($c_employee > 0){
             
-            $employee = DB::table('employees')->find($signature_employee);
+            $employee = DB::table('employees')->where('number_of_employees', $signature_employee)->first();
 
             $department = DB::table('departments')->find($employee->department_id);
             $job = DB::table('jobs')->find($employee->job_id);

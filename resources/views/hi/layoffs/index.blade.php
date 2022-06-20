@@ -58,16 +58,16 @@
             @foreach($layoffs as $layoff):
               <tr>
                 <td>{{$layoff->id}}</td>
-                <td>{{ $layoff->name }}</td>
                 <td>{{ $layoff->number_of_employees }}</td>
+                <td>{{ $layoff->name }}</td>
                   <?php 
                         $d_l = new \DateTime($layoff->layoff_date .' 00:00:00');
                         $year = date_format($d_l, "Y"); //for Display Year
                   ?>
                 <td>{{ $layoff->no_layoff .'/SK-PHK/HRD-HWI/'.$layoff->rom_layoff.'/'. $year   }}</td>
-                <td>{{ $layoff->layoff_date }}</td>
+                <td>{{ tanggal_pelanggaran($layoff->layoff_date) }}</td>
                 <td>
-                  {{ $layoff->layoff_date_start }}
+                  {{ tanggal_pelanggaran($layoff->layoff_date_start) }}
                 </td>
                 <td>
                   <?php  $print_alphabet  = DB::table('alphabets')->find($layoff->alphabet_id); ?>

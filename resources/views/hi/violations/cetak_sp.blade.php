@@ -116,7 +116,6 @@
                     ?>
                     @if($violation->alphabet_accumulation != NULL)
                         <!-- violation accumulation here -->
-                        
                             <?php
                                 $sel_alphabet_accumulation = DB::table('alphabets')->find($violation->alphabet_accumulation);
                                 $sel_paragraph_accumulation = DB::table('paragraphs')->find($sel_alphabet_accumulation->paragraph_id);
@@ -124,12 +123,14 @@
                             ?>
                         
                                 <!-- PASAL AKUMULASI -->
-                            <div class="col-sm-12 lead" style="text-align: justify;">Perjanjian Kerja Bersama Pasal  {{$sel_article_accumulation->article}} ayat {{$sel_paragraph_accumulation->paragraph}}  huruf {{$sel_alphabet_accumulation->alphabet}}  {{$sel_alphabet_accumulation->alphabet_sound}}</div>
+                            <div class="col-sm-12 lead" style="text-align: justify;">Perjanjian Kerja Bersama Pasal  
+                            {{$sel_article_accumulation->article}} ayat ({{$sel_paragraph_accumulation->paragraph}})  huruf "{{$sel_alphabet_accumulation->alphabet}}"  {{$sel_alphabet_accumulation->alphabet_sound}}</div>
                         
                     @else
                     
                               <!-- Pasal Tanpa Akumulasi -->
-                        <div class="col-sm-12 lead" style="text-align: justify;">Perjanjian Kerja Bersama Pasal {{$sel_article->article}} ayat ({{$sel_paragraph->paragraph}}) huruf "{{$sel_alphabet->alphabet}}" {{$sel_alphabet->alphabet_sound}}.</div>
+                        <div class="col-sm-12 lead" style="text-align: justify;">Perjanjian Kerja Bersama Pasal 
+                        {{$sel_article->article}} ayat ({{$sel_paragraph->paragraph}}) huruf "{{$sel_alphabet->alphabet}}" {{$sel_alphabet->alphabet_sound}}.</div>
                     @endif
               
                     <br>
@@ -183,9 +184,9 @@
                                                     }elseif($violation->violation_accumulation2 !== NULL){
 
                                                         $pelanggran_lalu2 = DB::table('violations')->find($violation->violation_accumulation2);
-                                                        
+                    
                                                         ?> 
-                                                        2 Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal 
+                                                        Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal 
                                                        
                                                         {{ pasal($pelanggran_lalu->alphabet_accumulation);}} Perjanjian Kerja Bersama Pasal 
 
@@ -195,7 +196,7 @@
                                                         {{$pelanggran_lalu->other_information}} {{$pelanggran_lalu2->other_information}} </td>                                                    
                                                     <?php 
                                                     }elseif($violation->violation_accumulation !== NULL){  ?>
-                                                        1 Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal
+                                                        Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal
                                                         <?php
                                                             if($pelanggran_lalu->alphabet_accumulation != NULL){ ?>
                                                                 {{ pasal($pelanggran_lalu->alphabet_accumulation); }}  Perjanjian Kerja Bersama Pasal

@@ -310,7 +310,7 @@
 
 
  //Menampilkan karyawan PHK
- $('#cari_karyawan_phk').on( "change", function() {
+ $('#cari_karyawan_phk').keyup(function() {
     // alert("oke");
     $.ajaxSetup({
         headers: {
@@ -347,9 +347,16 @@
             $("#job_phk").html(data[4]);
             $("#hire_date_phk").html(data[5]);
 
-
             $("#output_cari_karyawan").html(data[0]);
 
+            var btn_phk = data[0];
+
+            if(btn_phk == "NULL"){
+              $('#button_php').attr('disabled','true');
+            }else{
+              $('#button_php').removeAttr('disabled');
+
+            }
           },error(){
             alert("error");
           }

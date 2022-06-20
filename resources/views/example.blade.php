@@ -98,41 +98,50 @@ echo tanggal_pelanggaran(date('Y-m-d'));
 
 
 
-// VIOLATION_ACCUMULATION3
-// DB::table('violations')->where('violation_accumulation' , '!=' , NULL)->orderBy('id')->chunk(100, function ($violations) {
+// // VIOLATION_ACCUMULATION3
+// DB::table('violations')->where('violation_accumulation2' , '!=' , NULL)->orderBy('id')->chunk(100, function ($violations) {
 //   foreach ($violations as $violation) {
+
+//     // Cari accumulation2 dari terakhir 
 //     $c_violations = DB::table('violations')
 //         ->where('employee_id',  $violation->employee_id)
+//         ->where('violation_accumulation2' , '!=' , NULL)        
 //         ->where('id', '<', $violation->id)
 //         ->count();
 
 //     if($c_violations > 0){
+
+//        // menampilkan accumulation2 dari terakhir 
 //       $get_violations = DB::table('violations')
 //         ->where('employee_id',  $violation->employee_id)
 //         ->where('id', '<', $violation->id)
+//         ->where('violation_accumulation2' , '!=' , NULL)
 //         ->orderBy('id', 'desc')
 //         ->first();
+
 //       if($get_violations->date_end_violation > $violation->reporting_date){
 
 //           $c_violation2 = DB::table('violations')
 //             ->where('employee_id',  $violation->employee_id)
 //             ->where('id', '<', $get_violations->id)
+//             ->where('violation_accumulation' , '!=' , NULL)
 //             ->count();
 
 //             if($c_violation2 > 0){
 //               $get_violations2 = DB::table('violations')
 //                 ->where('employee_id',  $violation->employee_id)
 //                 ->where('id', '<', $get_violations->id)
+//                 ->where('violation_accumulation' , '!=' , NULL)
 //                 ->orderBy('id', 'desc')
 //                 ->first();
 
 //                 if($get_violations2->date_end_violation > $get_violations->reporting_date){
 
-//                 // DB::table('violations')
-//                 //   ->where('id', $violation->id)
-//                 //   ->update([
-//                 //       'violation_accumulation2'=> $get_violations2->id
-//                 //   ]);
+//                 DB::table('violations')
+//                   ->where('id', $violation->id)
+//                   ->update([
+//                       'violation_accumulation3'=> $get_violations->violation_accumulation2
+//                   ]);
 //                 }
 //             }else{
 
