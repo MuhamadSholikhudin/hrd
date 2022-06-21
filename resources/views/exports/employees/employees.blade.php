@@ -45,7 +45,7 @@
     </thead>
 <tbody>
 <?php
-DB::table('employees')->orderBy('id')->chunk(100, function ($employees) {
+DB::table('employees')->orderBy('number_of_employees', 'asc')->chunk(100, function ($employees) {
     foreach ($employees as $employee) { ?>
         <tr>
             <td>{{  $employee->id }}</td>
