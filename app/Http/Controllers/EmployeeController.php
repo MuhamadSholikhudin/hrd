@@ -278,8 +278,10 @@ class EmployeeController extends Controller
                         $date_out_i = $row['date_out'];
                         if($date_out_i == null){
                             $date_out = $p_employee->date_out;
+                            $status_employee = $p_employee->status_employee;  
                         }else{
                             $date_out = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['date_out']);
+                            $status_employee = "not active";
                         }
                         if($date_out == 'false'){
                             return redirect('/employees')->with('danger', 'Data Karyawan Mulai dari baris '. floor($row['number_of_employees']) . ' Format Tanggal date_out salah. Pastikan kolom date dengan performatan date yang benar !');
@@ -287,11 +289,9 @@ class EmployeeController extends Controller
                         
                         // exit_statement
                         if($row['exit_statement'] == null){
-                            $exit_statement = $p_employee->exit_statement;
-                            $status_employee = $p_employee->status_employee;                            
+                            $exit_statement = $p_employee->exit_statement;                          
                         }else{
                             $exit_statement = $row['exit_statement'];
-                            $status_employee = "not active";
                         }
 
 
