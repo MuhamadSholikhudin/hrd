@@ -2,6 +2,7 @@
     <thead>
         <tr>
             <th>NO</th>
+            <th>status_employee</th>
             <th>number_of_employees</th>
             <th>name</th>
             <th>gender</th>
@@ -48,6 +49,16 @@ DB::table('employees')->orderBy('id')->chunk(100, function ($employees) {
     foreach ($employees as $employee) { ?>
         <tr>
             <td>{{  $employee->id }}</td>
+            <td>
+                <?php 
+                    if($employee->status_employee == 'active'){
+                        $status_emp = "ACTIVE";
+                    }else{
+                        $status_emp = "NON ACTIVE";
+                    }
+                ?>
+                {{ $status_emp }}
+            </td>
             <td>{{ $employee->number_of_employees}}</td>
             <td>{{ $employee->name}}</td>
             <td>{{ $employee->gender}}</td>
