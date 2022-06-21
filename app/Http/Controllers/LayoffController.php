@@ -69,7 +69,7 @@ class LayoffController extends Controller
             // ->get();
 
         $alphabet = DB::select( DB::raw("SELECT * FROM alphabets
-        WHERE paragraph_id = 6 OR paragraph_id = 7") );
+        WHERE paragraph_id BETWEEN 6 AND 38") );
 
         return view('hi.layoffs.create',[
             'alphabets' =>  $alphabet,

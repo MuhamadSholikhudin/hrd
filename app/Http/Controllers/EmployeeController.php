@@ -281,7 +281,7 @@ class EmployeeController extends Controller
                             $status_employee = $p_employee->status_employee;  
                         }else{
                             $date_out = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['date_out']);
-                            $status_employee = "not active";
+                            $status_employee = "notactive";
                         }
                         if($date_out == 'false'){
                             return redirect('/employees')->with('danger', 'Data Karyawan Mulai dari baris '. floor($row['number_of_employees']) . ' Format Tanggal date_out salah. Pastikan kolom date dengan performatan date yang benar !');

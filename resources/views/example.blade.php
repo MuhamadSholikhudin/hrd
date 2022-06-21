@@ -167,7 +167,28 @@ echo tanggal_pelanggaran(date('Y-m-d'));
 //     }
 // });
 
+echo '<br>';
+// $cari_pasal_akumulasi = DB::table('alphabets')
+//             ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+//             ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+//             ->where('paragraphs.type_of_verse', 'Surat Peringatan Terakhir')
+//             ->where('alphabet_accumulation', 'like', '%' . 'Surat Peringatan Pertama' . '%')
+//             ->select('alphabets.id as id')
+//             ->first();
+// $cari_pasal_akumulasi = ['id' => 93];  
+// echo $cari_pasal_akumulasi['id'];  
 
+
+DB::table('violations')->where('id', '>', 8028)->delete();
+
+// $hapus_vio = DB::table('violations')->where('id' , '>' , 8028)-get();
+  // foreach ($hapus_vio as $hapus) {
+  //   DB::table('employees')
+  //     ->where('id', $employee->id)
+  //     ->update([
+  //         'status_employee'=> 'notactive'
+  //     ]);                
+  //   }
 ?>
     <h1>Hello, world!</h1>
     <div class="container">
