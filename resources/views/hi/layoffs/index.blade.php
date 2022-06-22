@@ -59,16 +59,20 @@
               <tr>
                 <td>{{$layoff->id}}</td>
                 <td>
-                  <a href="/layoffs/{{$layoff->id }}" target="_blank" class="text-dark">
+                  
                     {{ $layoff->number_of_employees }}                  
-                  </a>
+                  
                 </td>
                 <td>{{ $layoff->name }}</td>
                   <?php 
                         $d_l = new \DateTime($layoff->layoff_date .' 00:00:00');
                         $year = date_format($d_l, "Y"); //for Display Year
                   ?>
-                <td>{{ $layoff->no_layoff .'/SK-PHK/HRD-HWI/'.$layoff->rom_layoff.'/'. $year   }}</td>
+                <td>
+                  <a href="/layoffs/{{$layoff->id }}" target="_blank" class="text-dark">
+                    {{ $layoff->no_layoff .'/SK-PHK/HRD-HWI/'.$layoff->rom_layoff.'/'. $year   }}
+                  </a>
+                </td>
                 <td>{{ tanggal_pelanggaran($layoff->layoff_date) }}</td>
                 <td>
                   {{ tanggal_pelanggaran($layoff->layoff_date_start) }}

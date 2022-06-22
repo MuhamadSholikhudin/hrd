@@ -144,12 +144,60 @@
         ->count();
 
     if($num_pasal_akumulasi > 0){
-        $cari_pasal_akumulasi = DB::table('alphabets')
-            ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
-            ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
-            ->where('paragraphs.type_of_verse', $status_type_violation)
-            ->where('alphabet_accumulation', 'like', '%' . $select_status_type_violation . '%')
-            ->first();
+        if($status_type_violation == 'Surat Peringatan Terakhir'){
+            
+            if($last_type == 'Surat Peringatan Pertama'){
+                // $cari_pasal_akumulasi = ['id' => 91];
+                // $pasal_terakhir = $cari_pasal_akumulasi['id'];
+                $cari_pasal_akumulasi = DB::table('alphabets')
+                    ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                    ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                    ->where('paragraphs.type_of_verse', $status_type_violation)
+                    ->where('alphabets.id', 91)
+                    ->first(); 
+
+            }elseif($last_type == 'Surat Peringatan Kedua'){
+                // $cari_pasal_akumulasi = ['id' => 92];
+                // $pasal_terakhir = $cari_pasal_akumulasi['id']; 
+                $cari_pasal_akumulasi = DB::table('alphabets')
+                    ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                    ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                    ->where('paragraphs.type_of_verse', $status_type_violation)
+                    ->where('alphabets.id', 92)
+                    ->first(); 
+            }elseif($last_type == 'Surat Peringatan Ketiga'){
+                // $cari_pasal_akumulasi = ['id' => 93]; 
+                // $pasal_terakhir = $cari_pasal_akumulasi['id']; 
+                $cari_pasal_akumulasi = DB::table('alphabets')
+                    ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                    ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                    ->where('paragraphs.type_of_verse', $status_type_violation)
+                    ->where('alphabets.id', 93)
+                    ->first(); 
+            }else{
+                $cari_pasal_akumulasi = DB::table('alphabets')
+                    ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                    ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                    ->where('paragraphs.type_of_verse', $status_type_violation)
+                    ->where('alphabet_accumulation', 'like', '%' . $select_status_type_violation . '%')
+                    ->first();
+            }
+        }else{
+            $cari_pasal_akumulasi = DB::table('alphabets')
+                ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+                ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+                ->where('paragraphs.type_of_verse', $status_type_violation)
+                ->where('alphabet_accumulation', 'like', '%' . $select_status_type_violation . '%')
+                ->first();
+        }
+       
+        // ASLINYA
+        // $cari_pasal_akumulasi = DB::table('alphabets')
+        //     ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+        //     ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+        //     ->where('paragraphs.type_of_verse', $status_type_violation)
+        //     ->where('alphabet_accumulation', 'like', '%' . $select_status_type_violation . '%')
+        //     ->first();
     }else{
         $cari_pasal_akumulasi = DB::table('alphabets')
             ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')

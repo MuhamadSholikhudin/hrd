@@ -477,8 +477,8 @@
         </div>
 
       {{-- Displaynone --}}
-        <div >
-       <!-- <div style="display:none;" >  -->
+        <!-- <div > -->
+       <div style="display:none;" > 
           <?php
             $date_violation = new \DateTime(date('Y-m-d') .' 4:06:37' );
 
@@ -805,7 +805,7 @@
                   <div class="col-sm-10">
                     <!-- <input id="x" type="hidden" name="other_information">
                     <trix-editor input="x"></trix-editor> -->
-                    <textarea name="other_information" class="form-control" id="" rows="4"></textarea>
+                    <textarea name="other_information" class="form-control" id="" rows="4" required></textarea>
                   </div>
                 </div> 
                 <div class="form-group row">

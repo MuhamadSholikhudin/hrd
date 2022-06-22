@@ -890,7 +890,7 @@ class ViolationController extends Controller
                     require_once 'Violationjsondatas.php';
                 }else{
                     // BATAS AKUMULASI
-                                    // CARI PELANGGARAN AKUMULASI 3               
+                    // CARI PELANGGARAN AKUMULASI 3               
                     $num_vio_accumulation2 = DB::table('violations')
                         ->where('employee_id',  $employee_id) 
                         ->where('violation_accumulation', '!=',  null) 
