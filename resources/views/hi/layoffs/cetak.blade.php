@@ -98,15 +98,40 @@
                             <td class="txt" valign="top">&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                             <td class="txt" valign="top">
                                 <div>              
-                                    <div id="isi_text" style="width:100%;">
+                                    <div id="isi_text" style="width:100%; text-align:justify;">
                                         <?php 
+
+                                        if($layoff->read <> NULL){
+                                            $pasal = $layoff->read;
+                                        }elseif($layoff->read == ""){
+                                            if($layoff->alphabet){
+
+                                            }
                                             $sel_alphabet = DB::table('alphabets')->find($layoff->alphabet_id);
                                             $sel_paragraph = DB::table('paragraphs')->find($sel_alphabet->paragraph_id);
                                             $sel_article = DB::table('articles')->find($sel_paragraph->article_id);
-                                            $pasal = 'Perjanjian Kerja Bersama Pasal '.$sel_article->article.'. Jenis Pelanggaran dan Sanksi ayat ('.$sel_paragraph->paragraph.') 
-                                            tentang '.$sel_paragraph->description .'. '.$sel_alphabet->alphabet_sound.'';
-                                        ?>
 
+                                            $kecil = strtolower($sel_article->chapters);
+                                            $chapters = ucwords($kecil);
+                                            $pasal = 'Perjanjian Kerja Bersama Pasal '.$sel_article->article.' '.
+                                            $chapters .'. ayat ('.$sel_paragraph->paragraph.') tentang '
+                                            .$sel_paragraph->description .' ' 
+                                            . $sel_alphabet->alphabet.' .'
+                                            .$sel_alphabet->alphabet_sound.'';
+                                        }else{
+                                            $sel_alphabet = DB::table('alphabets')->find($layoff->alphabet_id);
+                                            $sel_paragraph = DB::table('paragraphs')->find($sel_alphabet->paragraph_id);
+                                            $sel_article = DB::table('articles')->find($sel_paragraph->article_id);
+
+                                            $kecil = strtolower($sel_article->chapters);
+                                            $chapters = ucwords($kecil);
+                                            $pasal = 'Perjanjian Kerja Bersama Pasal '.$sel_article->article.' '.
+                                            $chapters .'. ayat ('.$sel_paragraph->paragraph.') tentang '
+                                            .$sel_paragraph->description .' ' 
+                                            . $sel_alphabet->alphabet.' .'
+                                            .$sel_alphabet->alphabet_sound.'';
+                                        }
+                                        ?>                                        
                                         {{$pasal}}
                                     </div>
                                 </div>
@@ -118,7 +143,7 @@
                         <tr>
                             <td class="txt" class="txt" valign="top">Menimbang</td>
                             <td class="txt" valign="top">&nbsp;&nbsp;:&nbsp;&nbsp;</td>
-                            <td class="txt" valign="top">
+                            <td class="txt" valign="top" style="text-align:justify;">
                                 {{ $layoff->layoff_description }}
                             </td>
                         </tr>

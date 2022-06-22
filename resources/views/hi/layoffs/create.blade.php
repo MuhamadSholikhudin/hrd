@@ -126,8 +126,9 @@
                   @endforeach
                 </select>
            
-                <div id="isi_text" style="width:100%;">
-
+                <div style="width:100%;">
+                  <textarea name="read" id="isi_text" class="form-control" rows="5" required></textarea>
+                  <br>
                 </div>
               </div>
               </td>

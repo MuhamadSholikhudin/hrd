@@ -253,7 +253,7 @@
                   html += '<option value="' + obj[i].id +'">'+ obj[i].number_of_employees +' ' + obj[i].name +'</option>';
             }
               $('#karyawan_phk').html(html);
-              $('#isi_text').text(data[0]);
+              $('#isi_text').val(data[0]);
 
               // $('#karyawan_phk').html('<option value="get3" id="karyawan_phk3" >Pilih3</option>');
               // $('#karyawan_phk').append('<option value="get3" id="karyawan_phk3" >Pilih3</option>');
