@@ -67,6 +67,8 @@ git@github.com:MuhamadSholikhudin/hrd.git
 
 composer require maatwebsite/excel
 
+composer require barryvdh/laravel-dompdf
+
 php artisan make:import UsersImport --model=User
 
 php artisan make:export UsersExport --model=User

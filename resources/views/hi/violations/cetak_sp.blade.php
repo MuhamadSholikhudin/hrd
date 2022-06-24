@@ -178,20 +178,24 @@
                                                         $pelanggran_lalu2 = DB::table('violations')->find($violation->violation_accumulation2);
                                                         ?> 
                                                         Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal 
-                                                        {{ pasal($violation->alphabet_accumulation);}} Perjanjian Kerja Bersama Pasal 
-                                                        {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", {{$pelanggran_lalu->other_information}} {{$pelanggran_lalu2->other_information}} </td>                                                    
+
+                                                        <?php if($pelanggran_lalu->alphabet_accumulation != NULL){ ?>
+                                                                {{ pasal($pelanggran_lalu->alphabet_accumulation); }}  Perjanjian Kerja Bersama Pasal
+                                                        <?php } ?>
+
+                                                        {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", 
+                                                        {{$pelanggran_lalu->other_information}} 
+                                                        {{$pelanggran_lalu2->other_information}} </td>                                                 
                                                     <?php 
                                                     }elseif($violation->violation_accumulation2 !== NULL){
-
                                                         $pelanggran_lalu2 = DB::table('violations')->find($violation->violation_accumulation2);
-                    
                                                         ?> 
                                                         Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal 
-                                                       
-                                                        {{ pasal($pelanggran_lalu->alphabet_accumulation);}} Perjanjian Kerja Bersama Pasal 
-
+                                                        <?php
+                                                            if($pelanggran_lalu->alphabet_accumulation != NULL){ ?>
+                                                                {{ pasal($pelanggran_lalu->alphabet_accumulation); }}  Perjanjian Kerja Bersama Pasal
+                                                        <?php } ?>                                                       
                                                         <!-- {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", -->
-                                                        
                                                         {{ pasal($pelanggran_lalu->alphabet_id);}} ,
                                                         {{$pelanggran_lalu->other_information}} {{$pelanggran_lalu2->other_information}} </td>                                                    
                                                     <?php 
@@ -201,11 +205,9 @@
                                                             if($pelanggran_lalu->alphabet_accumulation != NULL){ ?>
                                                                 {{ pasal($pelanggran_lalu->alphabet_accumulation); }}  Perjanjian Kerja Bersama Pasal
                                                         <?php } ?>
-                                                        
                                                         <!-- {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}",  -->
-                                                        
                                                         {{ pasal($pelanggran_lalu->alphabet_id);}} 
-                                                        {{$pelanggran_lalu->other_information}}</td>                                                    
+                                                        {{$pelanggran_lalu->other_information}}</td>                                                       
                                                     <?php 
                                                     }else{
                                                         
@@ -359,7 +361,6 @@
                                             Human Resources Development
                                         </p>
 
-                                        {{-- <h6 class="text-center">Jepara, {{ $date_day_sp. " ". $month_indo_sp . " ". $date_year_sp }} </h6>
                                      <h6 class="text-center">Jepara, 5 April 2022 </h6> 
                                     <h6 class="text-center">Human Resources Development</h6> --}}
                                 </div>
@@ -375,18 +376,22 @@
                                 <div>
                                     
                                     <p class="text-center lead"> <br>
-                                        <?php 
-                                            $num_hrd = DB::table('signatures')->where('status_signature', 'active')->count();
-                                            if($num_hrd == 1){
-                                                $hrd = DB::table('signatures')->where('status_signature', 'active')->first();
-                                            }else{
-                                                $hrd = DB::table('signatures')->oldest()->first();
-            
-                                            }
-                                        ?>
+                                        
                                         <b>
                                             <u>
-                                                {{ $hrd->name}}
+                                            <?php 
+                                                if($violation->signature_id <> NULL){
+                                                    $hrd = DB::table('signatures')->find($violation->signature_id);
+                                                    $an_hrd =  $hrd->name;
+                                                }elseif($violation->signature_id == ""){
+                                                    $hrd = DB::table('signatures')->where('status_signature', 'active')->first();
+                                                    $an_hrd =  $hrd->name;
+                                                }else{
+                                                    $hrd = DB::table('signatures')->where('status_signature', 'active')->first();
+                                                    $an_hrd =  $hrd->name;
+                                                }
+                                            ?>
+                                            {{ $an_hrd  }}
                                             </u>
                                         </b>
                                     </p>

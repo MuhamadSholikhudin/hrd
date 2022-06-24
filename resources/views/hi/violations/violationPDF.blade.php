@@ -4,7 +4,6 @@
     <style>
         .pageA4{
             height: 1010px;
-            border: 1px solid black;  
         }
 
         h4 {
@@ -162,20 +161,23 @@
                                                         $pelanggran_lalu2 = DB::table('violations')->find($violation->violation_accumulation2);
                                                         ?> 
                                                         Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal 
-                                                        {{ pasal($violation->alphabet_accumulation);}} Perjanjian Kerja Bersama Pasal 
-                                                        {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", {{$pelanggran_lalu->other_information}} {{$pelanggran_lalu2->other_information}} </td>                                                    
+                                                        <?php if($pelanggran_lalu->alphabet_accumulation != NULL){ ?>
+                                                                {{ pasal($pelanggran_lalu->alphabet_accumulation); }}  Perjanjian Kerja Bersama Pasal
+                                                        <?php } ?>
+                                                        {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", 
+                                                        {{$pelanggran_lalu->other_information}} 
+                                                        {{$pelanggran_lalu2->other_information}} </td> 
+
                                                     <?php 
                                                     }elseif($violation->violation_accumulation2 !== NULL){
-
                                                         $pelanggran_lalu2 = DB::table('violations')->find($violation->violation_accumulation2);
-                    
                                                         ?> 
                                                         Dalam masa {{$pelanggran_lalu->type_of_violation}}  Perjanjian Kerja Bersama Pasal 
-                                                       
-                                                        {{ pasal($pelanggran_lalu->alphabet_accumulation);}} Perjanjian Kerja Bersama Pasal 
-
+                                                        <?php
+                                                            if($pelanggran_lalu->alphabet_accumulation != NULL){ ?>
+                                                                {{ pasal($pelanggran_lalu->alphabet_accumulation); }}  Perjanjian Kerja Bersama Pasal
+                                                        <?php } ?>                                                       
                                                         <!-- {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}", -->
-                                                        
                                                         {{ pasal($pelanggran_lalu->alphabet_id);}} ,
                                                         {{$pelanggran_lalu->other_information}} {{$pelanggran_lalu2->other_information}} </td>                                                    
                                                     <?php 
@@ -185,9 +187,7 @@
                                                             if($pelanggran_lalu->alphabet_accumulation != NULL){ ?>
                                                                 {{ pasal($pelanggran_lalu->alphabet_accumulation); }}  Perjanjian Kerja Bersama Pasal
                                                         <?php } ?>
-                                                        
                                                         <!-- {{$sel_article_lalu->article}}  ayat {{$sel_paragraph_lalu->paragraph}} huruf "{{$sel_alphabet_lalu->alphabet}}",  -->
-                                                        
                                                         {{ pasal($pelanggran_lalu->alphabet_id);}} 
                                                         {{$pelanggran_lalu->other_information}}</td>                                                    
                                                     <?php 
@@ -259,62 +259,48 @@
                         maka akan diambil tindakan lanjutan sesuai peraturan perusahaan yang berlaku.
                     </div>
                     <br>
-                    <table width="100%">
-                         <?php 
-                            $date_day_sp = date_format($date_violation_sp, "d"); //for Display Date
-                            $date_month_sp =  date_format($date_violation_sp, "m"); //for Display Month
-                            $date_year_sp = date_format($date_violation_sp, "Y"); //for Display Year
-                            $day_sp = gmdate("l", mktime(0,0,0,$date_day_sp,$date_month_sp,$date_year_sp));
-
-                            //Bulan Indonesia
-                            if($date_month_sp == '01'){
-                            $month_indo_sp = 'Januari';
-                            }elseif($date_month_sp == '02'){
-                            $month_indo_sp = 'Februari';            
-                            }elseif($date_month_sp == '03'){
-                            $month_indo_sp = 'Maret';            
-                            }elseif($date_month_sp == '04'){
-                            $month_indo_sp = 'April';            
-                            }elseif($date_month_sp == '05'){
-                            $month_indo_sp = 'Mei';            
-                            }elseif($date_month_sp == '06'){
-                            $month_indo_sp = 'Juni';            
-                            }elseif($date_month_sp == '07'){
-                            $month_indo_sp = 'Juli';            
-                            }elseif($date_month_sp == '08'){
-                            $month_indo_sp = 'Agustus';            
-                            }elseif($date_month_sp == '09'){
-                            $month_indo_sp = 'September';            
-                            }elseif($date_month_sp == '10'){
-                            $month_indo_sp = 'Oktober';            
-                            }elseif($date_month_sp == '11'){
-                            $month_indo_sp = 'November';            
-                            }elseif($date_month_sp == '12'){
-                            $month_indo_sp = 'Desember';            
-                            }
-                            ?>
+                    <table style="width:100%;">
                         <tr>
                             <td></td>
-                            <td>Jepara, 5 April 2022 </td>
+                            <td style="text-align:center;">
+                            
+                            {{ tanggal_pelanggaran($violation->date_of_violation)  }}
+                            
+                            </td>
                         </tr>
                         <tr>
-                            <td>Penerima Sanksi</td>
-                            <td>Human Resources Development</td>
+                            <td  style="text-align:center;">Penerima Sanksi</td>
+                            <td  style="text-align:center;">Human Resources Development</td>
                         </tr>
                         <tr>
+                            <td style="height:70px;">
+                            
+                            </td>
                             <td></td>
-                            <td></td>
-                        </tr>
+                        </tr>                                              
                         <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>{{ $employee->name}}</td>
-                            <td><b><u>GUNTUR SUHENDRO</u></b></td>
+                            <td  style="text-align:center;">{{ $employee->name}}</td>
+                            <td  style="text-align:center;">
+                                <b>
+                                    <u>
+                                        <?php 
+                                            if($violation->signature_id <> NULL){
+                                                $hrd = DB::table('signatures')->find($violation->signature_id);
+                                                $an_hrd =  $hrd->name;
+                                            }elseif($violation->signature_id == ""){
+                                                $hrd = DB::table('signatures')->where('status_signature', 'active')->first();
+                                                $an_hrd =  $hrd->name;
+                                            }else{
+                                                $hrd = DB::table('signatures')->where('status_signature', 'active')->first();
+                                                $an_hrd =  $hrd->name;
+                                            }
+                                        ?>
+                                        {{ $an_hrd  }}
+                                    </u>
+                                </b>
+                            </td>
                         </tr>
                     </table>
-
 
             </div>
         @endforeach
