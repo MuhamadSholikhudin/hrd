@@ -361,8 +361,8 @@
                                             Human Resources Development
                                         </p>
 
-                                     <h6 class="text-center">Jepara, 5 April 2022 </h6> 
-                                    <h6 class="text-center">Human Resources Development</h6> --}}
+                                     <!-- <h6 class="text-center">Jepara, 5 April 2022 </h6> 
+                                    <h6 class="text-center">Human Resources Development</h6>  -->
                                 </div>
                                 <div>
                                     <br>
