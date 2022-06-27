@@ -242,17 +242,13 @@
                 <td>{{ $violation->type_of_violation }}</td>
                 <td> {{pasal($violation->alphabet_id);}} </td>
                 <td>
-                
                  <!-- {{ pasal($violation->alphabet_id); }} -->
-                 
                  <?php 
                     if($violation->alphabet_accumulation !== NULL){
                     echo pasal($violation->alphabet_accumulation);
                     }else{
-
                     }
                  ?>
-                 
                   </td>
                 <!-- <td>{{ $violation->other_information  }}</td>                 -->
                 <td>{{ $violation->violation_status  }}</td>
@@ -260,9 +256,9 @@
                     <a href="/violations/{{$violation->id }}" target="_blank" class="btn  btn-outline-primary">
                       Cetak                    
                     </a>
-                        <!-- <a href="/hi/employees//edit" class="btn  btn-outline-warning">
-                      Edit
-                      </a> -->
+                        <a href="/hiviolations/{{$violation->id }}/getedit" class="btn  btn-outline-warning">
+                        Edit
+                      </a>
                     <form action="{{route('deleteviolations')}}" method="POST" class="d-inline ">
                       @csrf
                       <input type="hidden" name="id" value="{{$violation->id }}">

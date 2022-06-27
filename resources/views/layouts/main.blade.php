@@ -166,6 +166,62 @@
     });
   });
   
+    // Proses pencarian pelanggaran
+  $('#btn_proses_edit').on('click', function() {
+
+  $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+  var violation_id = document.getElementById("violation_id").value;;
+  var status_violant_last = document.getElementById("last_vio").value;
+  var id_emp = document.getElementById("id_emp").value;
+  var violation_now = document.getElementById("select_violation_last").value;
+  var last_type = document.getElementById("last_type").value;
+  var last_accumulation = document.getElementById("last_accumulation").value;
+  // var keyword = $(this).val();
+  alert(violation_id + status_violant_last + id_emp + violation_now + last_type + last_accumulation);
+
+  $.ajax({
+    type: "POST",
+    url: "{{route('get_type_hiviolation')}}",
+    // async: true,
+    dataType: 'json',
+    data: {
+      violation_id: violation_id,
+      violation_now: violation_now,
+      id_emp : id_emp,
+      status_violant_last : status_violant_last,
+      last_type: last_type,
+      last_accumulation: last_accumulation
+    },
+  //   beforeSend: function(){
+  //   // Show image container
+  //   $("#loader").show();
+  //  },
+    success: function(data) {
+      // alert(data);
+      // document.getElementById("btn_modal_click1").click();
+      $("#jpn1").val(data[0]);
+      $("#pkb1").html(data[1]);
+      $("#remainder1").text(data[2]);
+      $("#remainder2").text(data[3]);
+      $("#alphabet_id").val(violation_id);
+    },
+  //   complete:function(data){
+  //   // Hide image container
+  //   $("#loader").hide();
+  //  },
+    error(){
+      alert("Inputan error");
+    }
+
+  });
+});
+
+
   // Proses pencarian pelanggaran
     $('#btn_proses').on('click', function() {
 

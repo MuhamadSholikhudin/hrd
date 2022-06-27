@@ -181,14 +181,19 @@ Route::controller(ExcelMutationController::class)->group(function(){
 });
 
 
-// DATA HI Violations
+// DATA EMPLOYE HI Violations
 Route::resource('/violations', ViolationController::class)->middleware('isrole');
 
+// EDIT 
+// Route::get('/hiviolations/{id}/getedit', [HiViolationController::class], 'getedit');
+
+// DATA VIOLATIONS
 Route::get('/hiviolations', [HiViolationController::class, 'index'])->middleware('isrole');
 
-// Route::resource('hi/hiviolations', HiViolationController::class)->middleware('isrole');
+// Route::resource('/hiviolations', HiViolationController::class)->middleware('isrole');
 
 Route::controller(HiViolationController::class)->group(function(){
+    Route::get('/hiviolations/{id}/getedit', 'getedit')->middleware('isrole');
     Route::get('exportviolations', 'export')->name('violations.export');
     Route::post('importviolations', 'import')->name('violations.import');
     Route::post('violationmigrations', 'violationmigrations')->name('violationmigrations.import');
@@ -197,7 +202,11 @@ Route::controller(HiViolationController::class)->group(function(){
     
 });
 
+// ajax alphabet_id get on create
 Route::post('violation/get_type_violation', [ViolationController::class, 'get_type_violation'])->name('get_type_violation');
+
+// ajax alphabet_id get on edit
+Route::post('hiviolation/get_type_hiviolation', [HiViolationController::class, 'get_type_hiviolation'])->name('get_type_hiviolation');
 
 
 ///Migrasi Violation

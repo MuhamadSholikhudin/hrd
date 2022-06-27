@@ -243,7 +243,7 @@
                     <td> {{ tanggal_pelanggaran($violation->reporting_date); }} </td>
                   <td>
                   <?php
-                    $day_sp = gmdate("l", mktime(0,0,0,$date_day_sp,$date_month_sp,$date_year_sp));
+                    $day_sp = gmdate("l", mktime(0,0,0,$date_month_sp,$date_day_sp,$date_year_sp));
 
                     // Hari Indonesia
                     if($day_sp == 'Monday'){
@@ -289,7 +289,8 @@
                       $month_indo_sp = 'Desember';            
                     }
                   ?>
-                    {{ $day_indo_sp. ", ". $date_day_sp. " ". $month_indo_sp . " ". $date_year_sp }}
+                    <!-- {{ $day_indo_sp. ", ". $date_day_sp. " ". $month_indo_sp . " ". $date_year_sp }} -->
+                    {{ tanggal_pelanggaran($violation->date_of_violation); }}
                   </td>
 
 
@@ -300,7 +301,7 @@
                       $date_month =  date_format($date_violation_end, "m"); //for Display Month
                       $date_day = date_format($date_violation_end, "d"); //for Display Date
 
-                      $day = gmdate("l", mktime(0,0,0,$date_day,$date_month,$date_year));
+                      $day = gmdate("l", mktime(0,0,0,$date_month_sp,$date_day_sp,$date_year_sp));
 
                       // Hari Indonesia
                       if($day == 'Monday'){
@@ -346,7 +347,8 @@
                         $month_indo = 'Desember';            
                       }
                     ?>
-                    {{ $day_indo. ", ". $date_day. " ". $month_indo . " ". $date_year }}
+                    <!-- {{ $day_indo. ", ". $date_day. " ". $month_indo . " ". $date_year }} -->
+                    {{ tanggal_pelanggaran($violation->date_end_violation); }}
                   </td>
                   <td>
                     <?php                     
@@ -729,7 +731,7 @@
           <!-- INISIASI AKUMULASI PELANGGARAN -->
           <input type="text" name="last_vio" value="{{$sta_viol}}" id="last_vio">
           <input type="text" name="last_type" value="{{$type_viol}}" id="last_type">
-          <input type="text" name="id_emp" value="{{$employee->id}}" id="id_emp">
+          <input type="text" name="id_emp" value="{{$violation->employee_id}}" id="id_emp">
           <input type="text" name="last_accumulation" value="{{$last_accumulation}}" id="last_accumulation" >    
 
         </div>
@@ -775,11 +777,13 @@
                 <div class="form-group row">
                   <label for="job_level" class="col-sm-2 col-form-label">Jabatan </label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" id="job_level" name="job_level" value="{{  $job->job_level  }}" placeholder="Jabatan" disabled>
+                      <input type="text" class="form-control" id="job_level" value="{{  $job->job_level  }}" placeholder="Jabatan" disabled>
+                      <input type="hidden" class="form-control" name="job_level" value="{{  $job->job_level  }}" >
                   </div>
                   <label for="department" class="col-sm-2 col-form-label">Bagian / Department</label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" id="department" name="department" value="{{  $department->department  }}" placeholder="Bagian" disabled>
+                      <input type="text" class="form-control" id="department" value="{{  $department->department  }}" placeholder="Bagian" disabled>
+                      <input type="hidden" class="form-control"  name="department" value="{{  $department->department  }}" >
                   </div>
                 </div>
                 <div class="form-group row">

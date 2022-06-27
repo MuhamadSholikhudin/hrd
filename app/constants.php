@@ -10,6 +10,17 @@ function oke()
     return  'oke';
 }
 
+// $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+// $jumlah_karakter = strlen($actual_link);
+
+// define("actual_link", $actual_link);
+// define("jumlah_karakter", $jumlah_karakter);
+
+
+// define("URL_WEB", $actual_link);
+// define("SUM_URL_WEB", $jumlah_karakter);
+
 // define("URL_WEB", "http://10.10.42.6:8080");
 // define("SUM_URL_WEB", 23);
 
