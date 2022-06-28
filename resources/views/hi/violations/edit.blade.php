@@ -222,7 +222,14 @@
               @foreach($violations as $violation)
                 <tr>
                   <td>{{ $loop->iteration }}</td>
-                  <td>
+                  <?php
+                    if($violation->violation_status == 'cancel'){
+                      $colorcancel = 'style="background-color:#00FF00"';
+                    }else{
+                      $colorcancel = '';
+                    }
+                  ?>
+                  <td <?= $colorcancel ?> >
                     <?php
                       $date_violation_sp = new \DateTime($violation->date_of_violation .' 00:00:00');
                       $date_year_sp = date_format($date_violation_sp, "Y"); //for Display Year
@@ -479,8 +486,8 @@
         </div>
 
       {{-- Displaynone --}}
-        <!-- <div > -->
-       <div style="display:none;" > 
+        <div >
+       <!-- <div style="display:none;" >  -->
           <?php
             $date_violation = new \DateTime(date('Y-m-d') .' 4:06:37' );
 
@@ -621,16 +628,12 @@
             // Cari data pelanggan terakhir 
             
             /*
-
             $sel_num_vio = DB::table('violations')->where('employee_id', $employee->id)->count();
-
             if($sel_num_vio > 0){
-
               $sel_vio = DB::table('violations')->where('employee_id', $employee->id)->latest()->first();
               $date_now = date_create();
               $date_sta = date_create($sel_vio->date_end_violation);
               $diffx  = date_diff($date_sta, $date_now);
-
               if($diffx->d <= 0){
                 $sta_viol = 'notactive';
                 $type_viol = 'notviolation';
@@ -640,18 +643,14 @@
                 $type_viol = $sel_vio->type_of_violation;
                 $last_accumulation = $sel_vio->accumulation;
               }
-
             }elseif($sel_num_vio < 1){
-
               $sel_num_vio_migrat = DB::table('violationmigrations')->where('employee_id', $employee->id)->count();
               if($sel_num_vio_migrat > 0){
                 $vio_migrat = DB::table('violationmigrations')
                   ->where('employee_id', $employee->id)
                   ->orderBy('id', 'desc')
                   ->first();
-
                   if($vio_migrat->violation_status == 'active'){
-
                     if($vio_migrat->type_of_violation == 'Peringatan Lisan'){
                       $l_accuml = 0.5;
                     }elseif($vio_migrat->type_of_violation == 'Surat Peringatan Pertama'){
@@ -667,32 +666,26 @@
                     }else{
                       $l_accuml = 0;
                     }
-
                     $sta_viol = $vio_migrat->violation_status;
                     $type_viol = $vio_migrat->type_of_violation;
                     $last_accumulation = $l_accuml;
-
                   }else{
                     $sta_viol = 'notactive';
                     $type_viol = 'notviolation';
                     $last_accumulation = 0;
                   }
-
               }elseif($sel_num_vio_migrat < 1){
                 $sta_viol = 'notactive';
                 $type_viol = 'notviolation';
                 $last_accumulation = 0;
-
               }
-
             }
 
-
-
             */
-            
-
-            $sel_num_vio = DB::table('violations')->where('employee_id', $employee->id)->count();
+            $sel_num_vio = DB::table('violations')
+              ->where('employee_id', $employee->id)
+              ->where('violation_status', '!=', 'cancel')
+              ->count();
 
             if($sel_num_vio == 0){
               $sta_viol = 'notactive';
@@ -700,23 +693,40 @@
               $last_accumulation = 0;
               
             }else{
-              $sel_vio = DB::table('violations')->where('employee_id', $employee->id)->latest()->first();
-              $date_now = date_create();
-              $date_sta = date_create($sel_vio->date_end_violation);
-              $diffx  = date_diff($date_sta, $date_now);
+              $sel_vio = DB::table('violations')
+                ->where('employee_id', $employee->id)
+                ->where('violation_status', '!=', 'cancel')
+                ->latest()
+                ->first();
 
-              if($diffx->d <= 0){
+              // $date_now = date_create();
+              // $date_sta = date_create($sel_vio->date_end_violation);
+              // $diffx  = date_diff($date_sta, $date_now);
+
+              $date_str_reporting_date = strtotime(date('Y-m-d'));
+              $date_str_date_end_violation_lasst = strtotime($sel_vio->date_end_violation);
+              $differencs_date = $date_str_date_end_violation_lasst - $date_str_reporting_date;
+
+              if($differencs_date <= 0){
                 $sta_viol = 'notactive';
                 $type_viol = 'notviolation';
                 $last_accumulation = 0;
               }else{
-                $sta_viol = $sel_vio->violation_status;
-                $type_viol = $sel_vio->type_of_violation;
-                $last_accumulation = $sel_vio->accumulation;
+                if($sel_vio->violation_status == 'cancel'){
+                  $sta_viol = 'notactive';
+                  $type_viol = 'notviolation';
+                  $last_accumulation = 0;
+                }elseif($sel_vio->violation_status == 'active'){
+                  $sta_viol = $sel_vio->violation_status;
+                  $type_viol = $sel_vio->type_of_violation;
+                  $last_accumulation = $sel_vio->accumulation;
+                }else{
+                  $sta_viol = 'notactive';
+                  $type_viol = 'notviolation';
+                  $last_accumulation = 0;
+                }
               }
-            }
-            
-            
+            }            
 
             echo '<br>';
             //memotong jumlah karakter

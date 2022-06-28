@@ -182,7 +182,6 @@
   var last_type = document.getElementById("last_type").value;
   var last_accumulation = document.getElementById("last_accumulation").value;
   // var keyword = $(this).val();
-  alert(violation_id + status_violant_last + id_emp + violation_now + last_type + last_accumulation);
 
   $.ajax({
     type: "POST",
@@ -197,10 +196,11 @@
       last_type: last_type,
       last_accumulation: last_accumulation
     },
-  //   beforeSend: function(){
-  //   // Show image container
-  //   $("#loader").show();
-  //  },
+    // beforeSend: function(){
+    //   // Show image container
+    // $("#loader").show();
+    //   // alert(violation_id + status_violant_last + id_emp + violation_now + last_type + last_accumulation);
+    // },
     success: function(data) {
       // alert(data);
       // document.getElementById("btn_modal_click1").click();
@@ -208,12 +208,12 @@
       $("#pkb1").html(data[1]);
       $("#remainder1").text(data[2]);
       $("#remainder2").text(data[3]);
-      $("#alphabet_id").val(violation_id);
+      $("#alphabet_id").val(violation_now);
     },
-  //   complete:function(data){
-  //   // Hide image container
-  //   $("#loader").hide();
-  //  },
+    // complete:function(data){
+    //   // Hide image container
+    //   $("#loader").hide();
+    // },
     error(){
       alert("Inputan error");
     }

@@ -207,6 +207,7 @@
     }
         $pelanggran_sebelumnya = DB::table('violations')
             ->where('employee_id',  $employee_id) 
+            ->where('violation_status', 'active')
             ->latest()                       
             ->first();
 

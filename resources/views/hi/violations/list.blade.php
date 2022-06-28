@@ -196,6 +196,87 @@
             </div>
           </div>
         </div>
+
+
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{{ route('alphabets.export') }}" class="btn btn-success" data-toggle="modal"  data-target="#edit_violation" data-toggle="tooltip" data-placement="bottom" title="Download Data SP ke yang mau di edit">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </a>
+        <div class="modal fade" id="edit_violation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Downlad SP Yang mau di edit Berdasarkan NO ID</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form action="/violationeditexcel" method="POST" enctype="multipart/form-data">
+                @csrf
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-5">
+                    <input type="number" name="awal" class="form-control" required>
+                  </div>
+                  <div class="col-2">
+                    <p class="text-center">
+
+                      -
+                    </p>
+                  </div>
+                  <div class="col-5">
+                    <input type="number" name="akhir" class="form-control" required>
+                  </div>
+                </div>
+              
+                
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">
+                <i class="fa-solid fa-download"></i>
+                Download</button>
+              </div>
+            </form>
+            </div>
+          </div>
+
+
+          <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload SP Yang mau di edit Berdasarkan NO ID</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form action="/violation-pdf" method="POST" enctype="multipart/form-data">
+                @csrf
+              <div class="modal-body">
+                <div class="row">
+                
+                  <div class="col-12">
+                    <input type="file" name="file" id="exampleInputFile">
+                  </div>
+                  
+                  
+                </div>
+              
+                
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">
+                <i class="fa-solid fa-upload"></i>
+                Upload</button>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+
         <div class="card-tools">
             <form action="/hiviolations" >     
                 <div class="input-group input-group-sm" style="width: 300px;">
@@ -212,7 +293,7 @@
         <table class="table table-hover text-nowrap">
           <thead>
             <tr>
-              <th>NO</th>
+              <th>NO ID</th>
               <th>NIK</th>
               <th>Nama</th>
               <th>NO SP</th>
@@ -256,9 +337,22 @@
                     <a href="/violations/{{$violation->id }}" target="_blank" class="btn  btn-outline-primary">
                       Cetak                    
                     </a>
-                        <a href="/hiviolations/{{$violation->id }}/getedit" class="btn  btn-outline-warning">
-                        Edit
-                      </a>
+                    <form action="{{route('cancelviolations')}}" method="POST" class="d-inline ">
+                      @csrf
+                      <input type="hidden" name="id" value="{{$violation->id }}">
+                      <button type="submit" class="btn btn-outline-success" onclick="return confirm(' Are you sure process violation data ?')"> 
+                        <?php if($violation->violation_status == 'active'){  ?>
+                          Cancel
+                        <?php }else{ ?>
+                          Activate
+                        <?php } ?>
+                      </button>
+                    </form> 
+                    
+                    
+                    <a href="/hiviolations/{{$violation->id }}/getedit" class="btn  btn-outline-warning">
+                      Edit
+                    </a>
                     <form action="{{route('deleteviolations')}}" method="POST" class="d-inline ">
                       @csrf
                       <input type="hidden" name="id" value="{{$violation->id }}">

@@ -14,6 +14,24 @@
 
   <?php
 
+$tanggal1 = "2022-05-08";
+$tanggal2 = "2022-05-09";
+
+echo(strtotime($tanggal1) . "<br>");
+echo(strtotime($tanggal2) . "<br>");
+
+$keluar1 = strtotime($tanggal1);
+$keluar2 = strtotime($tanggal2);
+$klu = $keluar1 - $keluar2;
+
+if($klu > 0){
+  echo 1;
+}elseif($klu < 1){
+  echo $klu;
+}
+
+echo '<br>';
+
 echo tanggal_pelanggaran(date('Y-m-d'));
             // $cari_vio_alpha_not_null = DB::table('violations')->where('alphabet_accumulation' , '!=' , NULL)->get();
 
@@ -179,7 +197,7 @@ echo '<br>';
 // echo $cari_pasal_akumulasi['id'];  
 
 
-DB::table('violations')->where('id', '>', 8028)->delete();
+// DB::table('violations')->where('id', '>', 8028)->delete();
 
 // $hapus_vio = DB::table('violations')->where('id' , '>' , 8028)-get();
   // foreach ($hapus_vio as $hapus) {

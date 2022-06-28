@@ -185,7 +185,7 @@ Route::controller(ExcelMutationController::class)->group(function(){
 Route::resource('/violations', ViolationController::class)->middleware('isrole');
 
 // EDIT 
-// Route::get('/hiviolations/{id}/getedit', [HiViolationController::class], 'getedit');
+Route::post('/violationeditexcel', [ViolationController::class, 'violationeditexcel']);
 
 // DATA VIOLATIONS
 Route::get('/hiviolations', [HiViolationController::class, 'index'])->middleware('isrole');
@@ -194,10 +194,12 @@ Route::get('/hiviolations', [HiViolationController::class, 'index'])->middleware
 
 Route::controller(HiViolationController::class)->group(function(){
     Route::get('/hiviolations/{id}/getedit', 'getedit')->middleware('isrole');
+    Route::post('/hiviolations/update', 'update');
     Route::get('exportviolations', 'export')->name('violations.export');
     Route::post('importviolations', 'import')->name('violations.import');
     Route::post('violationmigrations', 'violationmigrations')->name('violationmigrations.import');
     Route::post('deleteviolations', 'hapus')->name('deleteviolations');
+    Route::post('cancelviolations', 'cancel')->name('cancelviolations');
     Route::post('importmigration', 'importmigration')->name('importmigration.import');
     
 });

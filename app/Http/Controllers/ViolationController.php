@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\URL;
 
+use Maatwebsite\Excel\Concerns\ToArray;
+use Maatwebsite\Excel\Facades\Excel;
+
+use App\Exports\ViolationsEditExport;
+
 use Illuminate\Support\Collection;
 
 use Illuminate\Support\Arr;
@@ -792,6 +797,8 @@ class ViolationController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+
     }
 
     /**
@@ -877,7 +884,7 @@ class ViolationController extends Controller
 
                     $pelanggran_sebelumnya2 = DB::table('violations')
                         ->where('employee_id',  $employee_id) 
-                        ->where('id',  $pelanggran_sebelumnya->violation_accumulation) 
+                        ->where('id',  $pelanggran_sebelumnya->violation_accumulation)  
                         ->latest()                       
                         ->first();
 
@@ -1224,6 +1231,16 @@ class ViolationController extends Controller
             'violations' => $violations->paginate(10),
             'count' => DB::table('violations')->count()
         ]);
+    }
+
+    public function violationeditexcel(Request $request){
+        $violations = DB::table('violations')
+            // ->where('id', $request->awal)
+            ->whereBetween('id', [$request->awal, $request->akhir])
+            ->get();
+
+            return Excel::download(new ViolationsEditExport, 'Master_Pelanggaran.xlsx'); 
+
     }
 
 
