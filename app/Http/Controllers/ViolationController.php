@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\URL;
 use Maatwebsite\Excel\Concerns\ToArray;
 use Maatwebsite\Excel\Facades\Excel;
 
+use App\Imports\ViolationsImport;
+use App\Imports\ViolationmigrationImport;
+
+use App\Exports\ViolationsExport;
 use App\Exports\ViolationsEditExport;
 
 use Illuminate\Support\Collection;
@@ -1234,13 +1238,9 @@ class ViolationController extends Controller
     }
 
     public function violationeditexcel(Request $request){
-        $violations = DB::table('violations')
-            // ->where('id', $request->awal)
-            ->whereBetween('id', [$request->awal, $request->akhir])
-            ->get();
-
-            return Excel::download(new ViolationsEditExport, 'Master_Pelanggaran.xlsx'); 
-
+            // return Excel::download(new ViolationsEditExport, 'Master_Pelanggaran.xlsx'); 
+            // return (new ViolationsEditExport)->request($request)->download('Edit_Master_Pelanggaran.xlsx');
+            return Excel::download(new ViolationsEditExport($request), 'Edit_Master_Pelanggaran.xlsx');
     }
 
 

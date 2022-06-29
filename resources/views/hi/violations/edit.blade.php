@@ -741,7 +741,7 @@
           <!-- INISIASI AKUMULASI PELANGGARAN -->
           <input type="text" name="last_vio" value="{{$sta_viol}}" id="last_vio">
           <input type="text" name="last_type" value="{{$type_viol}}" id="last_type">
-          <input type="text" name="id_emp" value="{{$violation->employee_id}}" id="id_emp">
+          <input type="text" name="id_emp" value="{{$employee->id}}" id="id_emp">
           <input type="text" name="last_accumulation" value="{{$last_accumulation}}" id="last_accumulation" >    
 
         </div>

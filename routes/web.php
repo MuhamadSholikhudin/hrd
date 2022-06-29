@@ -195,13 +195,13 @@ Route::get('/hiviolations', [HiViolationController::class, 'index'])->middleware
 Route::controller(HiViolationController::class)->group(function(){
     Route::get('/hiviolations/{id}/getedit', 'getedit')->middleware('isrole');
     Route::post('/hiviolations/update', 'update');
+    Route::post('/hiviolations/updateimport', 'updateimport');
     Route::get('exportviolations', 'export')->name('violations.export');
     Route::post('importviolations', 'import')->name('violations.import');
     Route::post('violationmigrations', 'violationmigrations')->name('violationmigrations.import');
     Route::post('deleteviolations', 'hapus')->name('deleteviolations');
     Route::post('cancelviolations', 'cancel')->name('cancelviolations');
     Route::post('importmigration', 'importmigration')->name('importmigration.import');
-    
 });
 
 // ajax alphabet_id get on create

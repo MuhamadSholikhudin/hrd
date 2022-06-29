@@ -220,7 +220,6 @@
                   </div>
                   <div class="col-2">
                     <p class="text-center">
-
                       -
                     </p>
                   </div>
@@ -228,8 +227,6 @@
                     <input type="number" name="akhir" class="form-control" required>
                   </div>
                 </div>
-              
-                
               </div>
 
               <div class="modal-footer">
@@ -251,7 +248,7 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form action="/violation-pdf" method="POST" enctype="multipart/form-data">
+              <form action="/hiviolations/updateimport" method="POST" enctype="multipart/form-data">
                 @csrf
               <div class="modal-body">
                 <div class="row">
@@ -259,10 +256,7 @@
                   <div class="col-12">
                     <input type="file" name="file" id="exampleInputFile">
                   </div>
-                  
-                  
-                </div>
-              
+                </div>              
                 
               </div>
 
@@ -304,8 +298,8 @@
               <th>Pelangaran</th>
               <th>Pasal</th>
               <th>Pasal Akumulasi</th>
-              <!-- <th>Keterangan</th> -->
               <th>Status </th>
+              <th>Penyampain</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -331,8 +325,8 @@
                     }
                  ?>
                   </td>
-                <!-- <td>{{ $violation->other_information  }}</td>                 -->
                 <td>{{ $violation->violation_status  }}</td>
+                <td>tanggal, nama</td>                
                 <td>
                     <a href="/violations/{{$violation->id }}" target="_blank" class="btn  btn-outline-primary">
                       Cetak                    
