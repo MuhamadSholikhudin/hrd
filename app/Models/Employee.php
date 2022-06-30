@@ -18,20 +18,16 @@ class Employee extends Model
 
     public function scopeFilter($query, array $filters){
 
-
         $query->when( $filters['search'] ?? false, function($query, $search){
            return $query->where('number_of_employees', 'like', '%' . $search . '%')
                       ->orWhere('name', 'like', '%' . $search . '%');
         });
-
 
         //Controller
         // if(isset($filters['search']) ? $filters['search'] : false){
         //    return $query->where('number_of_employees', 'like', '%' . request('search') . '%')
         //               ->orWhere('name', 'like', '%' . request('search') . '%');
         // }
-
-
         
         // if(request('search')){
         //     $query->where('number_of_employees', 'like', '%' . request('search') . '%')
@@ -64,8 +60,7 @@ class Employee extends Model
     {
         return $this->hasMany(Employee::class);
     }
-    
-    
+        
     public function department()
     {
         return $this->belongsTo(Department::class);

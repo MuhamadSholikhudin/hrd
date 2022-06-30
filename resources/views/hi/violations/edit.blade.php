@@ -486,8 +486,8 @@
         </div>
 
       {{-- Displaynone --}}
-        <div >
-       <!-- <div style="display:none;" >  -->
+        <!-- <div > -->
+       <div style="display:none;" > 
           <?php
             $date_violation = new \DateTime(date('Y-m-d') .' 4:06:37' );
 

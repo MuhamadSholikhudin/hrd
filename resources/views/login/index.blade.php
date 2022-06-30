@@ -38,15 +38,15 @@
   <div class="card">
 
   <?php
-echo $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-echo "<br>";
-echo $jumlah_karakter = strlen($actual_link);
-echo "<br>";
-// Program to display current page URL.
-$link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-echo $link;
+    // echo $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    echo "<br>";
+    // echo $jumlah_karakter = strlen($actual_link);
+    echo "<br>";
+    // Program to display current page URL.
+    // $link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    // echo $link;
 
-?>
+  ?>
     <div class="card-body login-card-body">
 
     @if(session()->has('loginError'))

@@ -284,6 +284,89 @@
       </div>
       <!-- /.card-header -->
       <div class="card-body table-responsive p-0">
+      <div class="modal fade" id="add_delivery" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Input Penyampain <span id="deladd">oke</span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form action="/deliveryletters" method="POST" enctype="multipart/form-data">
+                @csrf
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-6">
+                    <input type="date" name="date_delivery" value="<?= date('Y-m-d') ?>" class="form-control" required>
+                    <input type="hidden" name="violation_id" id="violation_id" value="" class="form-control" required>
+                  </div>
+                  
+                  <div class="col-6">
+                    <select class="form-control" name="user_id" id="" required>
+                      @foreach($users as $user)
+                        @if($user->id == auth()->user()->id)
+                        <option value="{{$user->id}}" selected>{{$user->name}} </option>  
+                        @else
+                          <option value="{{$user->id}}">{{$user->name}} </option>  
+                        @endif
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Tambah</button>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+
+      <div class="modal fade" id="edit_delivery" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Penyampain <span id="delsk">oke</span> </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form id="editformdel" action="/deliveryletters/" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('put')
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-6">
+                    <input type="date" name="datedeliveryedit" id="datedeliveryedit"  class="form-control" required>
+                    <input type="hidden" name="id" id="id_edit" value="" class="form-control" required>
+                  </div>
+                  
+                  <div class="col-6">
+                    <select class="form-control" name="user_id" id="user_id_edit" required>
+                      @foreach($users as $user)
+                        @if($user->id == auth()->user()->id)
+                        <option value="{{$user->id}}" id="selec" selected>{{$user->name}} </option>  
+                        @else
+                          <option value="{{$user->id}}">{{$user->name}} </option>  
+                        @endif
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Update</button>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+
         <table class="table table-hover text-nowrap">
           <thead>
             <tr>
@@ -326,7 +409,26 @@
                  ?>
                   </td>
                 <td>{{ $violation->violation_status  }}</td>
-                <td>tanggal, nama</td>                
+                <td style="align:center;">
+                <?php                
+                  $c_delivery = DB::table('deliveryletters')->where('id', $violation->id)->count();
+                if($c_delivery > 0){ ?>
+                  <?php
+                  $delivery = DB::table('deliveryletters')->find($violation->id);
+                  $use = DB::table('users')->find($delivery->user_id);
+
+                  ?>
+                  <a href="#" class="text-dark deliveryedit" data-id="{{$delivery->id}}" data-sk="{{nomer_sp($violation->no_violation, $violation->id);}}" data-datedeliveryedit="<?= $delivery->date_delivery ?>" data-user="<?= $delivery->user_id ?>" data-toggle="modal" data-target="#edit_delivery">
+                      <i class="fa-solid fa-pen"></i> &nbsp;
+                  </a>
+                      <?= tanggal_pelanggaran($delivery->date_delivery) ?>, <?= $use->name ?>               
+                <?php }else{ ?>
+                    <a href="" class="btn btn-info deliveryadd" data-id="{{$violation->id}}" data-toggle="modal" data-sk="{{nomer_sp($violation->no_violation, $violation->id);}}" data-target="#add_delivery" data-toggle="tooltip" data-placement="bottom" title="Tambah Penyampaian">
+                      <i class="fa-solid fa-clipboard-user"></i>
+                    </a>
+                <?php } ?>             
+  
+              </td>                
                 <td>
                     <a href="/violations/{{$violation->id }}" target="_blank" class="btn  btn-outline-primary">
                       Cetak                    

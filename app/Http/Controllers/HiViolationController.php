@@ -38,10 +38,10 @@ class HiViolationController extends Controller
         $tanggal_hari_ini = date('Y-m-d');// pendefinisian tanggal awal
         
         DB::table('violations')
-        ->where('date_end_violation', '<', $tanggal_hari_ini)
-        ->update([
-            'violation_status' => 'notactive'
-        ]);
+            ->where('date_end_violation', '<', $tanggal_hari_ini)
+            ->update([
+                'violation_status' => 'notactive'
+            ]);
 
         /*
             $cari_vio_alpha_not_null = DB::table('violations')
@@ -73,9 +73,19 @@ class HiViolationController extends Controller
                       ->orWhere('number_of_employees', 'like', '%' . request('search') . '%')
                       ->orWhere('other_information', 'like', '%' . request('search') . '%');
         }
+
+        
+
+        // if(){
+        //     $users = DB::table('users')->get();
+        // }else{
+        //     $users = DB::table('users')->get();
+        // }
+        $users = DB::table('users')->get();
         
         return view('hi.violations.list', [
             'violations' => $violations->paginate(10)->withQuerystring(),
+            'users' => $users,
             'count' => DB::table('violations')->count()
         ]);
     }

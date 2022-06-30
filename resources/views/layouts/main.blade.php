@@ -278,6 +278,29 @@
         });
     });
 
+    $('.deliveryadd').on('click', function() {
+        var id = $(this).data('id');
+        var sk = $(this).data('sk');
+        
+        $('#violation_id').val(id);
+        $('#deladd').html(sk);
+
+    });
+
+    $('.deliveryedit').on('click', function() {
+        var id = $(this).data('id');
+        var sk = $(this).data('sk');
+        var user = $(this).data('user');
+        var datedeliveryedit = $(this).data('datedeliveryedit');
+
+        $('#editformdel').attr('action', '/deliveryletters/' + id);
+        $('#delsk').html(sk);
+        $('#id_edit').val(id);
+        $('#datedeliveryedit').val(datedeliveryedit);
+        $('#user_id_edit').val(user);
+        
+    });
+
 
   // PHK Mencari Pasal PHK
   $('#pasal_phk').change(function() {

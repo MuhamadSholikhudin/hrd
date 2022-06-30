@@ -44,6 +44,7 @@ use App\Http\Controllers\HiArticleController;
 use App\Http\Controllers\HiParagraphController;
 use App\Http\Controllers\HiAlphabetController;
 use App\Http\Controllers\SignatureController;
+use App\Http\Controllers\DeliveryletterController;
 
 // MANAGEMENT ROLES
 use App\Http\Controllers\RoleController;
@@ -203,6 +204,9 @@ Route::controller(HiViolationController::class)->group(function(){
     Route::post('cancelviolations', 'cancel')->name('cancelviolations');
     Route::post('importmigration', 'importmigration')->name('importmigration.import');
 });
+
+// DATA EMPLOYE HI Violations
+Route::resource('/deliveryletters', DeliveryletterController::class);
 
 // ajax alphabet_id get on create
 Route::post('violation/get_type_violation', [ViolationController::class, 'get_type_violation'])->name('get_type_violation');

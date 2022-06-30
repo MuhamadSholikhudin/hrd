@@ -71,7 +71,7 @@
                     Change Password
                   </a>
 
-                  <div class="card-footer">
+                  
             <?php 
               $url_nowxz = url()->current();
               $jumlah_url = 23;

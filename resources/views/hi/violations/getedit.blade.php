@@ -170,9 +170,9 @@
                                     ->latest()
                                     ->first();
 
-                                $date_now = date_create($violation->reporting_date);
-                                $date_sta = date_create($sel_vio->date_end_violation);
-                                $diffx  = date_diff($date_sta, $date_now);
+                                // $date_now = date_create($violation->reporting_date);
+                                // $date_sta = date_create($sel_vio->date_end_violation);
+                                // $diffx  = date_diff($date_sta, $date_now);
 
                                 $date_str_reporting_date = strtotime($violation->reporting_date);
                                 $date_str_date_end_violation_lasst = strtotime($sel_vio->date_end_violation);
@@ -217,12 +217,7 @@
                             <input type="text" name="last_type" value="{{$type_viol}}" id="last_type">
                             <input type="text" name="employee_id" value="{{$violation->employee_id}}" id="id_emp">
                             <input type="text" name="last_accumulation" value="{{$last_accumulation}}" id="last_accumulation">
-                            <p>   {{$diffx->d}}   :  pengurangan tanggal     </p>
-                            <p>   {{$sel_vio->accumulation}} :  accumulasi  </p>
-                            <p>   {{$last_accumulation}}  :  accumulasi </p>
-                            <p>   {{$sel_vio->id}} : violation_id  sebelumnya </p>
-                            <p>   {{date('Y-m-d')}}  : Tanggal Sekarang  </p>
-                            <p>   {{$sel_vio->date_end_violation}}  : Tanggal berakhir  </p>
+                         
                             
                         </div>
 
