@@ -12,6 +12,79 @@
   </head>
   <body>
 
+  <table border="1" class="table">
+        <tr>
+            <th>ID violation</th>
+            <th>employee ID</th>
+            <th>Array</th>
+        </tr>
+        <?php 
+              $violations = DB::table('violations')
+                ->where('type_of_violation', 'Surat Peringatan Lisan')
+                ->whereYear('reporting_date', '2022')
+                ->orderByDesc('id')
+                ->get();
+                
+              ?>
+              @foreach($violations as $vilo)
+        <tr>
+          <td>{{$vilo->id}}</td>
+          <td>{{$vilo->employee_id}}</td>
+          <td>
+            <table  border="1">
+              <tr>
+                <th>
+                id</th> <th>reporting_date</th> <th>date_end_violation</th> <th>date_of_violation</th> <th>type_of_violation</th> <th>violation_status</th> <th>accumulation </th>
+              
+              </tr>
+              <?php 
+              $violations_emp = DB::table('violations')
+                ->where('employee_id', $vilo->employee_id)
+                ->get();
+                
+              ?>
+
+              @foreach($violations_emp as $vilo_emp)
+              <tr>
+                <td>
+                {{$vilo_emp->id}}</td> 
+                <td>{{$vilo_emp->reporting_date}}</td>
+                 <td>{{$vilo_emp->date_end_violation}}</td> 
+                 <td>{{$vilo_emp->date_of_violation}}</td> 
+                 <td>{{$vilo_emp->type_of_violation}}</td>
+                  <td>{{$vilo_emp->violation_status}}</td>
+                   <td>{{$vilo_emp->accumulation}} </td>
+              
+              </tr>
+              @endforeach
+            
+            </table>
+          
+          </td>
+        </tr>
+        @endforeach
+        <!-- <tr>
+            <td>Robby</td>
+            <td>76</td>
+            <td>80</td>
+            <td>81</td>
+        </tr>
+        <tr>
+            <td>Rendi</td>
+            <td>84</td>
+            <td>70</td>
+            <td>75</td>
+        </tr>
+        <tr>
+            <td>Alfian</td>
+            <td>96</td>
+            <td>70</td>
+            <td>71</td>
+        </tr> -->
+    </table>
+
+
+
   <?php
 
 $tanggal1 = "2022-05-08";
