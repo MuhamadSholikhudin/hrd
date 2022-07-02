@@ -37,7 +37,7 @@ class LayoffController extends Controller
             'layoffs.alphabet_id as alphabet_id',
             'layoffs.layoff_description as layoff_description',
             'employees.name as name',
-            'employees.number_of_employees as number_of_employees',
+            'employees.number_of_employees as number_of_employees'
             )
             ->orderByDesc('layoffs.id');
         if(request('search')){
@@ -317,12 +317,13 @@ class LayoffController extends Controller
 
         if($c_employee > 0){
             
-            $employee = DB::table('employees')->find($signature_employee);
+            $employee = DB::table('employees')->where('number_of_employees', $signature_employee)->first();
 
             $department = DB::table('departments')->find($employee->department_id);
             $job = DB::table('jobs')->find($employee->job_id);
     
             $data = [$employee->name, $employee->bagian, $employee->number_of_employees,  $department->department,  $job->job_level, $employee->hire_date];   
+            // $data = [$employee->name, $signature_employee, $signature_employee, $signature_employee, $signature_employee, $signature_employee];   
 
             // $data = [1, "NULL", "NULL",  "NULL",  "NULL", "NULL"];   
         }else{

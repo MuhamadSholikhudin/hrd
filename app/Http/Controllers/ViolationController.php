@@ -99,7 +99,7 @@ class ViolationController extends Controller
           $no_sp = $sel_no_sp->no_violation + 1 ;
         }
 
-        require_once 'GetViolationFormat.php';
+        require 'GetViolationFormat.php';
 
         //LOGIKAN PENENTUAN MENDAPATKAN PELANGGARAN
         $sel_alphabet = DB::table('alphabets')->find($alphabet_id);

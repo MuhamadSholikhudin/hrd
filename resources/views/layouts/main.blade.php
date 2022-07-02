@@ -308,11 +308,12 @@
     }
   }
 
+function keydowncari() {
+  document.getElementById("cari_karyawan_phk").style.backgroundColor = "red";
+}
 
- //Menampilkan karyawan PHK
- $('#cari_karyawan_phk').on( "change", function() {
-    // alert("oke");
-    $.ajaxSetup({
+function keyupcari() {
+  $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
         }
@@ -321,7 +322,7 @@
     var input_kar = document.getElementById("cari_karyawan_phk").value;
 
     if(input_kar == ""){
-      $("#output_cari_karyawan").html("KOSONG");
+
     }else{
 
       $.ajaxSetup({
@@ -357,8 +358,59 @@
 
       
     }
+  document.getElementById("cari_karyawan_phk").style.backgroundColor = "white";
+}
+
+ //Menampilkan karyawan PHK
+//  $('#cari_karyawan_phk').on( "change", function() {
+//     // alert("oke");
+//     $.ajaxSetup({
+//         headers: {
+//             'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+//         }
+//     });
+
+//     var input_kar = document.getElementById("cari_karyawan_phk").value;
+
+//     if(input_kar == ""){
+//       $("#output_cari_karyawan").html("KOSONG");
+//     }else{
+
+//       $.ajaxSetup({
+//         headers: {
+//             'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+//           }
+//       });
+
+//       $.ajax({
+//           type: "POST",
+//           url: "{{route('get_karyawan_phk')}}",
+//           dataType: 'json',
+//           data: {
+//             karyawan_phk: input_kar
+//           },
+//           success: function(data) {
+//             // alert(data);
+//             $("#nama_phk").html(data[0]);
+//             $("#sml").val(data[0]);
+//             $("#bagian_phk").html(data[1]);
+//             $("#id_no_phk").html(data[2]);
+//             $("#department_phk").html(data[3]);
+//             $("#job_phk").html(data[4]);
+//             $("#hire_date_phk").html(data[5]);
+
+
+//             $("#output_cari_karyawan").html(data[0]);
+
+//           },error(){
+//             alert("error");
+//           }
+//       });
+
+      
+//     }
     
-  });
+//   });
 
 
   //Menampilkan karyawan PHK

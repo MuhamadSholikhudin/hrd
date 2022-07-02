@@ -10,7 +10,7 @@
   //   echo "Oct 3, 1975 was on a ".gmdate("l", mktime(0,0,0,$date_day,$date_month,$date_year)) . "<br>";
 
   $day = gmdate($date_of_violation, time()+60*60*7);
-  $day = date("l", gmmktime(0,0,0, $date_month,$date_day, $date_year));
+  $day = date("l", gmmktime(0,0,0, $date_month, $date_day, $date_year));
 
   if($day == 'Monday'){
     $day_num = '1';
@@ -37,7 +37,7 @@
         
   $month_n = date("n", gmmktime(0,0,0, $date_month, $date_day, $date_year));
           
-          if($month_n == '1'){
+          if($month_n == 1){
             $ROM = 'I';
           }elseif($month_n == 2){
             $ROM = 'II';

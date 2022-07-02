@@ -39,9 +39,12 @@
             </u>
             <br>
               <?php 
+              $bul = date('m');
+              $year = date('Y');
               $num_latest = DB::table('layoffs')
                 // ->whereMonth('created_at', Carbon::now()->month) 
-                ->whereMonth('layoff_date', '04') 
+                ->whereMonth('layoff_date', $bul) 
+                ->whereYear('layoff_date', $year) 
                 ->count(); 
 
                 if($num_latest < 1){
@@ -53,9 +56,58 @@
                   $no_lf = $latest->no_layoff + 1;
               }
               // echo $num_latest;
+              $int_value = intval( $no_lf );
+              ?>
+              <script>
+              var no_lf = parseInt($int_value);
+                document.getElementById("no_lf").value = no_lf;
+              </script>
+              <?php
+                $rom_pil = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
+
+                if($bul == '01'){
+                  $ROM = 'I';
+                }elseif($bul == "02"){
+                  $ROM = 'II';
+                }elseif($bul == "03"){
+                  $ROM = 'III';
+                }elseif($bul == "04"){
+                  $ROM = 'IV';
+                }elseif($bul == "05"){
+                  $ROM = 'V';
+                }elseif($bul == "06"){
+                  $ROM = 'VI';
+                }elseif($bul == "07"){
+                  $ROM = 'VII';
+                }elseif($bul == "08"){
+                  $ROM = 'VIII';
+                }elseif($bul == "09"){
+                  $ROM = 'IX';
+                }elseif($bul == "10"){
+                  $ROM = 'X';
+                }elseif($bul == "11"){
+                  $ROM = 'XI';
+                }elseif($bul == "12"){
+                  $ROM = 'XII';
+                }
               ?>
 
-              NO.    <input type="number" name="" id="" value="{{$no_lf}} ">        /SK-PHK/HRD-HWI/IV/{{ date('Y') }} <br>
+              NO.    <input type="text" name="" id="no_lf" min="1" value="{{$int_value}}" style="width: 80px;">        /SK-PHK/HRD-HWI/
+              
+              
+              <select name="rom" id="">
+                <?php
+                  foreach ($rom_pil as $rom) {
+                    if($rom == $ROM){ ?>
+                      <option value="<?= $rom ?>" selected><?= $rom ?></option>
+                    <?php }else{ ?>
+                      <option value="<?= $rom ?>" ><?= $rom ?></option>
+                    <?php }
+                  }                    
+                ?>
+
+              </select>
+              /{{ date('Y') }} <br>
               TENTANG<br>
               PEMUTUSAN HUBUNGAN KERJA
             
@@ -113,7 +165,7 @@
                       Melakukan Pemutusan Hubungan Kerja (PHK) terhadap :
                       <!-- <select class="form-control select2bs4 select2-hidden-accessible" name="employee_id" id="karyawan_phk" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
                       </select> -->
-                      <input class="form-control" type="text" name="" id="cari_karyawan_phk">
+                      <input class="form-control" type="text" name="" id="cari_karyawan_phk" onkeydown="keydowncari()" onkeyup="keyupcari()">
                     </td>
                     <td>
                       <br>
