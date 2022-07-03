@@ -16,11 +16,11 @@
 
   <style>
     .login-page {
-      /* background-image: url("{{ asset('img/View.jpg') }}"); */
+      background-image: url("{{ asset('img/View.jpg') }}");
       /* background-color: #cccccc; */
       /* width: 500px; */
       /* background-size: auto; */
-      /* background-size: 100%; */
+      background-size: 100%;
     }
   
   </style>
@@ -36,6 +36,17 @@
   </div>
   <!-- /.login-logo -->
   <div class="card">
+
+  <?php
+    // echo $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    echo "<br>";
+    // echo $jumlah_karakter = strlen($actual_link);
+    echo "<br>";
+    // Program to display current page URL.
+    // $link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    // echo $link;
+
+  ?>
     <div class="card-body login-card-body">
 
     @if(session()->has('loginError'))
@@ -128,6 +139,12 @@
 <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 
 <script>
+// function myFunction() {
+//   document.body.style.backgroundColor = "#f3f3f3";
+//   document.body.style.backgroundImage = "url('{{ asset('img/View.jpg') }}')";
+//   document.body.style.backgroundSize = "100%"; 
+// }
+
 
   // var gmbr = 'gmbr';
   // if(gmbr == gmbr){
@@ -135,11 +152,7 @@
   // }else{
 
   // }
-function myFunction() {
-  document.body.style.backgroundColor = "#f3f3f3";
-  document.body.style.backgroundImage = "url('{{ asset('img/View.jpg') }}')";
-  document.body.style.backgroundSize = "100%"; 
-}
+
 // function makeAlert(){ 
 //     alert("Popup window!");
 // };

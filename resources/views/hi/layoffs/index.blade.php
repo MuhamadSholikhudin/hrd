@@ -58,23 +58,42 @@
             @foreach($layoffs as $layoff):
               <tr>
                 <td>{{$layoff->id}}</td>
+                <td>
+                  
+                    {{ $layoff->number_of_employees }}                  
+                  
+                </td>
                 <td>{{ $layoff->name }}</td>
-                <td>{{ $layoff->number_of_employees }}</td>
                   <?php 
                         $d_l = new \DateTime($layoff->layoff_date .' 00:00:00');
                         $year = date_format($d_l, "Y"); //for Display Year
                   ?>
-                <td>{{ $layoff->no_layoff .'/SK-PHK/HRD-HWI/'.$layoff->rom_layoff.'/'. $year   }}</td>
-                <td>{{ $layoff->layoff_date }}</td>
                 <td>
-                  {{ $layoff->layoff_date_start }}
+                  <a href="/layoffs/{{$layoff->id }}" target="_blank" class="text-dark">
+                    {{ $layoff->no_layoff .'/SK-PHK/HRD-HWI/'.$layoff->rom_layoff.'/'. $year   }}
+                  </a>
+                </td>
+                <td>{{ tanggal_pelanggaran($layoff->layoff_date) }}</td>
+                <td>
+                  {{ tanggal_pelanggaran($layoff->layoff_date_start) }}
                 </td>
                 <td>
-                  <?php  $print_alphabet  = DB::table('alphabets')->find($layoff->alphabet_id); ?>
-                  <?php  $print_paragraph  = DB::table('paragraphs')->find($print_alphabet->paragraph_id); ?>
-                  <?php  $print_article  = DB::table('articles')->find($print_paragraph->article_id); ?>
-                  {{ $pal = "Pasal ". $print_article->article. " ayat " . $print_paragraph->paragraph. " " . $print_alphabet->alphabet }}
+                <?php
+                  if($layoff->read <> NULL){
+                    echo $layoff->read;
+                  }elseif($layoff->alphabet_id <> NULL){ ?>
 
+                    <?php  $print_alphabet  = DB::table('alphabets')->find($layoff->alphabet_id); ?>
+                    <?php  $print_paragraph  = DB::table('paragraphs')->find($print_alphabet->paragraph_id); ?>
+                    <?php  $print_article  = DB::table('articles')->find($print_paragraph->article_id); ?>
+                    {{ $pal = "Pasal ". $print_article->article. " ayat " . $print_paragraph->paragraph. " " . $print_alphabet->alphabet }}
+
+                  <?php }else{
+
+                  }
+
+                ?>
+                 
                 </td>
                 <td>{{$layoff->layoff_description}}</td>
                 <td>

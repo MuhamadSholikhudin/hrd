@@ -142,10 +142,17 @@
             </div>
           </div>
         </div>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a class="btn btn-outline-primary" data-toggle="modal"  data-target="#excel_karyawan_update" >
-          <i class="fas fa-upload" data-toggle="tooltip" data-placement="bottom" title="Upload Excel Update Data Karyawan"></i>
+
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="btn btn-outline-danger" data-toggle="modal"  data-target="#excel_karyawan_update" >
+        <i class="fas fa-arrow-up"  data-toggle="tooltip" data-placement="bottom" title="Upload Excel Edit Data Karyawan "></i>
         </a>
+
+
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <!-- <a class="btn btn-outline-primary" data-toggle="modal"  data-target="#excel_karyawan_update" >
+          <i class="fas fa-upload" data-toggle="tooltip" data-placement="bottom" title="Upload Excel Update Data Karyawan"></i>
+        </a> -->
         <!-- Modal -->
         <div class="modal fade"  id="excel_karyawan_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">

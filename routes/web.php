@@ -35,6 +35,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchController;
 
 // Controller HI
+// use App\Http\Controllers\TeatViolationController;
 use App\Http\Controllers\ViolationmigrationController;
 use App\Http\Controllers\ViolationController;
 use App\Http\Controllers\HiViolationController;
@@ -44,6 +45,8 @@ use App\Http\Controllers\HiArticleController;
 use App\Http\Controllers\HiParagraphController;
 use App\Http\Controllers\HiAlphabetController;
 use App\Http\Controllers\SignatureController;
+use App\Http\Controllers\DeliveryletterController;
+use App\Http\Controllers\TaetViolationController;
 
 // MANAGEMENT ROLES
 use App\Http\Controllers\RoleController;
@@ -181,23 +184,45 @@ Route::controller(ExcelMutationController::class)->group(function(){
 });
 
 
-// DATA HI Violations
+// DATA EMPLOYE HI Violations
 Route::resource('/violations', ViolationController::class)->middleware('isrole');
 
+// EDIT 
+Route::post('/violationeditexcel', [ViolationController::class, 'violationeditexcel']);
+
+// test SP  
+Route::get('/violations/{id}/testedit', [ViolationController::class, 'testedit']);
+
+// ajax alphabet_id get on TeatViolationController
+Route::post('/teatviolation/get_type_violation', [ViolationController::class, 'get_type_testeditviolation'])->name('get_type_teatviolation');
+
+
+// DATA VIOLATIONS
 Route::get('/hiviolations', [HiViolationController::class, 'index'])->middleware('isrole');
 
-// Route::resource('hi/hiviolations', HiViolationController::class)->middleware('isrole');
+Route::resource('/hiviolations', HiViolationController::class)->middleware('isrole');
 
 Route::controller(HiViolationController::class)->group(function(){
+    Route::get('/hiviolations/{id}/getedit', 'getedit')->middleware('isrole');
+    Route::post('/hiviolations/update', 'update');
+    Route::post('/hiviolations/updateimport', 'updateimport');
     Route::get('exportviolations', 'export')->name('violations.export');
     Route::post('importviolations', 'import')->name('violations.import');
     Route::post('violationmigrations', 'violationmigrations')->name('violationmigrations.import');
     Route::post('deleteviolations', 'hapus')->name('deleteviolations');
+    Route::post('cancelviolations', 'cancel')->name('cancelviolations');
     Route::post('importmigration', 'importmigration')->name('importmigration.import');
-    
 });
 
+// DATA EMPLOYE HI Violations
+Route::resource('/deliveryletters', DeliveryletterController::class);
+
+// ajax alphabet_id get on create
 Route::post('violation/get_type_violation', [ViolationController::class, 'get_type_violation'])->name('get_type_violation');
+
+
+// ajax alphabet_id get on edit
+Route::post('hiviolation/get_type_hiviolation', [HiViolationController::class, 'get_type_hiviolation'])->name('get_type_hiviolation');
 
 
 ///Migrasi Violation

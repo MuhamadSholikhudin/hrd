@@ -247,11 +247,12 @@
         //     // ->where('alphabets.alphabet_accumulation', $status_type_violation)
         //     ->select('alphabets.id as id')
         //     ->first();
+        
     }
 
     $pelanggran_sebelumnya = DB::table('violations')
         ->where('employee_id',  $employee_id) 
-        ->where('violation_status', 'active')
+        ->where('id', '<',   $violation_id) 
         ->latest()                       
         ->first();
 

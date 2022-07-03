@@ -60,7 +60,6 @@
                 ?> 
                     {{$p_no_s}}
             </td>
-
             <td>SP-HRD</td>
             <td>{{$violation->month_of_violation}}</td>
             <td>{{$violation->violation_ROM}}</td>
@@ -78,9 +77,7 @@
             <td>{{KETERANGAN_LAIN_1($violation->id); }} </td>
             <td>{{PELANGGARAN_SEBELUMNYA($violation->id); }} </td>
             <td>{{PELANGGARAN_SEBELUMNYA($violation->id);}}</td>
-            <td> {{format_date($violation->date_of_violation);}}
-          
-            </td>
+            <td> {{format_date($violation->date_of_violation);}} </td>
             <td>{{$violation->type_of_violation}}</td>
           <td>- </td>
            <td>- </td>

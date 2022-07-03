@@ -89,10 +89,11 @@ class HiAlphabetController extends Controller
 
         DB::table('alphabets')->insert([
             'alphabet'=> $request->alphabet,
-            'description'=> $request->description,
+            'alphabet_sound'=> $request->alphabet_sound,
             'paragraph_id'=> $request->paragraph_id,
             'alphabet_type'=> $request->alphabet_type,
             'alphabet_accumulation' => $implode, 
+            'alphabet_status' => 1, 
             'firts_periode'=> $request->firts_periode,
             'last_periode'=> $request->last_periode
             ]);

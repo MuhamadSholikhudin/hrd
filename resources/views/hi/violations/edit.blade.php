@@ -222,7 +222,14 @@
               @foreach($violations as $violation)
                 <tr>
                   <td>{{ $loop->iteration }}</td>
-                  <td>
+                  <?php
+                    if($violation->violation_status == 'cancel'){
+                      $colorcancel = 'style="background-color:#00FF00"';
+                    }else{
+                      $colorcancel = '';
+                    }
+                  ?>
+                  <td <?= $colorcancel ?> >
                     <?php
                       $date_violation_sp = new \DateTime($violation->date_of_violation .' 00:00:00');
                       $date_year_sp = date_format($date_violation_sp, "Y"); //for Display Year
@@ -243,7 +250,7 @@
                     <td> {{ tanggal_pelanggaran($violation->reporting_date); }} </td>
                   <td>
                   <?php
-                    $day_sp = gmdate("l", mktime(0,0,0,$date_day_sp,$date_month_sp,$date_year_sp));
+                    $day_sp = gmdate("l", mktime(0,0,0,$date_month_sp,$date_day_sp,$date_year_sp));
 
                     // Hari Indonesia
                     if($day_sp == 'Monday'){
@@ -289,7 +296,8 @@
                       $month_indo_sp = 'Desember';            
                     }
                   ?>
-                    {{ $day_indo_sp. ", ". $date_day_sp. " ". $month_indo_sp . " ". $date_year_sp }}
+                    <!-- {{ $day_indo_sp. ", ". $date_day_sp. " ". $month_indo_sp . " ". $date_year_sp }} -->
+                    {{ tanggal_pelanggaran($violation->date_of_violation); }}
                   </td>
 
 
@@ -300,7 +308,7 @@
                       $date_month =  date_format($date_violation_end, "m"); //for Display Month
                       $date_day = date_format($date_violation_end, "d"); //for Display Date
 
-                      $day = gmdate("l", mktime(0,0,0,$date_day,$date_month,$date_year));
+                      $day = gmdate("l", mktime(0,0,0,$date_month_sp,$date_day_sp,$date_year_sp));
 
                       // Hari Indonesia
                       if($day == 'Monday'){
@@ -346,7 +354,8 @@
                         $month_indo = 'Desember';            
                       }
                     ?>
-                    {{ $day_indo. ", ". $date_day. " ". $month_indo . " ". $date_year }}
+                    <!-- {{ $day_indo. ", ". $date_day. " ". $month_indo . " ". $date_year }} -->
+                    {{ tanggal_pelanggaran($violation->date_end_violation); }}
                   </td>
                   <td>
                     <?php                     
@@ -470,15 +479,15 @@
                 </select>
               </div>
               <div class="col-sm-2">
-                <button class="btn btn-button btn-primary"  onclick="btn_proses()" id="btn_proses" data-id="btn_proses" data-target="btn_proses">Proses</button>
+                <button class="btn btn-button btn-primary" id="btn_proses" data-id="btn_proses" data-target="btn_proses">Proses</button>
               </div>
             </div> 
           </div>
         </div>
 
       {{-- Displaynone --}}
-        <div >
-       <!-- <div style="display:none;" >  -->
+        <!-- <div > -->
+       <div style="display:none;" > 
           <?php
             $date_violation = new \DateTime(date('Y-m-d') .' 4:06:37' );
 
@@ -619,16 +628,12 @@
             // Cari data pelanggan terakhir 
             
             /*
-
             $sel_num_vio = DB::table('violations')->where('employee_id', $employee->id)->count();
-
             if($sel_num_vio > 0){
-
               $sel_vio = DB::table('violations')->where('employee_id', $employee->id)->latest()->first();
               $date_now = date_create();
               $date_sta = date_create($sel_vio->date_end_violation);
               $diffx  = date_diff($date_sta, $date_now);
-
               if($diffx->d <= 0){
                 $sta_viol = 'notactive';
                 $type_viol = 'notviolation';
@@ -638,18 +643,14 @@
                 $type_viol = $sel_vio->type_of_violation;
                 $last_accumulation = $sel_vio->accumulation;
               }
-
             }elseif($sel_num_vio < 1){
-
               $sel_num_vio_migrat = DB::table('violationmigrations')->where('employee_id', $employee->id)->count();
               if($sel_num_vio_migrat > 0){
                 $vio_migrat = DB::table('violationmigrations')
                   ->where('employee_id', $employee->id)
                   ->orderBy('id', 'desc')
                   ->first();
-
                   if($vio_migrat->violation_status == 'active'){
-
                     if($vio_migrat->type_of_violation == 'Peringatan Lisan'){
                       $l_accuml = 0.5;
                     }elseif($vio_migrat->type_of_violation == 'Surat Peringatan Pertama'){
@@ -665,32 +666,26 @@
                     }else{
                       $l_accuml = 0;
                     }
-
                     $sta_viol = $vio_migrat->violation_status;
                     $type_viol = $vio_migrat->type_of_violation;
                     $last_accumulation = $l_accuml;
-
                   }else{
                     $sta_viol = 'notactive';
                     $type_viol = 'notviolation';
                     $last_accumulation = 0;
                   }
-
               }elseif($sel_num_vio_migrat < 1){
                 $sta_viol = 'notactive';
                 $type_viol = 'notviolation';
                 $last_accumulation = 0;
-
               }
-
             }
 
-
-
             */
-            
-
-            $sel_num_vio = DB::table('violations')->where('employee_id', $employee->id)->count();
+            $sel_num_vio = DB::table('violations')
+              ->where('employee_id', $employee->id)
+              ->where('violation_status', '!=', 'cancel')
+              ->count();
 
             if($sel_num_vio == 0){
               $sta_viol = 'notactive';
@@ -698,23 +693,40 @@
               $last_accumulation = 0;
               
             }else{
-              $sel_vio = DB::table('violations')->where('employee_id', $employee->id)->latest()->first();
-              $date_now = date_create();
-              $date_sta = date_create($sel_vio->date_end_violation);
-              $diffx  = date_diff($date_sta, $date_now);
+              $sel_vio = DB::table('violations')
+                ->where('employee_id', $employee->id)
+                ->where('violation_status', '!=', 'cancel')
+                ->latest()
+                ->first();
 
-              if($diffx->d <= 0){
+              // $date_now = date_create();
+              // $date_sta = date_create($sel_vio->date_end_violation);
+              // $diffx  = date_diff($date_sta, $date_now);
+
+              $date_str_reporting_date = strtotime(date('Y-m-d'));
+              $date_str_date_end_violation_lasst = strtotime($sel_vio->date_end_violation);
+              $differencs_date = $date_str_date_end_violation_lasst - $date_str_reporting_date;
+
+              if($differencs_date <= 0){
                 $sta_viol = 'notactive';
                 $type_viol = 'notviolation';
                 $last_accumulation = 0;
               }else{
-                $sta_viol = $sel_vio->violation_status;
-                $type_viol = $sel_vio->type_of_violation;
-                $last_accumulation = $sel_vio->accumulation;
+                if($sel_vio->violation_status == 'cancel'){
+                  $sta_viol = 'notactive';
+                  $type_viol = 'notviolation';
+                  $last_accumulation = 0;
+                }elseif($sel_vio->violation_status == 'active'){
+                  $sta_viol = $sel_vio->violation_status;
+                  $type_viol = $sel_vio->type_of_violation;
+                  $last_accumulation = $sel_vio->accumulation;
+                }else{
+                  $sta_viol = 'notactive';
+                  $type_viol = 'notviolation';
+                  $last_accumulation = 0;
+                }
               }
-            }
-            
-            
+            }            
 
             echo '<br>';
             //memotong jumlah karakter
@@ -775,11 +787,13 @@
                 <div class="form-group row">
                   <label for="job_level" class="col-sm-2 col-form-label">Jabatan </label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" id="job_level" name="job_level" value="{{  $job->job_level  }}" placeholder="Jabatan" disabled>
+                      <input type="text" class="form-control" id="job_level" value="{{  $job->job_level  }}" placeholder="Jabatan" disabled>
+                      <input type="hidden" class="form-control" name="job_level" value="{{  $job->job_level  }}" >
                   </div>
                   <label for="department" class="col-sm-2 col-form-label">Bagian / Department</label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" id="department" name="department" value="{{  $department->department  }}" placeholder="Bagian" disabled>
+                      <input type="text" class="form-control" id="department" value="{{  $department->department  }}" placeholder="Bagian" disabled>
+                      <input type="hidden" class="form-control"  name="department" value="{{  $department->department  }}" >
                   </div>
                 </div>
                 <div class="form-group row">
@@ -805,7 +819,7 @@
                   <div class="col-sm-10">
                     <!-- <input id="x" type="hidden" name="other_information">
                     <trix-editor input="x"></trix-editor> -->
-                    <textarea name="other_information" class="form-control" id="" rows="4"></textarea>
+                    <textarea name="other_information" class="form-control" id="" rows="4" required></textarea>
                   </div>
                 </div> 
                 <div class="form-group row">

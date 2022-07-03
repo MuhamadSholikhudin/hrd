@@ -30,6 +30,8 @@
         <div class="card-header">
           <h3 class="card-title">Form Surat Keputusan PHK </h3>
         </div>
+        <form action="/layoffs/" method="POST" enctype="multipart/form-data">
+              @csrf
         <!-- /.card-header -->
         <div class="card-body">
           <p class="text-center">
@@ -40,73 +42,72 @@
             <br>
               <?php 
               $bul = date('m');
-              $year = date('Y');
+              $yea = date('Y');
               $num_latest = DB::table('layoffs')
-                // ->whereMonth('created_at', Carbon::now()->month) 
                 ->whereMonth('layoff_date', $bul) 
-                ->whereYear('layoff_date', $year) 
+                ->whereYear('layoff_date', $yea) 
                 ->count(); 
 
                 if($num_latest < 1){
                   $no_lf = 1;
               }elseif($num_latest > 0){
                   $latest = DB::table('layoffs')
-                      ->latest()
+                      ->whereMonth('layoff_date', $bul) 
+                      ->whereYear('layoff_date', $yea) 
+                      ->orderBy('no_layoff', 'desc')
                       ->first();
                   $no_lf = $latest->no_layoff + 1;
               }
               // echo $num_latest;
               $int_value = intval( $no_lf );
               ?>
-              <script>
-              var no_lf = parseInt($int_value);
-                document.getElementById("no_lf").value = no_lf;
-              </script>
+              
               <?php
                 $rom_pil = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
-
-                if($bul == '01'){
-                  $ROM = 'I';
+?>
+              NO.    <input type="text" name="no_layoff" id="" value="{{$no_lf}} " style="width: 80px;">     /SK-PHK/HRD-HWI/
+              <?php
+                if($bul == "01"){
+                    $ROM = 'I';
                 }elseif($bul == "02"){
-                  $ROM = 'II';
+                    $ROM = 'II';
                 }elseif($bul == "03"){
-                  $ROM = 'III';
+                    $ROM = 'III';
                 }elseif($bul == "04"){
-                  $ROM = 'IV';
+                    $ROM = 'IV';
                 }elseif($bul == "05"){
-                  $ROM = 'V';
+                    $ROM = 'V';
                 }elseif($bul == "06"){
-                  $ROM = 'VI';
+                    $ROM = 'VI';
                 }elseif($bul == "07"){
-                  $ROM = 'VII';
+                    $ROM = 'VII';
                 }elseif($bul == "08"){
-                  $ROM = 'VIII';
+                    $ROM = 'VIII';
                 }elseif($bul == "09"){
-                  $ROM = 'IX';
+                    $ROM = 'IX';
                 }elseif($bul == "10"){
-                  $ROM = 'X';
+                    $ROM = 'X';
                 }elseif($bul == "11"){
-                  $ROM = 'XI';
+                    $ROM = 'XI';
                 }elseif($bul == "12"){
-                  $ROM = 'XII';
+                    $ROM = 'XII';
                 }
+                $layROMs = ["I", "II","III","IV","V","VI","VII","VIII", "IX", "X", "XI", 'XII'];
               ?>
 
-              NO.    <input type="text" name="" id="no_lf" min="1" value="{{$int_value}}" style="width: 80px;">        /SK-PHK/HRD-HWI/
-              
-              
-              <select name="rom" id="">
-                <?php
-                  foreach ($rom_pil as $rom) {
-                    if($rom == $ROM){ ?>
-                      <option value="<?= $rom ?>" selected><?= $rom ?></option>
-                    <?php }else{ ?>
-                      <option value="<?= $rom ?>" ><?= $rom ?></option>
-                    <?php }
-                  }                    
-                ?>
-
+              <select name="rom_layoff" id="">
+              <?php
+                foreach($layROMs as $layROM) :?>
+                  <?php if($layROM == $ROM){ ?>
+                    <option value="<?= $layROM?>" selected><?= $layROM?></option>
+                  <?php }else{ ?>
+                    <option value="<?= $layROM?>"><?= $layROM?></option>
+                  <?php }     ?>  
+                <?php endforeach;
+              ?>
+             
               </select>
+
               /{{ date('Y') }} <br>
               TENTANG<br>
               PEMUTUSAN HUBUNGAN KERJA
@@ -114,8 +115,7 @@
           </p>
 
           <table>
-            <form action="/layoffs/" method="POST" enctype="multipart/form-data">
-              @csrf
+           
             <tr>
               <td valign="top">Membaca</td>
               <td valign="top">:</td>
@@ -130,8 +130,9 @@
                   @endforeach
                 </select>
            
-                <div id="isi_text" style="width:100%;">
-
+                <div style="width:100%;">
+                  <textarea name="read" id="isi_text" class="form-control" rows="5" required></textarea>
+                  <br>
                 </div>
               </div>
               </td>
@@ -165,14 +166,14 @@
                       Melakukan Pemutusan Hubungan Kerja (PHK) terhadap :
                       <!-- <select class="form-control select2bs4 select2-hidden-accessible" name="employee_id" id="karyawan_phk" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
                       </select> -->
-                      <input class="form-control" type="text" name="" id="cari_karyawan_phk" onkeydown="keydowncari()" onkeyup="keyupcari()">
+                      <input class="form-control" type="text" name="phk_employee" id="cari_karyawan_phk" >
                     </td>
                     <td>
                       <br>
-                      <span onClick="car_kar()" class="btn btn-primary">Cari</span>
+                      <!-- <span onClick="car_kar()" class="btn btn-primary">Cari</span> -->
                     </td>
                     <td>
-                      &nbsp; &nbsp; <span id="output_cari_karyawan">Berhasil</span> 
+                      <!-- &nbsp; &nbsp; <span id="output_cari_karyawan">Berhasil</span>  -->
 
                     </td>
                   </tr>
@@ -278,7 +279,7 @@
                       ->first();
                       $edit = $prt_meth->edit;
                       if($edit == 'true'){
-                        echo '<button class="btn btn-primary" type="submit">Simpan</button>';
+                        echo '<button class="btn btn-primary" id="button_php" type="submit" disabled>Simpan</button>';
                       }
                     }
                   }

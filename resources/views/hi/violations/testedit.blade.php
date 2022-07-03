@@ -222,7 +222,14 @@
               @foreach($violations as $violation)
                 <tr>
                   <td>{{ $loop->iteration }}</td>
-                  <td>
+                  <?php
+                    if($violation->violation_status == 'cancel'){
+                      $colorcancel = 'style="background-color:#00FF00"';
+                    }else{
+                      $colorcancel = '';
+                    }
+                  ?>
+                  <td <?= $colorcancel ?> >
                     <?php
                       $date_violation_sp = new \DateTime($violation->date_of_violation .' 00:00:00');
                       $date_year_sp = date_format($date_violation_sp, "Y"); //for Display Year
@@ -243,7 +250,7 @@
                     <td> {{ tanggal_pelanggaran($violation->reporting_date); }} </td>
                   <td>
                   <?php
-                    $day_sp = gmdate("l", mktime(0,0,0,$date_day_sp,$date_month_sp,$date_year_sp));
+                    $day_sp = gmdate("l", mktime(0,0,0,$date_month_sp,$date_day_sp,$date_year_sp));
 
                     // Hari Indonesia
                     if($day_sp == 'Monday'){
@@ -289,7 +296,8 @@
                       $month_indo_sp = 'Desember';            
                     }
                   ?>
-                    {{ $day_indo_sp. ", ". $date_day_sp. " ". $month_indo_sp . " ". $date_year_sp }}
+                    <!-- {{ $day_indo_sp. ", ". $date_day_sp. " ". $month_indo_sp . " ". $date_year_sp }} -->
+                    {{ tanggal_pelanggaran($violation->date_of_violation); }}
                   </td>
 
 
@@ -300,7 +308,7 @@
                       $date_month =  date_format($date_violation_end, "m"); //for Display Month
                       $date_day = date_format($date_violation_end, "d"); //for Display Date
 
-                      $day = gmdate("l", mktime(0,0,0,$date_day,$date_month,$date_year));
+                      $day = gmdate("l", mktime(0,0,0,$date_month_sp,$date_day_sp,$date_year_sp));
 
                       // Hari Indonesia
                       if($day == 'Monday'){
@@ -346,7 +354,8 @@
                         $month_indo = 'Desember';            
                       }
                     ?>
-                    {{ $day_indo. ", ". $date_day. " ". $month_indo . " ". $date_year }}
+                    <!-- {{ $day_indo. ", ". $date_day. " ". $month_indo . " ". $date_year }} -->
+                    {{ tanggal_pelanggaran($violation->date_end_violation); }}
                   </td>
                   <td>
                     <?php                     
@@ -365,17 +374,20 @@
                     <?php
                       if($violation->type_of_violation == 'Peringatan Lisan'){
                         $p = "SP Lisan";
+                      }elseif($violation->type_of_violation == 'Surat Peringatan Lisan'){
+                        $p = "SP Lisan";
                       }elseif($violation->type_of_violation == 'Surat Peringatan Pertama'){
                         $p = "SP I";
                       }elseif($violation->type_of_violation == 'Surat Peringatan Kedua'){
                         $p = "SP II";
-                      
                       }elseif($violation->type_of_violation == 'Surat Peringatan Ketiga'){
                         $p = "SP III";
                       }elseif($violation->type_of_violation == 'Surat Peringatan Terakhir'){
                         $p = "SP Terakhir";
                       }elseif($violation->type_of_violation == 'Pemutusan Hubungan Kerja'){
                         $p = "PHK";
+                      }else{
+                        $p = "Tidak Ditemukan";
                       }
                     ?>
                     {{ $p }}
@@ -386,17 +398,14 @@
                       // $alphabet  = DB::table('alphabets')->find($violation->alphabet_id); 
                       // $paragraph  = DB::table('paragraphs')->find($alphabet->paragraph_id); 
                       // $article  = DB::table('articles')->find($paragraph->article_id); 
-
-                      if($violation->alphabet_id !== NULL){
-                        echo pasal($violation->alphabet_id);
-                        }else{
-
-                        }
+                      
+                       echo pasal($violation->alphabet_id);
+                    
                     ?>
                   </td>
 
                       <td>
-                          <?php 
+                      <?php 
                               if($violation->alphabet_accumulation !== NULL){
                               echo pasal($violation->alphabet_accumulation);
                               }else{
@@ -470,15 +479,15 @@
                 </select>
               </div>
               <div class="col-sm-2">
-                <button class="btn btn-button btn-primary"  onclick="btn_proses()" id="btn_proses" data-id="btn_proses" data-target="btn_proses">Proses</button>
+                <button class="btn btn-button btn-primary"  id="btn_proses_testedit" data-id="btn_proses" data-target="btn_proses">Proses</button>
               </div>
             </div> 
           </div>
         </div>
 
       {{-- Displaynone --}}
-        <div >
-        {{-- <div style="display:none;" > --}}
+         <div > 
+       {{-- <div style="display:none;" >  --}}
           <?php
             $date_violation = new \DateTime(date('Y-m-d') .' 4:06:37' );
 
@@ -511,8 +520,11 @@
             echo '<br> $num_no_sp ';
 
             // Nomer SP
+            $month_m_bul = date('m');
+            $yaer_y_bul = date('Y');
             echo $num_no_sp = DB::table('violations')
-                              ->where('month_of_violation',  $month_n)
+                              ->whereMonth('date_of_violation',  $month_m_bul)
+                              ->whereYear('date_of_violation',  $yaer_y_bul)  
                               ->count();
             echo '<br> ';
             // dd($num_no_sp);
@@ -520,11 +532,16 @@
               $no_sp = 1;
             }elseif($num_no_sp > 0){
               $sel_no_sp = DB::table('violations')
-                ->latest()->first();
-
+                ->whereMonth('date_of_violation',  $month_m_bul)  
+                ->whereYear('date_of_violation',  $yaer_y_bul)  
+                ->orderByDesc('no_violation')
+                ->latest()
+                ->first();
               $no_sp = $sel_no_sp->no_violation + 1;
             }
-            echo '<br> ';
+            echo $no_sp;
+            echo '<br>';
+            
             $var = 1234567;
             echo is_numeric($var) ? "Jumlah digit dari bilangan ".$var." adalah ".strlen($var) : 'Bukan Termasuk Angka';
             echo '<br>';
@@ -533,6 +550,8 @@
               $p_no_sp = '00'. $no_sp;
             }elseif(strlen($no_sp) == '2'){
               $p_no_sp = '0'.$no_sp;
+            }else{
+              $p_no_sp = $no_sp;
             }
 
             echo $p_no_sp;
@@ -608,17 +627,13 @@
 
             // Cari data pelanggan terakhir 
             
-            
-
+            /*
             $sel_num_vio = DB::table('violations')->where('employee_id', $employee->id)->count();
-
             if($sel_num_vio > 0){
-
               $sel_vio = DB::table('violations')->where('employee_id', $employee->id)->latest()->first();
               $date_now = date_create();
               $date_sta = date_create($sel_vio->date_end_violation);
               $diffx  = date_diff($date_sta, $date_now);
-
               if($diffx->d <= 0){
                 $sta_viol = 'notactive';
                 $type_viol = 'notviolation';
@@ -628,18 +643,14 @@
                 $type_viol = $sel_vio->type_of_violation;
                 $last_accumulation = $sel_vio->accumulation;
               }
-
             }elseif($sel_num_vio < 1){
-
               $sel_num_vio_migrat = DB::table('violationmigrations')->where('employee_id', $employee->id)->count();
               if($sel_num_vio_migrat > 0){
                 $vio_migrat = DB::table('violationmigrations')
                   ->where('employee_id', $employee->id)
                   ->orderBy('id', 'desc')
                   ->first();
-
                   if($vio_migrat->violation_status == 'active'){
-
                     if($vio_migrat->type_of_violation == 'Peringatan Lisan'){
                       $l_accuml = 0.5;
                     }elseif($vio_migrat->type_of_violation == 'Surat Peringatan Pertama'){
@@ -655,57 +666,212 @@
                     }else{
                       $l_accuml = 0;
                     }
-
                     $sta_viol = $vio_migrat->violation_status;
                     $type_viol = $vio_migrat->type_of_violation;
                     $last_accumulation = $l_accuml;
-
                   }else{
                     $sta_viol = 'notactive';
                     $type_viol = 'notviolation';
                     $last_accumulation = 0;
                   }
-
               }elseif($sel_num_vio_migrat < 1){
                 $sta_viol = 'notactive';
                 $type_viol = 'notviolation';
                 $last_accumulation = 0;
-
               }
-
             }
 
+            */
+ 
+            // Tampilkan SP terakhir
+            function status_type_violation_akhir($sp_gab){
+              if($sp_gab == 0.5){
+                  $status_type_violation_akhir = 'Surat Peringatan Lisan';
+              }elseif($sp_gab >= 1 AND $sp_gab <= 1.5){
+                  $status_type_violation_akhir = 'Surat Peringatan Pertama';
+              }elseif($sp_gab >= 2 AND $sp_gab <= 2.5){
+                  $status_type_violation_akhir = 'Surat Peringatan Kedua';
+              }elseif($sp_gab >= 3 AND $sp_gab <= 3.5){
+                  $status_type_violation_akhir = 'Surat Peringatan Ketiga';
+              }elseif($sp_gab >= 4 AND $sp_gab <= 4.5){
+                  $status_type_violation_akhir = 'Surat Peringatan Terakhir';
+              }elseif($sp_gab >= 5 AND $sp_gab <= 5.5){
+                  $status_type_violation_akhir = 'Pemutusan Hubungan Kerja';
+              } 
+              return $status_type_violation_akhir;
+            }
 
+            function cari_sp_terakhir_sebelum_sp_lisan_type($cari_sp_terakhir_sebelum_sp_lisan_type_of_violation){
+              if($cari_sp_terakhir_sebelum_sp_lisan_type_of_violation == "Peringatan Lisan"){
+                  $cari_sp_terakhir_sebelum_sp_lisan_type = 0.5;
+              }elseif($cari_sp_terakhir_sebelum_sp_lisan_type_of_violation == "Surat Peringatan Pertama"){
+                  $cari_sp_terakhir_sebelum_sp_lisan_type = 1;
+              }elseif($cari_sp_terakhir_sebelum_sp_lisan_type_of_violation == "Surat Peringatan Kedua"){
+                  $cari_sp_terakhir_sebelum_sp_lisan_type = 2;
+              }elseif($cari_sp_terakhir_sebelum_sp_lisan_type_of_violation == "Surat Peringatan Ketiga"){
+                  $cari_sp_terakhir_sebelum_sp_lisan_type = 3;
+              }elseif($cari_sp_terakhir_sebelum_sp_lisan_type_of_violation == "Surat Peringatan Terakhir"){
+                  $cari_sp_terakhir_sebelum_sp_lisan_type = 4;
+              }elseif($cari_sp_terakhir_sebelum_sp_lisan_type_of_violation == "Pemutusan Hubungan Kerja"){
+                  $cari_sp_terakhir_sebelum_sp_lisan_type = 5;    
+              }
+              return $cari_sp_terakhir_sebelum_sp_lisan_type;
+            }
 
+          //hitung sp terakhir ada apa tidak
+          $sel_num_vio = DB::table('violations')
+              ->where('employee_id', $employee->id)
+              ->where('violation_status', '!=', 'cancel')
+              ->where('violation_status', 'active')
+              ->count();
+
+              //jika ada sp masaih aktif
+          if($sel_num_vio > 0){
+          
+              //taampilkan sp terkhhiir
+              $sel_last_vio = DB::table('violations')
+                  ->where('employee_id', $employee->id)
+                  ->where('violation_status', '!=', 'cancel')
+                  ->where('violation_status', 'active')
+                  ->orderByDesc('id')
+                  ->first();
+
+                  // jika sp terakhir sama dengan Peringatan LIsan
+              if($sel_last_vio->type_of_violation == "Peringatan Lisan"){
+              
+                $sp_lisan_terakhir = $sel_last_vio->violation_status;
+
+                  // cari sp sebelum sp lisan yang aktif
+                  $cari_sp_sebelum_sp_lisan = DB::table('violations')
+                      ->where('employee_id', $employee->id)
+                      ->where('violation_status', '!=', 'cancel')
+                      ->where('violation_status', 'active')
+                      ->where('id', '<', $sel_last_vio->id)
+                      ->count();
+
+                      // jika ada sebelum sp lisan yang aktif
+                  if($cari_sp_sebelum_sp_lisan > 0){
+
+                    // cari sp terakhir sebelum sp lisan active
+                      $count_sp_terakhir_sebelum_sp_lisan = DB::table('violations')
+                          ->where('employee_id', $employee->id)
+                          ->where('violation_status', '!=', 'cancel')
+                          ->where('violation_status', 'active')
+                          ->where('id', '<', $sel_last_vio->id)
+                          ->where("type_of_violation", "!=" , "Peringatan Lisan")
+                          ->count();
+
+                          // jika ada sp terakhir sebelum sp lisan active
+                      if($count_sp_terakhir_sebelum_sp_lisan > 0){
+
+                          //tampilkan sp terakhir sebelum sp lisan active
+                          $cari_sp_terakhir_sebelum_sp_lisan = DB::table('violations')
+                              ->where('employee_id', $employee->id)
+                              ->where('violation_status', '!=', 'cancel')
+                              ->where('violation_status', 'active')
+                              ->where('id', '<', $sel_last_vio->id)
+                              ->where("type_of_violation", "!=" , "Peringatan Lisan")
+                              ->orderByDesc('id')
+                              ->first();
+
+                              $cari_sp_terakhir_sebelum_sp_lisan_type = cari_sp_terakhir_sebelum_sp_lisan_type($cari_sp_terakhir_sebelum_sp_lisan->type_of_violation);
+                          
+                              //cari sp lisan sebelum sp lisan
+                          $cari_sp_lisan_sebelum_sp_lisan = DB::table("violations")
+                              ->where("employee_id", $employee->id)
+                              ->where("violation_status", "!=", "cancel")
+                              ->where("violation_status", "active")
+                              ->where("type_of_violation", "Peringatan Lisan")
+                              ->where("id", "<", $sel_last_vio->id)
+                              ->count();
+                          
+                          // sp_gab($cari_sp_lisan_sebelum_sp_lisan);
+                          if($cari_sp_lisan_sebelum_sp_lisan == 1){
+                              $s_p_1 = 0;
+                              $sp_last = 0.5;
+                              $sp_tidak_lisan = $cari_sp_terakhir_sebelum_sp_lisan_type;
+                              $sp_gab = $sp_tidak_lisan + $s_p_1 + $sp_last;
+                          }elseif($cari_sp_lisan_sebelum_sp_lisan == 2){
+                              $s_p_1 = 0.5;
+                              $sp_last = 0.5;
+                              $sp_tidak_lisan = $cari_sp_terakhir_sebelum_sp_lisan_type;
+                              $sp_gab = $sp_tidak_lisan + $s_p_1 + $sp_last;
+                          }elseif($cari_sp_lisan_sebelum_sp_lisan == 3){
+                              $s_p_1 = 0;
+                              $sp_last = 0.5;
+                              $sp_tidak_lisan = $cari_sp_terakhir_sebelum_sp_lisan_type;
+                              $sp_gab = $sp_tidak_lisan + $s_p_1 + $sp_last;
+                          }elseif($cari_sp_lisan_sebelum_sp_lisan == 4){
+                              $s_p_1 = 0;
+                              $sp_last = 0.5;
+                              $sp_tidak_lisan = $cari_sp_terakhir_sebelum_sp_lisan_type;
+                              $sp_gab = $sp_tidak_lisan + $s_p_1 + $sp_last;
+                          }else{
+                              $s_p_1 = 0;
+                              $sp_last = 0.5;
+                              $sp_tidak_lisan = $cari_sp_terakhir_sebelum_sp_lisan_type;
+                              $sp_gab = $sp_tidak_lisan + $s_p_1 + $sp_last;
+                          }
+
+                          // jika tidak ada sp terakhir sebelum sp lisan active selain sp lisan
+                      }else{
+                        $sp_gab = 0.5;
+                      }
+
+                  // jika tidak ada sp terakhir setelah SP lisan
+                  }else{
+                      $s_p_1 = 0.5;
+                      $sp_gab = $s_p_1;
+                  }
+
+                  // jika sp terakhir tidak sama dengan Peringatan Lisan
+              }else{
+
+                  $cari_sp_terakhir_sebelum_sp_lisan_type = cari_sp_terakhir_sebelum_sp_lisan_type($sel_last_vio->type_of_violation);
+                
+                  $cari_sp_lisan_sebelum_sp_lisan = DB::table('violations')
+                      ->where('employee_id', $employee->id)
+                      ->where('violation_status', '!=', 'cancel')
+                      ->where('violation_status', 'active')
+                      ->where('type_of_violation', 'Peringatan Lisan')
+                      ->where('id', '<', $sel_last_vio->id)
+                      ->count();
+
+                  if($cari_sp_lisan_sebelum_sp_lisan == 1){
+                      $s_p_1 = 0.5;
+                      $sp_tidak_lisan = $cari_sp_terakhir_sebelum_sp_lisan_type;
+                      $sp_gab = $sp_tidak_lisan + $s_p_1;
+                  }elseif($cari_sp_lisan_sebelum_sp_lisan == 2){
+                      $s_p_1 = 0;
+                      $sp_tidak_lisan = $cari_sp_terakhir_sebelum_sp_lisan_type;
+                      $sp_gab = $sp_tidak_lisan + $s_p_1;
+                  }elseif($cari_sp_lisan_sebelum_sp_lisan == 3){
+                      $s_p_1 = 0.5;
+                      $sp_tidak_lisan = $cari_sp_terakhir_sebelum_sp_lisan_type;
+                      $sp_gab = $sp_tidak_lisan + $s_p_1;
+                  }elseif($cari_sp_lisan_sebelum_sp_lisan == 4){
+                      $s_p_1 = 0;
+                      $sp_tidak_lisan = $cari_sp_terakhir_sebelum_sp_lisan_type;
+                      $sp_gab = $sp_tidak_lisan + $s_p_1;
+                  }else{
+                      $s_p_1 = 0;
+                      $sp_tidak_lisan = $cari_sp_terakhir_sebelum_sp_lisan_type;
+                      $sp_gab = $sp_tidak_lisan + $s_p_1;
+                  }
+              }
             
-            /*
-            
+              $sta_viol = $sel_last_vio->violation_status;
+              $type_viol = status_type_violation_akhir($sp_gab);
+              $last_accumulation = $sp_gab;
 
-            $sel_num_vio = DB::table('violations')->where('employee_id', $employee->id)->count();
+          }else{
+              $sp_gab = 0;
 
-            if($sel_num_vio == 0){
               $sta_viol = 'notactive';
               $type_viol = 'notviolation';
-              $last_accumulation = 0;
+              $last_accumulation = $sp_gab;
               
-            }else{
-              $sel_vio = DB::table('violations')->where('employee_id', $employee->id)->latest()->first();
-              $date_now = date_create();
-              $date_sta = date_create($sel_vio->date_end_violation);
-              $diffx  = date_diff($date_sta, $date_now);
-
-              if($diffx->d <= 0){
-                $sta_viol = 'notactive';
-                $type_viol = 'notviolation';
-                $last_accumulation = 0;
-              }else{
-                $sta_viol = $sel_vio->violation_status;
-                $type_viol = $sel_vio->type_of_violation;
-                $last_accumulation = $sel_vio->accumulation;
-              }
-            }
-            */
-            
+          }
 
             echo '<br>';
             //memotong jumlah karakter
@@ -749,36 +915,38 @@
                     </div>
                   <label for="number_of_employees" class="col-sm-2 col-form-label">Nomer SP </label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" value="{{$p_no_sp}}/SP-HRD/{{$ROM}}/{{date('Y')}}" placeholder="Nomer Induk Karyawan" >
+                      <input type="text" class="form-control" value="{{$p_no_sp}}/SP-HRD/{{$ROM}}/{{date('Y')}}" placeholder="Nomer SP" disabled>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="name" class="col-sm-2 col-form-label">Nama </label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" id="employee_id" name="employee_id" value="{{  $employee->id  }}" placeholder="Nomer Induk Karyawan" >
-                      <input type="text" class="form-control" value="{{  $employee->name  }}" placeholder="Nomer Induk Karyawan" >
+                      <input type="hidden" class="form-control" id="employee_id" name="employee_id" value="{{  $employee->id  }}" placeholder="Nomer Induk Karyawan" >
+                      <input type="text" class="form-control" value="{{  $employee->name  }}" placeholder="Nama Karyawan" disabled>
                   </div>
                   <label for="number_of_employees" class="col-sm-2 col-form-label">NIK</label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" value="{{  $employee->number_of_employees  }}" placeholder="" >
+                      <input type="text" class="form-control" value="{{  $employee->number_of_employees  }}" placeholder="Nomer Induk Karyawan" disabled>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="job_level" class="col-sm-2 col-form-label">Jabatan </label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" id="job_level" name="job_level" value="{{  $job->job_level  }}" placeholder="Nomer Induk Karyawan" >
+                      <input type="text" class="form-control" id="job_level" value="{{  $job->job_level  }}" placeholder="Jabatan" disabled>
+                      <input type="hidden" class="form-control" name="job_level" value="{{  $job->job_level  }}" >
                   </div>
                   <label for="department" class="col-sm-2 col-form-label">Bagian / Department</label>
                   <div class="col-sm-4">
-                      <input type="text" class="form-control" id="department" name="department" value="{{  $department->department  }}" placeholder="Finger ID" >
+                      <input type="text" class="form-control" id="department" value="{{  $department->department  }}" placeholder="Bagian" disabled>
+                      <input type="hidden" class="form-control"  name="department" value="{{  $department->department  }}" >
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label">Jenis Pelangaran</label>
                   <div class="col-sm-3">
-                      <input type="text" name="last_vio" value="{{$sta_viol}}" >
-                      <input type="text" name="last_type" value="{{$type_viol}}"  >     
-                      <input type="text" name="last_accumulation" value="{{$last_accumulation}}"  >     
+                      <input type="hidden" name="last_vio" value="{{$sta_viol}}" >
+                      <input type="hidden" name="last_type" value="{{$type_viol}}"  >     
+                      <input type="hidden" name="last_accumulation" value="{{$last_accumulation}}"  >     
 
                       <input type="text" class="form-control" id="jpn1"  placeholder="Jenis Pelanggaran" >     
                   </div>
@@ -786,7 +954,7 @@
             
                 <div class="form-group row">
                   <label for="inputName" class="col-sm-2 col-form-label">Pasal Yang dilanggar : </label>
-                  <input type="text" class="form-control" id="alphabet_id" name="alphabet_id"  value="" placeholder="Alphabet ID" >                  
+                  <input type="hidden" class="form-control" id="alphabet_id" name="alphabet_id"  value="" placeholder="Alphabet ID" >                  
                   <div class="col-sm-10" id="pkb1">
 
                   </div>
@@ -796,7 +964,7 @@
                   <div class="col-sm-10">
                     <!-- <input id="x" type="hidden" name="other_information">
                     <trix-editor input="x"></trix-editor> -->
-                    <textarea name="other_information" class="form-control" id="" rows="4"></textarea>
+                    <textarea name="other_information" class="form-control" id="" rows="4" required></textarea>
                   </div>
                 </div> 
                 <div class="form-group row">

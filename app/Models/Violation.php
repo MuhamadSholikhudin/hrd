@@ -26,4 +26,9 @@ class Violation extends Model
     {
         return $this->belongsTo(Employee::class);
     }
+
+    public function deliveryletters()
+    {
+        return $this->hasMany(Deliveryletter::class);
+    }
 }

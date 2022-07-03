@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('rom_layoff')->nullable();     
             $table->foreignId('alphabet_id');      
             $table->foreignId('employee_id');      
+            $table->foreignId('signature_id');      
             $table->timestamps();
         });
     }

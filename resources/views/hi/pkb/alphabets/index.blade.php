@@ -95,7 +95,7 @@
                       </div>
                       <div class="form-group">
                         <label for="description">Keterangan</label>
-                        <textarea  class="form-control" id="" name="description" placeholder="Bunyi huruf"></textarea>
+                        <textarea  class="form-control" id="" name="alphabet_sound" placeholder="Bunyi huruf"></textarea>
                       </div>
                       <div class="form-group row">
                         <label for="bank_branch" class="col-sm-3 col-form-label">Periode</label>

@@ -69,7 +69,7 @@ class LayoffController extends Controller
             // ->get();
 
         $alphabet = DB::select( DB::raw("SELECT * FROM alphabets
-        WHERE paragraph_id = 6 OR paragraph_id = 7") );
+        WHERE paragraph_id BETWEEN 6 AND 38") );
 
         return view('hi.layoffs.create',[
             'alphabets' =>  $alphabet,
@@ -161,19 +161,22 @@ class LayoffController extends Controller
           $ROM = 'XII';
         }
 
+        $employee = DB::table('employees')->where('number_of_employees', $request->phk_employee)->first();
+
         DB::table('layoffs')->insert([
             'alphabet_id' => $request->alphabet_id,
-            'employee_id' => $request->employee_id,
+            'employee_id' => $employee->id,
+            'read' => $request->read,
             'layoff_description' => $request->layoff_description,
-            'no_layoff' => $no_lf,
-            'rom_layoff' => $ROM,
+            'no_layoff' => $request->no_layoff,
+            'rom_layoff' => $request->rom_layoff,
             'layoff_date_start' => $request->layoff_date_start,
             'layoff_date' => $request->layoff_date,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ]);
 
-        $select_employee = DB::table('employees')->find($request->employee_id);
+        $select_employee = DB::table('employees')->find($employee->id);
         $remark = "menambahkan PHK ".$select_employee->number_of_employees;
         $action = "add";
 
@@ -291,10 +294,14 @@ class LayoffController extends Controller
         $sel_paragraph = DB::table('paragraphs')->find($sel_alphabet->paragraph_id);
         $sel_article = DB::table('articles')->find($sel_paragraph->article_id);
         
-        $pasal = 'Perjanjian Kerja Bersama Pasal '.$sel_article->article.'. Jenis Pelanggaran dan Sanksi ayat ('.$sel_paragraph->paragraph.') 
-        
-        
-        tentang '.$sel_paragraph->description .'. '.$sel_alphabet->alphabet_sound.'';
+        // $pasal = 'Perjanjian Kerja Bersama Pasal '.$sel_article->article.'. Jenis Pelanggaran dan Sanksi ayat ('.$sel_paragraph->paragraph.') 
+        $kecil = strtolower($sel_article->chapters);
+        $chapters = ucwords($kecil);
+        $pasal = 'Perjanjian Kerja Bersama Pasal '.$sel_article->article.' '.
+        $chapters .'. ayat ('.$sel_paragraph->paragraph.') tentang '
+        .$sel_paragraph->sub_chapters .' ' 
+        . $sel_alphabet->alphabet.' .'
+        .$sel_alphabet->alphabet_sound.'';
         // I. Pengusaha dapat melakukan Pemutusan Hubungan Kerja (PHK) tanpa memberikan Pesangon, apabila melakukan kesalahan berat sebagai berikut : '
         // $pasal = '1';
         $employees = DB::table('employees')

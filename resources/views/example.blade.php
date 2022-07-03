@@ -12,7 +12,98 @@
   </head>
   <body>
 
+  <table border="1" class="table">
+        <tr>
+            <th>ID violation</th>
+            <th>employee ID</th>
+            <th>Array</th>
+        </tr>
+        <?php 
+              $violations = DB::table('violations')
+                ->where('type_of_violation', 'Peringatan Lisan')
+                ->whereYear('reporting_date', '2022')
+                ->orderByDesc('id')
+                ->get();
+                
+              ?>
+              @foreach($violations as $vilo)
+        <tr>
+          <td>{{$vilo->id}}</td>
+          <td>{{$vilo->employee_id}}</td>
+          <td>
+            <table  border="1">
+              <tr>
+                <th>
+                id</th> <th>reporting_date</th> <th>date_end_violation</th> <th>date_of_violation</th> <th>type_of_violation</th> <th>violation_status</th> <th>accumulation </th>
+              
+              </tr>
+              <?php 
+              $violations_emp = DB::table('violations')
+                ->where('employee_id', $vilo->employee_id)
+                ->get();
+                
+              ?>
+
+              @foreach($violations_emp as $vilo_emp)
+              <tr>
+                <td>
+                {{$vilo_emp->id}}</td> 
+                <td>{{$vilo_emp->reporting_date}}</td>
+                 <td>{{$vilo_emp->date_end_violation}}</td> 
+                 <td>{{$vilo_emp->date_of_violation}}</td> 
+                 <td>{{$vilo_emp->type_of_violation}}</td>
+                  <td>{{$vilo_emp->violation_status}}</td>
+                   <td>{{$vilo_emp->accumulation}} </td>
+              
+              </tr>
+              @endforeach
+            
+            </table>
+          
+          </td>
+        </tr>
+        @endforeach
+        <!-- <tr>
+            <td>Robby</td>
+            <td>76</td>
+            <td>80</td>
+            <td>81</td>
+        </tr>
+        <tr>
+            <td>Rendi</td>
+            <td>84</td>
+            <td>70</td>
+            <td>75</td>
+        </tr>
+        <tr>
+            <td>Alfian</td>
+            <td>96</td>
+            <td>70</td>
+            <td>71</td>
+        </tr> -->
+    </table>
+
+
+
   <?php
+
+$tanggal1 = "2022-05-08";
+$tanggal2 = "2022-05-09";
+
+echo(strtotime($tanggal1) . "<br>");
+echo(strtotime($tanggal2) . "<br>");
+
+$keluar1 = strtotime($tanggal1);
+$keluar2 = strtotime($tanggal2);
+$klu = $keluar1 - $keluar2;
+
+if($klu > 0){
+  echo 1;
+}elseif($klu < 1){
+  echo $klu;
+}
+
+echo '<br>';
 
 echo tanggal_pelanggaran(date('Y-m-d'));
             // $cari_vio_alpha_not_null = DB::table('violations')->where('alphabet_accumulation' , '!=' , NULL)->get();
@@ -98,41 +189,50 @@ echo tanggal_pelanggaran(date('Y-m-d'));
 
 
 
-// VIOLATION_ACCUMULATION3
-// DB::table('violations')->where('violation_accumulation' , '!=' , NULL)->orderBy('id')->chunk(100, function ($violations) {
+// // VIOLATION_ACCUMULATION3
+// DB::table('violations')->where('violation_accumulation2' , '!=' , NULL)->orderBy('id')->chunk(100, function ($violations) {
 //   foreach ($violations as $violation) {
+
+//     // Cari accumulation2 dari terakhir 
 //     $c_violations = DB::table('violations')
 //         ->where('employee_id',  $violation->employee_id)
+//         ->where('violation_accumulation2' , '!=' , NULL)        
 //         ->where('id', '<', $violation->id)
 //         ->count();
 
 //     if($c_violations > 0){
+
+//        // menampilkan accumulation2 dari terakhir 
 //       $get_violations = DB::table('violations')
 //         ->where('employee_id',  $violation->employee_id)
 //         ->where('id', '<', $violation->id)
+//         ->where('violation_accumulation2' , '!=' , NULL)
 //         ->orderBy('id', 'desc')
 //         ->first();
+
 //       if($get_violations->date_end_violation > $violation->reporting_date){
 
 //           $c_violation2 = DB::table('violations')
 //             ->where('employee_id',  $violation->employee_id)
 //             ->where('id', '<', $get_violations->id)
+//             ->where('violation_accumulation' , '!=' , NULL)
 //             ->count();
 
 //             if($c_violation2 > 0){
 //               $get_violations2 = DB::table('violations')
 //                 ->where('employee_id',  $violation->employee_id)
 //                 ->where('id', '<', $get_violations->id)
+//                 ->where('violation_accumulation' , '!=' , NULL)
 //                 ->orderBy('id', 'desc')
 //                 ->first();
 
 //                 if($get_violations2->date_end_violation > $get_violations->reporting_date){
 
-//                 // DB::table('violations')
-//                 //   ->where('id', $violation->id)
-//                 //   ->update([
-//                 //       'violation_accumulation2'=> $get_violations2->id
-//                 //   ]);
+//                 DB::table('violations')
+//                   ->where('id', $violation->id)
+//                   ->update([
+//                       'violation_accumulation3'=> $get_violations->violation_accumulation2
+//                   ]);
 //                 }
 //             }else{
 
@@ -147,6 +247,39 @@ echo tanggal_pelanggaran(date('Y-m-d'));
 // });
 
 
+// // MEMBUAT KARYAWAN TIDAK AKTIF
+// DB::table('employees')->where('date_out' , '!=' , NULL)->orderBy('id')->chunk(1000, function ($employees) {
+//   foreach ($employees as $employee) {
+//     DB::table('employees')
+//       ->where('id', $employee->id)
+//       ->update([
+//           'status_employee'=> 'notactive'
+//       ]);                
+//     }
+// });
+
+echo '<br>';
+// $cari_pasal_akumulasi = DB::table('alphabets')
+//             ->join('paragraphs', 'alphabets.paragraph_id', '=', 'paragraphs.id')
+//             ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
+//             ->where('paragraphs.type_of_verse', 'Surat Peringatan Terakhir')
+//             ->where('alphabet_accumulation', 'like', '%' . 'Surat Peringatan Pertama' . '%')
+//             ->select('alphabets.id as id')
+//             ->first();
+// $cari_pasal_akumulasi = ['id' => 93];  
+// echo $cari_pasal_akumulasi['id'];  
+
+
+// DB::table('violations')->where('id', '>', 8028)->delete();
+
+// $hapus_vio = DB::table('violations')->where('id' , '>' , 8028)-get();
+  // foreach ($hapus_vio as $hapus) {
+  //   DB::table('employees')
+  //     ->where('id', $employee->id)
+  //     ->update([
+  //         'status_employee'=> 'notactive'
+  //     ]);                
+  //   }
 ?>
     <h1>Hello, world!</h1>
     <div class="container">
