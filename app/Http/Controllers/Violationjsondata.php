@@ -17,4 +17,8 @@
                                     .' ' .$pelanggran_sebelumnya->other_information
                                     ;
 
-                                    $data = [ $status_type_violation, $pasal_yang_dilanggar, $remainder1, $remainder2]; 
+                                    if($status_type_violation == "Peringatan Lisan"){
+                                        $data = [ $status_type_violation, $pasal_yang_dilanggar, "-", "-"]; 
+                                    }else{
+                                        $data = [ $status_type_violation, $pasal_yang_dilanggar, $remainder1, $remainder2]; 
+                                    }

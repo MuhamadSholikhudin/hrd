@@ -188,22 +188,22 @@
     type: "POST",
     url: "{{route('get_type_teatviolation')}}",
     // async: true,
-  dataType: 'json',
-          data: {
-            violation_now: violation_now,
-            id_emp : id_emp,
-            status_violant_last : status_violant_last,
-            last_type: last_type,
-            last_accumulation: last_accumulation
-          },
-          success: function(data) {
-            // alert(data);
-            document.getElementById("btn_modal_click1").click();
-            $("#jpn1").val(data[0]);
-            $("#pkb1").html(data[1]);
-            $("#remainder1").text(data[2]);
-            $("#remainder2").text(data[3]);
-            $("#alphabet_id").val(violation_now);
+    dataType: 'json',
+    data: {
+      violation_now: violation_now,
+      id_emp : id_emp,
+      status_violant_last : status_violant_last,
+      last_type: last_type,
+      last_accumulation: last_accumulation
+    },
+    success: function(data) {
+      // alert(data);
+      document.getElementById("btn_modal_click1").click();
+      $("#jpn1").val(data[0]);
+      $("#pkb1").html(data[1]);
+      $("#remainder1").text(data[2]);
+      $("#remainder2").text(data[3]);
+      $("#alphabet_id").val(violation_now);
     },
     // complete:function(data){
     //   // Hide image container

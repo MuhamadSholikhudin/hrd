@@ -46,7 +46,7 @@ use App\Http\Controllers\HiParagraphController;
 use App\Http\Controllers\HiAlphabetController;
 use App\Http\Controllers\SignatureController;
 use App\Http\Controllers\DeliveryletterController;
-use App\Http\Controllers\TaetViolationController;
+use App\Http\Controllers\TeatViolationController;
 
 // MANAGEMENT ROLES
 use App\Http\Controllers\RoleController;
@@ -223,6 +223,12 @@ Route::post('violation/get_type_violation', [ViolationController::class, 'get_ty
 
 // ajax alphabet_id get on edit
 Route::post('hiviolation/get_type_hiviolation', [HiViolationController::class, 'get_type_hiviolation'])->name('get_type_hiviolation');
+
+Route::get('/teatviolations', [TeatViolationController::class, 'index']);
+
+// Route::post('/teatviolation/get_type_violation', [TeatViolationController::class, 'get_type_violation'])->name('get_type_teatviolation');
+
+Route::post('/teatviolation/store', [TeatViolationController::class, 'store'])->name('teatstore');
 
 
 ///Migrasi Violation
