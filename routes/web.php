@@ -193,8 +193,6 @@ Route::post('/violationeditexcel', [ViolationController::class, 'violationeditex
 // test SP  
 Route::get('/violations/{id}/testedit', [ViolationController::class, 'testedit']);
 
-// ajax alphabet_id get on TeatViolationController
-Route::post('/teatviolation/get_type_violation', [ViolationController::class, 'get_type_testeditviolation'])->name('get_type_teatviolation');
 
 
 // DATA VIOLATIONS
@@ -226,9 +224,16 @@ Route::post('hiviolation/get_type_hiviolation', [HiViolationController::class, '
 
 Route::get('/teatviolations', [TeatViolationController::class, 'index']);
 
+// ajax alphabet_id get on TeatViolationController
+Route::post('/teatviolation/get_type_violation', [TeatViolationController::class, 'get_type_violation'])->name('get_type_teatviolation');
+
+
 // Route::post('/teatviolation/get_type_violation', [TeatViolationController::class, 'get_type_violation'])->name('get_type_teatviolation');
 
 Route::post('/teatviolation/store', [TeatViolationController::class, 'store'])->name('teatstore');
+Route::post('/teatviolation/import', [TeatViolationController::class, 'import'])->name('teatimport');
+Route::post('/teatviolation/update', [TeatViolationController::class, 'update'])->name('teatupdate');
+Route::post('/teatviolation/updateimport', [TeatViolationController::class, 'updateimport'])->name('teatupdateimport');
 
 
 ///Migrasi Violation

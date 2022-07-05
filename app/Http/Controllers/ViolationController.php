@@ -780,7 +780,7 @@ class ViolationController extends Controller
             ->get();
         }
       
-        return view('hi.violations.edit', [
+        return view('hi.violations.testedit', [
             
             'employee' => $employee,
             'violations' => DB::table('violations')->where('employee_id', $id)->get(),

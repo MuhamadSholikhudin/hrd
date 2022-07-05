@@ -124,7 +124,7 @@
                     <a href="{{asset('excel/FORMAT_UPLOAD_PELANGGARAN.xlsx')}}">Format Upload Pelangaran</a>
                     <br>
                   </p>
-              <form action="{{ route('violations.import') }}" method="POST" enctype="multipart/form-data">
+              <form action="{{ route('teatimport') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <input type="file" name="file" id="exampleInputFile">
@@ -248,7 +248,7 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form action="/hiviolations/updateimport" method="POST" enctype="multipart/form-data">
+              <form action="{{route('teatupdateimport')}}" method="POST" enctype="multipart/form-data">
                 @csrf
               <div class="modal-body">
                 <div class="row">

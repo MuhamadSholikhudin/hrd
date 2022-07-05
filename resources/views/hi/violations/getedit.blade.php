@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <form action="/hiviolations/update" method="POST" enctype="multipart/form-data">
+    <form action="{{route('teatupdate')}}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="card-body">
       
@@ -150,56 +150,257 @@
                     <br>
                     <div class="col-sm-12 lead">   
                         <?php
-                
-                            $sel_num_vio = DB::table('violations')
-                                ->where('employee_id', $violation->employee_id)
-                                ->where('id', '<' ,$violation->id)
+                        $violation_id = $violation->id;
+
+                        //hitung sp terakhir ada apa tidak
+                        $sel_num_vio = DB::table('violations')
+                            ->where('employee_id', $employee->id)
+                            ->where('violation_status', '!=', 'cancel')
+                            ->where('id', '<', $violation_id)
+                            ->count();
+              
+                            //jika ada sp masaih aktif
+                        if($sel_num_vio > 0){
+                        
+                            //taampilkan sp terkhhiir
+                            $sel_last_vio = DB::table('violations')
+                                ->where('employee_id', $employee->id)
                                 ->where('violation_status', '!=', 'cancel')
-                                ->count();
+                                ->where('date_end_violation', '>=', $violation->reporting_date)
+                                ->where('id', '<', $violation_id)
+                                ->orderByDesc('id')
+                                ->first();
 
-                            if($sel_num_vio == 0){
-                                $sta_viol = 'notactive';
-                                $type_viol = 'notviolation';
-                                $last_accumulation = 0;
+                                // jika sp terakhir sama dengan Peringatan LIsan
+                            if($sel_last_vio->type_of_violation == "Peringatan Lisan"){
                             
-                            }else{
-                                $sel_vio = DB::table('violations')
-                                    ->where('employee_id', $violation->employee_id)
-                                    ->where('id', '<' ,$violation->id)     
-                                    ->where('violation_status', '!=', 'cancel')                               
-                                    ->latest()
-                                    ->first();
+                              $sp_lisan_terakhir = $sel_last_vio->violation_status;
+              
+                                // cari sp sebelum sp lisan yang aktif
+                                $cari_sp_sebelum_sp_lisan = DB::table('violations')
+                                    ->where('employee_id', $employee->id)
+                                    ->where('violation_status', '!=', 'cancel')
+                                    ->where('date_end_violation', '>=', $violation->reporting_date)
+                                    ->where('id', '<', $sel_last_vio->id)
+                                    ->count();
+              
+                                    // jika ada sebelum sp lisan yang aktif
+                                if($cari_sp_sebelum_sp_lisan > 0){
+              
+                                  // cari sp terakhir sebelum sp lisan active
+                                    $count_sp_terakhir_sebelum_sp_lisan = DB::table('violations')
+                                        ->where('employee_id', $employee->id)
+                                        ->where('violation_status', '!=', 'cancel')
+                                        ->where('date_end_violation', '>=', $violation->reporting_date)
+                                        ->where('id', '<', $sel_last_vio->id)
+                                        ->where("type_of_violation", "!=" , "Peringatan Lisan")
+                                        ->count();
+              
+                                        // jika ada sp terakhir sebelum sp lisan active
+                                    if($count_sp_terakhir_sebelum_sp_lisan > 0){
+              
+                                        //tampilkan sp terakhir sebelum sp lisan active
+                                        $cari_sp_terakhir_sebelum_sp_lisan = DB::table('violations')
+                                            ->where('employee_id', $employee->id)
+                                            ->where('violation_status', '!=', 'cancel')
+                                            ->where('date_end_violation', '>=', $violation->reporting_date)
+                                            ->where('id', '<', $sel_last_vio->id)
+                                            ->where("type_of_violation", "!=" , "Peringatan Lisan")
+                                            ->orderByDesc('id')
+                                            ->first();
+              
+                                            // $cari_sp_terakhir_sebelum_sp_lisan_type = cari_sp_terakhir_sebelum_sp_lisan_type($cari_sp_terakhir_sebelum_sp_lisan->type_of_violation);
+                                        
+                                            if($cari_sp_terakhir_sebelum_sp_lisan->type_of_violation == "Peringatan Lisan"){
+                                                $cari_sp_terakhir_sebelum_sp_lisan_type = 0.5;
+                                            }elseif($cari_sp_terakhir_sebelum_sp_lisan->type_of_violation == "Surat Peringatan Pertama"){
+                                                $cari_sp_terakhir_sebelum_sp_lisan_type = 1;
+                                            }elseif($cari_sp_terakhir_sebelum_sp_lisan->type_of_violation == "Surat Peringatan Kedua"){
+                                                $cari_sp_terakhir_sebelum_sp_lisan_type = 2;
+                                            }elseif($cari_sp_terakhir_sebelum_sp_lisan->type_of_violation == "Surat Peringatan Ketiga"){
+                                                $cari_sp_terakhir_sebelum_sp_lisan_type = 3;
+                                            }elseif($cari_sp_terakhir_sebelum_sp_lisan->type_of_violation == "Surat Peringatan Terakhir"){
+                                                $cari_sp_terakhir_sebelum_sp_lisan_type = 4;
+                                            }elseif($cari_sp_terakhir_sebelum_sp_lisan->type_of_violation == "Pemutusan Hubungan Kerja"){
+                                                $cari_sp_terakhir_sebelum_sp_lisan_type = 5;    
+                                            }
 
-                                // $date_now = date_create($violation->reporting_date);
-                                // $date_sta = date_create($sel_vio->date_end_violation);
-                                // $diffx  = date_diff($date_sta, $date_now);
-
-                                $date_str_reporting_date = strtotime($violation->reporting_date);
-                                $date_str_date_end_violation_lasst = strtotime($sel_vio->date_end_violation);
-                                $differencs_date = $date_str_date_end_violation_lasst - $date_str_reporting_date;
-
-                                if($differencs_date <= 0){
-                                    $sta_viol = 'notactive';
-                                    $type_viol = 'notviolation';
-                                    $last_accumulation = 0;
-                                }else{
-                                    if($sel_vio->violation_status == 'cancel'){
-                                        $sta_viol = 'notactive';
-                                        $type_viol = 'notviolation';
-                                        $last_accumulation = 0;
-                                    }elseif($sel_vio->violation_status == 'active'){
-                                        $sta_viol = $sel_vio->violation_status;
-                                        $type_viol = $sel_vio->type_of_violation;
-                                        $last_accumulation = $sel_vio->accumulation;
+                                            //cari sp lisan sebelum sp lisan
+                                        $cari_sp_lisan_sebelum_sp_lisan = DB::table("violations")
+                                            ->where("employee_id", $employee->id)
+                                            ->where("violation_status", "!=", "cancel")
+                                            ->where('date_end_violation', '>=', $violation->reporting_date)
+                                            ->where("type_of_violation", "Peringatan Lisan")
+                                            ->where("id", "<", $sel_last_vio->id)
+                                            ->count();
+                                        
+                                        // sp_gab($cari_sp_lisan_sebelum_sp_lisan);
+                                        if($cari_sp_lisan_sebelum_sp_lisan == 1){
+                                            $s_p_1 = 0;
+                                            $sp_last = 0.5;
+                                            $sp_tidak_lisan = $cari_sp_terakhir_sebelum_sp_lisan_type;
+                                            $sp_gab = $sp_tidak_lisan + $s_p_1 + $sp_last;
+                                        }elseif($cari_sp_lisan_sebelum_sp_lisan == 2){
+                                            $s_p_1 = 0.5;
+                                            $sp_last = 0.5;
+                                            $sp_tidak_lisan = $cari_sp_terakhir_sebelum_sp_lisan_type;
+                                            $sp_gab = $sp_tidak_lisan + $s_p_1 + $sp_last;
+                                        }elseif($cari_sp_lisan_sebelum_sp_lisan == 3){
+                                            $s_p_1 = 0;
+                                            $sp_last = 0.5;
+                                            $sp_tidak_lisan = $cari_sp_terakhir_sebelum_sp_lisan_type;
+                                            $sp_gab = $sp_tidak_lisan + $s_p_1 + $sp_last;
+                                        }elseif($cari_sp_lisan_sebelum_sp_lisan == 4){
+                                            $s_p_1 = 0;
+                                            $sp_last = 0.5;
+                                            $sp_tidak_lisan = $cari_sp_terakhir_sebelum_sp_lisan_type;
+                                            $sp_gab = $sp_tidak_lisan + $s_p_1 + $sp_last;
+                                        }else{
+                                            $s_p_1 = 0;
+                                            $sp_last = 0.5;
+                                            $sp_tidak_lisan = $cari_sp_terakhir_sebelum_sp_lisan_type;
+                                            $sp_gab = $sp_tidak_lisan + $s_p_1 + $sp_last;
+                                        }
+              
+                                        // jika tidak ada sp terakhir sebelum sp lisan active selain sp lisan
                                     }else{
-                                        $sta_viol = 'notactive';
-                                        $type_viol = 'notviolation';
-                                        $last_accumulation = 0;
+                                      $sp_gab = 0.5;
                                     }
+              
+                                // jika tidak ada sp terakhir setelah SP lisan
+                                }else{
+                                    $s_p_1 = 0.5;
+                                    $sp_gab = $s_p_1;
+                                }
+              
+                                // jika sp terakhir tidak sama dengan Peringatan Lisan
+                            }else{
+              
+                                // $cari_sp_terakhir_sebelum_sp_lisan_type = cari_sp_terakhir_sebelum_sp_lisan_type($sel_last_vio->type_of_violation);
+                                if($sel_last_vio->type_of_violation == "Peringatan Lisan"){
+                                    $cari_sp_terakhir_sebelum_sp_lisan_type = 0.5;
+                                }elseif($sel_last_vio->type_of_violation == "Surat Peringatan Pertama"){
+                                    $cari_sp_terakhir_sebelum_sp_lisan_type = 1;
+                                }elseif($sel_last_vio->type_of_violation == "Surat Peringatan Kedua"){
+                                    $cari_sp_terakhir_sebelum_sp_lisan_type = 2;
+                                }elseif($sel_last_vio->type_of_violation == "Surat Peringatan Ketiga"){
+                                    $cari_sp_terakhir_sebelum_sp_lisan_type = 3;
+                                }elseif($sel_last_vio->type_of_violation == "Surat Peringatan Terakhir"){
+                                    $cari_sp_terakhir_sebelum_sp_lisan_type = 4;
+                                }elseif($sel_last_vio->type_of_violation == "Pemutusan Hubungan Kerja"){
+                                    $cari_sp_terakhir_sebelum_sp_lisan_type = 5;    
                                 }
 
+                                $cari_sp_lisan_sebelum_sp_lisan = DB::table('violations')
+                                    ->where('employee_id', $employee->id)
+                                    ->where('violation_status', '!=', 'cancel')
+                                    ->where('date_end_violation', '>=', $violation->reporting_date)
+                                    ->where('type_of_violation', 'Peringatan Lisan')
+                                    ->where('id', '<', $sel_last_vio->id)
+                                    ->count();
+              
+                                if($cari_sp_lisan_sebelum_sp_lisan == 1){
+                                    $s_p_1 = 0.5;
+                                    $sp_tidak_lisan = $cari_sp_terakhir_sebelum_sp_lisan_type;
+                                    $sp_gab = $sp_tidak_lisan + $s_p_1;
+                                }elseif($cari_sp_lisan_sebelum_sp_lisan == 2){
+                                    $s_p_1 = 0;
+                                    $sp_tidak_lisan = $cari_sp_terakhir_sebelum_sp_lisan_type;
+                                    $sp_gab = $sp_tidak_lisan + $s_p_1;
+                                }elseif($cari_sp_lisan_sebelum_sp_lisan == 3){
+                                    $s_p_1 = 0.5;
+                                    $sp_tidak_lisan = $cari_sp_terakhir_sebelum_sp_lisan_type;
+                                    $sp_gab = $sp_tidak_lisan + $s_p_1;
+                                }elseif($cari_sp_lisan_sebelum_sp_lisan == 4){
+                                    $s_p_1 = 0;
+                                    $sp_tidak_lisan = $cari_sp_terakhir_sebelum_sp_lisan_type;
+                                    $sp_gab = $sp_tidak_lisan + $s_p_1;
+                                }else{
+                                    $s_p_1 = 0;
+                                    $sp_tidak_lisan = $cari_sp_terakhir_sebelum_sp_lisan_type;
+                                    $sp_gab = $sp_tidak_lisan + $s_p_1;
+                                }
+                            }
+                           
+                                if($sp_gab == 0.5){
+                                    $status_type_violation_akhir = 'Peringatan Lisan';
+                                }elseif($sp_gab >= 1 AND $sp_gab <= 1.5){
+                                    $status_type_violation_akhir = 'Surat Peringatan Pertama';
+                                }elseif($sp_gab >= 2 AND $sp_gab <= 2.5){
+                                    $status_type_violation_akhir = 'Surat Peringatan Kedua';
+                                }elseif($sp_gab >= 3 AND $sp_gab <= 3.5){
+                                    $status_type_violation_akhir = 'Surat Peringatan Ketiga';
+                                }elseif($sp_gab >= 4 AND $sp_gab <= 4.5){
+                                    $status_type_violation_akhir = 'Surat Peringatan Terakhir';
+                                }elseif($sp_gab >= 5 AND $sp_gab <= 5.5){
+                                    $status_type_violation_akhir = 'Pemutusan Hubungan Kerja';
+                                } 
+                                              
+                                $sta_viol = $sel_last_vio->violation_status;
+                                $type_viol = $status_type_violation_akhir;
+                                $last_accumulation = $sp_gab;
+                
+                            }else{
+                                $sp_gab = 0;
+                
+                                $sta_viol = 'notactive';
+                                $type_viol = 'notviolation';
+                                $last_accumulation = $sp_gab;
+                            }
+
+
+
+
+                
+                            // $sel_num_vio = DB::table('violations')
+                            //     ->where('employee_id', $violation->employee_id)
+                            //     ->where('id', '<' ,$violation->id)
+                            //     ->where('violation_status', '!=', 'cancel')
+                            //     ->count();
+
+                            // if($sel_num_vio == 0){
+                            //     $sta_viol = 'notactive';
+                            //     $type_viol = 'notviolation';
+                            //     $last_accumulation = 0;
+                            
+                            // }else{
+                            //     $sel_vio = DB::table('violations')
+                            //         ->where('employee_id', $violation->employee_id)
+                            //         ->where('id', '<' ,$violation->id)     
+                            //         ->where('violation_status', '!=', 'cancel')                               
+                            //         ->latest()
+                            //         ->first();
+
+                            //     // $date_now = date_create($violation->reporting_date);
+                            //     // $date_sta = date_create($sel_vio->date_end_violation);
+                            //     // $diffx  = date_diff($date_sta, $date_now);
+
+                            //     $date_str_reporting_date = strtotime($violation->reporting_date);
+                            //     $date_str_date_end_violation_lasst = strtotime($sel_vio->date_end_violation);
+                            //     $differencs_date = $date_str_date_end_violation_lasst - $date_str_reporting_date;
+
+                            //     if($differencs_date <= 0){
+                            //         $sta_viol = 'notactive';
+                            //         $type_viol = 'notviolation';
+                            //         $last_accumulation = 0;
+                            //     }else{
+                            //         if($sel_vio->violation_status == 'cancel'){
+                            //             $sta_viol = 'notactive';
+                            //             $type_viol = 'notviolation';
+                            //             $last_accumulation = 0;
+                            //         }elseif($sel_vio->violation_status == 'active'){
+                            //             $sta_viol = $sel_vio->violation_status;
+                            //             $type_viol = $sel_vio->type_of_violation;
+                            //             $last_accumulation = $sel_vio->accumulation;
+                            //         }else{
+                            //             $sta_viol = 'notactive';
+                            //             $type_viol = 'notviolation';
+                            //             $last_accumulation = 0;
+                            //         }
+                            //     }
+
                                 
-                            } 
+                            // } 
 
 
                         ?>

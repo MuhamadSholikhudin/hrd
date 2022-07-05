@@ -176,13 +176,13 @@
     });
 
     var status_violant_last = document.getElementById("last_vio").value;
-        var id_emp = document.getElementById("id_emp").value;
-        var violation_now = document.getElementById("select_violation_last").value;
-        var last_type = document.getElementById("last_type").value;
-        var last_accumulation = document.getElementById("last_accumulation").value;
-        // var keyword = $(this).val();
-        // alert(status_violant_last + id_emp + violation_now + last_type + last_accumulation);
-// alert("POST");  
+    var id_emp = document.getElementById("id_emp").value;
+    var violation_now = document.getElementById("select_violation_last").value;
+    var last_type = document.getElementById("last_type").value;
+    var last_accumulation = document.getElementById("last_accumulation").value;
+    // var keyword = $(this).val();
+    // alert(status_violant_last + id_emp + violation_now + last_type + last_accumulation);
+    // alert("POST");  
 
   $.ajax({
     type: "POST",
@@ -195,6 +195,8 @@
       status_violant_last : status_violant_last,
       last_type: last_type,
       last_accumulation: last_accumulation
+
+      
     },
     success: function(data) {
       // alert(data);
@@ -204,6 +206,7 @@
       $("#remainder1").text(data[2]);
       $("#remainder2").text(data[3]);
       $("#alphabet_id").val(violation_now);
+      console.log(data);
     },
     // complete:function(data){
     //   // Hide image container

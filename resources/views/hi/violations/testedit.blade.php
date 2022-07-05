@@ -371,7 +371,7 @@
                     <?php
                       if($violation->type_of_violation == 'Peringatan Lisan'){
                         $p = "SP Lisan";
-                      }elseif($violation->type_of_violation == 'Surat Peringatan Lisan'){
+                      }elseif($violation->type_of_violation == 'Peringatan Lisan'){
                         $p = "SP Lisan";
                       }elseif($violation->type_of_violation == 'Surat Peringatan Pertama'){
                         $p = "SP I";
@@ -483,8 +483,8 @@
         </div>
 
       {{-- Displaynone --}}
-         <div > 
-       {{-- <div style="display:none;" >  --}}
+         <!-- <div >  -->
+    <div style="display:none;" >  
           <?php
             $date_violation = new \DateTime(date('Y-m-d') .' 4:06:37' );
 
@@ -683,7 +683,7 @@
             // Tampilkan SP terakhir
             function status_type_violation_akhir($sp_gab){
               if($sp_gab == 0.5){
-                  $status_type_violation_akhir = 'Surat Peringatan Lisan';
+                  $status_type_violation_akhir = 'Peringatan Lisan';
               }elseif($sp_gab >= 1 AND $sp_gab <= 1.5){
                   $status_type_violation_akhir = 'Surat Peringatan Pertama';
               }elseif($sp_gab >= 2 AND $sp_gab <= 2.5){
@@ -901,7 +901,7 @@
                 </button>
               </div>
               <div class="modal-body">
-              <form role="form" action="/violations" method="POST" enctype="multipart/form-data">
+              <form role="form" action="{{route('teatstore')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <!-- <p>One fine body&hellip;</p> -->
   

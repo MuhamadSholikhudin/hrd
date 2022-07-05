@@ -49,7 +49,7 @@ class HiViolationController extends Controller
         */
 
         //
-    $violations = DB::table('violations')
+        $violations = DB::table('violations')
                 ->leftJoin('employees', 'employees.id', '=', 'violations.employee_id')
                 ->select('violations.*', 'violations.id as id',
                  'violations.date_of_violation as date_of_violation',
