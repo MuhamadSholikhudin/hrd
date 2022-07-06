@@ -100,6 +100,9 @@
                   <a href="/layoffs/{{$layoff->id }}" target="_blank" class="btn  btn-outline-primary">
                     Cetak                    
                   </a>
+                  <a href="/layoffs/{{$layoff->id }}/edit" target="_blank" class="btn  btn-outline-success">
+                    Edit                    
+                  </a>
 
                   <form action="/layoffs/{{$layoff->id }}" method="POST" class="d-inline ">
                         @method('delete')

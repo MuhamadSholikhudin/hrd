@@ -166,6 +166,9 @@ class LayoffController extends Controller
         DB::table('layoffs')->insert([
             'alphabet_id' => $request->alphabet_id,
             'employee_id' => $employee->id,
+            'job_level' => $request->job_level,
+            'department' => $request->department,
+            'bagian' => $request->bagian,
             'read' => $request->read,
             'layoff_description' => $request->layoff_description,
             'no_layoff' => $request->no_layoff,
@@ -200,9 +203,8 @@ class LayoffController extends Controller
      */
     public function show($id)
     {
-        //
 
-    $layoff = DB::table('layoffs')->find($id);
+        $layoff = DB::table('layoffs')->find($id);
 
         return view('hi.layoffs.cetak',[
             'layoff' => $layoff,
@@ -219,18 +221,16 @@ class LayoffController extends Controller
      */
     public function edit($id)
     {
-        //
-
         $layoff = DB::table('layoffs')->find($id);
 
         $employee = DB::table('employees')->find($layoff->employee_id);        
         $job = DB::table('jobs')->find($employee->job_id);
         $department = DB::table('departments')->find($employee->department_id);
 
-
         return view('hi.layoffs.edit',[
             'alphabets' => Alphabet::all(),
             'layoff' => $layoff,
+            'employee' => $employee,
             'job' => $job,
             'department' => $department
         ]);
@@ -246,17 +246,39 @@ class LayoffController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $employee = DB::table('employees')->where('number_of_employees', $request->phk_employee)->first();
 
         DB::table('layoffs')
             ->where('id', $id)
             ->update([
                 'alphabet_id' => $request->alphabet_id,
+                'job_level' => $request->job_level,
+                'department' => $request->department,
+                'bagian' => $request->bagian,
+                'read' => $request->read,
                 'layoff_description' => $request->layoff_description,
+                'no_layoff' => $request->no_layoff,
+                'rom_layoff' => $request->rom_layoff,
                 'layoff_date_start' => $request->layoff_date_start,
-                'layoff_date' => $request->layoff_date
+                'layoff_date' => $request->layoff_date,
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+
+        $select_employee = DB::table('employees')->find($employee->id);
+        $remark = "mengubah PHK ".$select_employee->number_of_employees;
+        $action = "ubah";
+
+        DB::table('histories')->insert([
+            'user_id' => auth()->user()->id,
+            'role_id' => auth()->user()->role_id,
+            'remark' => $remark,
+            'action' => $action,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
         ]);
 
         return redirect('/layoffs');
+
     }
 
     /**

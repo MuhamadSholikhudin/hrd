@@ -657,7 +657,7 @@ class TeatViolationController extends Controller
             'updated_at' => date('Y-m-d H:i:s')
         ]);
 
-        return redirect('/violations/' . $employee_id . '/testedit');
+        return redirect('/violations/' . $employee_id . '/edit');
     }
 
 

@@ -64,7 +64,7 @@
               
               <?php
                 $rom_pil = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
-?>
+              ?>
               NO.    <input type="text" name="no_layoff" id="" value="{{$no_lf}} " style="width: 80px;">     /SK-PHK/HRD-HWI/
               <?php
                 if($bul == "01"){
@@ -186,7 +186,7 @@
                     
                     <td>Bagian</td>
                     <td>:</td>
-                    <td id="bagian_phk"></td>
+                    <td > <input type="text" name="bagian" id="bagian_phk">    </td>
                   </tr>
 
                   <tr>
@@ -198,12 +198,12 @@
                     
                     <td>Departemen</td>
                     <td>:</td>
-                    <td id="department_phk"></td>
+                    <td> <input type="text" name="department" id="department_phk"></td>
                   </tr>
                   <tr>
                     <td>Jabatan</td>
                     <td>:</td>
-                    <td id="job_phk"> </td>
+                    <td> <input type="text" name="job_level" id="job_phk"> </td>
 
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     

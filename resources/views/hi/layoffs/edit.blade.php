@@ -30,6 +30,9 @@
         <div class="card-header">
           <h3 class="card-title">Form Surat Keputusan PHK </h3>
         </div>
+        <form action="/layoffs/{{$layoff->id}}" method="POST" enctype="multipart/form-data">
+          @csrf
+          @method('put')
         <!-- /.card-header -->
         <div class="card-body">
           <p class="text-center">
@@ -39,53 +42,102 @@
             </u>
             <br>
               <?php 
+              $bul = date('m');
+              $yea = date('Y');
+              $num_latest = DB::table('layoffs')
+                ->whereMonth('layoff_date', $bul) 
+                ->whereYear('layoff_date', $yea) 
+                ->count(); 
 
-              $date_layoff = new \DateTime($layoff->$date_layoff .' 00:00:00');
-              $date_layoff_year = date_format($date_layoff, "Y"); //for Display Year
-
+                if($num_latest < 1){
+                  $no_lf = 1;
+              }elseif($num_latest > 0){
+                  $latest = DB::table('layoffs')
+                      ->whereMonth('layoff_date', $bul) 
+                      ->whereYear('layoff_date', $yea) 
+                      ->orderBy('no_layoff', 'desc')
+                      ->first();
+                  $no_lf = $latest->no_layoff + 1;
+              }
+              // echo $num_latest;
+              $int_value = intval( $no_lf );
+              ?>
+              
+              <?php
+                $rom_pil = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
+              ?>
+              NO.    <input type="text" name="no_layoff" id="" value="{{$layoff->no_layoff}}" style="width: 80px;">     /SK-PHK/HRD-HWI/
+              <?php
+                if($bul == "01"){
+                    $ROM = 'I';
+                }elseif($bul == "02"){
+                    $ROM = 'II';
+                }elseif($bul == "03"){
+                    $ROM = 'III';
+                }elseif($bul == "04"){
+                    $ROM = 'IV';
+                }elseif($bul == "05"){
+                    $ROM = 'V';
+                }elseif($bul == "06"){
+                    $ROM = 'VI';
+                }elseif($bul == "07"){
+                    $ROM = 'VII';
+                }elseif($bul == "08"){
+                    $ROM = 'VIII';
+                }elseif($bul == "09"){
+                    $ROM = 'IX';
+                }elseif($bul == "10"){
+                    $ROM = 'X';
+                }elseif($bul == "11"){
+                    $ROM = 'XI';
+                }elseif($bul == "12"){
+                    $ROM = 'XII';
+                }
+                $layROMs = ["I", "II","III","IV","V","VI","VII","VIII", "IX", "X", "XI", 'XII'];
               ?>
 
-              NO. {{$layoff->no_layoff}}/SK-PHK/HRD-HWI/{{ $layoff->rom_layoff}}/{{$date_layoff_year}} <br>
+              <select name="rom_layoff" id="">
+              <?php
+                foreach($layROMs as $layROM) :?>
+                  <?php if($layROM == $layoff->rom_layoff){ ?>
+                    <option value="<?= $layROM?>" selected><?= $layROM?></option>
+                  <?php }else{ ?>
+                    <option value="<?= $layROM?>"><?= $layROM?></option>
+                  <?php }     ?>  
+                <?php endforeach;
+              ?>
+             
+              </select>
+
+              /{{ date('Y') }} <br>
               TENTANG<br>
               PEMUTUSAN HUBUNGAN KERJA
             
           </p>
 
           <table>
-            <form action="/layoffs/" method="POST" enctype="multipart/form-data">
-              @csrf
-              @method('put')
-              <input type="hidden" name="id" value="{{$layoff->id}}">
+           
             <tr>
               <td valign="top">Membaca</td>
               <td valign="top">:</td>
               <td valign="top">
               <div>              
-                <select class="form-control select2bs4 " name="alphabet_id" style="width: 100%;" id="pasal_phk">
-                  <option value="" >Pilih PASAL </option>
-                  
+                <select class="form-control select2bs4 " name="alphabet_id" style="width-max: 100%;" id="pasal_phk">
                   @foreach($alphabets as $alphabet):
-                    @if(old('alphabet_id', $layoff->alphabet_id) == $alphabet->id)
-                      
-                      <?php  $print_alphabet  = DB::table('alphabets')->find($layoff->alphabet_id); ?>
-                      <?php  $print_paragraph  = DB::table('paragraphs')->find($print_alphabet->paragraph_id); ?>
-                      <?php  $print_article  = DB::table('articles')->find($print_paragraph->article_id); ?>
-                      
-                      <option value="{{ $layoff->alphabet_id }}" selected>PASAL {{$print_article->article}} {{$print_paragraph->paragraph}} {{$alphabet->alphabet}} {{$alphabet->alphabet_sound}} / {{$print_paragraph->sub_chapters}} / {{$alphabet->description}} </option>
-
+                    <?php  $print_paragraph  = DB::table('paragraphs')->find($alphabet->paragraph_id); ?>
+                    <?php  $print_article  = DB::table('articles')->find($print_paragraph->article_id); ?>
+                    @if($alphabet->id == $layoff->alphabet_id)
+                    <option value="{{$alphabet->id}}" selected>PASAL {{$print_article->article}} {{$print_paragraph->paragraph}} {{$alphabet->alphabet}} {{$alphabet->alphabet_sound}} / {{$print_paragraph->sub_chapters}} / {{$alphabet->alphabet_sound}}</option>
                     @else
-                      <?php  $print_paragraph  = DB::table('paragraphs')->find($alphabet->paragraph_id); ?>
-                      <?php  $print_article  = DB::table('articles')->find($print_paragraph->article_id); ?>
-                      <option value="{{$alphabet->id}}" >PASAL {{$print_article->article}} {{$print_paragraph->paragraph}} {{$alphabet->alphabet}} {{$alphabet->alphabet_sound}} / {{$print_paragraph->sub_chapters}} / {{$alphabet->description}}</option>
+                    <option value="{{$alphabet->id}}" >PASAL {{$print_article->article}} {{$print_paragraph->paragraph}} {{$alphabet->alphabet}} {{$alphabet->alphabet_sound}} / {{$print_paragraph->sub_chapters}} / {{$alphabet->alphabet_sound}}</option>
                     @endif
-                    
                   @endforeach
                 </select>
-                {{--                 Perjanjian Kerja Bersama Pasal 27. Jenis Pelanggaran dan Sanksi ayat (6) tentang Pemutusan Hubungan Kerja (PHK) tanpa memberikan Pesangon. I. Pengusaha dapat melakukan Pemutusan Hubungan Kerja (PHK) tanpa memberikan Pesangon, apabila melakukan kesalahan berat sebagai berikut : e. Terbukti menyerang, menganiaya, mengancam, atau mengintimidasi teman sekerja atau Pengusaha di lingkungan perusahaan.s
- --}} 
-                <p id="isi_text">
-                  {{$layoff->alphabet_id}}
-                </p>
+           
+                <div style="width:100%;">
+                  <textarea name="read" id="isi_text" class="form-control" rows="5" required>{{$layoff->read}}</textarea>
+                  <br>
+                </div>
               </div>
               </td>
             </tr>
@@ -93,14 +145,14 @@
               <td valign="top">Menimbang</td>
               <td valign="top">:</td>
               <td valign="top">
-              <textarea name="layoff_description" id="" class="form-control" required>{{$layoff->layoff_description}}</textarea>
+              <textarea name="layoff_description" id="layoff_description" class="form-control" required>{{$layoff->layoff_description}}</textarea>
               </td>
             </tr>
             <tr>
               <td valign="top">Mengingat</td>
               <td valign="top">:</td>
               <td valign="top">
-              Undang-Undang No. 13 Tahun 2003 Tentang Ketenagakerjaan dan peraturan pelaksanaannya
+                Undang-Undang No. 13 Tahun 2003 Tentang Ketenagakerjaan dan peraturan pelaksanaannya
               </td>
             </tr>
 
@@ -114,40 +166,48 @@
               <td valign="top">
                 <table>
                   <tr>
-                    <td colspan="7">
+                    <td colspan="5">
                       Melakukan Pemutusan Hubungan Kerja (PHK) terhadap :
-                      <select class="form-control select2bs4 select2-hidden-accessible" name="employee_id" id="karyawan_phk" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
-                          
-                      </select>
+                      <!-- <select class="form-control select2bs4 select2-hidden-accessible" name="employee_id" id="karyawan_phk" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
+                      </select> -->
+                      <input class="form-control" type="hidden" name="phk_employee" value="{{$employee->number_of_employees}}"  >
+                    </td>
+                    <td>
+                      <br>
+                      <!-- <span onClick="car_kar()" class="btn btn-primary">Cari</span> -->
+                    </td>
+                    <td>
+                      <!-- &nbsp; &nbsp; <span id="output_cari_karyawan">Berhasil</span>  -->
+
                     </td>
                   </tr>
                   <tr>
                     <td>Nama</td>
                     <td>:</td>
-                    <td id="nama_phk"> {{$employee->name}}</td>
+                    <td id="nama_phk"> {{$employee->name}} </td>
 
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     
                     <td>Bagian</td>
                     <td>:</td>
-                    <td id="bagian_phk">{{$employee->bagian}}</td>
+                    <td > <input type="text" name="bagian" id="bagian_phk" value="{{$layoff->bagian}}">    </td>
                   </tr>
 
                   <tr>
                     <td>ID No.</td>
                     <td>:</td>
-                    <td id="id_no_phk"> {{$employee->number_of_employees}}</td>
+                    <td id="id_no_phk">{{$employee->number_of_employees}}  </td>
 
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     
                     <td>Departemen</td>
                     <td>:</td>
-                    <td id="department_phk">{{$department->department}}</td>
+                    <td> <input type="text" name="department" id="department_phk" value="{{$layoff->department}}"></td>
                   </tr>
                   <tr>
                     <td>Jabatan</td>
                     <td>:</td>
-                    <td id="job_phk">{{$job->job_level}} </td>
+                    <td> <input type="text" name="job_level" id="job_phk" value="{{$layoff->job_level}}"> </td>
 
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     
@@ -168,7 +228,7 @@
               <td valign="top">Kedua</td>
               <td valign="top">:</td>
               <td valign="top">
-              Sejak dikeluarkan   Surat   Keputusan  ini  antara  Sdr. {{$employee->name}} dan PT. HWA SEUNG INDONESIA akan segera menyelesaikan hak dan kewajiban masing-masing.
+              Sejak dikeluarkan   Surat   Keputusan  ini  antara  Sdr. <small id="sml"> </small> dan PT. HWA SEUNG INDONESIA akan segera menyelesaikan hak dan kewajiban masing-masing.
               </td>
             </tr>
             <tr>
@@ -187,7 +247,7 @@
           
             </tr>
             <tr>
-              <td valign="top" colspan="3">Pada Tanggal :  <input type="date" class="form" style="width: 100px;   border-radius: 1px; border:#555;" name="layoff_date" id="" required>  </td>
+              <td valign="top" colspan="3">Pada Tanggal :  <input type="date" class="form" style="width: 100px;   border-radius: 1px; border:#555;" name="layoff_date" value="{{$layoff->layoff_date}}" id="" required>  </td>
             </tr>
             <tr>
               <td valign="top" colspan="3">PT. HWA SEUNG INDONESIA</td>
@@ -199,7 +259,39 @@
               <td valign="top" colspan="3">&nbsp;</td>
             </tr>
             <tr>
-              <td valign="top" colspan="3"><button class="btn btn-primary" type="submit">Save</button></td>
+              <td valign="top" colspan="3">
+                <?php 
+                  $url_nowxz = url()->current();
+                  $sum_url =SUM_URL_WEB;
+                  $url_scc = substr($url_nowxz, $sum_url); 
+                  $pecah = explode("/", $url_scc);
+                  $kalimat1 = $pecah[0];
+                  $num_sub = DB::table('sub_menus')->where('url', '/'.$kalimat1)->count(); 
+                  if($num_sub > 0){
+                    $print_sub = DB::table('sub_menus')->where('url', '/'.$kalimat1)->first();
+                    $num_meth = DB::table('methods')
+                      ->leftJoin('access_menus', 'methods.access_menu_id' ,'access_menus.id')
+                      ->where('methods.sub_menu_id', $print_sub->id)
+                      ->where('access_menus.role_id', auth()->user()->role_id)
+                      ->count();
+                    if($num_meth > 0){
+                      $prt_meth = DB::table('methods')
+                      ->leftJoin('access_menus', 'methods.access_menu_id' ,'access_menus.id')
+                      ->select('methods.edit as edit', 'methods.delete as delete','methods.delete as view')
+                      ->where('methods.sub_menu_id', $print_sub->id)
+                      ->where('access_menus.role_id', auth()->user()->role_id)
+                      ->first();
+                      $edit = $prt_meth->edit;
+                      if($edit == 'true'){
+                        echo '<button class="btn btn-success" id="button_php" type="submit" >Ubah</button>';
+                      }
+                    }
+                  }
+              ?>
+
+              <!-- <button class="btn btn-primary" type="submit">Simpan</button> -->
+              
+              </td>
             </tr>
    
             <tr>

@@ -198,7 +198,7 @@
                                         
                                         <td class="txt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Bagian</td>
                                         <td class="txt">&nbsp;&nbsp;:&nbsp;&nbsp;</td>
-                                        <td class="txt" id="bagian_phk"> {{$employee->bagian}}</td>
+                                        <td class="txt" id="bagian_phk"> {{$layoff->bagian}}</td>
                                     </tr>
 
                                     <tr>
@@ -211,10 +211,7 @@
                                         <td class="txt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Departemen</td>
                                         <td class="txt">&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                                         <td class="txt" id="department_phk">
-                                            <?php 
-                                                $department = DB::table('departments')->find($employee->department_id);
-                                            ?>
-                                             {{$department->department}}
+                                                {{$layoff->department}}
                                             
                                             </td>
                                     </tr>
@@ -222,10 +219,8 @@
                                         <td class="txt">Jabatan</td>
                                         <td class="txt">&nbsp;&nbsp;:&nbsp;&nbsp;</td>
                                         <td class="txt" id="job_phk">
-                                            <?php 
-                                                $job = DB::table('jobs')->find($employee->job_id);
-                                            ?>
-                                             {{$job->job_level}} 
+                                            
+                                             {{$layoff->job_level}}
                                             </td>
 
                                         <td class="txt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>

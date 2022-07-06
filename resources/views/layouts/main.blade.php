@@ -477,10 +477,10 @@ function keydowncari() {
             // alert(data);
             $("#nama_phk").html(data[0]);
             $("#sml").val(data[0]);
-            $("#bagian_phk").html(data[1]);
+            $("#bagian_phk").val(data[1]);
             $("#id_no_phk").html(data[2]);
-            $("#department_phk").html(data[3]);
-            $("#job_phk").html(data[4]);
+            $("#department_phk").val(data[3]);
+            $("#job_phk").val(data[4]);
             $("#hire_date_phk").html(data[5]);
 
             $("#output_cari_karyawan").html(data[0]);
