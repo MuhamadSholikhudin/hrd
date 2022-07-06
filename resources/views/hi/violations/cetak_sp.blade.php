@@ -102,7 +102,14 @@
                         </table>
                     </div>
                     <br>
-                    <div class="col-sm-12 lead">Dengan ini diberikan, <b><u>{{ $violation->type_of_violation}}</u></b> </div>
+                    <div class="col-sm-12 lead">Dengan ini diberikan, <b><u>
+                    
+                    @if($violation->type_of_violation == "Peringatan Lisan")
+                            Surat Peringatan Lisan
+                    @else
+                        {{ $violation->type_of_violation}}
+                    @endif
+                    </u></b> </div>
                     <br>
                     <div class="col-sm-12 lead" style="text-align: justify;">Sehubungan yang bersangkutan telah melakukan pelanggaran peraturan/tata tertib/disiplin kerja yang
                         berlaku di perusahaan. :</div>

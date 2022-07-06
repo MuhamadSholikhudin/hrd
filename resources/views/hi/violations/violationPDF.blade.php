@@ -4,6 +4,7 @@
     <style>
         .pageA4{
             height: 1010px;
+            margin:0%;
         }
 
         h4 {
@@ -11,6 +12,9 @@
         }
         h1 {
             text-align: center;
+        }
+        .lead{
+            font-family:'Calibri';
         }
     </style>
     </head>
@@ -49,11 +53,11 @@
                         $p_no_s = $violation->no_violation;
                     }
                 ?>
-                <h5 class="text-center " style="text-align: center; margin-top: 0%;"> 
+                <h5 class="text-center" style="font-family:'Calibri'; text-align: center; margin-top: 0%; "> 
                     NO:{{ $p_no_s}} /SP-HRD/{{ $violation->violation_ROM}}/{{date_format($date_violation_sp, "Y")}}      
                 </h5>
 
-                <div class="col-sm-12 lead">Kepada karyawan tersebut di bawah ini :</div>
+                <div class="col-sm-12" style="font-family: 'Calibri';">Kepada karyawan tersebut di bawah ini :</div>
                 <br>
                 <table>
                     <?php
@@ -82,7 +86,7 @@
                 </table>
 
                 <br>
-                <div class="col-sm-12 lead">Dengan ini diberikan, <u>{{ $violation->type_of_violation}}</u></div>
+                <div class="col-sm-12 ">Dengan ini diberikan, <b> <u>{{ $violation->type_of_violation}}</u></b></div>
                 <br>
                 <div class="col-sm-12 lead" style="text-align: justify;">
                     Sehubungan yang bersangkutan telah melakukan pelanggaran peraturan/tata tertib/disiplin kerja yang
@@ -138,12 +142,12 @@
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td valign="top">&nbsp;&nbsp;&nbsp;-</td>
+                                        <td valign="top">-</td>
                                         <td valign="top" class="lead" style="text-align: justify;">{{ $violation->other_information}}</td>
                                     </tr>
 
                                     <tr>
-                                        <td valign="top">&nbsp;&nbsp;&nbsp;-</td>
+                                        <td valign="top">-</td>
                                         <td valign="top" class="lead" style="text-align: justify;">Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal  
                                             <!-- {{$sel_article->article}} ayat {{$sel_paragraph->paragraph}} huruf "{{$sel_alphabet->alphabet}}"   -->
                                             {{ pasal($violation->alphabet_id);}}
@@ -151,7 +155,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td valign="top">&nbsp;&nbsp;&nbsp;-</td>
+                                        <td valign="top">-</td>
                                         <td valign="top" class="lead" style="text-align: justify;">
                                         
                                             <?php 
@@ -209,12 +213,12 @@
                         <table >
                             <tbody>
                                 <tr>
-                                    <td valign="top">&nbsp;&nbsp;&nbsp;-</td>
+                                    <td valign="top">-</td>
                                     <td valign="top" class="lead" style="text-align: justify;">{{ $violation->other_information}}</td>
                                 </tr>
 
                                 <tr>
-                                    <td valign="top">&nbsp;&nbsp;&nbsp;-</td>
+                                    <td valign="top">-</td>
                                     <td valign="top" class="lead" style="text-align: justify;">Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal  
                                         <!-- {{$sel_article->article}} ayat {{$sel_paragraph->paragraph}} huruf "{{$sel_alphabet->alphabet}}"  -->
                                         {{ pasal($violation->alphabet_id);}} 
@@ -223,7 +227,7 @@
                                 </tr>
 
                                 <tr>
-                                    <td valign="top">&nbsp;&nbsp;&nbsp;-</td>
+                                    <td valign="top">-</td>
                                     <td valign="top" class="lead" style="text-align: justify;"></td>
                                     
                     
@@ -241,7 +245,7 @@
                         <table >
                             <tbody>
                                 <tr>
-                                    <td valign="top">&nbsp;&nbsp;&nbsp;-</td>
+                                    <td valign="top">-</td>
                                     <td valign="top" class="lead" style="text-align: justify;">{{ $violation->other_information}}</td>
                                 </tr>
                             </tbody>
@@ -258,6 +262,8 @@
                         perbuatan pelanggaran selama masa berlaku Surat Peringatan (6 bulan sejak waktu pelanggaran )
                         maka akan diambil tindakan lanjutan sesuai peraturan perusahaan yang berlaku.
                     </div>
+                    <br>
+                    <br>
                     <br>
                     <table style="width:100%;">
                         <tr>

@@ -83,7 +83,7 @@ class HiViolationController extends Controller
         // }else{
         //     $users = DB::table('users')->get();
         // }
-        $users = DB::table('users')->get();
+        $users = DB::table('users')->where('role_id', auth()->user()->role_id)->get();
         
         return view('hi.violations.list', [
             'violations' => $violations->paginate(10)->withQuerystring(),
