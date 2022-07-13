@@ -12,6 +12,12 @@
   </head>
   <body>
 
+  <form action="" class="form p-3" method="post">
+    <textarea name="" id="" style="width:100;"></textarea>
+    <br>
+    <button type="submit">Proses</button>
+  </form>
+
   <table border="1" class="table">
     <tr>
         <th>ID violation</th>
@@ -19,47 +25,30 @@
         <th>Array</th>
     </tr>
     <?php 
-      $violations = DB::table('violations')
-        ->where('type_of_violation', 'Peringatan Lisan')
-        ->whereYear('reporting_date', '2022')
-        ->orderByDesc('id')
-        ->get();
-    ?>
-    @foreach($violations as $vilo)
-      <tr>
-        <td>{{$vilo->id}}</td>
-        <td>{{$vilo->employee_id}}</td>
-        <td>
-          <table  border="1">
-            <tr>
-              <th>
-              id</th> <th>reporting_date</th> <th>date_end_violation</th> <th>date_of_violation</th> <th>type_of_violation</th> <th>violation_status</th> <th>accumulation </th>
-            
-            </tr>
-            <?php 
-              $violations_emp = DB::table('violations')
-                ->where('employee_id', $vilo->employee_id)
-                ->get();
-            ?>
+      // DB::table('violationmigrations')->upsert([
 
-            @foreach($violations_emp as $vilo_emp)
-            <tr>
-              <td>{{$vilo_emp->id}}</td> 
-              <td>{{$vilo_emp->reporting_date}}</td>
-              <td>{{$vilo_emp->date_end_violation}}</td> 
-              <td>{{$vilo_emp->date_of_violation}}</td> 
-              <td>{{$vilo_emp->type_of_violation}}</td>
-              <td>{{$vilo_emp->violation_status}}</td>
-              <td>{{$vilo_emp->accumulation}} </td>
-            
-            </tr>
-            @endforeach
-          
-          </table>
+
         
-        </td>
-      </tr>
-    @endforeach
+        
+      // ],
+      //   ['number_of_employees' ,'employee_id','name' ,'date_of_violation','date_end_violation','no_violation','month_of_violation','violation_rom','reporting_day' ,'reporting_date','job_level','department','violation_status' ,'type_of_violation','	pasal_yang_dilanggar' ,'bunyi_pasal_pelanggaran_jika_pernah_sp' ,'bunyi_pasal_pelanggaran' ,'pelanggaran_sekarang_jiks_pernah_dapat_sp' ,'bunyi_pasal_pelanggarang_sekarang' ,'keterangan_lain' ,'ketengan_lain_2' ,'keterangan_lain_1' ,'pelanggaran_sebelumnya' ,'keterangan' ,'rekap_sesuai_dengan_laporan_pelanggaran' ,'tambahan_ket_1' ,'tambahan_keterangan' ,'tambahan_ket_2' ,'tambahan_ket_3' ,'an_hrd','tanggal_penyampaian_sp']);
+  
+      // include 'migrasi.php';
+
+      
+
+      //  INSERT BATCH
+      // DB::table('violationmigrations')->upsert([
+      
+
+
+      // ],
+      // ['number_of_employees' ,'employee_id','name' ,'date_of_violation','date_end_violation','no_violation','month_of_violation','violation_rom','reporting_day' ,'reporting_date','job_level','department','violation_status' ,'type_of_violation','	pasal_yang_dilanggar' ,'bunyi_pasal_pelanggaran_jika_pernah_sp' ,'bunyi_pasal_pelanggaran' ,'pelanggaran_sekarang_jiks_pernah_dapat_sp' ,'bunyi_pasal_pelanggarang_sekarang' ,'keterangan_lain' ,'ketengan_lain_2' ,'keterangan_lain_1' ,'pelanggaran_sebelumnya' ,'keterangan' ,'rekap_sesuai_dengan_laporan_pelanggaran' ,'tambahan_ket_1' ,'tambahan_keterangan' ,'tambahan_ket_2' ,'tambahan_ket_3' ,'an_hrd','tanggal_penyampaian_sp']);
+    
+    ?>
+
+
+
         <!-- <tr>
             <td>Robby</td>
             <td>76</td>

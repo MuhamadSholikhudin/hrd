@@ -779,11 +779,17 @@ class ViolationController extends Controller
             ->where('employee_id',  $id)              
             ->get();
         }
+
+        $violationmigrations = DB::table('violationmigrations')
+            ->where('employee_id',  $id)  
+            ->limit(5)            
+            ->get();
       
         return view('hi.violations.testedit', [
             
             'employee' => $employee,
             'violations' => DB::table('violations')->where('employee_id', $id)->get(),
+            'violationmigrations' => DB::table('violationmigrations')->where('number_of_employees', $employee->number_of_employees)->get(),
             // 'violations' => $violation,
             'alphabets' => $alphabet,
             'jobs' => Job::all(),

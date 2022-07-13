@@ -122,6 +122,11 @@ class HiViolationController extends Controller
     public function show($id)
     {
         //
+        $violation = DB::table('violationmigrations')->where('id', $id)
+                ->first();
+        return view('hi.violations.cetak_sp_migration', [
+            'violation' => $violation
+        ]);
     }
 
     /**
@@ -1835,6 +1840,11 @@ class HiViolationController extends Controller
                         return redirect('/hiviolations')->with('danger', 'Data Karyawan Mulai dari baris '. floor($x['number_of_employees']) . ' Format Tanggal date_end_violation salah. Pastikan kolom date dengan performatan date yang benar !');
                     }
 
+                    $tanggal_penyampaian_sp = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['tanggal_penyampaian_sp']);                    
+                    if($tanggal_penyampaian_sp == 'false'){
+                        return redirect('/hiviolations')->with('danger', 'Data Karyawan Mulai dari baris '. floor($x['number_of_employees']) . ' Format Tanggal tanggal_penyampaian_sp salah. Pastikan kolom date dengan performatan date yang benar !');
+                    }
+
                     $datev = $date_of_violation;
                     $dater = $reporting_date;
                     $datee = $date_end_violation;
@@ -3326,7 +3336,8 @@ class HiViolationController extends Controller
         // Excel::import(new ViolationmigrationsImport, request()->file('file'));
 
         $rows =  Excel::toArray(new ViolationmigrationImport, request()->file('file'));
-
+        ini_set('max_execution_time', 7200);
+        
         foreach($rows as $row):
             foreach($row as $x):
 
@@ -3334,7 +3345,6 @@ class HiViolationController extends Controller
 
                 }else{
                
-
                     $date_of_violation_i = $x['date_of_violation'];
                     if($date_of_violation_i == null){
                         $date_of_violation = NULL;
@@ -3364,32 +3374,57 @@ class HiViolationController extends Controller
                     if($reporting_date == 'false'){
                         return redirect('/hiviolations')->with('danger', 'Data Pelanggran Mulai dari baris '. $x['employee_id'] . ' Format Tanggal salah. Pastikan kolom date dengan performatan date yang benar !');
                     }
+                    
+                    $tanggal_penyampaian_sp_i = $x['tanggal_penyampaian_sp'];
+                    
+                    if($tanggal_penyampaian_sp_i == null){
+                        $tanggal_penyampaian_sp = NULL;
+                    }else{
+                        $tanggal_penyampaian_sp = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['tanggal_penyampaian_sp']);                    
+                    }
+                    if($tanggal_penyampaian_sp == 'false'){
+                        return redirect('/hiviolations')->with('danger', 'Data Karyawan Mulai dari baris '. floor($x['number_of_employees']) . ' Format Tanggal tanggal_penyampaian_sp salah. Pastikan kolom date dengan performatan date yang benar !');
+                    }
 
-                    DB::table('violationmigrations')->insert([
-                        "employee_id" => floor($x['employee_id']),	
-                        "date_of_violation" => $date_of_violation,
-                        "date_end_violation" => $date_end_violation,
-                        "reporting_date"  =>  $reporting_date,
-                        "no_violation" => floor($x['no_violation']),
-                        "format" => "SP-HRD",
-                        "month_of_violation" => floor($x['month_of_violation']),
-                        "reporting_day" => $x['reporting_day'],
-                        "job_level"  => $x['job_level'],
-                        "department"   => $x['department'],
-                        "other_information"  => $x['other_information'],
-                        "violation_status"  => $x['violation_status'],
-                        "type_of_violation"  => $x['type_of_violation'],
-                        "alphabet_id"  => $x['alphabet_id'],
-                        'alphabet_accumulation' => $alphabet_accumulation,    
-                        "violation_accumulation"  => $x['violation_accumulation'],
-                        "violation_accumulation2"  => $x['violation_accumulation2'],
-                        'violation_accumulation3' => $violation_accumulation3,   
+                    $data = [
 
-                        "violation_ROM" => $x['violation_rom'],
-                        "signature_id"  => floor($x['signature_id'])
-                    ]);
+                        'date_of_violation' => $date_of_violation,
+                        'date_end_violation' => $date_end_violation,
+                        'no_violation' => floor($x['no_violation']),
+                        'month_of_violation' => floor($x['month_of_violation']),
+                        'violation_rom' => $x['violation_rom'],
+                        'reporting_day' => $x['reporting_day'],
+                        'reporting_date' => $reporting_date,
+                        'job_level' => $x['job_level'],
+                        'department' => $x['department'],
+                        'violation_status' => $x['violation_status'],
+                        'type_of_violation' => $x['type_of_violation'],
+                        'employee_id' => floor($x['employee_id']),
+                        'number_of_employees' => floor($x['number_of_employees']),
+                        'name' => $x['name'],
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s'),
+                        'pasal_yang_dilanggar' => $x['pasal_yang_dilanggar'],
+                        'bunyi_pasal_pelanggaran_jika_pernah_sp' => $x['bunyi_pasal_pelanggaran_jika_pernah_sp'],
+                        'bunyi_pasal_pelanggaran' => $x['bunyi_pasal_pelanggaran'],
+                        'pelanggaran_sekarang_jiks_pernah_dapat_sp' => $x['pelanggaran_sekarang_jiks_pernah_dapat_sp'],
+                        'bunyi_pasal_pelanggarang_sekarang' => $x['bunyi_pasal_pelanggarang_sekarang'],
+                        'keterangan_lain' => $x['keterangan_lain'],
+                        'ketengan_lain_2' => $x['ketengan_lain_2'],
+                        'keterangan_lain_1' => $x['keterangan_lain_1'],
+                        'pelanggaran_sebelumnya' => $x['pelanggaran_sebelumnya'],
+                        'keterangan' => $x['keterangan'],
+                        'rekap_sesuai_dengan_laporan_pelanggaran' => $x['rekap_sesuai_dengan_laporan_pelanggaran'],
+                        'tambahan_ket_1' => $x['tambahan_ket_1'],
+                        'tambahan_keterangan' => $x['tambahan_keterangan'],
+                        'tambahan_ket_2' => $x['tambahan_ket_2'],
+                        'tambahan_ket_3' => $x['tambahan_ket_3'],
+                        'an_hrd' => $x['an_hrd'],
+                        'tanggal_penyampaian_sp' => $tanggal_penyampaian_sp
+                    ];
 
-            }
+                    DB::table('violationmigrations')->insert($data);
+                }
 
             endforeach;
         endforeach;

@@ -178,4 +178,9 @@ class UserController extends Controller
         redirect('/users');
 
     }
+
+    public function example(Request $request){
+        
+
+    }
 }

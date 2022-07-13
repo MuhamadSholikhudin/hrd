@@ -222,7 +222,7 @@ class DatamasterEmployeeController extends Controller
         $employee_type = ["Permanent","Probation", "Contract"];
         $kode_ptkp = ["TK","K/0", "K/1", "K/2"];
         $grade_salary = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
-        $status_employee = ['active', 'not active'];
+        $status_employee = ['active', 'notactive'];
         //
         // $job = DB::table('jobs')
         // ->where('id', '=', $employee->job_id)

@@ -216,6 +216,55 @@
                 </tr>
               </thead>
               <tbody>
+              @foreach($violationmigrations as $violationmigration)
+                <tr>
+                  <td>{{ $violationmigration->id }}</td>
+                 
+                  <td>{{$violationmigration->no_violation}}/SP-HRD/{{$violationmigration->violation_rom}}/{{ date('Y', strtotime($violationmigration->date_of_violation))}}</td>
+                  <td>{{ tanggal_pelanggaran($violationmigration->reporting_date); }}</td>
+                  <td>{{ tanggal_pelanggaran($violationmigration->date_of_violation); }}</td>
+                  <td>{{ tanggal_pelanggaran($violationmigration->date_end_violation); }} </td>
+                  <td></td>
+                  <td>
+                  <?php
+                      if($violationmigration->type_of_violation == 'Peringatan Lisan'){
+                        $p = "SP Lisan";
+                      }elseif($violationmigration->type_of_violation == 'Peringatan Lisan'){
+                        $p = "SP Lisan";
+                      }elseif($violationmigration->type_of_violation == 'Surat Peringatan Pertama'){
+                        $p = "SP I";
+                      }elseif($violationmigration->type_of_violation == 'Surat Peringatan Kedua'){
+                        $p = "SP II";
+                      }elseif($violationmigration->type_of_violation == 'Surat Peringatan Ketiga'){
+                        $p = "SP III";
+                      }elseif($violationmigration->type_of_violation == 'Surat Peringatan Terakhir'){
+                        $p = "SP Terakhir";
+                      }elseif($violationmigration->type_of_violation == 'Pemutusan Hubungan Kerja'){
+                        $p = "PHK";
+                      }else{
+                        $p = "Tidak Ditemukan";
+                      }
+                    ?>
+                    {{$p}}
+                  
+                  </td>
+                  <td></td>
+                  
+                  <td></td>
+                  <td>notactive </td>
+                  <td>
+                    <a href="/hiviolations/{{$violationmigration->id }}" target="_blank" class="btn  btn-outline-primary">
+                        Cetak                    
+                      </a>
+                  
+                  </td>
+                </tr>
+
+              @endforeach
+
+
+
+
               @foreach($violations as $violation)
                 <tr>
                   <td>{{ $loop->iteration }}</td>
