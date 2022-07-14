@@ -30,6 +30,16 @@ function oke()
 define("URL_WEB", "http://127.0.0.1:8000");
 define("SUM_URL_WEB", 22);
 
+function number_of_employees($employee_id){
+  $sel_employee = DB::table('employees')->find($employee_id);
+  return $sel_employee->number_of_employees;
+}
+
+function name($employee_id){
+  $sel_employee = DB::table('employees')->find($employee_id);
+  return $sel_employee->name;
+}
+
 function jabatan($employee_id){
   $sel_employee = DB::table('employees')->find($employee_id);
   $job = DB::table('jobs')->find($sel_employee->job_id);
@@ -38,7 +48,7 @@ function jabatan($employee_id){
 
 function department($employee_id){
   $sel_employee = DB::table('employees')->find($employee_id);
-  $department = DB::table('departments')->find($sel_employee->job_id);
+  $department = DB::table('departments')->find($sel_employee->department_id);
   return $department->department;
 }
 

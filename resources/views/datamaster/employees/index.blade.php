@@ -144,8 +144,8 @@
         </div>
 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a class="btn btn-outline-danger" data-toggle="modal"  data-target="#excel_karyawan_update" >
-        <i class="fas fa-arrow-up"  data-toggle="tooltip" data-placement="bottom" title="Upload Excel Edit Data Karyawan "></i>
+        <a class="btn btn-outline-danger" data-toggle="modal"  data-target="#excel_karyawan_resign" >
+        <i class="fas fa-arrow-up"  data-toggle="tooltip" data-placement="bottom" title="Upload Excel Resign Data Karyawan "></i>
         </a>
 
 
@@ -154,20 +154,20 @@
           <i class="fas fa-upload" data-toggle="tooltip" data-placement="bottom" title="Upload Excel Update Data Karyawan"></i>
         </a> -->
         <!-- Modal -->
-        <div class="modal fade"  id="excel_karyawan_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade"  id="excel_karyawan_resign" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Upload excel Update data karyawan</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Upload excel Resign data karyawan</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form action="{{ route('employees.update') }}" method="POST" enctype="multipart/form-data">
+              <form action="{{ route('employees.resign') }}" method="POST" enctype="multipart/form-data">
                 @csrf
               <div class="modal-body">
                 <p class="text-justify-right">
-                  <a href="{{asset('excel/FORMAT_UPDATE_MASTER_DATA.xlsx')}}">Format Update Master Data</a>
+                  <a href="{{asset('excel/FORMAT_RESIGN_DATA.xlsx')}}">Format Resign Karyawan</a>
                   <br>
                 </p>
                 <div class="input-group">

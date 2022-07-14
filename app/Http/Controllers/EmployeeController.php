@@ -661,6 +661,49 @@ class EmployeeController extends Controller
         return redirect('/employees')->with('success', 'Data Karyawan Berhasil di import Semua');
     }
 
+    public function resign(){
+        $rows =  Excel::toArray(new EmployeesImport, request()->file('file'));
+
+        foreach($rows as $row):
+            foreach($row as $x):
+                
+                if($x['number_of_employees'] == NULL){
+
+                }else{ 
+                    $search_employee = DB::table('employees')->where('number_of_employees', '=', floor($x['number_of_employees']))->count();
+                    if($search_employee > 0){
+                        
+                        $p_employee = DB::table('employees')->where('number_of_employees', '=', floor($x['number_of_employees']))->first();
+                       
+                        $date_out_i = $x['date_out'];
+                        if($date_out_i == null){
+                             $date_out = null;
+                             $status_employee = "active";
+                        }else{
+                            $date_out = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($x['date_out']);
+                            $status_employee = "notactive";
+                        }
+                        if($date_out == 'false'){
+                            return redirect('/employees')->with('danger', 'Data Karyawan Mulai dari baris '. floor($x['number_of_employees']) . ' Format Tanggal OUT salah. Pastikan kolom date dengan performatan date yang benar !');
+                        }
+                        
+                        DB::table('employees')
+                        ->where('number_of_employees', floor($x['number_of_employees']))
+                        ->update([
+                            'date_out' => $date_out,
+                            'exit_statement' => $x['exit_statement'],
+                            'status_employee' => $status_employee
+                        ]);
+
+                    }
+
+                }
+            endforeach;
+        endforeach;
+
+        return redirect('/employees')->with('success', 'Data Karyawan Berhasil di resign Semua');
+    }
+
     public function import1() 
     {
         Excel::import(new EmployeesImport, request()->file('file'));

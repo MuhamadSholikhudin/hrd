@@ -144,6 +144,7 @@ Route::controller(EmployeeController::class)->group(function(){
     Route::get('exportemployees', 'export')->name('users.export');
     Route::post('importemployees', 'import')->name('employees.import');
     Route::post('updateemployees', 'update')->name('employees.update');
+    Route::post('resignemployees', 'resign')->name('employees.resign');
 });
 
 // DATA MASTER PROMOTION

@@ -391,8 +391,8 @@
             @foreach($violations as $violation)
               <tr>
                 <td>{{ $violation->id }}</td>
-                <td><a href="/violations/{{ $violation->employee_id }}/edit" class="text-dark" >{{ $violation->number_of_employees }}</a></td>
-                <td><a href="/violations/{{ $violation->employee_id }}/edit" class="text-dark">{{ $violation->name }}</a></td>
+                <td><a href="/violations/{{ $violation->employee_id }}/edit" class="text-dark" >{{ number_of_employees($violation->employee_id); }}</a></td>
+                <td><a href="/violations/{{ $violation->employee_id }}/edit" class="text-dark">{{ name($violation->employee_id); }}</a></td>
                 <td>{{nomer_sp($violation->no_violation, $violation->id);}}           </td>
                 <td> {{ tanggal_pelanggaran($violation->reporting_date); }} </td>
                 <td>{{ tanggal_pelanggaran($violation->date_of_violation); }}  </td>
