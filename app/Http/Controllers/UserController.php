@@ -12,12 +12,14 @@ use App\Exports\UsersExport;
 use App\Imports\UsersImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\User;
+use App\Models\Employee;
 
 
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Crypt;
 
-  
+use DataTables;
+
 class UserController extends Controller
 {
     /**
@@ -183,4 +185,27 @@ class UserController extends Controller
         
 
     }
+
+    
+    public function yajra(Request $request){
+        if ($request->ajax()) {
+            $data = Employee::select('*');
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row){
+     
+                           $btn = '<a href="https://www.google.com" class="edit btn btn-primary btn-sm">View</a>';
+    
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        
+        return view('yajra.users');
+        
+
+    }
+
+
 }

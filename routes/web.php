@@ -119,7 +119,10 @@ Route::controller(UserController::class)->group(function(){
     Route::put('users/update', 'update')->name('users.update')->middleware('isrole');
     Route::put('users/changepassword', 'changepassword')->name('users.changepassword')->middleware('isrole');
     // Route::post('users-import', 'import')->name('users.import')->middleware('isrole');
+
 });
+
+Route::get('users/yajra', [UserController::class, 'yajra'])->name('users.yajra');
 
 //SELECT2 
 Route::controller(SearchController::class)->group(function(){

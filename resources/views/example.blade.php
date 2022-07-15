@@ -24,6 +24,18 @@
         <th>employee ID</th>
         <th>Array</th>
     </tr>
+    <?php
+      // DB::table('startworks')
+      //   ->where('employee_id', 'employee_id')
+      //   ->update([
+      //     "department_id" => "department",
+      //     "job_id" => "job",
+      //     "bagian" => "bagian",
+      //     "cell" => "cell",
+      //     "hire_date" => "date"
+      //   ]);
+
+    ?>
     <?php 
       // DB::table('violationmigrations')->upsert([
 
