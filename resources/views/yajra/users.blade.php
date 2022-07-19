@@ -20,13 +20,33 @@
         <thead>
             <tr>
                 <th>No</th>
-                <th>Name</th>
-                <th>number_of_employees</th>
+                <th>employee_id</th>
+                <th>alphabet_id</th>
                 <th width="100px">Action</th>
             </tr>
         </thead>
         <tbody>
         </tbody>
+    </table>
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>username</th>
+                <th>email</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($users as $user)
+            <tr>
+                <td>{{$user->username}}</td>
+                <td>{{$user->email}}</td>
+            </tr>
+            @endforeach
+        </tbody>
+
+
     </table>
 </div>
    
@@ -36,13 +56,13 @@
   $(function () {
     
     var table = $('.data-table').DataTable({
-        processing: true,
+        // processing: true,
         serverSide: true,
         ajax: "{{ route('users.yajra') }}",
         columns: [
             {data: 'id', name: 'id'},
-            {data: 'name', name: 'name'},
             {data: 'number_of_employees', name: 'number_of_employees'},
+            {data: 'alphabet_id', name: 'alphabet_id'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });

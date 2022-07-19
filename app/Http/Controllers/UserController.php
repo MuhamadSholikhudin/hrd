@@ -13,6 +13,7 @@ use App\Imports\UsersImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\User;
 use App\Models\Employee;
+use App\Models\Violation;
 
 
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -188,8 +189,49 @@ class UserController extends Controller
 
     
     public function yajra(Request $request){
+        $violationmigrations = DB::table('violationmigrations')
+        ->select(
+          'id as id',
+          'date_of_violation as date_of_violation',
+          'no_violation as no_violation',
+          'reporting_date as reporting_date',
+          'violation_rom as violation_ROM',
+          'date_end_violation as date_end_violation',
+          'type_of_violation as type_of_violation',
+          'violation_status as violation_status',
+          'name as name',
+          'number_of_employees as number_of_employees',
+          'pasal_yang_dilanggar as alphabet_accumulation',
+          'keterangan_lain as other_information',
+          'pasal_yang_dilanggar as alphabet_id'
+        )
+      ->get()
+      ;
+  
+      $violation = DB::table('violations')
+      ->leftJoin('employees', 'employees.id', '=', 'violations.employee_id')
+        ->select( 'violations.id as id',
+            'violations.date_of_violation as date_of_violation',
+            'violations.reporting_date as reporting_date',
+            'violations.no_violation as no_violation',
+            'violations.violation_ROM as violation_ROM',
+            'violations.date_end_violation as date_end_violation',
+            'violations.type_of_violation as type_of_violation',
+            'violations.violation_status as violation_status',
+            'employees.name as name',
+            'employees.number_of_employees as number_of_employees',
+            'violations.alphabet_accumulation as alphabet_accumulation',
+            'violations.other_information as other_information',
+            'violations.alphabet_id as alphabet_id'
+        )
+          ->get()
+          ;
+  
+      $violations = $violation->merge($violationmigrations);
+
+
         if ($request->ajax()) {
-            $data = Employee::select('*');
+            $data = $violations;
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
@@ -202,9 +244,7 @@ class UserController extends Controller
                     ->make(true);
         }
         
-        return view('yajra.users');
-        
-
+        return view('yajra.users', ['users' => User::all()]);
     }
 
 

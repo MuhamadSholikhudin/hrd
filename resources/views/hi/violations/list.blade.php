@@ -367,7 +367,6 @@
             </div>
           </div>
         </div>
-
         <table class="table table-hover text-nowrap">
           <thead>
             <tr>
@@ -446,7 +445,6 @@
                       </button>
                     </form> 
                     
-                    
                     <a href="/hiviolations/{{$violation->id }}/getedit" class="btn  btn-outline-warning">
                       Edit
                     </a>
@@ -474,6 +472,7 @@
       <!-- /.card-body -->
     </div>
   </div>
+
 
 
 

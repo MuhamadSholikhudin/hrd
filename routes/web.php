@@ -124,6 +124,7 @@ Route::controller(UserController::class)->group(function(){
 
 Route::get('users/yajra', [UserController::class, 'yajra'])->name('users.yajra');
 
+
 //SELECT2 
 Route::controller(SearchController::class)->group(function(){
     Route::get('demo-search', 'index');
@@ -201,6 +202,8 @@ Route::get('/violations/{id}/testedit', [ViolationController::class, 'testedit']
 
 // DATA VIOLATIONS
 Route::get('/hiviolations', [HiViolationController::class, 'index'])->middleware('isrole');
+
+Route::get('/hiviolations/yajra', [HiViolationController::class, 'yajra'])->name('hiviolations.yajra');
 
 Route::resource('/hiviolations', HiViolationController::class)->middleware('isrole');
 

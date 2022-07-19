@@ -31,8 +31,16 @@ define("URL_WEB", "http://127.0.0.1:8000");
 define("SUM_URL_WEB", 22);
 
 function number_of_employees($employee_id){
-  $sel_employee = DB::table('employees')->find($employee_id);
-  return $sel_employee->number_of_employees;
+  // $count = DB::table('employees')->where('id', $employee_id)->count();
+  // if($count > 0){
+    $sel_employee = DB::table('employees')->find($employee_id);
+    return $sel_employee->number_of_employees;
+  // }else{
+  //   $count_migration = DB::table('violationmigrations')->where('id', $employee_id)->count();
+
+  // }
+
+
 }
 
 function name($employee_id){
@@ -255,11 +263,23 @@ function familyName($fname) {
 
 function pasal($alphabet_id){
   // Pasal 
-  $alphabet  = DB::table('alphabets')->find($alphabet_id); 
-  $paragraph  = DB::table('paragraphs')->find($alphabet->paragraph_id); 
-  $article  = DB::table('articles')->find($paragraph->article_id); 
+  $select_alphabet = DB::table('alphabets')
+  ->where('id', $alphabet_id)
+  ->count(); 
 
-  return $article->article . ' ayat ('. $paragraph->paragraph .') huruf "'. $alphabet->alphabet. '"';
+  if($select_alphabet > 0){
+
+    $alphabet  = DB::table('alphabets')->find($alphabet_id); 
+    $paragraph  = DB::table('paragraphs')->find($alphabet->paragraph_id); 
+    $article  = DB::table('articles')->find($paragraph->article_id); 
+
+    $pasal = $article->article . ' ayat ('. $paragraph->paragraph .') huruf "'. $alphabet->alphabet. '"';
+
+  }else{
+    $pasal = $alphabet_id;
+
+  }
+  return $pasal;
 }
 
 function pasal_yang_dilanggar($violation_id){
@@ -352,12 +372,9 @@ function PASAL_25_AYAT_2A_3A_4A_B_5A_B_DAN_C_JIKA_PERNAH_DAPAT_SP_PELANGGARAN_SE
           ->join('articles', 'paragraphs.article_id', '=', 'articles.id')
           ->where('alphabets.id', $violation->alphabet_accumulation)
           ->first();
-
           $PASAL_25_AYAT_2A_3A_4A_B_5A_B_DAN_C_JIKA_PERNAH_DAPAT_SP_PELANGGARAN_SEKARANG = 'Bobot Pelanggran sekarang yaitu Perjanjian Kerja Bersama Pasal '. $sel_article->article.' ayat ('.$sel_paragraph->paragraph .') huruf "'. $sel_alphabet->alphabet.'" ';   
   }else{
-
      $PASAL_25_AYAT_2A_3A_4A_B_5A_B_DAN_C_JIKA_PERNAH_DAPAT_SP_PELANGGARAN_SEKARANG = "-";
-
   }
 
   return $PASAL_25_AYAT_2A_3A_4A_B_5A_B_DAN_C_JIKA_PERNAH_DAPAT_SP_PELANGGARAN_SEKARANG;
@@ -412,8 +429,6 @@ function KETENGAN_LAIN_2($violation_id){
       $last_type = $cari_pasal_sebelumnya->type_of_verse;
 
       $BUNYI_PASAL1 = 'Dalam masa ' . $last_type . ' Perjanjian Kerja Bersama Pasal '. $cari_pasal_sebelumnya->article . ' ayat ('. $cari_pasal_sebelumnya->paragraph. ') huruf "'.$cari_pasal_sebelumnya->alphabet.'", ';   
-
-
     }else{ 
 
       $BUNYI_PASAL1 = "-";

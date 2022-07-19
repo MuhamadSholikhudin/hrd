@@ -26,6 +26,12 @@ use App\Models\Paragraph;
 use App\Models\Violation;
 use App\Models\Violationmigration;
 
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+
+use DataTables;
+
 class HiViolationController extends Controller
 {
     /**
@@ -49,6 +55,23 @@ class HiViolationController extends Controller
         */
 
         //
+        $violationmigrations = DB::table('violations')
+                ->leftJoin('employees', 'employees.id', '=', 'violations.employee_id')
+                ->select('violations.*', 'violations.id as id',
+                'violations.date_of_violation as date_of_violation',
+                'violations.no_violation as no_violation',
+                'violations.violation_ROM as violation_ROM',
+                'violations.date_end_violation as date_end_violation',
+                'violations.type_of_violation as type_of_violation',
+                'violations.alphabet_id as alphabet_id',
+                'violations.other_information as other_information',
+                'violations.violation_status as violation_status',
+                'employees.name as name',
+                'employees.number_of_employees as number_of_employees'
+                )->orderByDesc('violations.id');
+
+
+
         $violations = DB::table('violations')
                 ->leftJoin('employees', 'employees.id', '=', 'violations.employee_id')
                 ->select('violations.*', 'violations.id as id',
@@ -90,6 +113,33 @@ class HiViolationController extends Controller
             'users' => $users,
             'count' => DB::table('violations')->count()
         ]);
+    }
+
+    public function yajra(Request $request){
+        $myArray = [
+            ['id'=>1, 'title'=>'Laravel CRUD'],
+            ['id'=>2, 'title'=>'Laravel Ajax CRUD'],
+            ['id'=>3, 'title'=>'Laravel CORS Middleware'],
+            ['id'=>4, 'title'=>'Laravel Autocomplete'],
+            ['id'=>5, 'title'=>'Laravel Image Upload'],
+            ['id'=>6, 'title'=>'Laravel Ajax Request'],
+            ['id'=>7, 'title'=>'Laravel Multiple Image Upload'],
+            ['id'=>8, 'title'=>'Laravel Ckeditor'],
+            ['id'=>9, 'title'=>'Laravel Rest API'],
+            ['id'=>10, 'title'=>'Laravel Pagination'],
+        ];
+  
+        $data = $this->paginate($myArray);
+   
+        return view('yajra.violations', compact('data'));
+
+    }
+
+    public function paginate($items, $perPage = 5, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 
     /**

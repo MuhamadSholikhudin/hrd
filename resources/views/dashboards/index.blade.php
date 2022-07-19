@@ -154,7 +154,11 @@
                     <div class="inner">
                       <?php 
                           $bul = date('m');
-                          $num_violations = DB::table('violations')->whereMonth('date_of_violation', $bul)->count();
+                          $year = date('Y');
+                          $num_violations = DB::table('violations')
+                            ->whereMonth('date_of_violation', $bul)
+                            ->whereYear('date_of_violation', $year)
+                            ->count();
                       ?>
                       <h3 class="text-white">{{$num_violations}}</h3>
                       <p class="text-white">Pelanggaran Bulan ini</p>
