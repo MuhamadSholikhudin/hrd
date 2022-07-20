@@ -115,32 +115,75 @@ class HiViolationController extends Controller
         ]);
     }
 
-    public function yajra(Request $request){
-        $myArray = [
-            ['id'=>1, 'title'=>'Laravel CRUD'],
-            ['id'=>2, 'title'=>'Laravel Ajax CRUD'],
-            ['id'=>3, 'title'=>'Laravel CORS Middleware'],
-            ['id'=>4, 'title'=>'Laravel Autocomplete'],
-            ['id'=>5, 'title'=>'Laravel Image Upload'],
-            ['id'=>6, 'title'=>'Laravel Ajax Request'],
-            ['id'=>7, 'title'=>'Laravel Multiple Image Upload'],
-            ['id'=>8, 'title'=>'Laravel Ckeditor'],
-            ['id'=>9, 'title'=>'Laravel Rest API'],
-            ['id'=>10, 'title'=>'Laravel Pagination'],
-        ];
-  
-        $data = $this->paginate($myArray);
-   
-        return view('yajra.violations', compact('data'));
+    public function oldsp(){
+        echo 1;
+        // $violations = DB::table('violationmigrations')
+        //     ->select(
+        //         'id as id',
+        //         'employee_id as employee_id',
+        //         'reporting_date as reporting_date',
+        //         'date_of_violation as date_of_violation',
+        //         'date_end_violation as date_end_violation',
+        //         'no_violation as no_violation',
+        //         'violation_rom as violation_ROM',
+        //         'type_of_violation as type_of_violation',
+        //         'pasal_yang_dilanggar as alphabet_id',
+        //         'pasal_yang_dilanggar as alphabet_accumulation',
+        //         'keterangan_lain as other_information',
+        //         'violation_status as violation_status',
+        //         'name as name',
+        //         'number_of_employees as number_of_employees'
+        //     )
+        //     ->orderByDesc('id');
+
+        // if (request('search')) {
+        //     $violations
+        //         ->where(
+        //             'date_end_violation',
+        //             'like',
+        //             '%' . request('search') . '%'
+        //         )
+        //         ->orWhere(
+        //             'date_of_violation',
+        //             'like',
+        //             '%' . request('search') . '%'
+        //         )
+        //         ->orWhere('name', 'like', '%' . request('search') . '%')
+        //         ->orWhere(
+        //             'number_of_employees',
+        //             'like',
+        //             '%' . request('search') . '%'
+        //         )
+        //         ->orWhere(
+        //             'violation_status',
+        //             'like',
+        //             '%' . request('search') . '%'
+        //         )
+        //         ->orWhere('no_violation', 'like', '%' . request('search') . '%')
+        //         ->orWhere(
+        //             'keterangan_lain',
+        //             'like',
+        //             '%' . request('search') . '%'
+        //         );
+        // }
+
+        // // if(){
+        // //     $users = DB::table('users')->get();
+        // // }else{
+        //     // $users = DB::table('users')->get();
+        // // }
+        // $users = DB::table('users')
+        //     ->where('role_id', auth()->user()->role_id)
+        //     ->get();
+
+        // return view('hi.violations.listmigrations', [
+        //     'violations' => $violations->paginate(10)->withQuerystring(),
+        //     'users' => $users,
+        //     'count' => DB::table('violations')->count(),
+        // ]);
 
     }
 
-    public function paginate($items, $perPage = 5, $page = null, $options = [])
-    {
-        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
-        $items = $items instanceof Collection ? $items : Collection::make($items);
-        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -188,7 +231,7 @@ class HiViolationController extends Controller
     public function edit($id)
     {
         //
-        echo 1;
+        
     }
 
     public function getedit($id)

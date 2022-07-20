@@ -75,36 +75,52 @@
           <i class="fa fa-plus" data-toggle="tooltip" data-placement="bottom" title="Tambah 1 Karyawan"></i>
         </a> -->
         <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-          <?php 
-            $url_nowxz = url()->current();
-            $sum_url =SUM_URL_WEB;
-            $url_scc = substr($url_nowxz, $sum_url); 
-            $pecah = explode("/", $url_scc);
-            $kalimat1 = $pecah[0];
-            $num_sub = DB::table('sub_menus')->where('url', '/'.$kalimat1)->count(); 
-            if($num_sub > 0){
-              $print_sub = DB::table('sub_menus')->where('url', '/'.$kalimat1)->first();
+          <?php
+          $url_nowxz = url()->current();
+          $sum_url = SUM_URL_WEB;
+          $url_scc = substr($url_nowxz, $sum_url);
+          $pecah = explode('/', $url_scc);
+          $kalimat1 = $pecah[0];
+          $num_sub = DB::table('sub_menus')
+              ->where('url', '/' . $kalimat1)
+              ->count();
+          if ($num_sub > 0) {
+              $print_sub = DB::table('sub_menus')
+                  ->where('url', '/' . $kalimat1)
+                  ->first();
               $num_meth = DB::table('methods')
-                ->leftJoin('access_menus', 'methods.access_menu_id' ,'access_menus.id')
-                ->where('methods.sub_menu_id', $print_sub->id)
-                ->where('access_menus.role_id', auth()->user()->role_id)
-                ->count();
-              if($num_meth > 0){
-                $prt_meth = DB::table('methods')
-                ->leftJoin('access_menus', 'methods.access_menu_id' ,'access_menus.id')
-                ->select('methods.edit as edit', 'methods.delete as delete','methods.delete as view')
-                ->where('methods.sub_menu_id', $print_sub->id)
-                ->where('access_menus.role_id', auth()->user()->role_id)
-                ->first();
-                $edit = $prt_meth->edit;
-                if($edit == 'true'){
-                  echo '<a class="btn btn-outline-primary" data-toggle="modal"  data-target="#excel_pelanggaran_baru" >
+                  ->leftJoin(
+                      'access_menus',
+                      'methods.access_menu_id',
+                      'access_menus.id'
+                  )
+                  ->where('methods.sub_menu_id', $print_sub->id)
+                  ->where('access_menus.role_id', auth()->user()->role_id)
+                  ->count();
+              if ($num_meth > 0) {
+                  $prt_meth = DB::table('methods')
+                      ->leftJoin(
+                          'access_menus',
+                          'methods.access_menu_id',
+                          'access_menus.id'
+                      )
+                      ->select(
+                          'methods.edit as edit',
+                          'methods.delete as delete',
+                          'methods.delete as view'
+                      )
+                      ->where('methods.sub_menu_id', $print_sub->id)
+                      ->where('access_menus.role_id', auth()->user()->role_id)
+                      ->first();
+                  $edit = $prt_meth->edit;
+                  if ($edit == 'true') {
+                      echo '<a class="btn btn-outline-primary" data-toggle="modal"  data-target="#excel_pelanggaran_baru" >
                           <i class="fa fa-arrow-up"  data-toggle="tooltip" data-placement="bottom" title="Upload Excel Tambah Data Pelanggaran"></i>
                         </a>';
-                }
+                  }
               }
-            }
-        ?>
+          }
+          ?>
         <!-- <a class="btn btn-outline-primary" data-toggle="modal"  data-target="#excel_pelanggaran_baru" >
           <i class="fa fa-arrow-up"  data-toggle="tooltip" data-placement="bottom" title="Upload Excel Tambah Data Pelanggaran"></i>
         </a> -->
@@ -151,13 +167,13 @@
           <i class="fas fa-download"></i>
         </a> 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="{{ route('alphabets.export') }}" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download Excel Alphabet ID">
-          <i class="fas fa-download"></i>
+        <a href="{{ route('alphabets.export') }}" class="btn btn-primary">
+          <i class="fas fa-download"  data-toggle="tooltip" data-placement="bottom" title="Download Excel Alphabet ID"></i>
         </a>
 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="{{ route('alphabets.export') }}" class="btn btn-warning" data-toggle="modal"  data-target="#pdf_violation" data-toggle="tooltip" data-placement="bottom" title="Export Data SP ke PDF">
-          <i class="fas fa-print"></i>
+        <a href="{{ route('alphabets.export') }}" class="btn btn-warning" data-toggle="modal"  data-target="#pdf_violation">
+          <i class="fas fa-print"  data-toggle="tooltip" data-placement="bottom" title="Export Data SP ke PDF"></i>
         </a>
         <div class="modal fade" id="pdf_violation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-md" role="document">
@@ -200,8 +216,8 @@
 
 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="{{ route('alphabets.export') }}" class="btn btn-success" data-toggle="modal"  data-target="#edit_violation" data-toggle="tooltip" data-placement="bottom" title="Download Data SP ke yang mau di edit">
-          <i class="fa-solid fa-pen-to-square"></i>
+        <a href="{{ route('alphabets.export') }}" class="btn btn-success" data-toggle="modal"  data-target="#edit_violation" >
+          <i class="fa-solid fa-pen-to-square" data-toggle="tooltip" data-placement="bottom" title="Download Data SP ke yang mau di edit"></i>
         </a>
         <div class="modal fade" id="edit_violation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-md" role="document">
@@ -282,6 +298,18 @@
                 </div>
             </form>
         </div>
+
+
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="/hiviolations/oldsp" class="btn btn-dark"  >
+          <i class="fa-solid fa-scroll" data-toggle="tooltip" data-placement="bottom" title="Data SP Lama"> Data SP LAMA </i>
+        </a>
+
       </div>
       <!-- /.card-header -->
       <div class="card-body table-responsive p-0">
@@ -299,7 +327,9 @@
               <div class="modal-body">
                 <div class="row">
                   <div class="col-6">
-                    <input type="date" name="date_delivery" value="<?= date('Y-m-d') ?>" class="form-control" required>
+                    <input type="date" name="date_delivery" value="<?= date(
+                        'Y-m-d'
+                    ) ?>" class="form-control" required>
                     <input type="hidden" name="violation_id" id="violation_id" value="" class="form-control" required>
                   </div>
                   
@@ -401,32 +431,36 @@
                 <td> {{pasal($violation->alphabet_id);}} </td>
                 <td>
                  <!-- {{ pasal($violation->alphabet_id); }} -->
-                 <?php 
-                    if($violation->alphabet_accumulation !== NULL){
-                    echo pasal($violation->alphabet_accumulation);
-                    }else{
-                    }
-                 ?>
+                 <?php if ($violation->alphabet_accumulation !== null) {
+                     echo pasal($violation->alphabet_accumulation);
+                 } else {
+                 } ?>
                   </td>
                 <td>{{ $violation->violation_status  }}</td>
                 <td style="align:center;">
-                <?php                
-                  $c_delivery = DB::table('deliveryletters')->where('id', $violation->id)->count();
-                if($c_delivery > 0){ ?>
+                <?php
+                $c_delivery = DB::table('deliveryletters')
+                    ->where('id', $violation->id)
+                    ->count();
+                if ($c_delivery > 0) { ?>
                   <?php
-                  $delivery = DB::table('deliveryletters')->find($violation->id);
+                  $delivery = DB::table('deliveryletters')->find(
+                      $violation->id
+                  );
                   $use = DB::table('users')->find($delivery->user_id);
-
                   ?>
                   <a href="#" class="text-dark deliveryedit" data-id="{{$delivery->id}}" data-sk="{{nomer_sp($violation->no_violation, $violation->id);}}" data-datedeliveryedit="<?= $delivery->date_delivery ?>" data-user="<?= $delivery->user_id ?>" data-toggle="modal" data-target="#edit_delivery">
                       <i class="fa-solid fa-pen"></i> &nbsp;
                   </a>
-                      <?= tanggal_pelanggaran($delivery->date_delivery) ?>, <?= $use->name ?>               
-                <?php }else{ ?>
+                      <?= tanggal_pelanggaran(
+                          $delivery->date_delivery
+                      ) ?>, <?= $use->name ?>               
+                <?php } else { ?>
                     <a href="" class="btn btn-info deliveryadd" data-id="{{$violation->id}}" data-toggle="modal" data-sk="{{nomer_sp($violation->no_violation, $violation->id);}}" data-target="#add_delivery" data-toggle="tooltip" data-placement="bottom" title="Tambah Penyampaian">
                       <i class="fa-solid fa-clipboard-user"></i>
                     </a>
-                <?php } ?>             
+                <?php }
+                ?>             
   
               </td>                
                 <td>
@@ -437,9 +471,9 @@
                       @csrf
                       <input type="hidden" name="id" value="{{$violation->id }}">
                       <button type="submit" class="btn btn-outline-success" onclick="return confirm(' Are you sure process violation data ?')"> 
-                        <?php if($violation->violation_status == 'active'){  ?>
+                        <?php if ($violation->violation_status == 'active') { ?>
                           Cancel
-                        <?php }else{ ?>
+                        <?php } else { ?>
                           Activate
                         <?php } ?>
                       </button>
@@ -472,8 +506,6 @@
       <!-- /.card-body -->
     </div>
   </div>
-
-
 
 
 </section>
